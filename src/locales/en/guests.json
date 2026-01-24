@@ -1,0 +1,40 @@
+{
+  "title": "Guests",
+  "addGuest": "Add guest",
+  "noGuests": "No guests yet",
+  "noGuestsDescription": "Add your first guest to the guest list",
+  "totalGuests": "Total guests",
+  "attending": "Attending",
+  "declined": "Declined",
+  "pending": "Pending",
+  "form": {
+    "name": "Name",
+    "namePlaceholder": "First and last name",
+    "email": "Email",
+    "emailPlaceholder": "guest@example.com",
+    "phone": "Phone number",
+    "phonePlaceholder": "+32 123 45 67 89",
+    "plusOne": "Plus one",
+    "dietaryRestrictions": "Dietary restrictions",
+    "notes": "Notes"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "attending": "I will attend",
+    "notAttending": "I cannot attend",
+    "submit": "Send RSVP",
+    "thankyou": "Thank you for your RSVP!",
+    "notFound": "Invitation not found"
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "sendInvite": "Send invitation"
+  },
+  "deleteConfirm": {
+    "title": "Delete guest?",
+    "message": "Are you sure you want to delete this guest?",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  }
+}

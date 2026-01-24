@@ -1,0 +1,43 @@
+{
+  "title": "Bruiloften",
+  "myWeddings": "Mijn bruiloften",
+  "createWedding": "Bruiloft aanmaken",
+  "createWeddingDescription": "Vul de details in om een nieuwe bruiloft aan te maken",
+  "createError": "Er is een fout opgetreden bij het aanmaken van de bruiloft",
+  "noWeddings": "U heeft nog geen bruiloften",
+  "noWeddingsDescription": "Maak uw eerste bruiloft aan om te beginnen",
+  "form": {
+    "name": "Naam bruiloft",
+    "namePlaceholder": "Bijv. Emma & Liam",
+    "date": "Datum",
+    "location": "Locatie",
+    "locationPlaceholder": "Bijv. Château de Limelette",
+    "description": "Beschrijving",
+    "descriptionPlaceholder": "Extra details over uw bruiloft"
+  },
+  "details": {
+    "overview": "Overzicht",
+    "guests": "Gasten",
+    "settings": "Instellingen",
+    "date": "Datum",
+    "location": "Locatie",
+    "guestCount": "Aantal gasten"
+  },
+  "actions": {
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "view": "Bekijken",
+    "manageGuests": "Gasten beheren"
+  },
+  "deleteConfirm": {
+    "title": "Bruiloft verwijderen?",
+    "message": "Weet u zeker dat u deze bruiloft wilt verwijderen? Deze actie kan niet ongedaan gemaakt worden.",
+    "confirm": "Verwijderen",
+    "cancel": "Annuleren"
+  },
+  "validation": {
+    "nameRequired": "Naam is verplicht",
+    "dateRequired": "Datum is verplicht",
+    "locationRequired": "Locatie is verplicht"
+  }
+}

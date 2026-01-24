@@ -1,0 +1,40 @@
+{
+  "title": "Invités",
+  "addGuest": "Ajouter un invité",
+  "noGuests": "Pas encore d'invités",
+  "noGuestsDescription": "Ajoutez votre premier invité à la liste",
+  "totalGuests": "Total des invités",
+  "attending": "Présent",
+  "declined": "Absent",
+  "pending": "En attente",
+  "form": {
+    "name": "Nom",
+    "namePlaceholder": "Prénom et nom",
+    "email": "E-mail",
+    "emailPlaceholder": "invite@example.com",
+    "phone": "Numéro de téléphone",
+    "phonePlaceholder": "+32 123 45 67 89",
+    "plusOne": "Plus un",
+    "dietaryRestrictions": "Restrictions alimentaires",
+    "notes": "Notes"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "attending": "Je serai présent",
+    "notAttending": "Je ne pourrai pas venir",
+    "submit": "Envoyer RSVP",
+    "thankyou": "Merci pour votre RSVP!",
+    "notFound": "Invitation non trouvée"
+  },
+  "actions": {
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "sendInvite": "Envoyer l'invitation"
+  },
+  "deleteConfirm": {
+    "title": "Supprimer l'invité?",
+    "message": "Êtes-vous sûr de vouloir supprimer cet invité?",
+    "confirm": "Supprimer",
+    "cancel": "Annuler"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "title": "Mariages",
+  "myWeddings": "Mes mariages",
+  "createWedding": "Créer un mariage",
+  "createWeddingDescription": "Remplissez les détails pour créer un nouveau mariage",
+  "createError": "Une erreur s'est produite lors de la création du mariage",
+  "noWeddings": "Vous n'avez pas encore de mariages",
+  "noWeddingsDescription": "Créez votre premier mariage pour commencer",
+  "form": {
+    "name": "Nom du mariage",
+    "namePlaceholder": "Ex. Emma & Liam",
+    "date": "Date",
+    "location": "Lieu",
+    "locationPlaceholder": "Ex. Château de Limelette",
+    "description": "Description",
+    "descriptionPlaceholder": "Détails supplémentaires sur votre mariage"
+  },
+  "details": {
+    "overview": "Aperçu",
+    "guests": "Invités",
+    "settings": "Paramètres",
+    "date": "Date",
+    "location": "Lieu",
+    "guestCount": "Nombre d'invités"
+  },
+  "actions": {
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir",
+    "manageGuests": "Gérer les invités"
+  },
+  "deleteConfirm": {
+    "title": "Supprimer le mariage?",
+    "message": "Êtes-vous sûr de vouloir supprimer ce mariage? Cette action ne peut pas être annulée.",
+    "confirm": "Supprimer",
+    "cancel": "Annuler"
+  },
+  "validation": {
+    "nameRequired": "Le nom est requis",
+    "dateRequired": "La date est requise",
+    "locationRequired": "Le lieu est requis"
+  }
+}

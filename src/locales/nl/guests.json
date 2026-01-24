@@ -1,0 +1,40 @@
+{
+  "title": "Gasten",
+  "addGuest": "Gast toevoegen",
+  "noGuests": "Nog geen gasten",
+  "noGuestsDescription": "Voeg uw eerste gast toe aan de gastenlijst",
+  "totalGuests": "Totaal aantal gasten",
+  "attending": "Komt",
+  "declined": "Komt niet",
+  "pending": "In afwachting",
+  "form": {
+    "name": "Naam",
+    "namePlaceholder": "Voor- en achternaam",
+    "email": "E-mailadres",
+    "emailPlaceholder": "gast@example.com",
+    "phone": "Telefoonnummer",
+    "phonePlaceholder": "+32 123 45 67 89",
+    "plusOne": "Plus één",
+    "dietaryRestrictions": "Dieetwensen",
+    "notes": "Notities"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "attending": "Ik kom",
+    "notAttending": "Ik kom niet",
+    "submit": "RSVP versturen",
+    "thankyou": "Bedankt voor uw RSVP!",
+    "notFound": "Uitnodiging niet gevonden"
+  },
+  "actions": {
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "sendInvite": "Uitnodiging versturen"
+  },
+  "deleteConfirm": {
+    "title": "Gast verwijderen?",
+    "message": "Weet u zeker dat u deze gast wilt verwijderen?",
+    "confirm": "Verwijderen",
+    "cancel": "Annuleren"
+  }
+}

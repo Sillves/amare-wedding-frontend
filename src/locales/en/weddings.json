@@ -1,0 +1,43 @@
+{
+  "title": "Weddings",
+  "myWeddings": "My weddings",
+  "createWedding": "Create wedding",
+  "createWeddingDescription": "Fill in the details to create a new wedding",
+  "createError": "An error occurred while creating the wedding",
+  "noWeddings": "You don't have any weddings yet",
+  "noWeddingsDescription": "Create your first wedding to get started",
+  "form": {
+    "name": "Wedding name",
+    "namePlaceholder": "E.g. Emma & Liam",
+    "date": "Date",
+    "location": "Location",
+    "locationPlaceholder": "E.g. Château de Limelette",
+    "description": "Description",
+    "descriptionPlaceholder": "Additional details about your wedding"
+  },
+  "details": {
+    "overview": "Overview",
+    "guests": "Guests",
+    "settings": "Settings",
+    "date": "Date",
+    "location": "Location",
+    "guestCount": "Guest count"
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "manageGuests": "Manage guests"
+  },
+  "deleteConfirm": {
+    "title": "Delete wedding?",
+    "message": "Are you sure you want to delete this wedding? This action cannot be undone.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "dateRequired": "Date is required",
+    "locationRequired": "Location is required"
+  }
+}

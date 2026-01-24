@@ -1,0 +1,23 @@
+{
+  "appName": "Amare.Wedding",
+  "tagline": "Your wedding, perfectly planned",
+  "language": "Language",
+  "loading": "Loading...",
+  "error": "An error occurred",
+  "success": "Success!",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "add": "Add",
+  "create": "Create",
+  "back": "Back",
+  "next": "Next",
+  "submit": "Submit",
+  "search": "Search",
+  "filter": "Filter",
+  "close": "Close",
+  "confirm": "Confirm",
+  "yes": "Yes",
+  "no": "No"
+}

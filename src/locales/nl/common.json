@@ -1,0 +1,23 @@
+{
+  "appName": "Amare.Wedding",
+  "tagline": "Uw bruiloft, perfect gepland",
+  "language": "Taal",
+  "loading": "Laden...",
+  "error": "Er is een fout opgetreden",
+  "success": "Gelukt!",
+  "cancel": "Annuleren",
+  "save": "Opslaan",
+  "delete": "Verwijderen",
+  "edit": "Bewerken",
+  "add": "Toevoegen",
+  "create": "Aanmaken",
+  "back": "Terug",
+  "next": "Volgende",
+  "submit": "Versturen",
+  "search": "Zoeken",
+  "filter": "Filteren",
+  "close": "Sluiten",
+  "confirm": "Bevestigen",
+  "yes": "Ja",
+  "no": "Nee"
+}
