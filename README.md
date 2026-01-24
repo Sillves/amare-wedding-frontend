@@ -95,17 +95,63 @@ Volledige uitleg: zie [SETUP.md](./SETUP.md)
 
 ---
 
+## 🤖 TypeScript Type Generatie (Fullstack Dev)
+
+Dit project gebruikt **automatische type generatie** van de OpenAPI specificatie. Geen handmatig copy-pasten meer!
+
+### Voor Fullstack Developers
+
+1. **Maak backend wijzigingen** in ASP.NET Core
+2. **Run backend** (F5 in Rider/Visual Studio)
+3. **Sync types** in frontend:
+   ```bash
+   npm run sync-types
+   ```
+4. **Done!** Alle API types zijn nu up-to-date 🎉
+
+De `sync-types` command doet automatisch:
+- Haalt OpenAPI spec van je draaiende backend
+- Genereert TypeScript types
+- Update alle API type definities
+
+**Workflow:**
+```bash
+# Backend wijziging maken → Backend runnen → Sync types
+npm run sync-types
+
+# Of stap voor stap:
+npm run fetch-openapi      # Haal van http://localhost:5072/swagger/v1/swagger.json
+npm run generate-types     # Genereer types
+```
+
+**Configuratie** in `.env.local`:
+```env
+BACKEND_URL=http://localhost:5072                # Backend URL
+OPENAPI_ENDPOINT=/swagger/v1/swagger.json        # Swagger endpoint (optioneel)
+```
+
+**Zie [TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md) voor volledige documentatie.**
+
+---
+
 ## 📖 Documentatie
 
-Volledige setup en development guide: **[SETUP.md](./SETUP.md)**
+- **[SETUP.md](./SETUP.md)** - Volledige setup en development guide
+- **[TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md)** - TypeScript & OpenAPI automatisering
 
-Inclusief:
+**SETUP.md** inclusief:
 - Folder structuur uitleg
 - Hoe nieuwe features toe te voegen
 - React Query & Zustand usage
 - shadcn/ui component toevoegen
 - i18n translations
 - Tips voor backend developers
+
+**TYPESCRIPT_SETUP.md** inclusief:
+- Automatische type generatie workflow
+- OpenAPI integratie
+- Troubleshooting
+- Best practices
 
 ---
 
@@ -128,10 +174,15 @@ API Endpoints:
 ### Available Scripts
 
 ```bash
-npm run dev      # Start dev server
-npm run build    # Build voor productie
-npm run preview  # Preview productie build
-npm run lint     # Run ESLint
+npm run dev              # Start dev server
+npm run build            # Build voor productie
+npm run preview          # Preview productie build
+npm run lint             # Run ESLint
+
+# TypeScript type generatie (fullstack workflow)
+npm run sync-types       # Haal OpenAPI spec + genereer types (aanbevolen!)
+npm run fetch-openapi    # Haal OpenAPI spec van backend
+npm run generate-types   # Genereer TypeScript types van openapi.json
 ```
 
 ### Environment Variables

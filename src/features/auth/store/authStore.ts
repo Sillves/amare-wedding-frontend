@@ -2,6 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { User } from '../types';
 
+/**
+ * Authentication state interface
+ * Manages user authentication state and token storage
+ */
 interface AuthState {
   user: User | null;
   token: string | null;
@@ -10,27 +14,41 @@ interface AuthState {
   logout: () => void;
 }
 
+/**
+ * Zustand store for managing authentication state
+ * Persisted to localStorage for session persistence
+ */
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
       token: null,
       isAuthenticated: false,
-      setAuth: (user, token) =>
+      setAuth: (user: User, token: string) => {
+        console.log('[AuthStore] setAuth called with:', {
+          userId: user.id,
+          userEmail: user.email,
+          userName: `${user.firstName} ${user.lastName}`,
+          tokenLength: token.length,
+          tokenPreview: `${token.substring(0, 10)}...`,
+        });
         set({
           user,
           token,
           isAuthenticated: true,
-        }),
-      logout: () =>
+        });
+      },
+      logout: () => {
+        console.log('[AuthStore] logout called');
         set({
           user: null,
           token: null,
           isAuthenticated: false,
-        }),
+        });
+      },
     }),
     {
-      name: 'auth-storage', // LocalStorage key
+      name: 'auth-storage',
     }
   )
 );

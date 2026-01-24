@@ -1,21 +1,64 @@
-export interface User {
-  email: string;
-  name: string;
-}
+import type { components } from '@/types/api';
 
+/**
+ * Auto-generated types from OpenAPI spec
+ * These are imported from the generated api.ts file
+ */
+
+/**
+ * Login request payload - Auto-generated from OpenAPI
+ * Backend allows nullable fields but we enforce them client-side
+ */
+export type LoginRequestDto = components['schemas']['LoginRequest'];
+
+/**
+ * Login request with required fields enforced
+ */
 export interface LoginRequest {
   email: string;
   password: string;
 }
 
+/**
+ * Registration request payload - Auto-generated from OpenAPI
+ * Backend allows nullable fields but we enforce them client-side
+ */
+export type RegisterRequestDto = components['schemas']['RegisterRequest'];
+
+/**
+ * Registration request with required fields enforced
+ */
 export interface RegisterRequest {
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
   password: string;
 }
 
-export interface AuthResponse {
-  token: string;
-  user: User;
+/**
+ * Authentication response from the API - Auto-generated from OpenAPI
+ * Note: Backend renamed AuthResponse to AuthResult and removed userId
+ */
+export type AuthResult = components['schemas']['AuthResult'];
+
+/**
+ * User data stored in the application
+ * Simplified client-side representation
+ */
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+/**
+ * Type guard to check if auth result is successful
+ * Narrows the type to ensure token is a string
+ * Note: userId is no longer returned by the backend
+ */
+export function isSuccessfulAuthResult(
+  response: AuthResult
+): response is AuthResult & { token: string } {
+  return Boolean(response.success && response.token);
 }
