@@ -1,8 +1,8 @@
 # Amare.Wedding - Frontend
 
-Moderne React applicatie voor bruiloft planning, gebouwd met TypeScript, React Query, Zustand, en Tailwind CSS.
+Modern React application for wedding planning, built with TypeScript, React Query, Zustand, and Tailwind CSS.
 
-**"Amare"** (Ah-mah-re) is Italiaans voor "te liefhebben" - omdat bruiloft planning draait om het vieren van liefde.
+**"Amare"** (Ah-mah-re) is Italian for "to love" - because wedding planning is all about celebrating love.
 
 ---
 
@@ -14,7 +14,7 @@ npm install
 ```
 
 ### 2. Configure environment
-Kopieer `.env.example` naar `.env` en pas aan indien nodig:
+Copy `.env.example` to `.env` and adjust if needed:
 ```env
 VITE_API_URL=https://amare.wedding/api
 ```
@@ -24,9 +24,9 @@ VITE_API_URL=https://amare.wedding/api
 npm run dev
 ```
 
-Bezoek [http://localhost:5173](http://localhost:5173)
+Visit [http://localhost:5173](http://localhost:5173)
 
-### 4. Build voor productie
+### 4. Build for production
 ```bash
 npm run build
 ```
@@ -57,99 +57,99 @@ npm run build
 
 ### i18n
 - **react-i18next** - Internationalization
-- Ondersteunt: **Nederlands**, **Engels**, **Frans**
+- Supports: **Dutch**, **English**, **French**
 
 ---
 
-## 📁 Project Structuur
+## 📁 Project Structure
 
 ```
 src/
 ├── features/        # Feature modules (auth, weddings, guests)
 ├── pages/          # Page components
 ├── components/ui/  # shadcn/ui components
-├── shared/         # Gedeelde componenten en utilities
-├── locales/        # Vertalingen (NL, EN, FR)
-└── lib/            # Configuraties (axios, react-query, router, i18n)
+├── shared/         # Shared components and utilities
+├── locales/        # Translations (NL, EN, FR)
+└── lib/            # Configurations (axios, react-query, router, i18n)
 ```
 
-Volledige uitleg: zie [SETUP.md](./SETUP.md)
+Full explanation: see [SETUP.md](./SETUP.md)
 
 ---
 
 ## 🎯 Features
 
-### ✅ Geïmplementeerd
-- [x] Authenticatie (Login/Register)
+### ✅ Implemented
+- [x] Authentication (Login/Register)
 - [x] Protected routes
 - [x] Multi-language support (NL/EN/FR)
 - [x] Token-based authentication
 - [x] Responsive design
 - [x] Dark mode ready
 
-### 🚧 In Ontwikkeling
+### 🚧 In Development
 - [ ] Weddings CRUD
 - [ ] Guests management
-- [ ] RSVP functionaliteit
+- [ ] RSVP functionality
 - [ ] Dashboard statistics
 
 ---
 
-## 🤖 TypeScript Type Generatie (Fullstack Dev)
+## 🤖 TypeScript Type Generation (Fullstack Dev)
 
-Dit project gebruikt **automatische type generatie** van de OpenAPI specificatie. Geen handmatig copy-pasten meer!
+This project uses **automatic type generation** from the OpenAPI specification. No more manual copy-pasting!
 
-### Voor Fullstack Developers
+### For Fullstack Developers
 
-1. **Maak backend wijzigingen** in ASP.NET Core
+1. **Make backend changes** in ASP.NET Core
 2. **Run backend** (F5 in Rider/Visual Studio)
 3. **Sync types** in frontend:
    ```bash
    npm run sync-types
    ```
-4. **Done!** Alle API types zijn nu up-to-date 🎉
+4. **Done!** All API types are now up-to-date 🎉
 
-De `sync-types` command doet automatisch:
-- Haalt OpenAPI spec van je draaiende backend
-- Genereert TypeScript types
-- Update alle API type definities
+The `sync-types` command automatically:
+- Fetches OpenAPI spec from your running backend
+- Generates TypeScript types
+- Updates all API type definitions
 
 **Workflow:**
 ```bash
-# Backend wijziging maken → Backend runnen → Sync types
+# Make backend change → Run backend → Sync types
 npm run sync-types
 
-# Of stap voor stap:
-npm run fetch-openapi      # Haal van http://localhost:5072/swagger/v1/swagger.json
-npm run generate-types     # Genereer types
+# Or step by step:
+npm run fetch-openapi      # Fetch from http://localhost:5072/swagger/v1/swagger.json
+npm run generate-types     # Generate types
 ```
 
-**Configuratie** in `.env.local`:
+**Configuration** in `.env.local`:
 ```env
 BACKEND_URL=http://localhost:5072                # Backend URL
-OPENAPI_ENDPOINT=/swagger/v1/swagger.json        # Swagger endpoint (optioneel)
+OPENAPI_ENDPOINT=/swagger/v1/swagger.json        # Swagger endpoint (optional)
 ```
 
-**Zie [TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md) voor volledige documentatie.**
+**See [TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md) for complete documentation.**
 
 ---
 
-## 📖 Documentatie
+## 📖 Documentation
 
-- **[SETUP.md](./SETUP.md)** - Volledige setup en development guide
-- **[TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md)** - TypeScript & OpenAPI automatisering
+- **[SETUP.md](./SETUP.md)** - Complete setup and development guide
+- **[TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md)** - TypeScript & OpenAPI automation
 
-**SETUP.md** inclusief:
-- Folder structuur uitleg
-- Hoe nieuwe features toe te voegen
+**SETUP.md** includes:
+- Folder structure explanation
+- How to add new features
 - React Query & Zustand usage
-- shadcn/ui component toevoegen
+- Adding shadcn/ui components
 - i18n translations
-- Tips voor backend developers
+- Tips for backend developers
 
-**TYPESCRIPT_SETUP.md** inclusief:
-- Automatische type generatie workflow
-- OpenAPI integratie
+**TYPESCRIPT_SETUP.md** includes:
+- Automatic type generation workflow
+- OpenAPI integration
 - Troubleshooting
 - Best practices
 
@@ -157,7 +157,7 @@ OPENAPI_ENDPOINT=/swagger/v1/swagger.json        # Swagger endpoint (optioneel)
 
 ## 🔗 API
 
-Backend API documentatie: Zie `claude.md` in de API repository
+Backend API documentation: See `claude.md` in the API repository
 
 API Endpoints:
 - `POST /api/auth/login` - Login
@@ -175,14 +175,14 @@ API Endpoints:
 
 ```bash
 npm run dev              # Start dev server
-npm run build            # Build voor productie
-npm run preview          # Preview productie build
+npm run build            # Build for production
+npm run preview          # Preview production build
 npm run lint             # Run ESLint
 
-# TypeScript type generatie (fullstack workflow)
-npm run sync-types       # Haal OpenAPI spec + genereer types (aanbevolen!)
-npm run fetch-openapi    # Haal OpenAPI spec van backend
-npm run generate-types   # Genereer TypeScript types van openapi.json
+# TypeScript type generation (fullstack workflow)
+npm run sync-types       # Fetch OpenAPI spec + generate types (recommended!)
+npm run fetch-openapi    # Fetch OpenAPI spec from backend
+npm run generate-types   # Generate TypeScript types from openapi.json
 ```
 
 ### Environment Variables
@@ -191,7 +191,7 @@ npm run generate-types   # Genereer TypeScript types van openapi.json
 VITE_API_URL=https://amare.wedding/api
 ```
 
-Voor lokale development:
+For local development:
 ```env
 VITE_API_URL=http://localhost:8080/api
 ```
@@ -200,30 +200,30 @@ VITE_API_URL=http://localhost:8080/api
 
 ## 🎨 UI Components
 
-Gebruik shadcn/ui components:
+Use shadcn/ui components:
 
 ```bash
-# Voeg nieuwe component toe
+# Add new component
 npx shadcn@latest add dialog
 npx shadcn@latest add dropdown-menu
 ```
 
-Beschikbare components: https://ui.shadcn.com/docs/components
+Available components: https://ui.shadcn.com/docs/components
 
 ---
 
 ## 🌍 Internationalization
 
-Vertalingen beheren in `src/locales/`:
+Manage translations in `src/locales/`:
 
 ```
 locales/
-├── nl/  # Nederlands (default)
-├── en/  # Engels
-└── fr/  # Frans
+├── nl/  # Dutch (default)
+├── en/  # English
+└── fr/  # French
 ```
 
-Gebruik in components:
+Use in components:
 ```tsx
 import { useTranslation } from 'react-i18next';
 
@@ -237,13 +237,13 @@ function MyComponent() {
 
 ## 🐛 Troubleshooting
 
-Zie [SETUP.md](./SETUP.md#-troubleshooting) voor veelvoorkomende problemen en oplossingen.
+See [SETUP.md](./SETUP.md#-troubleshooting) for common problems and solutions.
 
 ---
 
 ## 📄 License
 
-MIT License - Zie LICENSE bestand voor details.
+MIT License - See LICENSE file for details.
 
 ---
 
