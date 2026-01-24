@@ -5,6 +5,15 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'Dockerfile'
+      - '.github/workflows/docker-build-push.yml'
+      - '!**.md'
   workflow_dispatch:
 
 env:
