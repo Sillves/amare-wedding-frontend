@@ -2,6 +2,7 @@
   "title": "Weddings",
   "myWeddings": "My weddings",
   "createWedding": "Create wedding",
+  "selectWedding": "Select a wedding",
   "createWeddingDescription": "Fill in the details to create a new wedding",
   "createError": "An error occurred while creating the wedding",
   "noWeddings": "You don't have any weddings yet",

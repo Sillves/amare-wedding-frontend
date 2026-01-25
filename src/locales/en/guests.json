@@ -1,39 +1,75 @@
 {
   "title": "Guests",
-  "addGuest": "Add guest",
+  "addGuest": "Add Guest",
+  "addGuestDescription": "Add a new guest to the guest list",
+  "editGuestDescription": "Edit this guest's details",
+  "manageDescription": "Manage the guest list for your wedding",
+  "guestList": "Guest List",
+  "guestListDescription": "All guests for {{wedding}}",
   "noGuests": "No guests yet",
   "noGuestsDescription": "Add your first guest to the guest list",
-  "totalGuests": "Total guests",
+  "totalGuests": "Total Guests",
   "attending": "Attending",
   "declined": "Declined",
   "pending": "Pending",
+  "maybe": "Maybe",
   "form": {
     "name": "Name",
     "namePlaceholder": "First and last name",
     "email": "Email",
     "emailPlaceholder": "guest@example.com",
-    "phone": "Phone number",
-    "phonePlaceholder": "+32 123 45 67 89",
-    "plusOne": "Plus one",
-    "dietaryRestrictions": "Dietary restrictions",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+1 234 567 8900",
+    "plusOne": "Plus One",
+    "dietaryRestrictions": "Dietary Restrictions",
     "notes": "Notes"
   },
   "rsvp": {
     "title": "RSVP",
-    "attending": "I will attend",
-    "notAttending": "I cannot attend",
-    "submit": "Send RSVP",
+    "defaultTitle": "Wedding Invitation",
+    "description": "Let us know if you can join us on our special day",
+    "statusQuestion": "Will you be attending?",
+    "attending": "I'm attending",
+    "notAttending": "I'm not attending",
+    "submit": "Submit RSVP",
+    "submitting": "Submitting...",
     "thankyou": "Thank you for your RSVP!",
-    "notFound": "Invitation not found"
+    "notFound": "Invitation not found",
+    "error": "Something went wrong. Please try again.",
+    "guestNotFound": "You are not on the guest list for this wedding. Please contact the couple if you believe this is an error.",
+    "confirmAttending": "We look forward to seeing you!",
+    "confirmDeclined": "We'll miss you, but we understand.",
+    "confirmMaybe": "We hope to see you! Let us know when you're sure.",
+    "emailConfirmation": "You will receive a confirmation email at the provided address."
+  },
+  "rsvpStatus": {
+    "pending": "Pending",
+    "attending": "Attending",
+    "declined": "Declined",
+    "maybe": "Maybe"
+  },
+  "stats": {
+    "allGuests": "all guests",
+    "confirmed": "confirmed",
+    "declined": "declined",
+    "pending": "pending",
+    "maybe": "maybe"
   },
   "actions": {
+    "title": "Actions",
     "edit": "Edit",
     "delete": "Delete",
-    "sendInvite": "Send invitation"
+    "sendInvite": "Send Invitation",
+    "cancel": "Cancel",
+    "create": "Add",
+    "creating": "Adding...",
+    "save": "Save",
+    "saving": "Saving...",
+    "deleting": "Deleting..."
   },
   "deleteConfirm": {
-    "title": "Delete guest?",
-    "message": "Are you sure you want to delete this guest?",
+    "title": "Delete Guest?",
+    "message": "Are you sure you want to delete {{name}}?",
     "confirm": "Delete",
     "cancel": "Cancel"
   }

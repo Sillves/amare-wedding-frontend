@@ -1,39 +1,75 @@
 {
   "title": "Invités",
   "addGuest": "Ajouter un invité",
-  "noGuests": "Pas encore d'invités",
+  "addGuestDescription": "Ajouter un nouvel invité à la liste",
+  "editGuestDescription": "Modifier les détails de cet invité",
+  "manageDescription": "Gérer la liste des invités pour votre mariage",
+  "guestList": "Liste des invités",
+  "guestListDescription": "Tous les invités pour {{wedding}}",
+  "noGuests": "Aucun invité",
   "noGuestsDescription": "Ajoutez votre premier invité à la liste",
   "totalGuests": "Total des invités",
   "attending": "Présent",
-  "declined": "Absent",
+  "declined": "Décliné",
   "pending": "En attente",
+  "maybe": "Peut-être",
   "form": {
     "name": "Nom",
     "namePlaceholder": "Prénom et nom",
-    "email": "E-mail",
+    "email": "Email",
     "emailPlaceholder": "invite@example.com",
-    "phone": "Numéro de téléphone",
-    "phonePlaceholder": "+32 123 45 67 89",
+    "phone": "Téléphone",
+    "phonePlaceholder": "+33 1 23 45 67 89",
     "plusOne": "Plus un",
     "dietaryRestrictions": "Restrictions alimentaires",
     "notes": "Notes"
   },
   "rsvp": {
     "title": "RSVP",
+    "defaultTitle": "Invitation de mariage",
+    "description": "Faites-nous savoir si vous pouvez nous rejoindre pour notre jour spécial",
+    "statusQuestion": "Serez-vous présent?",
     "attending": "Je serai présent",
-    "notAttending": "Je ne pourrai pas venir",
+    "notAttending": "Je ne serai pas présent",
     "submit": "Envoyer RSVP",
+    "submitting": "Envoi en cours...",
     "thankyou": "Merci pour votre RSVP!",
-    "notFound": "Invitation non trouvée"
+    "notFound": "Invitation non trouvée",
+    "error": "Une erreur s'est produite. Veuillez réessayer.",
+    "guestNotFound": "Vous n'êtes pas sur la liste des invités pour ce mariage. Veuillez contacter les mariés si vous pensez qu'il s'agit d'une erreur.",
+    "confirmAttending": "Nous avons hâte de vous voir!",
+    "confirmDeclined": "Vous allez nous manquer, mais nous comprenons.",
+    "confirmMaybe": "Nous espérons vous voir! Faites-le nous savoir quand vous êtes sûr.",
+    "emailConfirmation": "Vous recevrez un email de confirmation à l'adresse fournie."
+  },
+  "rsvpStatus": {
+    "pending": "En attente",
+    "attending": "Présent",
+    "declined": "Décliné",
+    "maybe": "Peut-être"
+  },
+  "stats": {
+    "allGuests": "tous les invités",
+    "confirmed": "confirmé",
+    "declined": "décliné",
+    "pending": "en attente",
+    "maybe": "peut-être"
   },
   "actions": {
+    "title": "Actions",
     "edit": "Modifier",
     "delete": "Supprimer",
-    "sendInvite": "Envoyer l'invitation"
+    "sendInvite": "Envoyer l'invitation",
+    "cancel": "Annuler",
+    "create": "Ajouter",
+    "creating": "Ajout...",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "deleting": "Suppression..."
   },
   "deleteConfirm": {
     "title": "Supprimer l'invité?",
-    "message": "Êtes-vous sûr de vouloir supprimer cet invité?",
+    "message": "Êtes-vous sûr de vouloir supprimer {{name}}?",
     "confirm": "Supprimer",
     "cancel": "Annuler"
   }

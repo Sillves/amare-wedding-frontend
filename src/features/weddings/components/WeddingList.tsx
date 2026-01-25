@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useWeddings } from '../hooks/useWeddings';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export function WeddingList() {
   const { t } = useTranslation('weddings');
+  const navigate = useNavigate();
   const { data: weddings, isLoading, error } = useWeddings();
 
   if (isLoading) {
@@ -64,7 +66,12 @@ export function WeddingList() {
               <Button variant="outline" size="sm" className="flex-1">
                 {t('actions.view')}
               </Button>
-              <Button variant="outline" size="sm" className="flex-1">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={() => navigate(`/guests?weddingId=${wedding.id}`)}
+              >
                 {t('actions.manageGuests')}
               </Button>
             </div>

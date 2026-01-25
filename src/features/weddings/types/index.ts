@@ -72,3 +72,9 @@ export type WeddingUserDto = components['schemas']['WeddingUserDto'];
  * Wedding User Role enum - Auto-generated from OpenAPI
  */
 export type WeddingUserRole = components['schemas']['WeddingUserRole'];
+
+/**
+ * Public Wedding information - Auto-generated from OpenAPI
+ * Contains only publicly accessible wedding details (no authentication required)
+ */
+export type WeddingPublicDto = components['schemas']['WeddingPublicDto'];

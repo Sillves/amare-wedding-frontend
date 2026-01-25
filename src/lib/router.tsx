@@ -3,6 +3,8 @@ import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { GuestsPage } from '@/pages/GuestsPage';
+import { RsvpPage } from '@/pages/RsvpPage';
 import { ProtectedRoute } from '@/shared/components/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -19,10 +21,22 @@ export const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
+    path: '/rsvp/:weddingId',
+    element: <RsvpPage />,
+  },
+  {
     path: '/dashboard',
     element: (
       <ProtectedRoute>
         <DashboardPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/guests',
+    element: (
+      <ProtectedRoute>
+        <GuestsPage />
       </ProtectedRoute>
     ),
   },

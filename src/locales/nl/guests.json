@@ -1,12 +1,18 @@
 {
   "title": "Gasten",
   "addGuest": "Gast toevoegen",
+  "addGuestDescription": "Voeg een nieuwe gast toe aan de gastenlijst",
+  "editGuestDescription": "Wijzig de gegevens van deze gast",
+  "manageDescription": "Beheer de gastenlijst voor uw bruiloft",
+  "guestList": "Gastenlijst",
+  "guestListDescription": "Alle gasten voor {{wedding}}",
   "noGuests": "Nog geen gasten",
   "noGuestsDescription": "Voeg uw eerste gast toe aan de gastenlijst",
   "totalGuests": "Totaal aantal gasten",
   "attending": "Komt",
   "declined": "Komt niet",
   "pending": "In afwachting",
+  "maybe": "Misschien",
   "form": {
     "name": "Naam",
     "namePlaceholder": "Voor- en achternaam",
@@ -20,20 +26,50 @@
   },
   "rsvp": {
     "title": "RSVP",
+    "defaultTitle": "Huwelijksuitnodiging",
+    "description": "Laat ons weten of u erbij kunt zijn op onze speciale dag",
+    "statusQuestion": "Kunt u aanwezig zijn?",
     "attending": "Ik kom",
     "notAttending": "Ik kom niet",
     "submit": "RSVP versturen",
+    "submitting": "Versturen...",
     "thankyou": "Bedankt voor uw RSVP!",
-    "notFound": "Uitnodiging niet gevonden"
+    "notFound": "Uitnodiging niet gevonden",
+    "error": "Er is iets misgegaan. Probeer het opnieuw.",
+    "guestNotFound": "U staat niet op de gastenlijst voor deze bruiloft. Neem contact op met het bruidspaar als u denkt dat dit een fout is.",
+    "confirmAttending": "We verheugen ons erop u te zien!",
+    "confirmDeclined": "We zullen u missen, maar begrijpen het.",
+    "confirmMaybe": "We hopen u te zien! Laat het ons weten wanneer u zeker bent.",
+    "emailConfirmation": "U ontvangt een bevestigingsmail op het opgegeven e-mailadres."
+  },
+  "rsvpStatus": {
+    "pending": "In afwachting",
+    "attending": "Komt",
+    "declined": "Komt niet",
+    "maybe": "Misschien"
+  },
+  "stats": {
+    "allGuests": "alle gasten",
+    "confirmed": "bevestigd",
+    "declined": "geweigerd",
+    "pending": "in afwachting",
+    "maybe": "misschien"
   },
   "actions": {
+    "title": "Acties",
     "edit": "Bewerken",
     "delete": "Verwijderen",
-    "sendInvite": "Uitnodiging versturen"
+    "sendInvite": "Uitnodiging versturen",
+    "cancel": "Annuleren",
+    "create": "Toevoegen",
+    "creating": "Toevoegen...",
+    "save": "Opslaan",
+    "saving": "Opslaan...",
+    "deleting": "Verwijderen..."
   },
   "deleteConfirm": {
     "title": "Gast verwijderen?",
-    "message": "Weet u zeker dat u deze gast wilt verwijderen?",
+    "message": "Weet u zeker dat u {{name}} wilt verwijderen?",
     "confirm": "Verwijderen",
     "cancel": "Annuleren"
   }

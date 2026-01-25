@@ -135,6 +135,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/weddings/{idOrSlug}/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetWeddingPublicInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/weddings/{id}/rsvp": {
         parameters: {
             query?: never;
@@ -331,6 +347,15 @@ export interface components {
             updatedAt?: string;
             /** Format: uuid */
             userId?: string;
+        };
+        WeddingPublicDto: {
+            /** Format: uuid */
+            id?: string;
+            title?: string | null;
+            slug?: string | null;
+            /** Format: date-time */
+            date?: string;
+            location?: string | null;
         };
         WeddingUser: {
             /** Format: uuid */
@@ -745,6 +770,42 @@ export interface operations {
             };
             /** @description Not Found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetWeddingPublicInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                idOrSlug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingPublicDto"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Too Many Requests */
+            429: {
                 headers: {
                     [name: string]: unknown;
                 };
