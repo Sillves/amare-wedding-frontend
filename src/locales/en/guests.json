@@ -65,12 +65,23 @@
     "creating": "Adding...",
     "save": "Save",
     "saving": "Saving...",
-    "deleting": "Deleting..."
+    "deleting": "Deleting...",
+    "sending": "Sending..."
   },
   "deleteConfirm": {
     "title": "Delete Guest?",
     "message": "Are you sure you want to delete {{name}}?",
     "confirm": "Delete",
     "cancel": "Cancel"
+  },
+  "sendInvitationConfirm": {
+    "title": "Send Invitation?",
+    "message": "Send invitation email to {{name}} at {{email}}?",
+    "confirm": "Send",
+    "cancel": "Cancel",
+    "success": "Invitation sent!",
+    "successMessage": "Invitation email has been sent to {{email}}",
+    "error": "Failed to send invitation",
+    "errorMessage": "An error occurred while sending the invitation. Please try again."
   }
 }

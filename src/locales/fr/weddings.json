@@ -28,7 +28,8 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "view": "Voir",
-    "manageGuests": "Gérer les invités"
+    "manageGuests": "Gérer les invités",
+    "manageEvents": "Gérer les événements"
   },
   "deleteConfirm": {
     "title": "Supprimer le mariage?",

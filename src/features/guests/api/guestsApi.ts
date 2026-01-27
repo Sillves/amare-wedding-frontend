@@ -70,4 +70,14 @@ export const guestsApi = {
   delete: async (guestId: string): Promise<void> => {
     await apiClient.delete(`/guests/${guestId}`);
   },
+
+  /**
+   * Send invitation email to a single guest
+   * @param weddingId - Wedding UUID
+   * @param guestId - Guest UUID
+   * @returns Promise<void>
+   */
+  sendInvitation: async (weddingId: string, guestId: string): Promise<void> => {
+    await apiClient.post(`/weddings/${weddingId}/guests/${guestId}/send-invitation`);
+  },
 };

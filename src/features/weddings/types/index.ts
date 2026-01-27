@@ -78,3 +78,21 @@ export type WeddingUserRole = components['schemas']['WeddingUserRole'];
  * Contains only publicly accessible wedding details (no authentication required)
  */
 export type WeddingPublicDto = components['schemas']['WeddingPublicDto'];
+
+/**
+ * Event data transfer object - Extended from OpenAPI
+ * Note: The API now returns guestDtos but the OpenAPI spec doesn't include it yet
+ */
+export type EventDto = components['schemas']['EventDto'] & {
+  guestDtos?: GuestDto[];
+};
+
+/**
+ * Request payload for creating an event - Auto-generated from OpenAPI
+ */
+export type CreateEventRequest = components['schemas']['CreateEventRequestDto'];
+
+/**
+ * Request payload for updating an event - Auto-generated from OpenAPI
+ */
+export type UpdateEventRequest = components['schemas']['UpdateEventRequestDto'];

@@ -1,0 +1,62 @@
+{
+  "title": "Événements",
+  "addEvent": "Ajouter un événement",
+  "addEventDescription": "Créer un nouvel événement pour votre mariage",
+  "editEventDescription": "Modifier les détails de cet événement",
+  "manageDescription": "Gérer les événements de votre mariage",
+  "eventList": "Liste des événements",
+  "eventListDescription": "Tous les événements pour {{wedding}}",
+  "noEvents": "Aucun événement",
+  "noEventsDescription": "Ajoutez votre premier événement à la chronologie",
+  "totalEvents": "Total des événements",
+  "form": {
+    "name": "Nom de l'événement",
+    "namePlaceholder": "par ex. Cérémonie, Réception, Dîner",
+    "startDate": "Date et heure de début",
+    "endDate": "Date et heure de fin",
+    "location": "Lieu",
+    "locationPlaceholder": "Adresse du lieu",
+    "description": "Description",
+    "descriptionPlaceholder": "Code vestimentaire, parking, etc."
+  },
+  "actions": {
+    "title": "Actions",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "manageGuests": "Gérer les invités",
+    "cancel": "Annuler",
+    "create": "Ajouter",
+    "creating": "Ajout...",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "deleting": "Suppression...",
+    "addGuest": "Ajouter un invité",
+    "removeGuest": "Retirer l'invité"
+  },
+  "deleteConfirm": {
+    "title": "Supprimer l'événement?",
+    "message": "Êtes-vous sûr de vouloir supprimer {{name}}? Cela ne supprimera pas les invités, mais les retirera uniquement de cet événement.",
+    "confirm": "Supprimer",
+    "cancel": "Annuler"
+  },
+  "guestManagement": {
+    "title": "Gérer les invités pour {{event}}",
+    "description": "Sélectionnez les invités conviés à cet événement",
+    "assignedGuests": "Invités assignés ({{count}})",
+    "availableGuests": "Invités disponibles",
+    "noAssignedGuests": "Aucun invité n'est encore assigné à cet événement",
+    "noAvailableGuests": "Tous les invités sont déjà assignés à cet événement",
+    "searchGuests": "Rechercher des invités...",
+    "addSelected": "Ajouter la sélection ({{count}})",
+    "removeSelected": "Retirer la sélection ({{count}})",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner"
+  },
+  "stats": {
+    "totalGuests": "{{count}} invité",
+    "totalGuests_plural": "{{count}} invités",
+    "duration": "Durée",
+    "upcomingEvent": "À venir",
+    "pastEvent": "Passé"
+  }
+}

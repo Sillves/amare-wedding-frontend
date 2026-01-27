@@ -17,6 +17,7 @@ interface GuestTableProps {
   guests: GuestDto[];
   onEdit: (guest: GuestDto) => void;
   onDelete: (guest: GuestDto) => void;
+  onSendInvitation: (guest: GuestDto) => void;
 }
 
 /**
@@ -56,7 +57,7 @@ function getRsvpStatusKey(status: RsvpStatus): string {
   }
 }
 
-export function GuestTable({ guests, onEdit, onDelete }: GuestTableProps) {
+export function GuestTable({ guests, onEdit, onDelete, onSendInvitation }: GuestTableProps) {
   const { t } = useTranslation('guests');
   const [sortField, setSortField] = useState<'name' | 'email' | 'rsvpStatus'>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -138,6 +139,15 @@ export function GuestTable({ guests, onEdit, onDelete }: GuestTableProps) {
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onSendInvitation(guest)}
+                    title={t('actions.sendInvite')}
+                    disabled={!guest.email}
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"

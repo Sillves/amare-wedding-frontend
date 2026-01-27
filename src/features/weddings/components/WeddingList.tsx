@@ -62,18 +62,30 @@ export function WeddingList() {
                 {wedding.guestCount} {t('details.guests').toLowerCase()}
               </p>
             )}
-            <div className="flex gap-2 mt-4">
-              <Button variant="outline" size="sm" className="flex-1">
-                {t('actions.view')}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1"
-                onClick={() => navigate(`/guests?weddingId=${wedding.id}`)}
-              >
-                {t('actions.manageGuests')}
-              </Button>
+            <div className="flex flex-col gap-2 mt-4">
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" className="flex-1">
+                  {t('actions.view')}
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => navigate(`/guests?weddingId=${wedding.id}`)}
+                >
+                  {t('actions.manageGuests')}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => navigate(`/events?weddingId=${wedding.id}`)}
+                >
+                  {t('actions.manageEvents')}
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>

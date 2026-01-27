@@ -1,0 +1,62 @@
+{
+  "title": "Evenementen",
+  "addEvent": "Evenement toevoegen",
+  "addEventDescription": "Maak een nieuw evenement aan voor uw bruiloft",
+  "editEventDescription": "Wijzig de gegevens van dit evenement",
+  "manageDescription": "Beheer evenementen voor uw bruiloft",
+  "eventList": "Evenementenlijst",
+  "eventListDescription": "Alle evenementen voor {{wedding}}",
+  "noEvents": "Nog geen evenementen",
+  "noEventsDescription": "Voeg uw eerste evenement toe aan de tijdlijn",
+  "totalEvents": "Totaal aantal evenementen",
+  "form": {
+    "name": "Evenementnaam",
+    "namePlaceholder": "bijv. Ceremonie, Receptie, Diner",
+    "startDate": "Startdatum & tijd",
+    "endDate": "Einddatum & tijd",
+    "location": "Locatie",
+    "locationPlaceholder": "Adres van de locatie",
+    "description": "Beschrijving",
+    "descriptionPlaceholder": "Dresscode, parkeergelegenheid, etc."
+  },
+  "actions": {
+    "title": "Acties",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "manageGuests": "Gasten beheren",
+    "cancel": "Annuleren",
+    "create": "Toevoegen",
+    "creating": "Toevoegen...",
+    "save": "Opslaan",
+    "saving": "Opslaan...",
+    "deleting": "Verwijderen...",
+    "addGuest": "Gast toevoegen",
+    "removeGuest": "Gast verwijderen"
+  },
+  "deleteConfirm": {
+    "title": "Evenement verwijderen?",
+    "message": "Weet u zeker dat u {{name}} wilt verwijderen? Dit verwijdert de gasten niet, maar verwijdert ze alleen van dit evenement.",
+    "confirm": "Verwijderen",
+    "cancel": "Annuleren"
+  },
+  "guestManagement": {
+    "title": "Gasten beheren voor {{event}}",
+    "description": "Selecteer welke gasten uitgenodigd zijn voor dit evenement",
+    "assignedGuests": "Toegewezen gasten ({{count}})",
+    "availableGuests": "Beschikbare gasten",
+    "noAssignedGuests": "Nog geen gasten toegewezen aan dit evenement",
+    "noAvailableGuests": "Alle gasten zijn al toegewezen aan dit evenement",
+    "searchGuests": "Gasten zoeken...",
+    "addSelected": "Geselecteerde toevoegen ({{count}})",
+    "removeSelected": "Geselecteerde verwijderen ({{count}})",
+    "selectAll": "Alles selecteren",
+    "deselectAll": "Alles deselecteren"
+  },
+  "stats": {
+    "totalGuests": "{{count}} gast uitgenodigd",
+    "totalGuests_plural": "{{count}} gasten uitgenodigd",
+    "duration": "Duur",
+    "upcomingEvent": "Aankomend",
+    "pastEvent": "Afgelopen"
+  }
+}

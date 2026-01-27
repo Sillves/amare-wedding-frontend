@@ -1,0 +1,62 @@
+{
+  "title": "Events",
+  "addEvent": "Add Event",
+  "addEventDescription": "Create a new event for your wedding",
+  "editEventDescription": "Edit this event's details",
+  "manageDescription": "Manage events for your wedding",
+  "eventList": "Event List",
+  "eventListDescription": "All events for {{wedding}}",
+  "noEvents": "No events yet",
+  "noEventsDescription": "Add your first event to the timeline",
+  "totalEvents": "Total Events",
+  "form": {
+    "name": "Event Name",
+    "namePlaceholder": "e.g. Ceremony, Reception, Dinner",
+    "startDate": "Start Date & Time",
+    "endDate": "End Date & Time",
+    "location": "Location",
+    "locationPlaceholder": "Event venue address",
+    "description": "Description",
+    "descriptionPlaceholder": "Dress code, parking info, etc."
+  },
+  "actions": {
+    "title": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "manageGuests": "Manage Guests",
+    "cancel": "Cancel",
+    "create": "Add",
+    "creating": "Adding...",
+    "save": "Save",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "addGuest": "Add Guest",
+    "removeGuest": "Remove Guest"
+  },
+  "deleteConfirm": {
+    "title": "Delete Event?",
+    "message": "Are you sure you want to delete {{name}}? This will not delete the guests, only remove them from this event.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "guestManagement": {
+    "title": "Manage Guests for {{event}}",
+    "description": "Select which guests are invited to this event",
+    "assignedGuests": "Assigned Guests ({{count}})",
+    "availableGuests": "Available Guests",
+    "noAssignedGuests": "No guests assigned to this event yet",
+    "noAvailableGuests": "All guests are already assigned to this event",
+    "searchGuests": "Search guests...",
+    "addSelected": "Add Selected ({{count}})",
+    "removeSelected": "Remove Selected ({{count}})",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All"
+  },
+  "stats": {
+    "totalGuests": "{{count}} guest invited",
+    "totalGuests_plural": "{{count}} guests invited",
+    "duration": "Duration",
+    "upcomingEvent": "Upcoming",
+    "pastEvent": "Past"
+  }
+}
