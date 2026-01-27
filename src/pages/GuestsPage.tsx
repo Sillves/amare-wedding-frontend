@@ -18,6 +18,7 @@ import { GuestTable } from '@/features/guests/components/GuestTable';
 import { CreateGuestDialog } from '@/features/guests/components/CreateGuestDialog';
 import { EditGuestDialog } from '@/features/guests/components/EditGuestDialog';
 import { DeleteGuestDialog } from '@/features/guests/components/DeleteGuestDialog';
+import { SendInvitationDialog } from '@/features/guests/components/SendInvitationDialog';
 import type { GuestDto } from '@/features/weddings/types';
 
 export function GuestsPage() {
@@ -35,6 +36,7 @@ export function GuestsPage() {
 
   const [editingGuest, setEditingGuest] = useState<GuestDto | null>(null);
   const [deletingGuest, setDeletingGuest] = useState<GuestDto | null>(null);
+  const [sendingInvitationGuest, setSendingInvitationGuest] = useState<GuestDto | null>(null);
 
   // Calculate statistics
   const stats = useMemo(() => {
@@ -227,6 +229,7 @@ export function GuestsPage() {
                   guests={guests || []}
                   onEdit={setEditingGuest}
                   onDelete={setDeletingGuest}
+                  onSendInvitation={setSendingInvitationGuest}
                 />
               )}
             </CardContent>
@@ -246,6 +249,13 @@ export function GuestsPage() {
         guest={deletingGuest}
         open={!!deletingGuest}
         onOpenChange={(open) => !open && setDeletingGuest(null)}
+      />
+
+      {/* Send Invitation Dialog */}
+      <SendInvitationDialog
+        guest={sendingInvitationGuest}
+        open={!!sendingInvitationGuest}
+        onOpenChange={(open) => !open && setSendingInvitationGuest(null)}
       />
     </div>
   );

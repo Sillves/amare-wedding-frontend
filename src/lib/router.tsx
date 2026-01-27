@@ -4,6 +4,7 @@ import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { GuestsPage } from '@/pages/GuestsPage';
+import { EventsPage } from '@/pages/EventsPage';
 import { RsvpPage } from '@/pages/RsvpPage';
 import { ProtectedRoute } from '@/shared/components/ProtectedRoute';
 
@@ -37,6 +38,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <GuestsPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/events',
+    element: (
+      <ProtectedRoute>
+        <EventsPage />
       </ProtectedRoute>
     ),
   },

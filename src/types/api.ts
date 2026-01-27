@@ -36,6 +36,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/events/{eventId}/guests/{guestId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AddGuestToEvent"];
+        delete: operations["RemoveGuestFromEvent"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetEventsByWedding"];
+        put?: never;
+        post: operations["CreateEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/events/{eventId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetEvent"];
+        put: operations["UpdateEvent"];
+        post?: never;
+        delete: operations["DeleteEvent"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetEvents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/weddings/{weddingId}/guests": {
         parameters: {
             query?: never;
@@ -63,6 +127,38 @@ export interface paths {
         put: operations["UpdateGuest"];
         post?: never;
         delete: operations["DeleteGuest"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/guests/{guestId}/send-invitation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SendGuestInvitation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/guests/send-invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SendGuestInvitations"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -213,10 +309,20 @@ export interface components {
             message?: string | null;
             token?: string | null;
         };
+        CreateEventRequestDto: {
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string;
+            /** Format: date-time */
+            endDate?: string;
+            location?: string | null;
+            description?: string | null;
+        };
         CreateGuestRequestDto: {
             name?: string | null;
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
+            preferredLanguage?: string | null;
         };
         CreateWeddingRequestDto: {
             title?: string | null;
@@ -224,15 +330,50 @@ export interface components {
             date?: string;
             location?: string | null;
         };
+        Event: {
+            /** Format: uuid */
+            id?: string;
+            name: string | null;
+            /** Format: date-time */
+            startDate: string;
+            /** Format: date-time */
+            endDate?: string;
+            location: string | null;
+            description?: string | null;
+            guests?: components["schemas"]["Guest"][] | null;
+            /** Format: uuid */
+            weddingId?: string;
+            wedding?: components["schemas"]["Wedding"];
+        };
+        EventDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string;
+            /** Format: date-time */
+            endDate?: string;
+            location?: string | null;
+            description?: string | null;
+            /** Format: uuid */
+            weddingId?: string;
+        };
         Guest: {
             /** Format: uuid */
             id?: string;
             name?: string | null;
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
+            preferredLanguage?: string | null;
+            invitationToken?: string | null;
+            /** Format: date-time */
+            invitationTokenExpiresAt?: string | null;
+            /** Format: date-time */
+            invitationSentAt?: string | null;
             /** Format: uuid */
             weddingId?: string;
             wedding?: components["schemas"]["Wedding"];
+            events?: components["schemas"]["Event"][] | null;
         };
         GuestDto: {
             /** Format: uuid */
@@ -240,8 +381,18 @@ export interface components {
             name?: string | null;
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
+            preferredLanguage?: string | null;
+            /** Format: date-time */
+            invitationSentAt?: string | null;
             /** Format: uuid */
             weddingId?: string;
+        };
+        InvitationSendResultDto: {
+            /** Format: int32 */
+            sentCount?: number;
+            /** Format: int32 */
+            failedCount?: number;
+            failedGuestIds?: string[] | null;
         };
         LoginRequest: {
             email?: string | null;
@@ -284,10 +435,23 @@ export interface components {
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
         };
+        SendInvitationsRequestDto: {
+            guestIds?: string[] | null;
+        };
+        UpdateEventRequestDto: {
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string;
+            /** Format: date-time */
+            endDate?: string;
+            location?: string | null;
+            description?: string | null;
+        };
         UpdateGuestRequestDto: {
             name?: string | null;
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
+            preferredLanguage?: string | null;
         };
         User: {
             /** Format: uuid */
@@ -330,6 +494,7 @@ export interface components {
             guests?: components["schemas"]["Guest"][] | null;
             pages?: components["schemas"]["Page"][] | null;
             media?: components["schemas"]["Media"][] | null;
+            events?: components["schemas"]["Event"][] | null;
         };
         WeddingDto: {
             /** Format: uuid */
@@ -454,6 +619,373 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["AuthResult"];
                 };
+            };
+        };
+    };
+    AddGuestToEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+                guestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RemoveGuestFromEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+                guestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetEventsByWedding: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CreateEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateEventRequestDto"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UpdateEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEventRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    DeleteEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetEvents: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -678,6 +1210,109 @@ export interface operations {
             };
             /** @description Not Found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    SendGuestInvitation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+                guestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    SendGuestInvitations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SendInvitationsRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvitationSendResultDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Internal Server Error */
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };

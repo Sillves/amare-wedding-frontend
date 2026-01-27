@@ -19,5 +19,7 @@
   "close": "Close",
   "confirm": "Confirm",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "selected": "selected",
+  "noResults": "No results found"
 }

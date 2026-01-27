@@ -65,12 +65,23 @@
     "creating": "Ajout...",
     "save": "Enregistrer",
     "saving": "Enregistrement...",
-    "deleting": "Suppression..."
+    "deleting": "Suppression...",
+    "sending": "Envoi..."
   },
   "deleteConfirm": {
     "title": "Supprimer l'invité?",
     "message": "Êtes-vous sûr de vouloir supprimer {{name}}?",
     "confirm": "Supprimer",
     "cancel": "Annuler"
+  },
+  "sendInvitationConfirm": {
+    "title": "Envoyer l'invitation?",
+    "message": "Envoyer l'email d'invitation à {{name}} à {{email}}?",
+    "confirm": "Envoyer",
+    "cancel": "Annuler",
+    "success": "Invitation envoyée!",
+    "successMessage": "L'email d'invitation a été envoyé à {{email}}",
+    "error": "Échec de l'envoi",
+    "errorMessage": "Une erreur s'est produite lors de l'envoi de l'invitation. Veuillez réessayer."
   }
 }

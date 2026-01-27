@@ -65,12 +65,23 @@
     "creating": "Toevoegen...",
     "save": "Opslaan",
     "saving": "Opslaan...",
-    "deleting": "Verwijderen..."
+    "deleting": "Verwijderen...",
+    "sending": "Versturen..."
   },
   "deleteConfirm": {
     "title": "Gast verwijderen?",
     "message": "Weet u zeker dat u {{name}} wilt verwijderen?",
     "confirm": "Verwijderen",
     "cancel": "Annuleren"
+  },
+  "sendInvitationConfirm": {
+    "title": "Uitnodiging versturen?",
+    "message": "Uitnodigingsmail versturen naar {{name}} op {{email}}?",
+    "confirm": "Versturen",
+    "cancel": "Annuleren",
+    "success": "Uitnodiging verstuurd!",
+    "successMessage": "De uitnodigingsmail is verstuurd naar {{email}}",
+    "error": "Verzenden mislukt",
+    "errorMessage": "Er is een fout opgetreden bij het versturen van de uitnodiging. Probeer het opnieuw."
   }
 }

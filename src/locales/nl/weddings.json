@@ -28,7 +28,8 @@
     "edit": "Bewerken",
     "delete": "Verwijderen",
     "view": "Bekijken",
-    "manageGuests": "Gasten beheren"
+    "manageGuests": "Gasten beheren",
+    "manageEvents": "Evenementen beheren"
   },
   "deleteConfirm": {
     "title": "Bruiloft verwijderen?",

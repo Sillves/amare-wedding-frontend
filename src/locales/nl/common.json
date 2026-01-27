@@ -19,5 +19,7 @@
   "close": "Sluiten",
   "confirm": "Bevestigen",
   "yes": "Ja",
-  "no": "Nee"
+  "no": "Nee",
+  "selected": "geselecteerd",
+  "noResults": "Geen resultaten gevonden"
 }

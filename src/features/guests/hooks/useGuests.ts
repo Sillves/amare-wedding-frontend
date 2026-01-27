@@ -82,3 +82,21 @@ export function useDeleteGuest() {
     },
   });
 }
+
+/**
+ * Hook for sending invitation email to a single guest
+ * Automatically invalidates relevant queries on success to refresh invitation status
+ * @returns React Query mutation for sending guest invitation
+ */
+export function useSendGuestInvitation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ weddingId, guestId }: { weddingId: string; guestId: string }) =>
+      guestsApi.sendInvitation(weddingId, guestId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
+      queryClient.invalidateQueries({ queryKey: ['guests', 'detail', variables.guestId] });
+    },
+  });
+}
