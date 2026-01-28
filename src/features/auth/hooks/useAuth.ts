@@ -19,7 +19,6 @@ function decodeJwtUserId(token: string): string | null {
     // Check common claim names for user ID
     return decoded.sub || decoded.userId || decoded.nameid || decoded.id || null;
   } catch (error) {
-    console.error('[Auth] Failed to decode JWT:', error);
     return null;
   }
 }
@@ -35,8 +34,6 @@ export function useLogin() {
   return useMutation({
     mutationFn: (data: LoginRequest) => authApi.login(data),
     onSuccess: (response, variables) => {
-      console.log('[Auth] Login response received:', response);
-
       // Use type guard to check if response is successful
       if (!isSuccessfulAuthResult(response)) {
         throw new Error(response.message || 'Login failed');
@@ -45,7 +42,6 @@ export function useLogin() {
       // Extract userId from JWT token
       const userId = decodeJwtUserId(response.token);
       if (!userId) {
-        console.error('[Auth] Could not extract user ID from token');
         throw new Error('Invalid authentication token. Please contact support.');
       }
 
@@ -58,11 +54,7 @@ export function useLogin() {
       };
 
       setAuth(user, response.token);
-      console.log('[Auth] Login successful! Token saved, navigating to dashboard');
       navigate('/dashboard');
-    },
-    onError: (error) => {
-      console.error('[Auth] Login failed:', error);
     },
   });
 }
@@ -78,8 +70,6 @@ export function useRegister() {
   return useMutation({
     mutationFn: (data: RegisterRequest) => authApi.register(data),
     onSuccess: (response, variables) => {
-      console.log('[Auth] Registration response received:', response);
-
       // Use type guard to check if response is successful
       if (!isSuccessfulAuthResult(response)) {
         throw new Error(response.message || 'Registration failed');
@@ -88,7 +78,6 @@ export function useRegister() {
       // Extract userId from JWT token
       const userId = decodeJwtUserId(response.token);
       if (!userId) {
-        console.error('[Auth] Could not extract user ID from token');
         throw new Error('Invalid authentication token. Please try logging in.');
       }
 
@@ -101,11 +90,7 @@ export function useRegister() {
       };
 
       setAuth(user, response.token);
-      console.log('[Auth] Registration successful! Token saved, navigating to dashboard');
       navigate('/dashboard');
-    },
-    onError: (error) => {
-      console.error('[Auth] Registration failed:', error);
     },
   });
 }

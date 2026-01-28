@@ -32,7 +32,7 @@ export function DeleteGuestDialog({ guest, open, onOpenChange }: DeleteGuestDial
       });
       onOpenChange(false);
     } catch (error) {
-      console.error('Failed to delete guest:', error);
+      // Error handled by React Query
     }
   };
 

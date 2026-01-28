@@ -59,7 +59,7 @@ export function EditGuestDialog({ guest, open, onOpenChange }: EditGuestDialogPr
       await updateGuest.mutateAsync({ guestId: guest.id!, data });
       onOpenChange(false);
     } catch (error) {
-      console.error('Failed to update guest:', error);
+      // Error handled by React Query
     }
   };
 

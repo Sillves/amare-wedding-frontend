@@ -44,8 +44,6 @@ export function RsvpPage() {
       });
       setSubmitted(true);
     } catch (error: any) {
-      console.error('Failed to submit RSVP:', error);
-
       // Check for specific error messages
       const errorResponse = error?.response?.data?.error;
       if (errorResponse === 'Guest not found for wedding') {

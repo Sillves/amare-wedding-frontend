@@ -106,7 +106,27 @@ export function useAddGuestToEvent() {
     mutationFn: ({ eventId, guestId }: { eventId: string; guestId: string }) =>
       eventsApi.addGuest(eventId, guestId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['events', 'detail', variables.eventId] });
+      // Invalidate all event queries to ensure UI updates everywhere
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+      queryClient.invalidateQueries({ queryKey: ['guests'] });
+    },
+  });
+}
+
+/**
+ * Hook for adding multiple guests to an event (bulk operation)
+ * Automatically invalidates relevant queries on success
+ * @returns React Query mutation for adding multiple guests to event
+ */
+export function useAddGuestsToEvent() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ eventId, guestIds }: { eventId: string; guestIds: string[] }) =>
+      eventsApi.addGuests(eventId, { guestIds }),
+    onSuccess: (_, variables) => {
+      // Invalidate all event queries to ensure UI updates everywhere
+      queryClient.invalidateQueries({ queryKey: ['events'] });
       queryClient.invalidateQueries({ queryKey: ['guests'] });
     },
   });
@@ -124,7 +144,8 @@ export function useRemoveGuestFromEvent() {
     mutationFn: ({ eventId, guestId }: { eventId: string; guestId: string }) =>
       eventsApi.removeGuest(eventId, guestId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['events', 'detail', variables.eventId] });
+      // Invalidate all event queries to ensure UI updates everywhere
+      queryClient.invalidateQueries({ queryKey: ['events'] });
       queryClient.invalidateQueries({ queryKey: ['guests'] });
     },
   });

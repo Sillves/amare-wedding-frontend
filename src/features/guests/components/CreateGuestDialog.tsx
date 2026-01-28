@@ -46,7 +46,7 @@ export function CreateGuestDialog({ weddingId, children }: CreateGuestDialogProp
       setName('');
       setEmail('');
     } catch (error) {
-      console.error('Failed to create guest:', error);
+      // Error handled by React Query
     }
   };
 

@@ -1,5 +1,11 @@
 import { apiClient } from '@/lib/axios';
-import type { EventDto, CreateEventRequest, UpdateEventRequest } from '@/features/weddings/types';
+import type {
+  EventDto,
+  CreateEventRequest,
+  UpdateEventRequest,
+  AddGuestsToEventRequest,
+  EventGuestBatchChangeResult
+} from '@/features/weddings/types';
 
 /**
  * API client for event management
@@ -74,6 +80,17 @@ export const eventsApi = {
    */
   addGuest: async (eventId: string, guestId: string): Promise<void> => {
     await apiClient.post(`/events/${eventId}/guests/${guestId}`);
+  },
+
+  /**
+   * Add multiple guests to an event (bulk operation)
+   * @param eventId - Event UUID
+   * @param data - Request payload with guest IDs
+   * @returns Promise<EventGuestBatchChangeResult>
+   */
+  addGuests: async (eventId: string, data: AddGuestsToEventRequest): Promise<EventGuestBatchChangeResult> => {
+    const response = await apiClient.post<EventGuestBatchChangeResult>(`/events/${eventId}/guests`, data);
+    return response.data;
   },
 
   /**

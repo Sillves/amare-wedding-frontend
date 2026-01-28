@@ -25,13 +25,6 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
       setAuth: (user: User, token: string) => {
-        console.log('[AuthStore] setAuth called with:', {
-          userId: user.id,
-          userEmail: user.email,
-          userName: `${user.firstName} ${user.lastName}`,
-          tokenLength: token.length,
-          tokenPreview: `${token.substring(0, 10)}...`,
-        });
         set({
           user,
           token,
@@ -39,7 +32,6 @@ export const useAuthStore = create<AuthState>()(
         });
       },
       logout: () => {
-        console.log('[AuthStore] logout called');
         set({
           user: null,
           token: null,

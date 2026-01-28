@@ -30,9 +30,6 @@ apiClient.interceptors.request.use(
     const token = useAuthStore.getState().token;
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log('[Auth] Token added to request:', config.url);
-    } else if (!token) {
-      console.warn('[Auth] No token available for request:', config.url);
     }
     return config;
   },
@@ -49,7 +46,6 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      console.log('[Auth] 401 Unauthorized - logging out user');
       useAuthStore.getState().logout();
       window.location.href = '/login';
     }

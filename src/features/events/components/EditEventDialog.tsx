@@ -64,7 +64,7 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
       await updateEvent.mutateAsync({ eventId: event.id!, data });
       onOpenChange(false);
     } catch (error) {
-      console.error('Failed to update event:', error);
+      // Error handled by React Query
     }
   };
 

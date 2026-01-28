@@ -78,6 +78,58 @@
         }
       }
     },
+    "/api/events/{eventId}/guests": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "operationId": "AddGuestsToEvent",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddGuestsToEventRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventGuestBatchChangeResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/api/events/{eventId}/guests/{guestId}": {
       "post": {
         "tags": [
@@ -1046,6 +1098,20 @@
   },
   "components": {
     "schemas": {
+      "AddGuestsToEventRequestDto": {
+        "type": "object",
+        "properties": {
+          "guestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AddWeddingUserRequestDto": {
         "type": "object",
         "properties": {
@@ -1217,12 +1283,64 @@
             "type": "string",
             "nullable": true
           },
+          "guestDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GuestDto"
+            },
+            "nullable": true
+          },
           "weddingId": {
             "type": "string",
             "format": "uuid"
           }
         },
         "additionalProperties": false
+      },
+      "EventGuestBatchChangeResultDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/EventGuestChangeResult"
+          },
+          "addedGuestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "alreadyInEventGuestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "notFoundGuestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EventGuestChangeResult": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "Guest": {
         "type": "object",

@@ -32,7 +32,7 @@ export function SendInvitationDialog({ guest, open, onOpenChange }: SendInvitati
       });
       onOpenChange(false);
     } catch (error) {
-      console.error('Failed to send invitation:', error);
+      // Error handled by React Query
     }
   };
 

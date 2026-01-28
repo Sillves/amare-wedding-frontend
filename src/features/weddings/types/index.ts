@@ -96,3 +96,18 @@ export type CreateEventRequest = components['schemas']['CreateEventRequestDto'];
  * Request payload for updating an event - Auto-generated from OpenAPI
  */
 export type UpdateEventRequest = components['schemas']['UpdateEventRequestDto'];
+
+/**
+ * Request payload for adding multiple guests to an event - Auto-generated from OpenAPI
+ */
+export type AddGuestsToEventRequest = components['schemas']['AddGuestsToEventRequestDto'];
+
+/**
+ * Result of adding multiple guests to an event - Auto-generated from OpenAPI
+ */
+export type EventGuestBatchChangeResult = components['schemas']['EventGuestBatchChangeResultDto'];
+
+/**
+ * Status enum for batch guest operations - Auto-generated from OpenAPI
+ */
+export type EventGuestChangeResult = components['schemas']['EventGuestChangeResult'];

@@ -21,5 +21,8 @@
   "yes": "Ja",
   "no": "Nee",
   "selected": "geselecteerd",
-  "noResults": "Geen resultaten gevonden"
+  "noResults": "Geen resultaten gevonden",
+  "showing": "Tonen",
+  "of": "van",
+  "page": "Pagina"
 }

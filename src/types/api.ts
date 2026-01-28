@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/events/{eventId}/guests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AddGuestsToEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/events/{eventId}/guests/{guestId}": {
         parameters: {
             query?: never;
@@ -299,6 +315,9 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AddGuestsToEventRequestDto: {
+            guestIds?: string[] | null;
+        };
         AddWeddingUserRequestDto: {
             /** Format: uuid */
             userId?: string;
@@ -355,9 +374,21 @@ export interface components {
             endDate?: string;
             location?: string | null;
             description?: string | null;
+            guestDtos?: components["schemas"]["GuestDto"][] | null;
             /** Format: uuid */
             weddingId?: string;
         };
+        EventGuestBatchChangeResultDto: {
+            status?: components["schemas"]["EventGuestChangeResult"];
+            addedGuestIds?: string[] | null;
+            alreadyInEventGuestIds?: string[] | null;
+            notFoundGuestIds?: string[] | null;
+        };
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        EventGuestChangeResult: 0 | 1 | 2 | 3 | 4 | 5;
         Guest: {
             /** Format: uuid */
             id?: string;
@@ -619,6 +650,60 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["AuthResult"];
                 };
+            };
+        };
+    };
+    AddGuestsToEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AddGuestsToEventRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventGuestBatchChangeResultDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

@@ -32,7 +32,7 @@ export function DeleteEventDialog({ event, open, onOpenChange }: DeleteEventDial
       });
       onOpenChange(false);
     } catch (error) {
-      console.error('Failed to delete event:', error);
+      // Error handled by React Query
     }
   };
 

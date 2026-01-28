@@ -60,7 +60,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
       setLocation('');
       setDescription('');
     } catch (error) {
-      console.error('Failed to create event:', error);
+      // Error handled by React Query
     }
   };
 
