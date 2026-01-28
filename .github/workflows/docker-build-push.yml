@@ -12,6 +12,7 @@ on:
       - 'package-lock.json'
       - 'vite.config.ts'
       - 'Dockerfile'
+      - 'nginx.conf'
       - '.github/workflows/docker-build-push.yml'
       - '!**.md'
   workflow_dispatch:
