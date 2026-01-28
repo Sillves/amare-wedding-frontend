@@ -5,13 +5,14 @@ import type { CreateGuestRequest, UpdateGuestRequest } from '@/features/weddings
 /**
  * Hook for fetching all guests for a specific wedding
  * @param weddingId - Wedding UUID
+ * @param options - Optional query options (e.g., enabled)
  * @returns React Query query for fetching guests list
  */
-export function useGuests(weddingId: string) {
+export function useGuests(weddingId: string, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['guests', weddingId],
     queryFn: () => guestsApi.getByWedding(weddingId),
-    enabled: !!weddingId,
+    enabled: options?.enabled !== undefined ? options.enabled : !!weddingId,
   });
 }
 

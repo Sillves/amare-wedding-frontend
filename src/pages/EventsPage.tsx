@@ -7,13 +7,6 @@ import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useEvents } from '@/features/events/hooks/useEvents';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { EventCard } from '@/features/events/components/EventCard';
 import { CreateEventDialog } from '@/features/events/components/CreateEventDialog';
 import { EditEventDialog } from '@/features/events/components/EditEventDialog';
@@ -116,28 +109,12 @@ export function EventsPage() {
             <h2 className="text-3xl font-bold">{t('events:title')}</h2>
             <p className="text-muted-foreground">{t('events:manageDescription')}</p>
           </div>
-          <div className="flex items-center gap-2">
-            {weddings && weddings.length > 1 && (
-              <Select value={selectedWeddingId} onValueChange={handleWeddingChange}>
-                <SelectTrigger className="w-[250px]">
-                  <SelectValue placeholder={t('weddings:selectWedding')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {weddings.map((wedding) => (
-                    <SelectItem key={wedding.id} value={wedding.id}>
-                      {wedding.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-            <CreateEventDialog weddingId={selectedWeddingId}>
-              <Button>
-                <Calendar className="h-4 w-4 mr-2" />
-                {t('events:addEvent')}
-              </Button>
-            </CreateEventDialog>
-          </div>
+          <CreateEventDialog weddingId={selectedWeddingId}>
+            <Button>
+              <Calendar className="h-4 w-4 mr-2" />
+              {t('events:addEvent')}
+            </Button>
+          </CreateEventDialog>
         </div>
 
         {/* Events List */}

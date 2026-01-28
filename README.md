@@ -1,8 +1,12 @@
 # Amare.Wedding - Frontend
 
+> 🎉 **Production Ready** - Build passes, all features implemented, fully internationalized
+
 Modern React application for wedding planning, built with TypeScript, React Query, Zustand, and Tailwind CSS.
 
 **"Amare"** (Ah-mah-re) is Italian for "to love" - because wedding planning is all about celebrating love.
+
+**Status**: ✅ Production Ready | 📦 Build: 4.3s | 🌍 Languages: EN/NL/FR
 
 ---
 
@@ -80,18 +84,38 @@ Full explanation: see [SETUP.md](./SETUP.md)
 ## 🎯 Features
 
 ### ✅ Implemented
-- [x] Authentication (Login/Register)
-- [x] Protected routes
-- [x] Multi-language support (NL/EN/FR)
-- [x] Token-based authentication
-- [x] Responsive design
-- [x] Dark mode ready
+- [x] **Authentication** - Login/Register with JWT tokens
+- [x] **Protected Routes** - Role-based access control
+- [x] **Multi-language Support** - Dutch, English, French (NL/EN/FR)
+- [x] **Wedding Management** - Create, view, and manage weddings
+- [x] **Enhanced Dashboard**
+  - Wedding countdown timer
+  - Guest statistics with clickable filters
+  - Quick actions (Add Guest, Add Event)
+  - Upcoming events list
+  - Smart "Next Steps" suggestions
+- [x] **Guest Management**
+  - Full CRUD operations
+  - RSVP status tracking (Attending, Declined, Pending, Maybe)
+  - Bulk invitation sending with confirmation
+  - Guest filtering by status
+  - Pagination support
+- [x] **Event Management**
+  - Create ceremony, reception, and custom events
+  - Assign guests to specific events
+  - Bulk guest assignment
+  - Event timeline visualization
+- [x] **RSVP Functionality** - Public RSVP pages for guests
+- [x] **Responsive Design** - Mobile-first approach
+- [x] **Dark Mode Ready** - Full theme support
 
-### 🚧 In Development
-- [ ] Weddings CRUD
-- [ ] Guests management
-- [ ] RSVP functionality
-- [ ] Dashboard statistics
+### 🚀 Recently Added
+- Enhanced single-wedding focused dashboard
+- Clickable statistic cards with URL-based filtering
+- Bulk invitation confirmation dialogs
+- "Next Steps" logic based on invitation status
+- Create guest option in event management
+- Proper React Query cache invalidation
 
 ---
 
@@ -136,8 +160,10 @@ OPENAPI_ENDPOINT=/swagger/v1/swagger.json        # Swagger endpoint (optional)
 
 ## 📖 Documentation
 
+- **[README.md](./README.md)** - This file - Quick start & features overview
 - **[SETUP.md](./SETUP.md)** - Complete setup and development guide
 - **[TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md)** - TypeScript & OpenAPI automation
+- **[claude.md](./claude.md)** - AI assistant context & recent changes
 
 **SETUP.md** includes:
 - Folder structure explanation
@@ -153,19 +179,36 @@ OPENAPI_ENDPOINT=/swagger/v1/swagger.json        # Swagger endpoint (optional)
 - Troubleshooting
 - Best practices
 
+**claude.md** includes:
+- Architecture decisions
+- Recent major changes
+- Data models & patterns
+- Common development tasks
+- AI assistant guidelines
+
 ---
 
-## 🔗 API
+## 🔗 API Integration
 
-Backend API documentation: See `claude.md` in the API repository
+**Backend**: ASP.NET Core Web API with OpenAPI/Swagger
 
-API Endpoints:
-- `POST /api/auth/login` - Login
-- `POST /api/auth/register` - Register
-- `GET /api/weddings` - Get weddings
-- `POST /api/weddings` - Create wedding
-- `GET /api/weddings/{id}/guests` - Get guests
-- Etc...
+### Automatic Type Generation
+All TypeScript types are auto-generated from the backend's OpenAPI specification:
+
+```bash
+npm run sync-types  # Fetch spec + generate types
+```
+
+This ensures frontend and backend stay in sync automatically. See [TYPESCRIPT_SETUP.md](./TYPESCRIPT_SETUP.md) for details.
+
+### Main Endpoints (Auto-typed)
+- **Auth**: `POST /api/auth/login`, `POST /api/auth/register`
+- **Weddings**: `GET|POST /api/weddings`, `DELETE /api/weddings/{id}`
+- **Guests**: Full CRUD + `POST /api/weddings/{weddingId}/guests/send-invitations`
+- **Events**: Full CRUD + `POST|DELETE /api/events/{eventId}/guests`
+- **RSVP**: `GET /api/weddings/{slug}/public`, `POST /api/weddings/{id}/rsvp`
+
+All types in `src/types/api.ts` are generated automatically.
 
 ---
 

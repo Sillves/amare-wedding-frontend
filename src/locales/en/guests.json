@@ -83,5 +83,14 @@
     "successMessage": "Invitation email has been sent to {{email}}",
     "error": "Failed to send invitation",
     "errorMessage": "An error occurred while sending the invitation. Please try again."
+  },
+  "bulkInvitation": {
+    "title": "Send {{count}} invitation?",
+    "title_plural": "Send {{count}} invitations?",
+    "message": "You are about to send invitation emails to {{count}} guest.",
+    "message_plural": "You are about to send invitation emails to {{count}} guests.",
+    "confirm": "Are you sure you want to continue?",
+    "confirmButton": "Send Invitations",
+    "cancel": "Cancel"
   }
 }

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Search, Plus, Minus, UserCheck } from 'lucide-react';
+import { Search, Plus, Minus, UserCheck, UserPlus } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CreateGuestDialog } from '@/features/guests/components/CreateGuestDialog';
 import { useGuests } from '@/features/guests/hooks/useGuests';
 import { useAddGuestsToEvent, useRemoveGuestsFromEvent, useEvent } from '../hooks/useEvents';
 import type { EventDto, GuestDto } from '@/features/weddings/types';
@@ -102,7 +103,8 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
     try {
       await addGuestsToEvent.mutateAsync({
         eventId: currentEvent.id!,
-        guestIds: Array.from(selectedGuestIds)
+        guestIds: Array.from(selectedGuestIds),
+        weddingId: currentEvent.weddingId
       });
       setSelectedGuestIds(new Set());
     } catch (error) {
@@ -116,7 +118,8 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
     try {
       await removeGuestsFromEvent.mutateAsync({
         eventId: currentEvent.id!,
-        guestIds: Array.from(selectedGuestIds)
+        guestIds: Array.from(selectedGuestIds),
+        weddingId: currentEvent.weddingId
       });
       setSelectedGuestIds(new Set());
     } catch (error) {
@@ -209,7 +212,7 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
         <DialogHeader>
           <DialogTitle>{t('guestManagement.title', { event: currentEvent?.name || '' })}</DialogTitle>
           <DialogDescription>
-            {invitedGuests.length} van {allGuests?.length || 0} gasten uitgenodigd voor dit event
+            {t('guestManagement.guestsInvitedFor', { count: invitedGuests.length, total: allGuests?.length || 0 })}
           </DialogDescription>
         </DialogHeader>
 
@@ -229,14 +232,14 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
           <Tabs value={activeTab} onValueChange={handleTabChange} className="flex-1 flex flex-col overflow-hidden">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="available" className="flex items-center gap-2">
-                Beschikbare gasten
+                {t('guestManagement.availableGuestsTab')}
                 <Badge variant="secondary" className="ml-1">
                   {filteredAvailableGuests.length}
                 </Badge>
               </TabsTrigger>
               <TabsTrigger value="invited" className="flex items-center gap-2">
                 <UserCheck className="h-4 w-4" />
-                Uitgenodigde gasten
+                {t('guestManagement.invitedGuestsTab')}
                 <Badge variant="secondary" className="ml-1">
                   {filteredInvitedGuests.length}
                 </Badge>
@@ -244,17 +247,84 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
             </TabsList>
 
             <TabsContent value="available" className="flex-1 overflow-hidden mt-4">
-              {renderGuestList(
-                filteredAvailableGuests,
-                searchQuery ? t('common:noResults') : 'Alle gasten zijn al uitgenodigd',
-                handleSelectAllAvailable
-              )}
+              <div className="space-y-3">
+                {/* Selection Controls */}
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">
+                    {selectedGuestIds.size} {t('common:selected')}
+                  </span>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleSelectAllAvailable}
+                      disabled={filteredAvailableGuests.length === 0}
+                    >
+                      {t('guestManagement.selectAll')}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleDeselectAll}
+                      disabled={selectedGuestIds.size === 0}
+                    >
+                      {t('guestManagement.deselectAll')}
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Guest List */}
+                <div className="overflow-y-auto border rounded-md max-h-[400px]">
+                  {filteredAvailableGuests.length === 0 ? (
+                    <div className="p-8 text-center">
+                      {searchQuery ? (
+                        <p className="text-muted-foreground">{t('common:noResults')}</p>
+                      ) : (
+                        <div className="space-y-3">
+                          <p className="text-muted-foreground">{t('guestManagement.allGuestsAlreadyInvited')}</p>
+                          <CreateGuestDialog weddingId={currentEvent?.weddingId || ''}>
+                            <Button variant="outline" size="sm">
+                              <UserPlus className="h-4 w-4 mr-2" />
+                              {t('guestManagement.createNewGuest')}
+                            </Button>
+                          </CreateGuestDialog>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="divide-y">
+                      {filteredAvailableGuests.map((guest) => {
+                        const isSelected = selectedGuestIds.has(guest.id!);
+
+                        return (
+                          <div
+                            key={guest.id}
+                            className="flex items-center gap-3 p-3 hover:bg-muted/50 cursor-pointer"
+                            onClick={() => handleToggleGuest(guest.id!)}
+                          >
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={() => handleToggleGuest(guest.id!)}
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium truncate">{guest.name || 'No name'}</p>
+                              {guest.email && (
+                                <p className="text-sm text-muted-foreground truncate">{guest.email}</p>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="invited" className="flex-1 overflow-hidden mt-4">
               {renderGuestList(
                 filteredInvitedGuests,
-                searchQuery ? t('common:noResults') : 'Geen gasten uitgenodigd voor dit event',
+                searchQuery ? t('common:noResults') : t('guestManagement.noGuestsInvited'),
                 handleSelectAllInvited
               )}
             </TabsContent>

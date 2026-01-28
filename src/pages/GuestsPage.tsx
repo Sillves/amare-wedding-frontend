@@ -1,24 +1,19 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Users, UserCheck, UserX, Clock } from 'lucide-react';
+import { ArrowLeft, Users, UserCheck, UserX, Clock, X } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useGuests, useSendGuestInvitations } from '@/features/guests/hooks/useGuests';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { GuestTable } from '@/features/guests/components/GuestTable';
 import { CreateGuestDialog } from '@/features/guests/components/CreateGuestDialog';
 import { EditGuestDialog } from '@/features/guests/components/EditGuestDialog';
 import { DeleteGuestDialog } from '@/features/guests/components/DeleteGuestDialog';
 import { SendInvitationDialog } from '@/features/guests/components/SendInvitationDialog';
+import { BulkInvitationDialog } from '@/features/guests/components/BulkInvitationDialog';
 import type { GuestDto } from '@/features/weddings/types';
 
 export function GuestsPage() {
@@ -29,6 +24,7 @@ export function GuestsPage() {
   const logout = useLogout();
 
   const weddingIdFromUrl = searchParams.get('weddingId');
+  const statusFilter = searchParams.get('status'); // 'attending', 'pending', 'declined', or null for all
 
   // Optimization: Only fetch all weddings if we don't have a weddingId in URL
   // When weddingId is in URL, we already have context and don't need to fetch all weddings
@@ -38,42 +34,105 @@ export function GuestsPage() {
 
   // Get wedding ID from URL params or use first wedding (when no URL param)
   const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
-  const { data: guests, isLoading: guestsLoading, error } = useGuests(selectedWeddingId);
+  const { data: allGuests, isLoading: guestsLoading, error } = useGuests(selectedWeddingId);
   const sendBulkInvitations = useSendGuestInvitations();
+
+  // Filter guests based on status
+  const guests = useMemo(() => {
+    if (!allGuests) return [];
+    if (!statusFilter) return allGuests;
+
+    switch (statusFilter) {
+      case 'attending':
+        return allGuests.filter((g) => g.rsvpStatus === 1);
+      case 'pending':
+        return allGuests.filter((g) => g.rsvpStatus === 0);
+      case 'declined':
+        return allGuests.filter((g) => g.rsvpStatus === 2);
+      case 'maybe':
+        return allGuests.filter((g) => g.rsvpStatus === 3);
+      default:
+        return allGuests;
+    }
+  }, [allGuests, statusFilter]);
 
   const [editingGuest, setEditingGuest] = useState<GuestDto | null>(null);
   const [deletingGuest, setDeletingGuest] = useState<GuestDto | null>(null);
   const [sendingInvitationGuest, setSendingInvitationGuest] = useState<GuestDto | null>(null);
+  const [bulkInviteGuestIds, setBulkInviteGuestIds] = useState<string[]>([]);
+  const [showBulkConfirm, setShowBulkConfirm] = useState(false);
 
-  // Calculate statistics
+  // Calculate statistics (always use all guests for stats)
   const stats = useMemo(() => {
-    if (!guests) return { total: 0, attending: 0, declined: 0, pending: 0, maybe: 0 };
+    if (!allGuests) return { total: 0, attending: 0, declined: 0, pending: 0, maybe: 0 };
 
     return {
-      total: guests.length,
-      attending: guests.filter((g) => g.rsvpStatus === 1).length,
-      declined: guests.filter((g) => g.rsvpStatus === 2).length,
-      pending: guests.filter((g) => g.rsvpStatus === 0).length,
-      maybe: guests.filter((g) => g.rsvpStatus === 3).length,
+      total: allGuests.length,
+      attending: allGuests.filter((g) => g.rsvpStatus === 1).length,
+      declined: allGuests.filter((g) => g.rsvpStatus === 2).length,
+      pending: allGuests.filter((g) => g.rsvpStatus === 0).length,
+      maybe: allGuests.filter((g) => g.rsvpStatus === 3).length,
     };
-  }, [guests]);
+  }, [allGuests]);
 
   const handleWeddingChange = (weddingId: string) => {
     setSearchParams({ weddingId });
   };
 
-  const handleBulkSendInvitations = async (guestIds: string[]) => {
-    if (!selectedWeddingId) return;
+  const clearFilter = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete('status');
+    setSearchParams(params);
+  };
+
+  const setFilter = (status: string | null) => {
+    const params = new URLSearchParams(searchParams);
+
+    // If clicking on the currently active filter, toggle it off (show all guests)
+    if (status && statusFilter === status) {
+      params.delete('status');
+    } else if (status) {
+      params.set('status', status);
+    } else {
+      params.delete('status');
+    }
+
+    setSearchParams(params);
+  };
+
+  const getFilterLabel = () => {
+    switch (statusFilter) {
+      case 'attending':
+        return t('guests:attending');
+      case 'pending':
+        return t('guests:pending');
+      case 'declined':
+        return t('guests:declined');
+      case 'maybe':
+        return t('guests:maybe');
+      default:
+        return null;
+    }
+  };
+
+  const handleBulkSendInvitations = (guestIds: string[]) => {
+    // Show confirmation dialog
+    setBulkInviteGuestIds(guestIds);
+    setShowBulkConfirm(true);
+  };
+
+  const confirmBulkSendInvitations = async () => {
+    if (!selectedWeddingId || bulkInviteGuestIds.length === 0) return;
 
     try {
       await sendBulkInvitations.mutateAsync({
         weddingId: selectedWeddingId,
-        guestIds
+        guestIds: bulkInviteGuestIds
       });
       // Success - React Query will handle cache invalidation
+      setBulkInviteGuestIds([]);
     } catch (error) {
       // Error handled by React Query
-      console.error('Failed to send bulk invitations:', error);
     }
   };
 
@@ -134,33 +193,33 @@ export function GuestsPage() {
         {/* Header with wedding selector */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-3xl font-bold">{t('guests:title')}</h2>
+            <div className="flex items-center gap-2">
+              <h2 className="text-3xl font-bold">{t('guests:title')}</h2>
+              {statusFilter && (
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  {getFilterLabel()}
+                  <button
+                    onClick={clearFilter}
+                    className="ml-1 hover:bg-muted-foreground/20 rounded-full p-0.5"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </Badge>
+              )}
+            </div>
             <p className="text-muted-foreground">{t('guests:manageDescription')}</p>
           </div>
-          <div className="flex items-center gap-2">
-            {weddings && weddings.length > 1 && (
-              <Select value={selectedWeddingId} onValueChange={handleWeddingChange}>
-                <SelectTrigger className="w-[250px]">
-                  <SelectValue placeholder={t('weddings:selectWedding')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {weddings.map((wedding) => (
-                    <SelectItem key={wedding.id} value={wedding.id}>
-                      {wedding.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-            <CreateGuestDialog weddingId={selectedWeddingId}>
-              <Button>{t('guests:addGuest')}</Button>
-            </CreateGuestDialog>
-          </div>
+          <CreateGuestDialog weddingId={selectedWeddingId}>
+            <Button>{t('guests:addGuest')}</Button>
+          </CreateGuestDialog>
         </div>
 
         {/* Statistics Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-          <Card>
+          <Card
+            className={`cursor-pointer hover:bg-muted/50 transition-colors ${!statusFilter ? 'ring-2 ring-primary' : ''}`}
+            onClick={() => setFilter(null)}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:totalGuests')}</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
@@ -171,7 +230,10 @@ export function GuestsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card
+            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'attending' ? 'ring-2 ring-green-600' : ''}`}
+            onClick={() => setFilter('attending')}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:attending')}</CardTitle>
               <UserCheck className="h-4 w-4 text-green-600" />
@@ -185,7 +247,10 @@ export function GuestsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card
+            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'declined' ? 'ring-2 ring-red-600' : ''}`}
+            onClick={() => setFilter('declined')}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:declined')}</CardTitle>
               <UserX className="h-4 w-4 text-red-600" />
@@ -199,7 +264,10 @@ export function GuestsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card
+            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'pending' ? 'ring-2 ring-yellow-600' : ''}`}
+            onClick={() => setFilter('pending')}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:pending')}</CardTitle>
               <Clock className="h-4 w-4 text-yellow-600" />
@@ -213,7 +281,10 @@ export function GuestsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card
+            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'maybe' ? 'ring-2 ring-blue-600' : ''}`}
+            onClick={() => setFilter('maybe')}
+          >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:maybe')}</CardTitle>
               <Users className="h-4 w-4 text-blue-600" />
@@ -235,7 +306,9 @@ export function GuestsPage() {
               <CardTitle>{t('guests:guestList')}</CardTitle>
               {selectedWedding && (
                 <CardDescription>
-                  {t('guests:guestListDescription', { wedding: selectedWedding.title })}
+                  {statusFilter
+                    ? `Showing ${guests.length} ${getFilterLabel()?.toLowerCase()} guest${guests.length !== 1 ? 's' : ''} for ${selectedWedding.title}`
+                    : t('guests:guestListDescription', { wedding: selectedWedding.title })}
                 </CardDescription>
               )}
             </CardHeader>
@@ -281,6 +354,14 @@ export function GuestsPage() {
         guest={sendingInvitationGuest}
         open={!!sendingInvitationGuest}
         onOpenChange={(open) => !open && setSendingInvitationGuest(null)}
+      />
+
+      {/* Bulk Invitation Confirmation Dialog */}
+      <BulkInvitationDialog
+        guestCount={bulkInviteGuestIds.length}
+        open={showBulkConfirm}
+        onOpenChange={setShowBulkConfirm}
+        onConfirm={confirmBulkSendInvitations}
       />
     </div>
   );

@@ -5,13 +5,14 @@ import type { CreateEventRequest, UpdateEventRequest } from '@/features/weddings
 /**
  * Hook for fetching all events for a specific wedding
  * @param weddingId - Wedding UUID
+ * @param options - Optional query options (e.g., enabled)
  * @returns React Query query for fetching events list
  */
-export function useEvents(weddingId: string) {
+export function useEvents(weddingId: string, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['events', weddingId],
     queryFn: () => eventsApi.getByWedding(weddingId),
-    enabled: !!weddingId,
+    enabled: options?.enabled !== undefined ? options.enabled : !!weddingId,
   });
 }
 
@@ -121,11 +122,15 @@ export function useAddGuestsToEvent() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ eventId, guestIds }: { eventId: string; guestIds: string[] }) =>
+    mutationFn: ({ eventId, guestIds, weddingId }: { eventId: string; guestIds: string[]; weddingId?: string }) =>
       eventsApi.addGuests(eventId, { guestIds }),
     onSuccess: (_, variables) => {
-      // Only invalidate the specific event that was modified
+      // Invalidate the specific event detail
       queryClient.invalidateQueries({ queryKey: ['events', 'detail', variables.eventId] });
+      // Invalidate the events list for the wedding to update guest counts
+      if (variables.weddingId) {
+        queryClient.invalidateQueries({ queryKey: ['events', variables.weddingId] });
+      }
     },
   });
 }
@@ -157,11 +162,15 @@ export function useRemoveGuestsFromEvent() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ eventId, guestIds }: { eventId: string; guestIds: string[] }) =>
+    mutationFn: ({ eventId, guestIds, weddingId }: { eventId: string; guestIds: string[]; weddingId?: string }) =>
       eventsApi.removeGuests(eventId, { guestIds }),
     onSuccess: (_, variables) => {
-      // Only invalidate the specific event that was modified
+      // Invalidate the specific event detail
       queryClient.invalidateQueries({ queryKey: ['events', 'detail', variables.eventId] });
+      // Invalidate the events list for the wedding to update guest counts
+      if (variables.weddingId) {
+        queryClient.invalidateQueries({ queryKey: ['events', variables.weddingId] });
+      }
     },
   });
 }
