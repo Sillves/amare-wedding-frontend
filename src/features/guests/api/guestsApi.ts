@@ -1,5 +1,11 @@
 import { apiClient } from '@/lib/axios';
-import type { GuestDto, CreateGuestRequest, UpdateGuestRequest } from '@/features/weddings/types';
+import type {
+  GuestDto,
+  CreateGuestRequest,
+  UpdateGuestRequest,
+  SendInvitationsRequest,
+  InvitationSendResult
+} from '@/features/weddings/types';
 import { normalizeRsvpStatus } from '../utils/rsvpStatusMapper';
 
 /**
@@ -79,5 +85,16 @@ export const guestsApi = {
    */
   sendInvitation: async (weddingId: string, guestId: string): Promise<void> => {
     await apiClient.post(`/weddings/${weddingId}/guests/${guestId}/send-invitation`);
+  },
+
+  /**
+   * Send invitation emails to multiple guests (bulk operation)
+   * @param weddingId - Wedding UUID
+   * @param data - Request payload with guest IDs
+   * @returns Promise<InvitationSendResult>
+   */
+  sendInvitations: async (weddingId: string, data: SendInvitationsRequest): Promise<InvitationSendResult> => {
+    const response = await apiClient.post<InvitationSendResult>(`/weddings/${weddingId}/guests/send-invitations`, data);
+    return response.data;
   },
 };

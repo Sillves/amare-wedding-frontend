@@ -111,3 +111,23 @@ export type EventGuestBatchChangeResult = components['schemas']['EventGuestBatch
  * Status enum for batch guest operations - Auto-generated from OpenAPI
  */
 export type EventGuestChangeResult = components['schemas']['EventGuestChangeResult'];
+
+/**
+ * Request payload for removing multiple guests from an event - Auto-generated from OpenAPI
+ */
+export type RemoveGuestsFromEventRequest = components['schemas']['RemoveGuestsFromEventRequestDto'];
+
+/**
+ * Result of removing multiple guests from an event - Auto-generated from OpenAPI
+ */
+export type EventGuestBatchRemoveResult = components['schemas']['EventGuestBatchRemoveResultDto'];
+
+/**
+ * Request payload for sending invitations to multiple guests - Auto-generated from OpenAPI
+ */
+export type SendInvitationsRequest = components['schemas']['SendInvitationsRequestDto'];
+
+/**
+ * Result of sending invitations to multiple guests - Auto-generated from OpenAPI
+ */
+export type InvitationSendResult = components['schemas']['InvitationSendResultDto'];

@@ -4,7 +4,9 @@ import type {
   CreateEventRequest,
   UpdateEventRequest,
   AddGuestsToEventRequest,
-  EventGuestBatchChangeResult
+  EventGuestBatchChangeResult,
+  RemoveGuestsFromEventRequest,
+  EventGuestBatchRemoveResult
 } from '@/features/weddings/types';
 
 /**
@@ -101,5 +103,16 @@ export const eventsApi = {
    */
   removeGuest: async (eventId: string, guestId: string): Promise<void> => {
     await apiClient.delete(`/events/${eventId}/guests/${guestId}`);
+  },
+
+  /**
+   * Remove multiple guests from an event (bulk operation)
+   * @param eventId - Event UUID
+   * @param data - Request payload with guest IDs
+   * @returns Promise<EventGuestBatchRemoveResult>
+   */
+  removeGuests: async (eventId: string, data: RemoveGuestsFromEventRequest): Promise<EventGuestBatchRemoveResult> => {
+    const response = await apiClient.delete<EventGuestBatchRemoveResult>(`/events/${eventId}/guests`, { data });
+    return response.data;
   },
 };

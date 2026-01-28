@@ -6,15 +6,16 @@ import type { CreateWeddingRequest, UpdateWeddingRequest } from '../types';
 /**
  * Hook for fetching all weddings
  * Only executes when a valid token exists
+ * @param options - Optional query options
  * @returns React Query query for fetching weddings list
  */
-export function useWeddings() {
+export function useWeddings(options?: { enabled?: boolean }) {
   const token = useAuthStore((state) => state.token);
 
   return useQuery({
     queryKey: ['weddings'],
     queryFn: weddingApi.getAll,
-    enabled: !!token,
+    enabled: options?.enabled !== undefined ? (options.enabled && !!token) : !!token,
   });
 }
 

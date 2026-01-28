@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Trash2, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Pencil, Trash2, Mail, ChevronLeft, ChevronRight, Send } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -25,6 +26,7 @@ interface GuestTableProps {
   onEdit: (guest: GuestDto) => void;
   onDelete: (guest: GuestDto) => void;
   onSendInvitation: (guest: GuestDto) => void;
+  onBulkSendInvitations?: (guestIds: string[]) => void;
 }
 
 /**
@@ -64,12 +66,13 @@ function getRsvpStatusKey(status: RsvpStatus): string {
   }
 }
 
-export function GuestTable({ guests, onEdit, onDelete, onSendInvitation }: GuestTableProps) {
+export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkSendInvitations }: GuestTableProps) {
   const { t } = useTranslation('guests');
   const [sortField, setSortField] = useState<'name' | 'email' | 'rsvpStatus'>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
+  const [selectedGuestIds, setSelectedGuestIds] = useState<Set<string>>(new Set());
 
   const handleSort = (field: 'name' | 'email' | 'rsvpStatus') => {
     if (sortField === field) {
@@ -118,6 +121,39 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation }: Guest
     setCurrentPage(1); // Reset to first page
   };
 
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      // Select all guests with email addresses (can send invitations)
+      const selectableIds = paginatedGuests
+        .filter(g => g.email && g.id)
+        .map(g => g.id!);
+      setSelectedGuestIds(new Set(selectableIds));
+    } else {
+      setSelectedGuestIds(new Set());
+    }
+  };
+
+  const handleSelectGuest = (guestId: string, checked: boolean) => {
+    const newSelected = new Set(selectedGuestIds);
+    if (checked) {
+      newSelected.add(guestId);
+    } else {
+      newSelected.delete(guestId);
+    }
+    setSelectedGuestIds(newSelected);
+  };
+
+  const handleBulkSend = () => {
+    if (onBulkSendInvitations && selectedGuestIds.size > 0) {
+      onBulkSendInvitations(Array.from(selectedGuestIds));
+      setSelectedGuestIds(new Set());
+    }
+  };
+
+  const selectableGuests = paginatedGuests.filter(g => g.email);
+  const allSelectableSelected = selectableGuests.length > 0 &&
+    selectableGuests.every(g => g.id && selectedGuestIds.has(g.id));
+
   if (guests.length === 0) {
     return (
       <div className="rounded-lg border border-dashed p-8 text-center">
@@ -129,12 +165,42 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation }: Guest
 
   return (
     <div className="space-y-4">
+      {/* Bulk Actions */}
+      {onBulkSendInvitations && (
+        <div className="flex items-center justify-between p-3 bg-muted rounded-md min-h-[52px]">
+          {selectedGuestIds.size > 0 ? (
+            <>
+              <span className="text-sm text-muted-foreground">
+                {selectedGuestIds.size} {t('common:selected')}
+              </span>
+              <Button onClick={handleBulkSend} size="sm">
+                <Send className="h-4 w-4 mr-2" />
+                {t('actions.sendInvite')} ({selectedGuestIds.size})
+              </Button>
+            </>
+          ) : (
+            <span className="text-sm text-muted-foreground">
+              Select guests to send invitations
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Table with fixed height and scroll */}
       <div className="rounded-md border">
         <div className="max-h-[600px] overflow-y-auto">
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
+                {onBulkSendInvitations && (
+                  <TableHead className="w-[50px]">
+                    <Checkbox
+                      checked={allSelectableSelected}
+                      onCheckedChange={handleSelectAll}
+                      aria-label="Select all"
+                    />
+                  </TableHead>
+                )}
                 <TableHead
                   className="cursor-pointer hover:text-foreground"
                   onClick={() => handleSort('name')}
@@ -161,7 +227,30 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation }: Guest
             </TableHeader>
             <TableBody>
               {paginatedGuests.map((guest) => (
-                <TableRow key={guest.id}>
+                <TableRow
+                  key={guest.id}
+                  className={onBulkSendInvitations && guest.email ? "cursor-pointer" : ""}
+                  onClick={(e) => {
+                    // Only toggle selection if clicking the row (not action buttons)
+                    if (onBulkSendInvitations && guest.email && guest.id) {
+                      const target = e.target as HTMLElement;
+                      // Don't select if clicking buttons or their children
+                      if (!target.closest('button')) {
+                        handleSelectGuest(guest.id, !selectedGuestIds.has(guest.id));
+                      }
+                    }
+                  }}
+                >
+                  {onBulkSendInvitations && (
+                    <TableCell onClick={(e) => e.stopPropagation()}>
+                      <Checkbox
+                        checked={guest.id ? selectedGuestIds.has(guest.id) : false}
+                        onCheckedChange={(checked) => guest.id && handleSelectGuest(guest.id, checked as boolean)}
+                        aria-label={`Select ${guest.name}`}
+                        disabled={!guest.email}
+                      />
+                    </TableCell>
+                  )}
                   <TableCell className="font-medium">{guest.name || '-'}</TableCell>
                   <TableCell>{guest.email || '-'}</TableCell>
                   <TableCell>
@@ -169,7 +258,7 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation }: Guest
                       {t(getRsvpStatusKey(guest.rsvpStatus ?? 0))}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                     <div className="flex justify-end gap-2">
                       <Button
                         variant="ghost"

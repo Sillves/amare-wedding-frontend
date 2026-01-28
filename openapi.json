@@ -74,6 +74,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResult"
+                }
+              }
+            }
           }
         }
       }
@@ -111,6 +121,56 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EventGuestBatchChangeResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Events"
+        ],
+        "operationId": "RemoveGuestsFromEvent",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveGuestsFromEventRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventGuestBatchRemoveResultDto"
                 }
               }
             }
@@ -1330,6 +1390,31 @@
         },
         "additionalProperties": false
       },
+      "EventGuestBatchRemoveResultDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/EventGuestChangeResult"
+          },
+          "removedGuestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "notInEventGuestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "EventGuestChangeResult": {
         "enum": [
           0,
@@ -1540,6 +1625,20 @@
           },
           "password": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RemoveGuestsFromEventRequestDto": {
+        "type": "object",
+        "properties": {
+          "guestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
             "nullable": true
           }
         },

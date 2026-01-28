@@ -15,7 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useGuests } from '@/features/guests/hooks/useGuests';
-import { useAddGuestsToEvent, useRemoveGuestFromEvent, useEvent } from '../hooks/useEvents';
+import { useAddGuestsToEvent, useRemoveGuestsFromEvent, useEvent } from '../hooks/useEvents';
 import type { EventDto, GuestDto } from '@/features/weddings/types';
 
 interface ManageEventGuestsDialogProps {
@@ -37,7 +37,7 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
 
   const { data: allGuests } = useGuests(currentEvent?.weddingId || '');
   const addGuestsToEvent = useAddGuestsToEvent();
-  const removeGuestFromEvent = useRemoveGuestFromEvent();
+  const removeGuestsFromEvent = useRemoveGuestsFromEvent();
 
   // Get IDs of guests already invited to this event
   const invitedGuestIds = useMemo(() => {
@@ -114,11 +114,10 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
     if (!currentEvent) return;
 
     try {
-      await Promise.all(
-        Array.from(selectedGuestIds).map(guestId =>
-          removeGuestFromEvent.mutateAsync({ eventId: currentEvent.id!, guestId })
-        )
-      );
+      await removeGuestsFromEvent.mutateAsync({
+        eventId: currentEvent.id!,
+        guestIds: Array.from(selectedGuestIds)
+      });
       setSelectedGuestIds(new Set());
     } catch (error) {
       // Error handled by React Query
@@ -137,7 +136,7 @@ export function ManageEventGuestsDialog({ event, open, onOpenChange }: ManageEve
     setSelectedGuestIds(new Set()); // Clear selection when switching tabs
   };
 
-  const isPending = addGuestsToEvent.isPending || removeGuestFromEvent.isPending;
+  const isPending = addGuestsToEvent.isPending || removeGuestsFromEvent.isPending;
 
   const renderGuestList = (guests: GuestDto[], emptyMessage: string, onSelectAll: () => void) => {
     return (

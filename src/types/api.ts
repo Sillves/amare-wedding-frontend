@@ -46,7 +46,7 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["AddGuestsToEvent"];
-        delete?: never;
+        delete: operations["RemoveGuestsFromEvent"];
         options?: never;
         head?: never;
         patch?: never;
@@ -384,6 +384,11 @@ export interface components {
             alreadyInEventGuestIds?: string[] | null;
             notFoundGuestIds?: string[] | null;
         };
+        EventGuestBatchRemoveResultDto: {
+            status?: components["schemas"]["EventGuestChangeResult"];
+            removedGuestIds?: string[] | null;
+            notInEventGuestIds?: string[] | null;
+        };
         /**
          * Format: int32
          * @enum {integer}
@@ -455,6 +460,9 @@ export interface components {
             firstName?: string | null;
             lastName?: string | null;
             password?: string | null;
+        };
+        RemoveGuestsFromEventRequestDto: {
+            guestIds?: string[] | null;
         };
         /**
          * Format: int32
@@ -651,6 +659,15 @@ export interface operations {
                     "application/json": components["schemas"]["AuthResult"];
                 };
             };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthResult"];
+                };
+            };
         };
     };
     AddGuestsToEvent: {
@@ -675,6 +692,60 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EventGuestBatchChangeResultDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RemoveGuestsFromEvent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eventId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RemoveGuestsFromEventRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventGuestBatchRemoveResultDto"];
                 };
             };
             /** @description Bad Request */

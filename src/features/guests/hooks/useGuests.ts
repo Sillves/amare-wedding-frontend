@@ -40,8 +40,8 @@ export function useCreateGuest() {
     mutationFn: ({ weddingId, data }: { weddingId: string; data: CreateGuestRequest }) =>
       guestsApi.create(weddingId, data),
     onSuccess: (_, variables) => {
+      // Only invalidate the guests list for this specific wedding
       queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
-      queryClient.invalidateQueries({ queryKey: ['weddings'] });
     },
   });
 }
@@ -58,9 +58,9 @@ export function useUpdateGuest() {
     mutationFn: ({ guestId, data }: { guestId: string; data: UpdateGuestRequest }) =>
       guestsApi.update(guestId, data),
     onSuccess: (data) => {
+      // Only invalidate the guest list and specific guest detail
       queryClient.invalidateQueries({ queryKey: ['guests', data.weddingId] });
       queryClient.invalidateQueries({ queryKey: ['guests', 'detail', data.id] });
-      queryClient.invalidateQueries({ queryKey: ['weddings'] });
     },
   });
 }
@@ -77,8 +77,8 @@ export function useDeleteGuest() {
     mutationFn: ({ guestId, weddingId }: { guestId: string; weddingId: string }) =>
       guestsApi.delete(guestId),
     onSuccess: (_, variables) => {
+      // Only invalidate the guests list for this specific wedding
       queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
-      queryClient.invalidateQueries({ queryKey: ['weddings'] });
     },
   });
 }
@@ -95,8 +95,28 @@ export function useSendGuestInvitation() {
     mutationFn: ({ weddingId, guestId }: { weddingId: string; guestId: string }) =>
       guestsApi.sendInvitation(weddingId, guestId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
+      // Only invalidate the specific guest detail - the guest list doesn't change
       queryClient.invalidateQueries({ queryKey: ['guests', 'detail', variables.guestId] });
+    },
+  });
+}
+
+/**
+ * Hook for sending invitation emails to multiple guests (bulk operation)
+ * Automatically invalidates relevant queries on success to refresh invitation status
+ * @returns React Query mutation for sending multiple guest invitations
+ */
+export function useSendGuestInvitations() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ weddingId, guestIds }: { weddingId: string; guestIds: string[] }) =>
+      guestsApi.sendInvitations(weddingId, { guestIds }),
+    onSuccess: (_, variables) => {
+      // Only invalidate the specific guest details - the guest list doesn't change
+      variables.guestIds.forEach(guestId => {
+        queryClient.invalidateQueries({ queryKey: ['guests', 'detail', guestId] });
+      });
     },
   });
 }

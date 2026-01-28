@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Users, UserCheck, UserX, Clock } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
-import { useGuests } from '@/features/guests/hooks/useGuests';
+import { useGuests, useSendGuestInvitations } from '@/features/guests/hooks/useGuests';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -28,11 +28,18 @@ export function GuestsPage() {
   const { user } = useAuth();
   const logout = useLogout();
 
-  const { data: weddings, isLoading: weddingsLoading } = useWeddings();
+  const weddingIdFromUrl = searchParams.get('weddingId');
 
-  // Get wedding ID from URL params or use first wedding
-  const selectedWeddingId = searchParams.get('weddingId') || weddings?.[0]?.id || '';
+  // Optimization: Only fetch all weddings if we don't have a weddingId in URL
+  // When weddingId is in URL, we already have context and don't need to fetch all weddings
+  const { data: weddings, isLoading: weddingsLoading } = useWeddings({
+    enabled: !weddingIdFromUrl
+  });
+
+  // Get wedding ID from URL params or use first wedding (when no URL param)
+  const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
   const { data: guests, isLoading: guestsLoading, error } = useGuests(selectedWeddingId);
+  const sendBulkInvitations = useSendGuestInvitations();
 
   const [editingGuest, setEditingGuest] = useState<GuestDto | null>(null);
   const [deletingGuest, setDeletingGuest] = useState<GuestDto | null>(null);
@@ -55,6 +62,21 @@ export function GuestsPage() {
     setSearchParams({ weddingId });
   };
 
+  const handleBulkSendInvitations = async (guestIds: string[]) => {
+    if (!selectedWeddingId) return;
+
+    try {
+      await sendBulkInvitations.mutateAsync({
+        weddingId: selectedWeddingId,
+        guestIds
+      });
+      // Success - React Query will handle cache invalidation
+    } catch (error) {
+      // Error handled by React Query
+      console.error('Failed to send bulk invitations:', error);
+    }
+  };
+
   const selectedWedding = weddings?.find((w) => w.id === selectedWeddingId);
 
   if (weddingsLoading) {
@@ -65,7 +87,7 @@ export function GuestsPage() {
     );
   }
 
-  if (!weddings || weddings.length === 0) {
+  if (!weddingIdFromUrl && (!weddings || weddings.length === 0)) {
     return (
       <div className="min-h-screen bg-muted/40">
         <header className="border-b bg-background">
@@ -116,7 +138,7 @@ export function GuestsPage() {
             <p className="text-muted-foreground">{t('guests:manageDescription')}</p>
           </div>
           <div className="flex items-center gap-2">
-            {weddings.length > 1 && (
+            {weddings && weddings.length > 1 && (
               <Select value={selectedWeddingId} onValueChange={handleWeddingChange}>
                 <SelectTrigger className="w-[250px]">
                   <SelectValue placeholder={t('weddings:selectWedding')} />
@@ -207,13 +229,15 @@ export function GuestsPage() {
         </div>
 
         {/* Guests Table */}
-        {selectedWedding && (
+        {selectedWeddingId && (
           <Card>
             <CardHeader>
               <CardTitle>{t('guests:guestList')}</CardTitle>
-              <CardDescription>
-                {t('guests:guestListDescription', { wedding: selectedWedding.title })}
-              </CardDescription>
+              {selectedWedding && (
+                <CardDescription>
+                  {t('guests:guestListDescription', { wedding: selectedWedding.title })}
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent>
               {guestsLoading ? (
@@ -230,6 +254,7 @@ export function GuestsPage() {
                   onEdit={setEditingGuest}
                   onDelete={setDeletingGuest}
                   onSendInvitation={setSendingInvitationGuest}
+                  onBulkSendInvitations={handleBulkSendInvitations}
                 />
               )}
             </CardContent>

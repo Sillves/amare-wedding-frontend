@@ -28,10 +28,18 @@ export function EventsPage() {
   const { user } = useAuth();
   const logout = useLogout();
 
-  const { data: weddings, isLoading: weddingsLoading } = useWeddings();
+  const weddingIdFromUrl = searchParams.get('weddingId');
 
-  // Get wedding ID from URL params or use first wedding
-  const selectedWeddingId = searchParams.get('weddingId') || weddings?.[0]?.id || '';
+  // Optimization: Only fetch all weddings if we don't have a weddingId in URL
+  // When weddingId is in URL, we already have context and don't need to fetch all weddings
+  const { data: weddings, isLoading: weddingsLoading } = useWeddings({
+    enabled: !weddingIdFromUrl
+  });
+
+  // Get wedding ID from URL params or use first wedding (when no URL param)
+  const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
+
+  // Fetch events for the selected wedding
   const { data: events, isLoading: eventsLoading, error } = useEvents(selectedWeddingId);
 
   const [editingEvent, setEditingEvent] = useState<EventDto | null>(null);
@@ -58,7 +66,7 @@ export function EventsPage() {
     );
   }
 
-  if (!weddings || weddings.length === 0) {
+  if (!weddingIdFromUrl && (!weddings || weddings.length === 0)) {
     return (
       <div className="min-h-screen bg-muted/40">
         <header className="border-b bg-background">
@@ -109,7 +117,7 @@ export function EventsPage() {
             <p className="text-muted-foreground">{t('events:manageDescription')}</p>
           </div>
           <div className="flex items-center gap-2">
-            {weddings.length > 1 && (
+            {weddings && weddings.length > 1 && (
               <Select value={selectedWeddingId} onValueChange={handleWeddingChange}>
                 <SelectTrigger className="w-[250px]">
                   <SelectValue placeholder={t('weddings:selectWedding')} />
@@ -133,13 +141,15 @@ export function EventsPage() {
         </div>
 
         {/* Events List */}
-        {selectedWedding && (
+        {selectedWeddingId && (
           <Card>
             <CardHeader>
               <CardTitle>{t('events:eventList')}</CardTitle>
-              <CardDescription>
-                {t('events:eventListDescription', { wedding: selectedWedding.title })}
-              </CardDescription>
+              {selectedWedding && (
+                <CardDescription>
+                  {t('events:eventListDescription', { wedding: selectedWedding.title })}
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent>
               {eventsLoading ? (
