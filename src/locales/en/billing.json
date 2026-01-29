@@ -1,0 +1,69 @@
+{
+  "title": "Choose Your Plan",
+  "subtitle": "Start planning your perfect wedding with the right plan for you",
+  "monthly": "Monthly",
+  "annual": "Annual",
+  "lifetime": "Lifetime",
+  "oneTime": "One-time",
+  "savePercent": "Save {{percent}}%",
+  "popular": "Most Popular",
+  "currentPlan": "Current Plan",
+  "free": "Free",
+  "perMonth": "/month",
+  "perYear": "/year",
+  "subscribe": "Subscribe",
+  "getStartedFree": "Get Started Free",
+  "notAvailable": "Not available",
+  "cancelAnytime": "All paid plans include a 14-day money-back guarantee. Cancel anytime.",
+  "backToDashboard": "Back to Dashboard",
+  "limits": {
+    "guests_one": "{{count}} guest",
+    "guests_other": "{{count}} guests",
+    "events_one": "{{count}} event",
+    "events_other": "{{count}} events",
+    "emails_one": "{{count}} email/month",
+    "emails_other": "{{count}} emails/month",
+    "unlimitedGuests": "Unlimited guests",
+    "unlimitedEvents": "Unlimited events",
+    "unlimitedEmails": "Unlimited emails"
+  },
+  "plans": {
+    "free": {
+      "name": "Free",
+      "description": "Perfect for small weddings"
+    },
+    "starter": {
+      "name": "Starter",
+      "description": "Great for medium-sized weddings"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "For large weddings and professionals"
+    }
+  },
+  "features": {
+    "basicRsvp": "Basic RSVP tracking",
+    "advancedRsvp": "Advanced RSVP with reminders",
+    "emailSupport": "Email support",
+    "prioritySupport": "Priority support",
+    "customDomain": "Custom domain",
+    "analytics": "Analytics & reports"
+  },
+  "success": {
+    "title": "Payment Successful!",
+    "description": "Thank you for subscribing. Your plan has been activated.",
+    "processingNote": "Your subscription is being processed. It may take a few moments for all features to become available.",
+    "goToDashboard": "Go to Dashboard",
+    "redirecting": "Redirecting in {{seconds}} seconds...",
+    "sessionId": "Session ID"
+  },
+  "changePlan": {
+    "title": "Change Plan",
+    "description": "Update your subscription plan",
+    "currentPlan": "Current Plan",
+    "newPlan": "New Plan",
+    "confirm": "Confirm Change",
+    "success": "Plan changed successfully",
+    "error": "Failed to change plan"
+  }
+}

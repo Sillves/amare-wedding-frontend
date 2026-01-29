@@ -1,0 +1,19 @@
+{
+  "title": "Profile",
+  "subtitle": "Manage your account and subscription",
+  "backToDashboard": "Back to Dashboard",
+  "accountInfo": {
+    "title": "Account Information",
+    "description": "Your personal details"
+  },
+  "subscription": {
+    "title": "Subscription",
+    "description": "Your current plan and billing",
+    "active": "Active",
+    "free": "Free Plan",
+    "upgrade": "Upgrade Plan",
+    "changePlan": "Change Plan",
+    "manage": "Manage Subscription",
+    "upgradePrompt": "Upgrade to unlock more guests, events, and premium features."
+  }
+}

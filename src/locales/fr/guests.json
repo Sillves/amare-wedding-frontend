@@ -83,5 +83,14 @@
     "successMessage": "L'email d'invitation a été envoyé à {{email}}",
     "error": "Échec de l'envoi",
     "errorMessage": "Une erreur s'est produite lors de l'envoi de l'invitation. Veuillez réessayer."
+  },
+  "bulkInvitation": {
+    "title": "Envoyer {{count}} invitation?",
+    "title_plural": "Envoyer {{count}} invitations?",
+    "message": "Vous êtes sur le point d'envoyer des emails d'invitation à {{count}} invité.",
+    "message_plural": "Vous êtes sur le point d'envoyer des emails d'invitation à {{count}} invités.",
+    "confirm": "Êtes-vous sûr de vouloir continuer?",
+    "confirmButton": "Envoyer les invitations",
+    "cancel": "Annuler"
   }
 }

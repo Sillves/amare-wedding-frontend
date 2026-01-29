@@ -3,6 +3,7 @@
   "tagline": "Your wedding, perfectly planned",
   "language": "Language",
   "loading": "Loading...",
+  "profile": "Profile",
   "error": "An error occurred",
   "success": "Success!",
   "cancel": "Cancel",
@@ -58,6 +59,9 @@
     "allSetDescription": "Your wedding planning is well underway",
     "addGuest": "Add Guest",
     "addEvent": "Add Event",
-    "sendInvites": "Send Invites"
+    "sendInvites": "Send Invites",
+    "upgradePlan": "Upgrade your plan",
+    "upgradePlanDescription": "Unlock more guests, events, and premium features",
+    "viewPlans": "View Plans"
   }
 }

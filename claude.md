@@ -47,6 +47,7 @@ This document provides context for AI assistants (like Claude) and developers wo
    ```
    src/features/
    ├── auth/
+   ├── billing/
    ├── weddings/
    ├── guests/
    └── events/
@@ -89,6 +90,38 @@ This document provides context for AI assistants (like Claude) and developers wo
   - Event guest management dialog
   - Bulk invitation dialog
 - Proper i18n pluralization support
+
+### Billing & Subscription (Jan 2026)
+- **Dynamic Pricing**: Fetches plans from `/api/billing/plans` (tier, limits, features, prices)
+- **Stripe Checkout**: New subscribers redirected to Stripe Checkout
+- **Stripe Billing Portal**: Existing subscribers manage subscription via portal
+- **Profile Page**: View account info and subscription status
+- **Billing Routes**:
+  - `/pricing` - View plans (unauthenticated & authenticated)
+  - `/billing` - Redirects to `/profile` (portal return URL)
+  - `/billing/success` - Post-checkout success page
+  - `/billing/cancel` - Checkout cancellation redirect
+
+### Billing Flow
+```
+New User → /pricing → Select Plan → /register → Stripe Checkout → /billing/success
+Existing Free User → /pricing → Select Plan → Stripe Checkout → /billing/success
+Existing Paid User → /profile → Manage Subscription → Stripe Portal → /billing → /profile
+```
+
+### Subscription Tiers (Enum)
+```typescript
+0 = Free
+1 = Starter
+2 = Pro
+```
+
+### Billing Intervals (Enum)
+```typescript
+0 = Monthly
+1 = Annual
+2 = Lifetime
+```
 
 ---
 

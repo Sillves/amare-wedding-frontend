@@ -11,9 +11,10 @@ import {
   Send,
   Plus,
   ArrowRight,
-  CalendarDays
+  CalendarDays,
+  Sparkles
 } from 'lucide-react';
-import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
+import { useAuth, useLogout, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useGuests } from '@/features/guests/hooks/useGuests';
 import { useEvents } from '@/features/events/hooks/useEvents';
@@ -26,11 +27,14 @@ import { CreateEventDialog } from '@/features/events/components/CreateEventDialo
 import { format, formatDistanceToNow, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
 
 export function DashboardPage() {
-  const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth']);
+  const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing']);
   const { user } = useAuth();
   const logout = useLogout();
   const navigate = useNavigate();
   const { data: weddings, isLoading } = useWeddings();
+
+  // Fetch current user to get subscription tier
+  useCurrentUser();
 
   // For now, focus on the first wedding (wedding couples typically have one)
   const wedding = weddings?.[0];
@@ -122,7 +126,10 @@ export function DashboardPage() {
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
             <h1 className="text-xl font-bold">{t('common:appName')}</h1>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">{user?.name}</span>
+              <span className="text-sm text-muted-foreground">{user?.email}</span>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
+                {t('common:profile')}
+              </Button>
               <Button variant="outline" size="sm" onClick={logout}>
                 {t('auth:logout')}
               </Button>
@@ -163,7 +170,10 @@ export function DashboardPage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <h1 className="text-xl font-bold">{t('common:appName')}</h1>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">{user?.name}</span>
+            <span className="text-sm text-muted-foreground">{user?.email}</span>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
+              {t('common:profile')}
+            </Button>
             <Button variant="outline" size="sm" onClick={logout}>
               {t('auth:logout')}
             </Button>
@@ -435,6 +445,22 @@ export function DashboardPage() {
                   </div>
                   <Button size="sm" onClick={() => navigate(`/guests?weddingId=${wedding?.id}`)}>
                     {t('common:dashboard.sendInvites')}
+                  </Button>
+                </div>
+              )}
+
+              {/* Upgrade prompt for Free tier users */}
+              {(user?.subscriptionTier === undefined || user?.subscriptionTier === 0) && (
+                <div className="flex items-start gap-3 p-3 rounded-lg border border-primary/30 bg-primary/5">
+                  <Sparkles className="h-5 w-5 text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">{t('common:dashboard.upgradePlan')}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t('common:dashboard.upgradePlanDescription')}
+                    </p>
+                  </div>
+                  <Button size="sm" variant="default" onClick={() => navigate('/pricing')}>
+                    {t('common:dashboard.viewPlans')}
                   </Button>
                 </div>
               )}

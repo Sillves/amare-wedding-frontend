@@ -42,14 +42,25 @@ export interface RegisterRequest {
 export type AuthResult = components['schemas']['AuthResult'];
 
 /**
+ * User profile from /api/auth/me endpoint
+ */
+export type UserProfileDto = components['schemas']['UserProfileDto'];
+
+/**
+ * Subscription tier enum (0=Free, 1=Starter, 2=Pro)
+ */
+export type SubscriptionTier = components['schemas']['SubscriptionTier'];
+
+/**
  * User data stored in the application
- * Simplified client-side representation
+ * Includes subscription tier from profile
  */
 export interface User {
   id: string;
   email: string;
   firstName: string;
   lastName: string;
+  subscriptionTier?: SubscriptionTier;
 }
 
 /**

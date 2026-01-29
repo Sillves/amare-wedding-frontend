@@ -1,0 +1,19 @@
+{
+  "title": "Profil",
+  "subtitle": "Gérez votre compte et votre abonnement",
+  "backToDashboard": "Retour au tableau de bord",
+  "accountInfo": {
+    "title": "Informations du compte",
+    "description": "Vos informations personnelles"
+  },
+  "subscription": {
+    "title": "Abonnement",
+    "description": "Votre forfait actuel et facturation",
+    "active": "Actif",
+    "free": "Forfait gratuit",
+    "upgrade": "Mettre à niveau",
+    "changePlan": "Changer de forfait",
+    "manage": "Gérer l'abonnement",
+    "upgradePrompt": "Passez à un forfait supérieur pour débloquer plus d'invités, d'événements et de fonctionnalités premium."
+  }
+}

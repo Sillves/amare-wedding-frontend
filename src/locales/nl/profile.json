@@ -1,0 +1,19 @@
+{
+  "title": "Profiel",
+  "subtitle": "Beheer uw account en abonnement",
+  "backToDashboard": "Terug naar dashboard",
+  "accountInfo": {
+    "title": "Accountgegevens",
+    "description": "Uw persoonlijke gegevens"
+  },
+  "subscription": {
+    "title": "Abonnement",
+    "description": "Uw huidige abonnement en facturering",
+    "active": "Actief",
+    "free": "Gratis abonnement",
+    "upgrade": "Upgraden",
+    "changePlan": "Abonnement wijzigen",
+    "manage": "Abonnement beheren",
+    "upgradePrompt": "Upgrade om meer gasten, evenementen en premium functies te ontgrendelen."
+  }
+}

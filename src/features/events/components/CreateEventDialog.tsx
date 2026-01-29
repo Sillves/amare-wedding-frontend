@@ -34,7 +34,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!name.trim() || !startDate) {
+    if (!name.trim() || !startDate || !location.trim()) {
       return;
     }
 
@@ -46,7 +46,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
       name: name.trim(),
       startDate: startDateISO,
       endDate: endDateISO,
-      location: location.trim() || null,
+      location: location.trim(),
       description: description.trim() || null,
     };
 
@@ -121,12 +121,15 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="location">{t('form.location')}</Label>
+              <Label htmlFor="location">
+                {t('form.location')} <span className="text-destructive">*</span>
+              </Label>
               <Input
                 id="location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder={t('form.locationPlaceholder')}
+                required
               />
             </div>
             <div className="grid gap-2">
@@ -144,7 +147,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               {t('actions.cancel')}
             </Button>
-            <Button type="submit" disabled={createEvent.isPending || !name.trim() || !startDate}>
+            <Button type="submit" disabled={createEvent.isPending || !name.trim() || !startDate || !location.trim()}>
               {createEvent.isPending ? t('actions.creating') : t('actions.create')}
             </Button>
           </DialogFooter>

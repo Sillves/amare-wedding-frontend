@@ -1,0 +1,69 @@
+{
+  "title": "Choisissez votre forfait",
+  "subtitle": "Commencez à planifier votre mariage parfait avec le forfait qui vous convient",
+  "monthly": "Mensuel",
+  "annual": "Annuel",
+  "lifetime": "À vie",
+  "oneTime": "Paiement unique",
+  "savePercent": "Économisez {{percent}}%",
+  "popular": "Le plus populaire",
+  "currentPlan": "Forfait actuel",
+  "free": "Gratuit",
+  "perMonth": "/mois",
+  "perYear": "/an",
+  "subscribe": "S'abonner",
+  "getStartedFree": "Commencer gratuitement",
+  "notAvailable": "Non disponible",
+  "cancelAnytime": "Tous les forfaits payants incluent une garantie de remboursement de 14 jours. Annulez à tout moment.",
+  "backToDashboard": "Retour au tableau de bord",
+  "limits": {
+    "guests_one": "{{count}} invité",
+    "guests_other": "{{count}} invités",
+    "events_one": "{{count}} événement",
+    "events_other": "{{count}} événements",
+    "emails_one": "{{count}} email/mois",
+    "emails_other": "{{count}} emails/mois",
+    "unlimitedGuests": "Invités illimités",
+    "unlimitedEvents": "Événements illimités",
+    "unlimitedEmails": "Emails illimités"
+  },
+  "plans": {
+    "free": {
+      "name": "Gratuit",
+      "description": "Parfait pour les petits mariages"
+    },
+    "starter": {
+      "name": "Starter",
+      "description": "Idéal pour les mariages de taille moyenne"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Pour les grands mariages et les professionnels"
+    }
+  },
+  "features": {
+    "basicRsvp": "Suivi RSVP de base",
+    "advancedRsvp": "RSVP avancé avec rappels",
+    "emailSupport": "Support par email",
+    "prioritySupport": "Support prioritaire",
+    "customDomain": "Domaine personnalisé",
+    "analytics": "Analyses et rapports"
+  },
+  "success": {
+    "title": "Paiement réussi!",
+    "description": "Merci pour votre abonnement. Votre forfait a été activé.",
+    "processingNote": "Votre abonnement est en cours de traitement. Il peut falloir quelques instants pour que toutes les fonctionnalités soient disponibles.",
+    "goToDashboard": "Aller au tableau de bord",
+    "redirecting": "Redirection dans {{seconds}} secondes...",
+    "sessionId": "ID de session"
+  },
+  "changePlan": {
+    "title": "Changer de forfait",
+    "description": "Mettez à jour votre abonnement",
+    "currentPlan": "Forfait actuel",
+    "newPlan": "Nouveau forfait",
+    "confirm": "Confirmer le changement",
+    "success": "Forfait modifié avec succès",
+    "error": "Échec du changement de forfait"
+  }
+}

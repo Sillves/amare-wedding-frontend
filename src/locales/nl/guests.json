@@ -83,5 +83,14 @@
     "successMessage": "De uitnodigingsmail is verstuurd naar {{email}}",
     "error": "Verzenden mislukt",
     "errorMessage": "Er is een fout opgetreden bij het versturen van de uitnodiging. Probeer het opnieuw."
+  },
+  "bulkInvitation": {
+    "title": "{{count}} uitnodiging versturen?",
+    "title_plural": "{{count}} uitnodigingen versturen?",
+    "message": "U staat op het punt om uitnodigingsmails te versturen naar {{count}} gast.",
+    "message_plural": "U staat op het punt om uitnodigingsmails te versturen naar {{count}} gasten.",
+    "confirm": "Weet u zeker dat u wilt doorgaan?",
+    "confirmButton": "Uitnodigingen versturen",
+    "cancel": "Annuleren"
   }
 }

@@ -1,0 +1,69 @@
+{
+  "title": "Kies uw abonnement",
+  "subtitle": "Begin met het plannen van uw perfecte bruiloft met het juiste abonnement voor u",
+  "monthly": "Maandelijks",
+  "annual": "Jaarlijks",
+  "lifetime": "Levenslang",
+  "oneTime": "Eenmalig",
+  "savePercent": "Bespaar {{percent}}%",
+  "popular": "Meest populair",
+  "currentPlan": "Huidig abonnement",
+  "free": "Gratis",
+  "perMonth": "/maand",
+  "perYear": "/jaar",
+  "subscribe": "Abonneren",
+  "getStartedFree": "Gratis starten",
+  "notAvailable": "Niet beschikbaar",
+  "cancelAnytime": "Alle betaalde abonnementen hebben een 14-dagen geld-terug-garantie. Op elk moment opzegbaar.",
+  "backToDashboard": "Terug naar dashboard",
+  "limits": {
+    "guests_one": "{{count}} gast",
+    "guests_other": "{{count}} gasten",
+    "events_one": "{{count}} evenement",
+    "events_other": "{{count}} evenementen",
+    "emails_one": "{{count}} e-mail/maand",
+    "emails_other": "{{count}} e-mails/maand",
+    "unlimitedGuests": "Onbeperkt aantal gasten",
+    "unlimitedEvents": "Onbeperkt aantal evenementen",
+    "unlimitedEmails": "Onbeperkt aantal e-mails"
+  },
+  "plans": {
+    "free": {
+      "name": "Gratis",
+      "description": "Perfect voor kleine bruiloften"
+    },
+    "starter": {
+      "name": "Starter",
+      "description": "Ideaal voor middelgrote bruiloften"
+    },
+    "pro": {
+      "name": "Pro",
+      "description": "Voor grote bruiloften en professionals"
+    }
+  },
+  "features": {
+    "basicRsvp": "Basis RSVP-tracking",
+    "advancedRsvp": "Geavanceerde RSVP met herinneringen",
+    "emailSupport": "E-mailondersteuning",
+    "prioritySupport": "Prioriteitsondersteuning",
+    "customDomain": "Eigen domein",
+    "analytics": "Analyses & rapporten"
+  },
+  "success": {
+    "title": "Betaling geslaagd!",
+    "description": "Bedankt voor uw abonnement. Uw plan is geactiveerd.",
+    "processingNote": "Uw abonnement wordt verwerkt. Het kan even duren voordat alle functies beschikbaar zijn.",
+    "goToDashboard": "Naar dashboard",
+    "redirecting": "Doorsturen over {{seconds}} seconden...",
+    "sessionId": "Sessie-ID"
+  },
+  "changePlan": {
+    "title": "Abonnement wijzigen",
+    "description": "Werk uw abonnement bij",
+    "currentPlan": "Huidig abonnement",
+    "newPlan": "Nieuw abonnement",
+    "confirm": "Wijziging bevestigen",
+    "success": "Abonnement succesvol gewijzigd",
+    "error": "Wijzigen van abonnement mislukt"
+  }
+}

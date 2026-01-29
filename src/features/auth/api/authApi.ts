@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/axios';
-import type { LoginRequest, RegisterRequest, AuthResult } from '../types';
+import type { LoginRequest, RegisterRequest, AuthResult, UserProfileDto } from '../types';
 
 /**
  * Authentication API endpoints
@@ -25,6 +25,16 @@ export const authApi = {
    */
   register: async (data: RegisterRequest): Promise<AuthResult> => {
     const response = await apiClient.post<AuthResult>('/auth/register', data);
+    return response.data;
+  },
+
+  /**
+   * Get current user profile including subscription tier
+   * @returns Promise<UserProfileDto> - User profile with subscription info
+   * @throws Error if the request fails or user is not authenticated
+   */
+  getCurrentUser: async (): Promise<UserProfileDto> => {
+    const response = await apiClient.get<UserProfileDto>('/auth/me');
     return response.data;
   },
 } as const;
