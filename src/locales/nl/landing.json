@@ -1,0 +1,79 @@
+{
+  "hero": {
+    "headline": "Plan Jullie Perfecte Bruiloft",
+    "subheadline": "Het alles-in-één platform voor bruiloftsplanning dat koppels helpt bij het beheren van gasten, RSVP's bijhouden en elk mooi moment organiseren.",
+    "cta": {
+      "getStarted": "Gratis Beginnen",
+      "viewPricing": "Bekijk Prijzen"
+    }
+  },
+  "features": {
+    "title": "Alles Wat Je Nodig Hebt voor Jullie Speciale Dag",
+    "subtitle": "Krachtige tools om het plannen van je bruiloft stressvrij te maken",
+    "guestManagement": {
+      "title": "Gastenbeheer",
+      "description": "Houd al je gasten op één plek bij. Voeg details, dieetwensen en contactgegevens toe."
+    },
+    "eventPlanning": {
+      "title": "Evenementplanning",
+      "description": "Plan je ceremonie, receptie en alle bruiloftsevenementen. Wijs gasten toe en beheer schema's moeiteloos."
+    },
+    "rsvpTracking": {
+      "title": "RSVP Bijhouden",
+      "description": "Ontvang realtime RSVP-updates. Zie in één oogopslag wie komt, nog moet reageren of heeft afgezegd."
+    },
+    "invitations": {
+      "title": "Digitale Uitnodigingen",
+      "description": "Stuur mooie uitnodigingen naar je gasten via e-mail. Volg wie ze heeft ontvangen en geopend."
+    }
+  },
+  "howItWorks": {
+    "title": "Plan Je Bruiloft in 3 Eenvoudige Stappen",
+    "subtitle": "Begin in minuten, niet in uren",
+    "step1": {
+      "title": "Maak Je Bruiloft Aan",
+      "description": "Registreer en stel je trouwdatum en details in"
+    },
+    "step2": {
+      "title": "Voeg Je Gasten Toe",
+      "description": "Importeer of voeg gasten toe en verstuur uitnodigingen"
+    },
+    "step3": {
+      "title": "Volg & Beheer",
+      "description": "Monitor RSVP's en plan je evenementen"
+    }
+  },
+  "comingSoon": {
+    "title": "Meer Functies Binnenkort",
+    "subtitle": "We bouwen actief nieuwe tools om jullie bruiloftsplanning nog makkelijker te maken",
+    "badge": "In Ontwikkeling",
+    "guestbook": {
+      "title": "Digitaal Gastenboek",
+      "description": "Laat je gasten hartelijke berichten en foto's achterlaten die je voor altijd kunt koesteren."
+    },
+    "expenses": {
+      "title": "Uitgaven Tracker",
+      "description": "Houd je bruiloftsbudget, betalingen en uitgaven allemaal op één plek bij."
+    },
+    "seating": {
+      "title": "Tafelschikking Planner",
+      "description": "Ontwerp je tafelschikking met een interactieve drag-and-drop tafelplanner."
+    },
+    "vendors": {
+      "title": "Leveranciers Overzicht",
+      "description": "Houd alle contactgegevens van je leveranciers op één plek - fotograaf, bloemist, cateraar, DJ, styliste en iedereen die helpt jullie dag perfect te maken."
+    }
+  },
+  "pricingCta": {
+    "title": "Klaar om te Beginnen met Plannen?",
+    "description": "Kies een abonnement dat past bij jullie bruiloft. Begin gratis, upgrade wanneer je meer nodig hebt.",
+    "cta": "Bekijk Abonnementen"
+  },
+  "footer": {
+    "copyright": "{{year}} Amare.Wedding. Alle rechten voorbehouden.",
+    "tagline": "Met liefde gemaakt voor jullie speciale dag"
+  },
+  "nav": {
+    "pricing": "Prijzen"
+  }
+}

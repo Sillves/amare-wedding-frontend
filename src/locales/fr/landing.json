@@ -1,0 +1,79 @@
+{
+  "hero": {
+    "headline": "Planifiez Votre Mariage Parfait",
+    "subheadline": "La plateforme tout-en-un de planification de mariage qui aide les couples à gérer les invités, suivre les RSVP et organiser chaque beau moment.",
+    "cta": {
+      "getStarted": "Commencer Gratuitement",
+      "viewPricing": "Voir les Tarifs"
+    }
+  },
+  "features": {
+    "title": "Tout Ce Dont Vous Avez Besoin pour Votre Jour Spécial",
+    "subtitle": "Des outils puissants pour rendre la planification de mariage sans stress",
+    "guestManagement": {
+      "title": "Gestion des Invités",
+      "description": "Gardez une trace de tous vos invités en un seul endroit. Ajoutez des détails, des exigences alimentaires et des coordonnées."
+    },
+    "eventPlanning": {
+      "title": "Planification d'Événements",
+      "description": "Planifiez votre cérémonie, réception et tous les événements du mariage. Assignez des invités et gérez les horaires sans effort."
+    },
+    "rsvpTracking": {
+      "title": "Suivi des RSVP",
+      "description": "Obtenez des mises à jour RSVP en temps réel. Voyez d'un coup d'œil qui participe, est en attente ou a décliné."
+    },
+    "invitations": {
+      "title": "Invitations Numériques",
+      "description": "Envoyez de belles invitations à vos invités par e-mail. Suivez qui les a reçues et ouvertes."
+    }
+  },
+  "howItWorks": {
+    "title": "Planifiez Votre Mariage en 3 Étapes Simples",
+    "subtitle": "Commencez en quelques minutes, pas en heures",
+    "step1": {
+      "title": "Créez Votre Mariage",
+      "description": "Inscrivez-vous et définissez votre date de mariage et vos détails"
+    },
+    "step2": {
+      "title": "Ajoutez Vos Invités",
+      "description": "Importez ou ajoutez des invités et envoyez des invitations"
+    },
+    "step3": {
+      "title": "Suivez & Gérez",
+      "description": "Surveillez les RSVP et planifiez vos événements"
+    }
+  },
+  "comingSoon": {
+    "title": "Plus de Fonctionnalités à Venir",
+    "subtitle": "Nous développons activement de nouveaux outils pour rendre la planification de votre mariage encore plus facile",
+    "badge": "En Développement",
+    "guestbook": {
+      "title": "Livre d'Or Numérique",
+      "description": "Permettez à vos invités de laisser des messages et des photos que vous pourrez chérir pour toujours."
+    },
+    "expenses": {
+      "title": "Suivi des Dépenses",
+      "description": "Gardez une trace de votre budget de mariage, des paiements et des dépenses au même endroit."
+    },
+    "seating": {
+      "title": "Plan de Table",
+      "description": "Concevez vos arrangements de places avec un planificateur de tables interactif."
+    },
+    "vendors": {
+      "title": "Annuaire des Prestataires",
+      "description": "Gardez tous les contacts de vos prestataires au même endroit - photographe, fleuriste, traiteur, DJ, styliste et tous ceux qui contribuent à rendre votre journée parfaite."
+    }
+  },
+  "pricingCta": {
+    "title": "Prêt à Commencer la Planification?",
+    "description": "Choisissez un forfait adapté à la taille de votre mariage. Commencez gratuitement, passez à un niveau supérieur quand vous en avez besoin.",
+    "cta": "Voir les Forfaits"
+  },
+  "footer": {
+    "copyright": "{{year}} Amare.Wedding. Tous droits réservés.",
+    "tagline": "Fait avec amour pour votre jour spécial"
+  },
+  "nav": {
+    "pricing": "Tarifs"
+  }
+}

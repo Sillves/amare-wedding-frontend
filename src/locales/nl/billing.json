@@ -14,6 +14,7 @@
   "subscribe": "Abonneren",
   "getStartedFree": "Gratis starten",
   "notAvailable": "Niet beschikbaar",
+  "notIncluded": "Niet inbegrepen",
   "cancelAnytime": "Alle betaalde abonnementen hebben een 14-dagen geld-terug-garantie. Op elk moment opzegbaar.",
   "backToDashboard": "Terug naar dashboard",
   "limits": {
@@ -42,12 +43,8 @@
     }
   },
   "features": {
-    "basicRsvp": "Basis RSVP-tracking",
-    "advancedRsvp": "Geavanceerde RSVP met herinneringen",
-    "emailSupport": "E-mailondersteuning",
-    "prioritySupport": "Prioriteitsondersteuning",
-    "customDomain": "Eigen domein",
-    "analytics": "Analyses & rapporten"
+    "custom_domain": "Eigen domein",
+    "priority_support": "Prioriteitsondersteuning"
   },
   "success": {
     "title": "Betaling geslaagd!",

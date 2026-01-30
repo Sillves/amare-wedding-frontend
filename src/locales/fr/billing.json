@@ -14,6 +14,7 @@
   "subscribe": "S'abonner",
   "getStartedFree": "Commencer gratuitement",
   "notAvailable": "Non disponible",
+  "notIncluded": "Non inclus",
   "cancelAnytime": "Tous les forfaits payants incluent une garantie de remboursement de 14 jours. Annulez à tout moment.",
   "backToDashboard": "Retour au tableau de bord",
   "limits": {
@@ -42,12 +43,8 @@
     }
   },
   "features": {
-    "basicRsvp": "Suivi RSVP de base",
-    "advancedRsvp": "RSVP avancé avec rappels",
-    "emailSupport": "Support par email",
-    "prioritySupport": "Support prioritaire",
-    "customDomain": "Domaine personnalisé",
-    "analytics": "Analyses et rapports"
+    "custom_domain": "Domaine personnalisé",
+    "priority_support": "Support prioritaire"
   },
   "success": {
     "title": "Paiement réussi!",

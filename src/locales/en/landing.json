@@ -1,0 +1,79 @@
+{
+  "hero": {
+    "headline": "Plan Your Perfect Wedding",
+    "subheadline": "The all-in-one wedding planning platform that helps couples manage guests, track RSVPs, and organize every beautiful moment.",
+    "cta": {
+      "getStarted": "Get Started Free",
+      "viewPricing": "View Pricing"
+    }
+  },
+  "features": {
+    "title": "Everything You Need for Your Special Day",
+    "subtitle": "Powerful tools to make wedding planning stress-free",
+    "guestManagement": {
+      "title": "Guest Management",
+      "description": "Keep track of all your guests in one place. Add details, dietary requirements, and contact information."
+    },
+    "eventPlanning": {
+      "title": "Event Planning",
+      "description": "Plan your ceremony, reception, and all wedding events. Assign guests and manage schedules effortlessly."
+    },
+    "rsvpTracking": {
+      "title": "RSVP Tracking",
+      "description": "Get real-time RSVP updates. See who is attending, pending, or declined at a glance."
+    },
+    "invitations": {
+      "title": "Digital Invitations",
+      "description": "Send beautiful invitations to your guests via email. Track who has received and opened them."
+    }
+  },
+  "howItWorks": {
+    "title": "Plan Your Wedding in 3 Simple Steps",
+    "subtitle": "Get started in minutes, not hours",
+    "step1": {
+      "title": "Create Your Wedding",
+      "description": "Sign up and set your wedding date and details"
+    },
+    "step2": {
+      "title": "Add Your Guests",
+      "description": "Import or add guests and send invitations"
+    },
+    "step3": {
+      "title": "Track & Manage",
+      "description": "Monitor RSVPs and plan your events"
+    }
+  },
+  "comingSoon": {
+    "title": "More Features Coming Soon",
+    "subtitle": "We're actively building new tools to make your wedding planning even easier",
+    "badge": "In Development",
+    "guestbook": {
+      "title": "Digital Guestbook",
+      "description": "Let your guests leave heartfelt messages and photos that you can treasure forever."
+    },
+    "expenses": {
+      "title": "Expense Tracker",
+      "description": "Keep track of your wedding budget, payments, and expenses all in one place."
+    },
+    "seating": {
+      "title": "Seating Planner",
+      "description": "Design your seating arrangements with an interactive drag-and-drop table planner."
+    },
+    "vendors": {
+      "title": "Wedding Team Directory",
+      "description": "Keep all your vendor contacts organized in one place - photographer, florist, caterer, DJ, stylist, and everyone helping make your day perfect."
+    }
+  },
+  "pricingCta": {
+    "title": "Ready to Start Planning?",
+    "description": "Choose a plan that fits your wedding size. Start free, upgrade when you need more.",
+    "cta": "See Pricing Plans"
+  },
+  "footer": {
+    "copyright": "{{year}} Amare.Wedding. All rights reserved.",
+    "tagline": "Made with love for your special day"
+  },
+  "nav": {
+    "pricing": "Pricing"
+  }
+}

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Check, Sparkles, Loader2 } from 'lucide-react';
+import { Check, X, Sparkles, Loader2 } from 'lucide-react';
 import { useAuth, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import {
   usePlans,
@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 
 type BillingCycle = 'Monthly' | 'Annual' | 'Lifetime';
 
@@ -130,7 +131,7 @@ export function PricingPage() {
   const highlightedTier = 1;
 
   return (
-    <div className="min-h-screen bg-muted/40">
+    <div className="min-h-screen bg-gradient-to-b from-rose-50/30 to-background">
       <header className="border-b bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <h1
@@ -140,6 +141,7 @@ export function PricingPage() {
             {t('common:appName')}
           </h1>
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             {isAuthenticated ? (
               <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
                 {t('billing:backToDashboard')}
@@ -147,10 +149,10 @@ export function PricingPage() {
             ) : (
               <>
                 <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
-                  {t('auth:login')}
+                  {t('auth:login.title')}
                 </Button>
                 <Button size="sm" onClick={() => navigate('/register')}>
-                  {t('auth:register')}
+                  {t('auth:register.title')}
                 </Button>
               </>
             )}
@@ -308,7 +310,7 @@ export function PricingPage() {
                         <Check className="h-4 w-4 text-green-600" />
                         {formatLimit(plan.maxEvents, 'events')}
                       </div>
-                      {plan.maxEmailsPerMonth !== undefined && plan.maxEmailsPerMonth > 0 && (
+                      {plan.maxEmailsPerMonth !== undefined && plan.maxEmailsPerMonth !== 0 && (
                         <div className="flex items-center gap-2">
                           <Check className="h-4 w-4 text-green-600" />
                           {formatLimit(plan.maxEmailsPerMonth, 'emails')}
@@ -317,16 +319,46 @@ export function PricingPage() {
                     </div>
 
                     {/* Features */}
-                    {plan.features && plan.features.length > 0 && (
-                      <ul className="space-y-2">
-                        {plan.features.map((featureKey) => (
-                          <li key={featureKey} className="flex items-center gap-2 text-sm">
-                            <Check className="h-4 w-4 text-green-600" />
-                            {t(`billing:features.${featureKey}`)}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    {plan.features && plan.features.length > 0 && (() => {
+                      // Filter out limit-related features (already shown above)
+                      const displayFeatures = plan.features.filter(
+                        (f) => !['guests', 'events', 'emails'].includes(f)
+                      );
+                      if (displayFeatures.length === 0) return null;
+                      return (
+                        <ul className="space-y-2">
+                          {displayFeatures.map((featureKey) => (
+                            <li key={featureKey} className="flex items-center gap-2 text-sm">
+                              <Check className="h-4 w-4 text-green-600" />
+                              {t(`billing:features.${featureKey}`)}
+                            </li>
+                          ))}
+                        </ul>
+                      );
+                    })()}
+
+                    {/* Not Included Features */}
+                    {(() => {
+                      const notIncluded = (plan.notIncludedFeatures ?? []).filter(
+                        (f) => !['guests', 'events', 'emails'].includes(f)
+                      );
+                      if (notIncluded.length === 0) return null;
+                      return (
+                        <div className="space-y-2 pt-2 border-t">
+                          <p className="text-xs text-muted-foreground font-medium">
+                            {t('billing:notIncluded')}
+                          </p>
+                          <ul className="space-y-2">
+                            {notIncluded.map((featureKey) => (
+                              <li key={featureKey} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <X className="h-4 w-4 text-muted-foreground" />
+                                {t(`billing:features.${featureKey}`)}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })()}
 
                     {/* CTA Button */}
                     <Button

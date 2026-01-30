@@ -184,7 +184,7 @@ export function DashboardPage() {
       <main className="container mx-auto p-4 space-y-6">
         {/* Welcome Header */}
         <div className="space-y-1">
-          <h2 className="text-3xl font-bold">{t('common:dashboard.welcome')}, {user?.name?.split(' ')[0] || user?.name}!</h2>
+          <h2 className="text-3xl font-bold">{t('common:dashboard.welcome')}, {user?.firstName}!</h2>
           <p className="text-muted-foreground">{t('common:tagline')}</p>
         </div>
 

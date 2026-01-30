@@ -84,6 +84,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/billing/portal-session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CreateBillingPortalSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/billing/plans": {
         parameters: {
             query?: never;
@@ -421,6 +437,7 @@ export interface components {
             tier?: components["schemas"]["SubscriptionTier"];
             name?: string | null;
             features?: string[] | null;
+            notIncludedFeatures?: string[] | null;
             /** Format: int32 */
             maxGuests?: number;
             /** Format: int32 */
@@ -440,6 +457,10 @@ export interface components {
         BillingPlanRequest: {
             tier?: components["schemas"]["SubscriptionTier"];
             interval?: components["schemas"]["BillingInterval"];
+        };
+        BillingPortalSession: {
+            sessionId?: string | null;
+            url?: string | null;
         };
         CreateEventRequestDto: {
             name?: string | null;
@@ -928,6 +949,44 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CreateBillingPortalSession: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BillingPortalSession"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

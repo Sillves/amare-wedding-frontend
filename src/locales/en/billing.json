@@ -14,6 +14,7 @@
   "subscribe": "Subscribe",
   "getStartedFree": "Get Started Free",
   "notAvailable": "Not available",
+  "notIncluded": "Not included",
   "cancelAnytime": "All paid plans include a 14-day money-back guarantee. Cancel anytime.",
   "backToDashboard": "Back to Dashboard",
   "limits": {
@@ -42,12 +43,8 @@
     }
   },
   "features": {
-    "basicRsvp": "Basic RSVP tracking",
-    "advancedRsvp": "Advanced RSVP with reminders",
-    "emailSupport": "Email support",
-    "prioritySupport": "Priority support",
-    "customDomain": "Custom domain",
-    "analytics": "Analytics & reports"
+    "custom_domain": "Custom domain",
+    "priority_support": "Priority support"
   },
   "success": {
     "title": "Payment Successful!",

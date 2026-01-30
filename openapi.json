@@ -238,6 +238,46 @@
         }
       }
     },
+    "/api/billing/portal-session": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "operationId": "CreateBillingPortalSession",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingPortalSession"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/billing/plans": {
       "get": {
         "tags": [
@@ -2040,6 +2080,13 @@
             },
             "nullable": true
           },
+          "notIncludedFeatures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
           "maxGuests": {
             "type": "integer",
             "format": "int32"
@@ -2094,6 +2141,20 @@
           },
           "interval": {
             "$ref": "#/components/schemas/BillingInterval"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillingPortalSession": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
