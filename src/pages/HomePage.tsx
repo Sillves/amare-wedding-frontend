@@ -10,14 +10,15 @@ import {
   CheckCircle2,
   ArrowRight,
   BookHeart,
-  Wallet,
   LayoutGrid,
   Contact,
+  Wallet,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 
 export function HomePage() {
   const { t } = useTranslation(['landing', 'common', 'auth']);
@@ -26,23 +27,28 @@ export function HomePage() {
   const features = [
     {
       icon: Users,
-      title: t('landing:features.guestManagement.title'),
-      description: t('landing:features.guestManagement.description'),
+      titleKey: 'landing:features.guestManagement.title',
+      descriptionKey: 'landing:features.guestManagement.description',
     },
     {
       icon: Calendar,
-      title: t('landing:features.eventPlanning.title'),
-      description: t('landing:features.eventPlanning.description'),
+      titleKey: 'landing:features.eventPlanning.title',
+      descriptionKey: 'landing:features.eventPlanning.description',
     },
     {
       icon: UserCheck,
-      title: t('landing:features.rsvpTracking.title'),
-      description: t('landing:features.rsvpTracking.description'),
+      titleKey: 'landing:features.rsvpTracking.title',
+      descriptionKey: 'landing:features.rsvpTracking.description',
     },
     {
       icon: Send,
-      title: t('landing:features.invitations.title'),
-      description: t('landing:features.invitations.description'),
+      titleKey: 'landing:features.invitations.title',
+      descriptionKey: 'landing:features.invitations.description',
+    },
+    {
+      icon: Wallet,
+      titleKey: 'landing:features.budgetManagement.title',
+      descriptionKey: 'landing:features.budgetManagement.description',
     },
   ];
 
@@ -50,20 +56,38 @@ export function HomePage() {
     {
       number: 1,
       icon: Plus,
-      title: t('landing:howItWorks.step1.title'),
-      description: t('landing:howItWorks.step1.description'),
+      titleKey: 'landing:howItWorks.step1.title',
+      descriptionKey: 'landing:howItWorks.step1.description',
     },
     {
       number: 2,
       icon: Users,
-      title: t('landing:howItWorks.step2.title'),
-      description: t('landing:howItWorks.step2.description'),
+      titleKey: 'landing:howItWorks.step2.title',
+      descriptionKey: 'landing:howItWorks.step2.description',
     },
     {
       number: 3,
       icon: CheckCircle2,
-      title: t('landing:howItWorks.step3.title'),
-      description: t('landing:howItWorks.step3.description'),
+      titleKey: 'landing:howItWorks.step3.title',
+      descriptionKey: 'landing:howItWorks.step3.description',
+    },
+  ];
+
+  const comingSoonFeatures = [
+    {
+      icon: BookHeart,
+      titleKey: 'landing:comingSoon.guestbook.title',
+      descriptionKey: 'landing:comingSoon.guestbook.description',
+    },
+    {
+      icon: LayoutGrid,
+      titleKey: 'landing:comingSoon.seating.title',
+      descriptionKey: 'landing:comingSoon.seating.description',
+    },
+    {
+      icon: Contact,
+      titleKey: 'landing:comingSoon.vendors.title',
+      descriptionKey: 'landing:comingSoon.vendors.description',
     },
   ];
 
@@ -75,7 +99,7 @@ export function HomePage() {
           <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-2">
               <Heart className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">{t('common:appName')}</span>
+              <span className="text-2xl font-script text-primary">{t('common:appName')}</span>
             </Link>
             <nav className="hidden md:flex items-center gap-6">
               <Link
@@ -87,27 +111,24 @@ export function HomePage() {
             </nav>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeSwitcher />
             <LanguageSwitcher />
             <Button variant="ghost" onClick={() => navigate('/login')}>
               {t('auth:login.title')}
             </Button>
-            <Button onClick={() => navigate('/register')}>
-              {t('auth:register.title')}
-            </Button>
+            <Button onClick={() => navigate('/register')}>{t('auth:register.title')}</Button>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-rose-50/50 to-background">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-secondary/50 to-background">
         <div className="container mx-auto px-4 text-center space-y-8">
           <div className="space-y-4 max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            <h1 className="text-5xl md:text-7xl font-script text-primary">
               {t('landing:hero.headline')}
             </h1>
-            <p className="text-xl text-muted-foreground">
-              {t('landing:hero.subheadline')}
-            </p>
+            <p className="text-xl text-muted-foreground">{t('landing:hero.subheadline')}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" onClick={() => navigate('/register')}>
@@ -122,7 +143,7 @@ export function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-rose-50/30">
+      <section className="py-20 bg-gradient-to-b from-background to-secondary/30">
         <div className="container mx-auto px-4 space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold">{t('landing:features.title')}</h2>
@@ -132,13 +153,13 @@ export function HomePage() {
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {features.map((feature) => (
-              <Card key={feature.title}>
+              <Card key={feature.titleKey}>
                 <CardHeader>
                   <feature.icon className="h-10 w-10 text-primary mb-2" />
-                  <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  <CardTitle className="text-lg">{t(feature.titleKey)}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>{feature.description}</CardDescription>
+                  <CardDescription>{t(feature.descriptionKey)}</CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -160,8 +181,8 @@ export function HomePage() {
                   {step.number}
                 </div>
                 <step.icon className="h-8 w-8 mx-auto text-muted-foreground" />
-                <h3 className="font-semibold text-lg">{step.title}</h3>
-                <p className="text-muted-foreground text-sm">{step.description}</p>
+                <h3 className="font-semibold text-lg">{t(step.titleKey)}</h3>
+                <p className="text-muted-foreground text-sm">{t(step.descriptionKey)}</p>
               </div>
             ))}
           </div>
@@ -169,7 +190,7 @@ export function HomePage() {
       </section>
 
       {/* Coming Soon Section */}
-      <section className="py-20 bg-gradient-to-b from-rose-50/20 to-background">
+      <section className="py-20 bg-gradient-to-b from-secondary/20 to-background">
         <div className="container mx-auto px-4 space-y-12">
           <div className="text-center space-y-4">
             <Badge variant="secondary" className="mb-2">
@@ -180,49 +201,24 @@ export function HomePage() {
               {t('landing:comingSoon.subtitle')}
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
-            <Card className="border-dashed">
-              <CardHeader>
-                <BookHeart className="h-10 w-10 text-primary/60 mb-2" />
-                <CardTitle className="text-lg">{t('landing:comingSoon.guestbook.title')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{t('landing:comingSoon.guestbook.description')}</CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="border-dashed">
-              <CardHeader>
-                <Wallet className="h-10 w-10 text-primary/60 mb-2" />
-                <CardTitle className="text-lg">{t('landing:comingSoon.expenses.title')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{t('landing:comingSoon.expenses.description')}</CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="border-dashed">
-              <CardHeader>
-                <LayoutGrid className="h-10 w-10 text-primary/60 mb-2" />
-                <CardTitle className="text-lg">{t('landing:comingSoon.seating.title')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{t('landing:comingSoon.seating.description')}</CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="border-dashed">
-              <CardHeader>
-                <Contact className="h-10 w-10 text-primary/60 mb-2" />
-                <CardTitle className="text-lg">{t('landing:comingSoon.vendors.title')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{t('landing:comingSoon.vendors.description')}</CardDescription>
-              </CardContent>
-            </Card>
+          <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto">
+            {comingSoonFeatures.map((feature) => (
+              <Card key={feature.titleKey} className="border-dashed">
+                <CardHeader>
+                  <feature.icon className="h-10 w-10 text-primary/60 mb-2" />
+                  <CardTitle className="text-lg">{t(feature.titleKey)}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>{t(feature.descriptionKey)}</CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Pricing CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-amber-50/40 to-background">
+      <section className="py-20 bg-gradient-to-b from-primary/10 to-background">
         <div className="container mx-auto px-4 text-center space-y-6">
           <h2 className="text-3xl font-bold">{t('landing:pricingCta.title')}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -236,12 +232,12 @@ export function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12 bg-rose-50/20">
+      <footer className="border-t py-12 bg-secondary/20">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2">
               <Heart className="h-5 w-5 text-primary" />
-              <span className="font-semibold">{t('common:appName')}</span>
+              <span className="text-xl font-script text-primary">{t('common:appName')}</span>
             </div>
             <nav className="flex gap-6 text-sm text-muted-foreground">
               <Link to="/pricing" className="hover:text-foreground transition-colors">

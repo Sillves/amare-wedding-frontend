@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { useCreateEvent } from '../hooks/useEvents';
 import type { CreateEventRequest } from '@/features/weddings/types';
 
@@ -25,8 +26,8 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
   const { t } = useTranslation('events');
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const createEvent = useCreateEvent();
@@ -38,9 +39,9 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
       return;
     }
 
-    // Convert datetime-local to ISO 8601 with timezone
-    const startDateISO = new Date(startDate).toISOString();
-    const endDateISO = endDate ? new Date(endDate).toISOString() : startDateISO;
+    // Convert Date to ISO 8601
+    const startDateISO = startDate.toISOString();
+    const endDateISO = endDate ? endDate.toISOString() : startDateISO;
 
     const data: CreateEventRequest = {
       name: name.trim(),
@@ -55,8 +56,8 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
       setOpen(false);
       // Reset form
       setName('');
-      setStartDate('');
-      setEndDate('');
+      setStartDate(undefined);
+      setEndDate(undefined);
       setLocation('');
       setDescription('');
     } catch (error) {
@@ -67,8 +68,8 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
       setName('');
-      setStartDate('');
-      setEndDate('');
+      setStartDate(undefined);
+      setEndDate(undefined);
       setLocation('');
       setDescription('');
     }
@@ -102,21 +103,18 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
                 <Label htmlFor="startDate">
                   {t('form.startDate')} <span className="text-destructive">*</span>
                 </Label>
-                <Input
-                  id="startDate"
-                  type="datetime-local"
+                <DateTimePicker
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  required
+                  onChange={setStartDate}
+                  placeholder={t('form.startDatePlaceholder')}
                 />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="endDate">{t('form.endDate')}</Label>
-                <Input
-                  id="endDate"
-                  type="datetime-local"
+                <DateTimePicker
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  onChange={setEndDate}
+                  placeholder={t('form.endDatePlaceholder')}
                 />
               </div>
             </div>

@@ -11,6 +11,7 @@
     "name": "Wedding name",
     "namePlaceholder": "E.g. Emma & Liam",
     "date": "Date",
+    "datePlaceholder": "Pick your wedding date",
     "location": "Location",
     "locationPlaceholder": "E.g. Château de Limelette",
     "description": "Description",
@@ -41,5 +42,78 @@
     "nameRequired": "Name is required",
     "dateRequired": "Date is required",
     "locationRequired": "Location is required"
+  },
+  "wizard": {
+    "steps": {
+      "welcome": "Welcome",
+      "details": "Details",
+      "partners": "Partners",
+      "location": "Location",
+      "guest": "Guest",
+      "complete": "Complete"
+    },
+    "welcome": {
+      "title": "Welcome to Amare",
+      "subtitle": "Let's set up your wedding in a few simple steps",
+      "description": "We'll help you create your wedding, add your partner's details, and get you started with guest management.",
+      "getStarted": "Get Started"
+    },
+    "details": {
+      "title": "Wedding Details",
+      "subtitle": "Give your wedding a name and pick your date",
+      "weddingName": "Wedding Name",
+      "weddingNamePlaceholder": "E.g. Emma & Liam's Wedding",
+      "weddingDate": "Wedding Date",
+      "dateNotDecided": "We haven't decided on a date yet"
+    },
+    "partners": {
+      "title": "The Happy Couple",
+      "subtitle": "Who's getting married?",
+      "partner1": "Partner 1",
+      "partner1Placeholder": "First name",
+      "partner2": "Partner 2",
+      "partner2Placeholder": "First name",
+      "autoTitle": "{{partner1}} & {{partner2}}'s Wedding"
+    },
+    "location": {
+      "title": "Location",
+      "subtitle": "Where will the magic happen?",
+      "description": "You can always add or change this later.",
+      "locationPlaceholder": "E.g. Château de Limelette, Belgium"
+    },
+    "guest": {
+      "title": "Add Your First Guest",
+      "subtitle": "Start building your guest list",
+      "description": "Add a guest now, or skip this step and add guests later.",
+      "guestName": "Guest Name",
+      "guestNamePlaceholder": "E.g. John Smith",
+      "guestEmail": "Guest Email",
+      "guestEmailPlaceholder": "john@example.com"
+    },
+    "complete": {
+      "title": "You're All Set!",
+      "subtitle": "Your wedding is ready to plan",
+      "summary": "Here's what we've set up for you:",
+      "weddingCreated": "Wedding created",
+      "dateSet": "Date set for {{date}}",
+      "dateNotSet": "Date not yet decided",
+      "locationSet": "Location: {{location}}",
+      "locationNotSet": "Location not yet set",
+      "guestAdded": "First guest added",
+      "noGuest": "No guests added yet",
+      "goToDashboard": "Go to Dashboard"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "skip": "Skip",
+      "complete": "Complete Setup"
+    },
+    "validation": {
+      "titleRequired": "Please give your wedding a name",
+      "partner1Required": "Please enter the first partner's name",
+      "partner2Required": "Please enter the second partner's name",
+      "emailInvalid": "Please enter a valid email address"
+    }
   }
 }

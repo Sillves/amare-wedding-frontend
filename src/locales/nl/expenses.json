@@ -1,0 +1,58 @@
+{
+  "title": "Kosten",
+  "subtitle": "Beheer en volg je trouwbudget",
+  "addExpense": "Kosten toevoegen",
+  "editExpense": "Kosten bewerken",
+  "noExpenses": "Nog geen kosten",
+  "noExpensesDescription": "Begin met het bijhouden van je trouwkosten door je eerste uitgave toe te voegen.",
+  "deleteConfirmTitle": "Kosten verwijderen",
+  "deleteConfirmDescription": "Weet je zeker dat je deze kosten wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+  "categories": {
+    "venue": "Locatie",
+    "catering": "Catering",
+    "photography": "Fotografie",
+    "decoration": "Decoratie",
+    "attire": "Kleding",
+    "transport": "Transport",
+    "other": "Overig"
+  },
+  "summary": {
+    "title": "Budget Overzicht",
+    "totalSpent": "Totaal Uitgegeven",
+    "byCategory": "Per Categorie",
+    "activeCategories": "actieve categorieën",
+    "checklist": "Budget Checklist",
+    "checklistDescription": "Volg je bruiloftskosten"
+  },
+  "table": {
+    "date": "Datum",
+    "description": "Beschrijving",
+    "category": "Categorie",
+    "amount": "Bedrag",
+    "notes": "Notities",
+    "actions": "Acties"
+  },
+  "form": {
+    "amount": "Bedrag",
+    "amountPlaceholder": "0,00",
+    "category": "Categorie",
+    "categoryPlaceholder": "Selecteer een categorie",
+    "description": "Beschrijving",
+    "descriptionPlaceholder": "bijv. Aanbetaling locatie",
+    "date": "Datum",
+    "notes": "Notities (optioneel)",
+    "notesPlaceholder": "Extra details...",
+    "save": "Opslaan",
+    "cancel": "Annuleren"
+  },
+  "toast": {
+    "created": "Kosten succesvol toegevoegd",
+    "updated": "Kosten succesvol bijgewerkt",
+    "deleted": "Kosten succesvol verwijderd",
+    "error": "Er is iets misgegaan"
+  },
+  "filter": {
+    "all": "Alle Categorieën",
+    "filterByCategory": "Filter op categorie"
+  }
+}

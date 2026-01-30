@@ -11,6 +11,7 @@
     "name": "Nom du mariage",
     "namePlaceholder": "Ex. Emma & Liam",
     "date": "Date",
+    "datePlaceholder": "Choisir la date du mariage",
     "location": "Lieu",
     "locationPlaceholder": "Ex. Château de Limelette",
     "description": "Description",
@@ -41,5 +42,78 @@
     "nameRequired": "Le nom est requis",
     "dateRequired": "La date est requise",
     "locationRequired": "Le lieu est requis"
+  },
+  "wizard": {
+    "steps": {
+      "welcome": "Bienvenue",
+      "details": "Détails",
+      "partners": "Partenaires",
+      "location": "Lieu",
+      "guest": "Invité",
+      "complete": "Terminé"
+    },
+    "welcome": {
+      "title": "Bienvenue chez Amare",
+      "subtitle": "Configurons votre mariage en quelques étapes simples",
+      "description": "Nous vous aiderons à créer votre mariage, ajouter les détails de votre partenaire et commencer la gestion des invités.",
+      "getStarted": "Commencer"
+    },
+    "details": {
+      "title": "Détails du Mariage",
+      "subtitle": "Donnez un nom à votre mariage et choisissez votre date",
+      "weddingName": "Nom du mariage",
+      "weddingNamePlaceholder": "Ex. Mariage d'Emma & Liam",
+      "weddingDate": "Date du mariage",
+      "dateNotDecided": "Nous n'avons pas encore choisi de date"
+    },
+    "partners": {
+      "title": "Les Heureux Élus",
+      "subtitle": "Qui se marie?",
+      "partner1": "Partenaire 1",
+      "partner1Placeholder": "Prénom",
+      "partner2": "Partenaire 2",
+      "partner2Placeholder": "Prénom",
+      "autoTitle": "Mariage de {{partner1}} & {{partner2}}"
+    },
+    "location": {
+      "title": "Lieu",
+      "subtitle": "Où la magie aura-t-elle lieu?",
+      "description": "Vous pourrez toujours ajouter ou modifier cela plus tard.",
+      "locationPlaceholder": "Ex. Château de Limelette, Belgique"
+    },
+    "guest": {
+      "title": "Ajoutez Votre Premier Invité",
+      "subtitle": "Commencez à construire votre liste d'invités",
+      "description": "Ajoutez un invité maintenant, ou passez cette étape et ajoutez des invités plus tard.",
+      "guestName": "Nom de l'invité",
+      "guestNamePlaceholder": "Ex. Jean Dupont",
+      "guestEmail": "Email de l'invité",
+      "guestEmailPlaceholder": "jean@exemple.fr"
+    },
+    "complete": {
+      "title": "Tout est Prêt!",
+      "subtitle": "Votre mariage est prêt à être planifié",
+      "summary": "Voici ce que nous avons configuré pour vous:",
+      "weddingCreated": "Mariage créé",
+      "dateSet": "Date fixée au {{date}}",
+      "dateNotSet": "Date pas encore décidée",
+      "locationSet": "Lieu: {{location}}",
+      "locationNotSet": "Lieu pas encore défini",
+      "guestAdded": "Premier invité ajouté",
+      "noGuest": "Aucun invité ajouté",
+      "goToDashboard": "Aller au Tableau de Bord"
+    },
+    "navigation": {
+      "back": "Retour",
+      "next": "Suivant",
+      "skip": "Passer",
+      "complete": "Terminer la Configuration"
+    },
+    "validation": {
+      "titleRequired": "Veuillez donner un nom à votre mariage",
+      "partner1Required": "Veuillez entrer le nom du premier partenaire",
+      "partner2Required": "Veuillez entrer le nom du deuxième partenaire",
+      "emailInvalid": "Veuillez entrer une adresse email valide"
+    }
   }
 }

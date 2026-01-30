@@ -11,6 +11,7 @@ import nlEvents from '@/locales/nl/events.json';
 import nlBilling from '@/locales/nl/billing.json';
 import nlProfile from '@/locales/nl/profile.json';
 import nlLanding from '@/locales/nl/landing.json';
+import nlExpenses from '@/locales/nl/expenses.json';
 
 import enCommon from '@/locales/en/common.json';
 import enAuth from '@/locales/en/auth.json';
@@ -20,6 +21,7 @@ import enEvents from '@/locales/en/events.json';
 import enBilling from '@/locales/en/billing.json';
 import enProfile from '@/locales/en/profile.json';
 import enLanding from '@/locales/en/landing.json';
+import enExpenses from '@/locales/en/expenses.json';
 
 import frCommon from '@/locales/fr/common.json';
 import frAuth from '@/locales/fr/auth.json';
@@ -29,6 +31,7 @@ import frEvents from '@/locales/fr/events.json';
 import frBilling from '@/locales/fr/billing.json';
 import frProfile from '@/locales/fr/profile.json';
 import frLanding from '@/locales/fr/landing.json';
+import frExpenses from '@/locales/fr/expenses.json';
 
 const resources = {
   nl: {
@@ -40,6 +43,7 @@ const resources = {
     billing: nlBilling,
     profile: nlProfile,
     landing: nlLanding,
+    expenses: nlExpenses,
   },
   en: {
     common: enCommon,
@@ -50,6 +54,7 @@ const resources = {
     billing: enBilling,
     profile: enProfile,
     landing: enLanding,
+    expenses: enExpenses,
   },
   fr: {
     common: frCommon,
@@ -60,6 +65,7 @@ const resources = {
     billing: frBilling,
     profile: frProfile,
     landing: frLanding,
+    expenses: frExpenses,
   },
 };
 
@@ -70,7 +76,7 @@ i18n
     resources,
     fallbackLng: 'nl', // Nederlands als fallback
     defaultNS: 'common',
-    ns: ['common', 'auth', 'weddings', 'guests', 'events', 'billing', 'profile', 'landing'],
+    ns: ['common', 'auth', 'weddings', 'guests', 'events', 'billing', 'profile', 'landing', 'expenses'],
     interpolation: {
       escapeValue: false, // React escapes by default
     },

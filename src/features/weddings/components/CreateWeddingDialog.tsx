@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 import { useCreateWedding } from '../hooks/useWeddings';
-import { useAuth } from '@/features/auth/hooks/useAuth';
 import {
   Dialog,
   DialogContent,
@@ -16,10 +15,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/ui/date-time-picker';
 
 const createWeddingSchema = z.object({
   title: z.string().min(1, 'weddings:validation.nameRequired'),
-  date: z.string().min(1, 'weddings:validation.dateRequired'),
+  date: z.date({ required_error: 'weddings:validation.dateRequired' }),
   location: z.string().min(1, 'weddings:validation.locationRequired'),
 });
 
@@ -39,15 +39,16 @@ export function CreateWeddingDialog({ children }: CreateWeddingDialogProps) {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<CreateWeddingFormData>({
     resolver: zodResolver(createWeddingSchema),
   });
 
   const onSubmit = (data: CreateWeddingFormData) => {
-    // Convert date string (YYYY-MM-DD) to ISO 8601 timestamp using user's local timezone
-    // Using noon (12:00) to avoid timezone edge cases where the date might shift
-    const dateObj = new Date(data.date + 'T12:00:00');
-    const isoDate = dateObj.toISOString();
+    // Set time to noon to avoid timezone edge cases
+    const dateWithNoon = new Date(data.date);
+    dateWithNoon.setHours(12, 0, 0, 0);
+    const isoDate = dateWithNoon.toISOString();
 
     createWeddingMutation.mutate(
       {
@@ -85,7 +86,17 @@ export function CreateWeddingDialog({ children }: CreateWeddingDialogProps) {
 
           <div className="space-y-2">
             <Label htmlFor="date">{t('weddings:form.date')}</Label>
-            <Input id="date" type="date" {...register('date')} />
+            <Controller
+              control={control}
+              name="date"
+              render={({ field }) => (
+                <DatePicker
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder={t('weddings:form.datePlaceholder')}
+                />
+              )}
+            />
             {errors.date && <p className="text-sm text-destructive">{t(errors.date.message!)}</p>}
           </div>
 

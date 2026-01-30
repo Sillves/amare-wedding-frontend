@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { useUpdateEvent } from '../hooks/useEvents';
 import type { EventDto, UpdateEventRequest } from '@/features/weddings/types';
 
@@ -24,8 +25,8 @@ interface EditEventDialogProps {
 export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogProps) {
   const { t } = useTranslation('events');
   const [name, setName] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const updateEvent = useUpdateEvent();
@@ -33,9 +34,8 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
   useEffect(() => {
     if (event) {
       setName(event.name || '');
-      // Convert ISO datetime to datetime-local format
-      setStartDate(event.startDate ? event.startDate.slice(0, 16) : '');
-      setEndDate(event.endDate ? event.endDate.slice(0, 16) : '');
+      setStartDate(event.startDate ? new Date(event.startDate) : undefined);
+      setEndDate(event.endDate ? new Date(event.endDate) : undefined);
       setLocation(event.location || '');
       setDescription(event.description || '');
     }
@@ -48,9 +48,9 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
       return;
     }
 
-    // Convert datetime-local to ISO 8601 with timezone
-    const startDateISO = new Date(startDate).toISOString();
-    const endDateISO = endDate ? new Date(endDate).toISOString() : startDateISO;
+    // Convert Date to ISO 8601
+    const startDateISO = startDate.toISOString();
+    const endDateISO = endDate ? endDate.toISOString() : startDateISO;
 
     const data: UpdateEventRequest = {
       name: name.trim(),
@@ -71,8 +71,8 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
       setName('');
-      setStartDate('');
-      setEndDate('');
+      setStartDate(undefined);
+      setEndDate(undefined);
       setLocation('');
       setDescription('');
     }
@@ -105,21 +105,18 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
                 <Label htmlFor="edit-startDate">
                   {t('form.startDate')} <span className="text-destructive">*</span>
                 </Label>
-                <Input
-                  id="edit-startDate"
-                  type="datetime-local"
+                <DateTimePicker
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  required
+                  onChange={setStartDate}
+                  placeholder={t('form.startDatePlaceholder')}
                 />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="edit-endDate">{t('form.endDate')}</Label>
-                <Input
-                  id="edit-endDate"
-                  type="datetime-local"
+                <DateTimePicker
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  onChange={setEndDate}
+                  placeholder={t('form.endDatePlaceholder')}
                 />
               </div>
             </div>

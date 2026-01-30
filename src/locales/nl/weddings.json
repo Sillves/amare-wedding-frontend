@@ -11,6 +11,7 @@
     "name": "Naam bruiloft",
     "namePlaceholder": "Bijv. Emma & Liam",
     "date": "Datum",
+    "datePlaceholder": "Kies uw trouwdatum",
     "location": "Locatie",
     "locationPlaceholder": "Bijv. Château de Limelette",
     "description": "Beschrijving",
@@ -41,5 +42,78 @@
     "nameRequired": "Naam is verplicht",
     "dateRequired": "Datum is verplicht",
     "locationRequired": "Locatie is verplicht"
+  },
+  "wizard": {
+    "steps": {
+      "welcome": "Welkom",
+      "details": "Details",
+      "partners": "Partners",
+      "location": "Locatie",
+      "guest": "Gast",
+      "complete": "Klaar"
+    },
+    "welcome": {
+      "title": "Welkom bij Amare",
+      "subtitle": "Laten we jullie bruiloft in een paar eenvoudige stappen opzetten",
+      "description": "We helpen jullie de bruiloft aan te maken, partnergegevens toe te voegen en te starten met gastenbeheer.",
+      "getStarted": "Aan de slag"
+    },
+    "details": {
+      "title": "Bruiloft Details",
+      "subtitle": "Geef jullie bruiloft een naam en kies de datum",
+      "weddingName": "Naam van de bruiloft",
+      "weddingNamePlaceholder": "Bijv. Emma & Liam's Bruiloft",
+      "weddingDate": "Trouwdatum",
+      "dateNotDecided": "We hebben nog geen datum gekozen"
+    },
+    "partners": {
+      "title": "Het Gelukkige Stel",
+      "subtitle": "Wie gaan er trouwen?",
+      "partner1": "Partner 1",
+      "partner1Placeholder": "Voornaam",
+      "partner2": "Partner 2",
+      "partner2Placeholder": "Voornaam",
+      "autoTitle": "{{partner1}} & {{partner2}}'s Bruiloft"
+    },
+    "location": {
+      "title": "Locatie",
+      "subtitle": "Waar vindt de magie plaats?",
+      "description": "Je kunt dit later altijd nog toevoegen of wijzigen.",
+      "locationPlaceholder": "Bijv. Château de Limelette, België"
+    },
+    "guest": {
+      "title": "Voeg Je Eerste Gast Toe",
+      "subtitle": "Begin met het opbouwen van je gastenlijst",
+      "description": "Voeg nu een gast toe, of sla deze stap over en voeg later gasten toe.",
+      "guestName": "Naam van de gast",
+      "guestNamePlaceholder": "Bijv. Jan Jansen",
+      "guestEmail": "E-mail van de gast",
+      "guestEmailPlaceholder": "jan@voorbeeld.nl"
+    },
+    "complete": {
+      "title": "Alles is Klaar!",
+      "subtitle": "Jullie bruiloft is klaar om te plannen",
+      "summary": "Dit hebben we voor jullie ingesteld:",
+      "weddingCreated": "Bruiloft aangemaakt",
+      "dateSet": "Datum ingesteld op {{date}}",
+      "dateNotSet": "Datum nog niet bepaald",
+      "locationSet": "Locatie: {{location}}",
+      "locationNotSet": "Locatie nog niet ingesteld",
+      "guestAdded": "Eerste gast toegevoegd",
+      "noGuest": "Nog geen gasten toegevoegd",
+      "goToDashboard": "Ga naar Dashboard"
+    },
+    "navigation": {
+      "back": "Terug",
+      "next": "Volgende",
+      "skip": "Overslaan",
+      "complete": "Setup Voltooien"
+    },
+    "validation": {
+      "titleRequired": "Geef jullie bruiloft een naam",
+      "partner1Required": "Vul de naam van de eerste partner in",
+      "partner2Required": "Vul de naam van de tweede partner in",
+      "emailInvalid": "Vul een geldig e-mailadres in"
+    }
   }
 }

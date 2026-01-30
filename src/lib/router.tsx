@@ -3,8 +3,10 @@ import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { OnboardingPage } from '@/pages/OnboardingPage';
 import { GuestsPage } from '@/pages/GuestsPage';
 import { EventsPage } from '@/pages/EventsPage';
+import { ExpensesPage } from '@/pages/ExpensesPage';
 import { RsvpPage } from '@/pages/RsvpPage';
 import { PricingPage } from '@/pages/PricingPage';
 import { ProfilePage } from '@/pages/ProfilePage';
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
     ),
   },
   {
+    path: '/onboarding',
+    element: (
+      <ProtectedRoute>
+        <OnboardingPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: '/guests',
     element: (
       <ProtectedRoute>
@@ -70,6 +80,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <EventsPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/expenses',
+    element: (
+      <ProtectedRoute>
+        <ExpensesPage />
       </ProtectedRoute>
     ),
   },

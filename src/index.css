@@ -4,61 +4,60 @@
 
 @layer base {
   :root {
-    /* Rose & Gold Wedding Theme - Light Mode */
-    --background: 30 30% 98%;
-    --foreground: 350 20% 15%;
+    /* Default theme - overridden by JS theme system */
+    --background: 0 0% 99%;
+    --foreground: 340 15% 20%;
     --card: 0 0% 100%;
-    --card-foreground: 350 20% 15%;
+    --card-foreground: 340 15% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 350 20% 15%;
-    --primary: 350 55% 55%;
-    --primary-foreground: 30 30% 98%;
-    --secondary: 40 45% 92%;
-    --secondary-foreground: 35 40% 30%;
-    --muted: 350 20% 94%;
-    --muted-foreground: 350 15% 40%;
-    --accent: 40 60% 50%;
-    --accent-foreground: 35 50% 15%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 30 30% 98%;
-    --border: 350 20% 88%;
-    --input: 350 20% 88%;
-    --ring: 350 55% 55%;
+    --popover-foreground: 340 15% 20%;
+    --primary: 340 22% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 120 12% 90%;
+    --secondary-foreground: 120 15% 30%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 252 10% 45%;
+    --accent: 248 14% 75%;
+    --accent-foreground: 248 20% 25%;
+    --destructive: 0 55% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 340 22% 63%;
     --radius: 0.5rem;
-    /* Chart colors with rose/gold theme */
-    --chart-1: 350 55% 55%;
-    --chart-2: 40 60% 50%;
-    --chart-3: 350 40% 70%;
-    --chart-4: 30 50% 60%;
-    --chart-5: 340 45% 45%;
+    --chart-1: 340 22% 63%;
+    --chart-2: 120 12% 75%;
+    --chart-3: 248 14% 75%;
+    --chart-4: 252 10% 64%;
+    --chart-5: 340 18% 72%;
   }
 
   .dark {
-    /* Rose & Gold Wedding Theme - Dark Mode */
-    --background: 350 20% 8%;
-    --foreground: 30 25% 95%;
-    --card: 350 18% 12%;
-    --card-foreground: 30 25% 95%;
-    --popover: 350 18% 12%;
-    --popover-foreground: 30 25% 95%;
-    --primary: 350 60% 65%;
-    --primary-foreground: 350 20% 8%;
-    --secondary: 40 30% 20%;
-    --secondary-foreground: 40 45% 85%;
-    --muted: 350 15% 18%;
-    --muted-foreground: 350 15% 65%;
-    --accent: 40 50% 40%;
-    --accent-foreground: 40 50% 90%;
-    --destructive: 0 62.8% 45%;
-    --destructive-foreground: 30 25% 95%;
-    --border: 350 15% 22%;
-    --input: 350 15% 22%;
-    --ring: 350 60% 65%;
-    --chart-1: 350 60% 60%;
-    --chart-2: 40 55% 55%;
-    --chart-3: 350 45% 50%;
-    --chart-4: 30 45% 50%;
-    --chart-5: 340 50% 55%;
+    /* Dark mode defaults - overridden by JS theme system */
+    --background: 340 10% 10%;
+    --foreground: 0 0% 95%;
+    --card: 340 8% 14%;
+    --card-foreground: 0 0% 95%;
+    --popover: 340 8% 14%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 340 28% 72%;
+    --primary-foreground: 340 15% 10%;
+    --secondary: 120 10% 20%;
+    --secondary-foreground: 120 12% 85%;
+    --muted: 340 8% 20%;
+    --muted-foreground: 252 10% 68%;
+    --accent: 248 18% 55%;
+    --accent-foreground: 248 14% 92%;
+    --destructive: 0 45% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 340 8% 24%;
+    --input: 340 8% 24%;
+    --ring: 340 28% 72%;
+    --chart-1: 340 25% 68%;
+    --chart-2: 120 15% 55%;
+    --chart-3: 248 18% 60%;
+    --chart-4: 252 12% 55%;
+    --chart-5: 340 22% 65%;
   }
 }
 

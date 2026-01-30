@@ -25,6 +25,10 @@
     "invitations": {
       "title": "Digital Invitations",
       "description": "Send beautiful invitations to your guests via email. Track who has received and opened them."
+    },
+    "budgetManagement": {
+      "title": "Budget Management",
+      "description": "Track expenses, manage payments, and stay on top of your wedding budget with ease."
     }
   },
   "howItWorks": {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import {
   Calendar,
   Users,
@@ -12,7 +12,8 @@ import {
   Plus,
   ArrowRight,
   CalendarDays,
-  Sparkles
+  Sparkles,
+  Wallet
 } from 'lucide-react';
 import { useAuth, useLogout, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
@@ -118,41 +119,9 @@ export function DashboardPage() {
     };
   }, [guestStats, events]);
 
-  // No weddings state
+  // No weddings - redirect to onboarding wizard
   if (!isLoading && (!weddings || weddings.length === 0)) {
-    return (
-      <div className="min-h-screen bg-muted/40">
-        <header className="border-b bg-background">
-          <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <h1 className="text-xl font-bold">{t('common:appName')}</h1>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">{user?.email}</span>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
-                {t('common:profile')}
-              </Button>
-              <Button variant="outline" size="sm" onClick={logout}>
-                {t('auth:logout')}
-              </Button>
-            </div>
-          </div>
-        </header>
-        <main className="container mx-auto p-4">
-          <div className="mb-8 flex flex-col items-center justify-center min-h-[60vh] text-center">
-            <Calendar className="h-16 w-16 text-muted-foreground mb-4" />
-            <h2 className="text-3xl font-bold mb-2">{t('weddings:noWeddings')}</h2>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              {t('weddings:noWeddingsDescription')}
-            </p>
-            <CreateWeddingDialog>
-              <Button size="lg">
-                <Plus className="h-5 w-5 mr-2" />
-                {t('weddings:createWedding')}
-              </Button>
-            </CreateWeddingDialog>
-          </div>
-        </main>
-      </div>
-    );
+    return <Navigate to="/onboarding" replace />;
   }
 
   // Loading state
@@ -336,6 +305,15 @@ export function DashboardPage() {
               >
                 <CalendarDays className="h-4 w-4 mr-2" />
                 {t('common:dashboard.viewAllEvents')}
+              </Button>
+
+              <Button
+                className="w-full justify-start"
+                variant="outline"
+                onClick={() => navigate(`/expenses?weddingId=${wedding?.id}`)}
+              >
+                <Wallet className="h-4 w-4 mr-2" />
+                {t('common:dashboard.viewExpenses')}
               </Button>
             </CardContent>
           </Card>

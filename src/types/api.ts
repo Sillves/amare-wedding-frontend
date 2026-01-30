@@ -212,6 +212,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/api/weddings/{weddingId}/expenses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetExpensesByWedding"];
+        put?: never;
+        post: operations["CreateExpense"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/api/expenses/{expenseId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetExpense"];
+        put: operations["UpdateExpense"];
+        post?: never;
+        delete: operations["DeleteExpense"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/api/weddings/{weddingId}/expenses/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetExpenseSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/weddings/{weddingId}/guests": {
         parameters: {
             query?: never;
@@ -477,6 +525,15 @@ export interface components {
             rsvpStatus?: components["schemas"]["RsvpStatus"];
             preferredLanguage?: string | null;
         };
+        CreateWeddingExpenseRequestDto: {
+            /** Format: double */
+            amount?: number;
+            category?: components["schemas"]["ExpenseCategory"];
+            description?: string | null;
+            /** Format: date-time */
+            date?: string;
+            notes?: string | null;
+        };
         CreateWeddingRequestDto: {
             title?: string | null;
             /** Format: date-time */
@@ -535,6 +592,11 @@ export interface components {
          * @enum {integer}
          */
         EventGuestChangeResult: 0 | 1 | 2 | 3 | 4 | 5;
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        ExpenseCategory: 0 | 1 | 2 | 3 | 4 | 5 | 6;
         Guest: {
             /** Format: uuid */
             id?: string;
@@ -638,6 +700,15 @@ export interface components {
             rsvpStatus?: components["schemas"]["RsvpStatus"];
             preferredLanguage?: string | null;
         };
+        UpdateWeddingExpenseRequestDto: {
+            /** Format: double */
+            amount?: number;
+            category?: components["schemas"]["ExpenseCategory"];
+            description?: string | null;
+            /** Format: date-time */
+            date?: string;
+            notes?: string | null;
+        };
         User: {
             /** Format: uuid */
             id?: string;
@@ -691,6 +762,7 @@ export interface components {
             pages?: components["schemas"]["Page"][] | null;
             media?: components["schemas"]["Media"][] | null;
             events?: components["schemas"]["Event"][] | null;
+            expenses?: components["schemas"]["WeddingExpense"][] | null;
         };
         WeddingDto: {
             /** Format: uuid */
@@ -708,6 +780,62 @@ export interface components {
             updatedAt?: string;
             /** Format: uuid */
             userId?: string;
+        };
+        WeddingExpense: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            /** Format: double */
+            amount?: number;
+            category?: components["schemas"]["ExpenseCategory"];
+            description?: string | null;
+            /** Format: date-time */
+            date?: string;
+            notes?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            wedding?: components["schemas"]["Wedding"];
+        };
+        WeddingExpenseDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            /** Format: double */
+            amount?: number;
+            category?: components["schemas"]["ExpenseCategory"];
+            description?: string | null;
+            /** Format: date-time */
+            date?: string;
+            notes?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        WeddingExpenseSummaryDto: {
+            /** Format: double */
+            totalAmount?: number;
+            categoryTotals?: {
+                /** Format: double */
+                Venue?: number;
+                /** Format: double */
+                Catering?: number;
+                /** Format: double */
+                Photography?: number;
+                /** Format: double */
+                Decoration?: number;
+                /** Format: double */
+                Attire?: number;
+                /** Format: double */
+                Transport?: number;
+                /** Format: double */
+                Other?: number;
+            } | null;
+            expenses?: components["schemas"]["WeddingExpenseDto"][] | null;
         };
         WeddingPublicDto: {
             /** Format: uuid */
@@ -1597,6 +1725,297 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetExpensesByWedding: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingExpenseDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CreateExpense: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWeddingExpenseRequestDto"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingExpenseDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetExpense: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                expenseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingExpenseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    UpdateExpense: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                expenseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateWeddingExpenseRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingExpenseDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    DeleteExpense: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                expenseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetExpenseSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingExpenseSummaryDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

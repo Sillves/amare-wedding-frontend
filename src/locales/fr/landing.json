@@ -25,6 +25,10 @@
     "invitations": {
       "title": "Invitations Numériques",
       "description": "Envoyez de belles invitations à vos invités par e-mail. Suivez qui les a reçues et ouvertes."
+    },
+    "budgetManagement": {
+      "title": "Gestion du Budget",
+      "description": "Suivez les dépenses, gérez les paiements et gardez facilement le contrôle de votre budget de mariage."
     }
   },
   "howItWorks": {

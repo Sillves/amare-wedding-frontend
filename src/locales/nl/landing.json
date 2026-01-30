@@ -25,6 +25,10 @@
     "invitations": {
       "title": "Digitale Uitnodigingen",
       "description": "Stuur mooie uitnodigingen naar je gasten via e-mail. Volg wie ze heeft ontvangen en geopend."
+    },
+    "budgetManagement": {
+      "title": "Budgetbeheer",
+      "description": "Houd uitgaven bij, beheer betalingen en blijf moeiteloos op de hoogte van je bruiloftsbudget."
     }
   },
   "howItWorks": {

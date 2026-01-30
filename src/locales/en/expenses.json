@@ -1,0 +1,58 @@
+{
+  "title": "Expenses",
+  "subtitle": "Track and manage your wedding budget",
+  "addExpense": "Add Expense",
+  "editExpense": "Edit Expense",
+  "noExpenses": "No expenses yet",
+  "noExpensesDescription": "Start tracking your wedding costs by adding your first expense.",
+  "deleteConfirmTitle": "Delete Expense",
+  "deleteConfirmDescription": "Are you sure you want to delete this expense? This action cannot be undone.",
+  "categories": {
+    "venue": "Venue",
+    "catering": "Catering",
+    "photography": "Photography",
+    "decoration": "Decoration",
+    "attire": "Attire",
+    "transport": "Transport",
+    "other": "Other"
+  },
+  "summary": {
+    "title": "Budget Overview",
+    "totalSpent": "Total Spent",
+    "byCategory": "By Category",
+    "activeCategories": "active categories",
+    "checklist": "Budget Checklist",
+    "checklistDescription": "Track your wedding expenses"
+  },
+  "table": {
+    "date": "Date",
+    "description": "Description",
+    "category": "Category",
+    "amount": "Amount",
+    "notes": "Notes",
+    "actions": "Actions"
+  },
+  "form": {
+    "amount": "Amount",
+    "amountPlaceholder": "0.00",
+    "category": "Category",
+    "categoryPlaceholder": "Select a category",
+    "description": "Description",
+    "descriptionPlaceholder": "e.g., Venue deposit",
+    "date": "Date",
+    "notes": "Notes (optional)",
+    "notesPlaceholder": "Additional details...",
+    "save": "Save Expense",
+    "cancel": "Cancel"
+  },
+  "toast": {
+    "created": "Expense added successfully",
+    "updated": "Expense updated successfully",
+    "deleted": "Expense deleted successfully",
+    "error": "Something went wrong"
+  },
+  "filter": {
+    "all": "All Categories",
+    "filterByCategory": "Filter by category"
+  }
+}

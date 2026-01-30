@@ -1,0 +1,58 @@
+{
+  "title": "Dépenses",
+  "subtitle": "Suivez et gérez votre budget de mariage",
+  "addExpense": "Ajouter une dépense",
+  "editExpense": "Modifier la dépense",
+  "noExpenses": "Pas encore de dépenses",
+  "noExpensesDescription": "Commencez à suivre vos coûts de mariage en ajoutant votre première dépense.",
+  "deleteConfirmTitle": "Supprimer la dépense",
+  "deleteConfirmDescription": "Êtes-vous sûr de vouloir supprimer cette dépense ? Cette action est irréversible.",
+  "categories": {
+    "venue": "Lieu",
+    "catering": "Traiteur",
+    "photography": "Photographie",
+    "decoration": "Décoration",
+    "attire": "Tenue",
+    "transport": "Transport",
+    "other": "Autre"
+  },
+  "summary": {
+    "title": "Aperçu du Budget",
+    "totalSpent": "Total Dépensé",
+    "byCategory": "Par Catégorie",
+    "activeCategories": "catégories actives",
+    "checklist": "Liste de Contrôle",
+    "checklistDescription": "Suivez vos dépenses de mariage"
+  },
+  "table": {
+    "date": "Date",
+    "description": "Description",
+    "category": "Catégorie",
+    "amount": "Montant",
+    "notes": "Notes",
+    "actions": "Actions"
+  },
+  "form": {
+    "amount": "Montant",
+    "amountPlaceholder": "0,00",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Sélectionner une catégorie",
+    "description": "Description",
+    "descriptionPlaceholder": "ex. Acompte du lieu",
+    "date": "Date",
+    "notes": "Notes (optionnel)",
+    "notesPlaceholder": "Détails supplémentaires...",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "toast": {
+    "created": "Dépense ajoutée avec succès",
+    "updated": "Dépense mise à jour avec succès",
+    "deleted": "Dépense supprimée avec succès",
+    "error": "Une erreur est survenue"
+  },
+  "filter": {
+    "all": "Toutes les Catégories",
+    "filterByCategory": "Filtrer par catégorie"
+  }
+}
