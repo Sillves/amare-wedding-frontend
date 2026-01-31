@@ -48,8 +48,8 @@ export function WeddingDetailsStep({ form }: WeddingDetailsStepProps) {
           <div className="flex items-center gap-2">
             <Calendar className="h-5 w-5 text-muted-foreground" />
             <DatePicker
-              date={date}
-              onDateChange={(newDate) => setValue('date', newDate)}
+              value={date}
+              onChange={(newDate) => setValue('date', newDate)}
               disabled={dateNotDecided}
             />
           </div>
