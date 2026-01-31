@@ -1,0 +1,53 @@
+{
+  "site": {
+    "name": "Amare.Wedding",
+    "tagline": "Planifiez Votre Mariage Parfait"
+  },
+  "home": {
+    "title": "Amare.Wedding - Planification de Mariage Simplifiée",
+    "description": "La plateforme tout-en-un pour planifier votre mariage. Gérez les invités, suivez les RSVP, planifiez les événements et organisez votre journée parfaite. Commencez gratuitement!",
+    "keywords": "planification mariage, organisateur mariage, gestion invités, suivi RSVP, événements mariage, budget mariage, wedding planner gratuit"
+  },
+  "demo": {
+    "title": "Mariage Démo - Découvrez Amare.Wedding",
+    "description": "Explorez notre plateforme de planification de mariage avec une démo en direct. Découvrez à quel point il est facile de gérer les invités, suivre les RSVP et planifier vos événements.",
+    "keywords": "démo wedding planner, démo application mariage, essayer wedding planner, logiciel planification mariage"
+  },
+  "pricing": {
+    "title": "Tarifs - Amare.Wedding",
+    "description": "Choisissez le forfait parfait pour votre mariage. Commencez gratuitement avec les fonctionnalités de base ou passez à un niveau supérieur pour des invités illimités et des fonctionnalités premium.",
+    "keywords": "tarifs wedding planner, coût application mariage, abonnement planification mariage, wedding planner gratuit"
+  },
+  "login": {
+    "title": "Connexion - Amare.Wedding",
+    "description": "Connectez-vous à votre compte Amare.Wedding pour continuer à planifier votre mariage parfait."
+  },
+  "register": {
+    "title": "Créer un Compte - Amare.Wedding",
+    "description": "Créez votre compte Amare.Wedding gratuit et commencez à planifier votre mariage parfait dès aujourd'hui. Configuration facile, fonctionnalités puissantes."
+  },
+  "rsvp": {
+    "title": "RSVP - {{weddingTitle}}",
+    "description": "Vous êtes invité! Veuillez nous faire savoir si vous pouvez assister à {{weddingTitle}}."
+  },
+  "dashboard": {
+    "title": "Tableau de Bord - Amare.Wedding",
+    "description": "Gérez la planification de votre mariage depuis votre tableau de bord personnel. Suivez les invités, les événements et le budget au même endroit."
+  },
+  "guests": {
+    "title": "Gestion des Invités - Amare.Wedding",
+    "description": "Gérez votre liste d'invités de mariage. Ajoutez des invités, suivez les RSVP et envoyez facilement des invitations."
+  },
+  "events": {
+    "title": "Événements - Amare.Wedding",
+    "description": "Planifiez et organisez tous vos événements de mariage. De la cérémonie à la réception, gardez tout organisé."
+  },
+  "expenses": {
+    "title": "Suivi du Budget - Amare.Wedding",
+    "description": "Suivez vos dépenses de mariage et restez dans votre budget. Organisez les coûts par catégorie et surveillez vos dépenses."
+  },
+  "og": {
+    "type": "website",
+    "locale": "fr_FR"
+  }
+}

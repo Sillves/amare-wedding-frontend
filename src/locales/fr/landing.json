@@ -4,6 +4,7 @@
     "subheadline": "La plateforme tout-en-un de planification de mariage qui aide les couples à gérer les invités, suivre les RSVP et organiser chaque beau moment.",
     "cta": {
       "getStarted": "Commencer Gratuitement",
+      "viewDemo": "Voir la Démo",
       "viewPricing": "Voir les Tarifs"
     }
   },
@@ -78,6 +79,7 @@
     "tagline": "Fait avec amour pour votre jour spécial"
   },
   "nav": {
+    "demo": "Démo",
     "pricing": "Tarifs"
   }
 }

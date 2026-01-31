@@ -4,6 +4,7 @@
     "subheadline": "Het alles-in-één platform voor bruiloftsplanning dat koppels helpt bij het beheren van gasten, RSVP's bijhouden en elk mooi moment organiseren.",
     "cta": {
       "getStarted": "Gratis Beginnen",
+      "viewDemo": "Bekijk Demo",
       "viewPricing": "Bekijk Prijzen"
     }
   },
@@ -78,6 +79,7 @@
     "tagline": "Met liefde gemaakt voor jullie speciale dag"
   },
   "nav": {
+    "demo": "Demo",
     "pricing": "Prijzen"
   }
 }

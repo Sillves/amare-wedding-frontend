@@ -4,6 +4,7 @@
     "subheadline": "The all-in-one wedding planning platform that helps couples manage guests, track RSVPs, and organize every beautiful moment.",
     "cta": {
       "getStarted": "Get Started Free",
+      "viewDemo": "View Demo",
       "viewPricing": "View Pricing"
     }
   },
@@ -78,6 +79,7 @@
     "tagline": "Made with love for your special day"
   },
   "nav": {
+    "demo": "Demo",
     "pricing": "Pricing"
   }
 }

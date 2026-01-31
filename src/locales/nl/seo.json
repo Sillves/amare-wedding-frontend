@@ -1,0 +1,53 @@
+{
+  "site": {
+    "name": "Amare.Wedding",
+    "tagline": "Plan Jullie Perfecte Bruiloft"
+  },
+  "home": {
+    "title": "Amare.Wedding - Bruiloft Plannen Makkelijk Gemaakt",
+    "description": "Het alles-in-één platform voor bruiloftsplanning. Beheer gasten, volg RSVP's, plan evenementen en organiseer jullie perfecte dag. Begin gratis!",
+    "keywords": "bruiloft plannen, trouwen organiseren, gastenbeheer, RSVP bijhouden, bruiloft evenementen, bruiloft budget, gratis wedding planner"
+  },
+  "demo": {
+    "title": "Demo Bruiloft - Ontdek Amare.Wedding",
+    "description": "Verken ons bruiloftsplanning platform met een live demo. Zie hoe makkelijk het is om gasten te beheren, RSVP's bij te houden en evenementen te plannen.",
+    "keywords": "wedding planner demo, bruiloft app demo, wedding planner proberen, bruiloft planning software"
+  },
+  "pricing": {
+    "title": "Prijzen - Amare.Wedding",
+    "description": "Kies het perfecte abonnement voor jullie bruiloft. Begin gratis met basisfuncties of upgrade voor onbeperkte gasten, evenementen en premium functies.",
+    "keywords": "wedding planner prijzen, bruiloft app kosten, bruiloft planning abonnement, gratis wedding planner"
+  },
+  "login": {
+    "title": "Inloggen - Amare.Wedding",
+    "description": "Log in op je Amare.Wedding account om door te gaan met het plannen van jullie perfecte bruiloft."
+  },
+  "register": {
+    "title": "Account Aanmaken - Amare.Wedding",
+    "description": "Maak je gratis Amare.Wedding account aan en begin vandaag nog met het plannen van jullie perfecte bruiloft. Eenvoudige setup, krachtige functies."
+  },
+  "rsvp": {
+    "title": "RSVP - {{weddingTitle}}",
+    "description": "Je bent uitgenodigd! Laat ons weten of je aanwezig kunt zijn bij {{weddingTitle}}."
+  },
+  "dashboard": {
+    "title": "Dashboard - Amare.Wedding",
+    "description": "Beheer je bruiloftsplanning vanuit je persoonlijke dashboard. Volg gasten, evenementen en budget op één plek."
+  },
+  "guests": {
+    "title": "Gastenbeheer - Amare.Wedding",
+    "description": "Beheer je gastenlijst voor de bruiloft. Voeg gasten toe, volg RSVP's en verstuur uitnodigingen eenvoudig."
+  },
+  "events": {
+    "title": "Evenementen - Amare.Wedding",
+    "description": "Plan en organiseer al je bruiloft evenementen. Van ceremonie tot receptie, houd alles georganiseerd."
+  },
+  "expenses": {
+    "title": "Budget Tracker - Amare.Wedding",
+    "description": "Volg je bruiloft uitgaven en blijf binnen budget. Organiseer kosten per categorie en monitor je uitgaven."
+  },
+  "og": {
+    "type": "website",
+    "locale": "nl_NL"
+  }
+}

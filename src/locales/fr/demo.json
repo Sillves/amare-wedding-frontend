@@ -1,0 +1,17 @@
+{
+  "banner": {
+    "message": "Ceci est un mariage de démonstration. N'hésitez pas à explorer ! Vos modifications ne seront pas sauvegardées."
+  },
+  "exitDemo": "Quitter la Démo",
+  "demoUser": "Utilisateur Démo",
+  "tryRsvp": {
+    "title": "Essayez la Fonction RSVP",
+    "description": "Découvrez ce que vos invités verront lorsqu'ils recevront leur invitation de mariage.",
+    "button": "Ouvrir la Page RSVP"
+  },
+  "demoNote": {
+    "title": "Mode Démo",
+    "changes": "Les modifications sont temporaires et ne seront pas sauvegardées",
+    "explore": "N'hésitez pas à explorer toutes les fonctionnalités"
+  }
+}

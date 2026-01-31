@@ -1,0 +1,17 @@
+{
+  "banner": {
+    "message": "Dit is een demo bruiloft. Voel je vrij om rond te kijken! Je wijzigingen worden niet opgeslagen."
+  },
+  "exitDemo": "Demo Afsluiten",
+  "demoUser": "Demo Gebruiker",
+  "tryRsvp": {
+    "title": "Probeer de RSVP Functie",
+    "description": "Ervaar wat je gasten zullen zien wanneer ze hun trouwuitnodiging ontvangen.",
+    "button": "Open RSVP Pagina"
+  },
+  "demoNote": {
+    "title": "Demo Modus",
+    "changes": "Wijzigingen zijn tijdelijk en worden niet opgeslagen",
+    "explore": "Voel je vrij om alle functies te verkennen"
+  }
+}

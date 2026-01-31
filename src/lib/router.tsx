@@ -14,6 +14,13 @@ import { BillingSuccessPage } from '@/pages/BillingSuccessPage';
 import { BillingCancelPage } from '@/pages/BillingCancelPage';
 import { ProtectedRoute } from '@/shared/components/ProtectedRoute';
 
+// Demo pages (public, no auth required)
+import { DemoPage } from '@/pages/DemoPage';
+import { DemoGuestsPage } from '@/pages/DemoGuestsPage';
+import { DemoEventsPage } from '@/pages/DemoEventsPage';
+import { DemoExpensesPage } from '@/pages/DemoExpensesPage';
+import { DemoRsvpPage } from '@/pages/DemoRsvpPage';
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -34,6 +41,27 @@ export const router = createBrowserRouter([
   {
     path: '/pricing',
     element: <PricingPage />,
+  },
+  // Demo routes (public, no auth required)
+  {
+    path: '/demo',
+    element: <DemoPage />,
+  },
+  {
+    path: '/demo/guests',
+    element: <DemoGuestsPage />,
+  },
+  {
+    path: '/demo/events',
+    element: <DemoEventsPage />,
+  },
+  {
+    path: '/demo/expenses',
+    element: <DemoExpensesPage />,
+  },
+  {
+    path: '/demo/rsvp',
+    element: <DemoRsvpPage />,
   },
   {
     path: '/billing',

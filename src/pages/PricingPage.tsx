@@ -16,6 +16,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { SEO } from '@/shared/components/seo';
 
 type BillingCycle = 'Monthly' | 'Annual' | 'Lifetime';
 
@@ -131,8 +132,10 @@ export function PricingPage() {
   const highlightedTier = 1;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-50/30 to-background">
-      <header className="border-b bg-background">
+    <>
+      <SEO page="pricing" />
+      <div className="min-h-screen bg-gradient-to-b from-rose-50/30 to-background">
+        <header className="border-b bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <h1
             className="text-xl font-bold cursor-pointer"
@@ -397,7 +400,8 @@ export function PricingPage() {
         <div className="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
           <p>{t('billing:cancelAnytime')}</p>
         </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }

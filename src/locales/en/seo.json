@@ -1,0 +1,53 @@
+{
+  "site": {
+    "name": "Amare.Wedding",
+    "tagline": "Plan Your Perfect Wedding"
+  },
+  "home": {
+    "title": "Amare.Wedding - Wedding Planning Made Easy",
+    "description": "The all-in-one wedding planning platform. Manage guests, track RSVPs, plan events, and organize your perfect day. Start planning for free!",
+    "keywords": "wedding planning, wedding organizer, guest management, RSVP tracking, wedding events, wedding budget, free wedding planner"
+  },
+  "demo": {
+    "title": "Demo Wedding - Experience Amare.Wedding",
+    "description": "Explore our wedding planning platform with a live demo. See how easy it is to manage guests, track RSVPs, and plan your wedding events.",
+    "keywords": "wedding planner demo, wedding app demo, try wedding planner, wedding planning software"
+  },
+  "pricing": {
+    "title": "Pricing Plans - Amare.Wedding",
+    "description": "Choose the perfect plan for your wedding. Start free with basic features or upgrade for unlimited guests, events, and premium features.",
+    "keywords": "wedding planner pricing, wedding app cost, wedding planning subscription, free wedding planner"
+  },
+  "login": {
+    "title": "Login - Amare.Wedding",
+    "description": "Sign in to your Amare.Wedding account to continue planning your perfect wedding day."
+  },
+  "register": {
+    "title": "Create Account - Amare.Wedding",
+    "description": "Create your free Amare.Wedding account and start planning your perfect wedding today. Easy setup, powerful features."
+  },
+  "rsvp": {
+    "title": "RSVP - {{weddingTitle}}",
+    "description": "You're invited! Please let us know if you can attend {{weddingTitle}}."
+  },
+  "dashboard": {
+    "title": "Dashboard - Amare.Wedding",
+    "description": "Manage your wedding planning from your personal dashboard. Track guests, events, and budget all in one place."
+  },
+  "guests": {
+    "title": "Guest Management - Amare.Wedding",
+    "description": "Manage your wedding guest list. Add guests, track RSVPs, and send invitations easily."
+  },
+  "events": {
+    "title": "Events - Amare.Wedding",
+    "description": "Plan and organize all your wedding events. From ceremony to reception, keep everything organized."
+  },
+  "expenses": {
+    "title": "Budget Tracker - Amare.Wedding",
+    "description": "Track your wedding expenses and stay on budget. Organize costs by category and monitor your spending."
+  },
+  "og": {
+    "type": "website",
+    "locale": "en_US"
+  }
+}

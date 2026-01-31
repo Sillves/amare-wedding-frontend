@@ -19,6 +19,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { SEO } from '@/shared/components/seo';
 
 export function HomePage() {
   const { t } = useTranslation(['landing', 'common', 'auth']);
@@ -92,8 +93,10 @@ export function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
+    <>
+      <SEO page="home" />
+      <div className="min-h-screen bg-background">
+        {/* Header */}
       <header className="border-b bg-background sticky top-0 z-50">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-8">
@@ -102,6 +105,12 @@ export function HomePage() {
               <span className="text-2xl font-script text-primary">{t('common:appName')}</span>
             </Link>
             <nav className="hidden md:flex items-center gap-6">
+              <Link
+                to="/demo"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {t('landing:nav.demo')}
+              </Link>
               <Link
                 to="/pricing"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -134,6 +143,9 @@ export function HomePage() {
             <Button size="lg" onClick={() => navigate('/register')}>
               {t('landing:hero.cta.getStarted')}
               <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button size="lg" variant="secondary" onClick={() => navigate('/demo')}>
+              {t('landing:hero.cta.viewDemo')}
             </Button>
             <Button size="lg" variant="outline" onClick={() => navigate('/pricing')}>
               {t('landing:hero.cta.viewPricing')}
@@ -256,6 +268,7 @@ export function HomePage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

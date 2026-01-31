@@ -12,6 +12,8 @@ import nlBilling from '@/locales/nl/billing.json';
 import nlProfile from '@/locales/nl/profile.json';
 import nlLanding from '@/locales/nl/landing.json';
 import nlExpenses from '@/locales/nl/expenses.json';
+import nlDemo from '@/locales/nl/demo.json';
+import nlSeo from '@/locales/nl/seo.json';
 
 import enCommon from '@/locales/en/common.json';
 import enAuth from '@/locales/en/auth.json';
@@ -22,6 +24,8 @@ import enBilling from '@/locales/en/billing.json';
 import enProfile from '@/locales/en/profile.json';
 import enLanding from '@/locales/en/landing.json';
 import enExpenses from '@/locales/en/expenses.json';
+import enDemo from '@/locales/en/demo.json';
+import enSeo from '@/locales/en/seo.json';
 
 import frCommon from '@/locales/fr/common.json';
 import frAuth from '@/locales/fr/auth.json';
@@ -32,6 +36,8 @@ import frBilling from '@/locales/fr/billing.json';
 import frProfile from '@/locales/fr/profile.json';
 import frLanding from '@/locales/fr/landing.json';
 import frExpenses from '@/locales/fr/expenses.json';
+import frDemo from '@/locales/fr/demo.json';
+import frSeo from '@/locales/fr/seo.json';
 
 const resources = {
   nl: {
@@ -44,6 +50,8 @@ const resources = {
     profile: nlProfile,
     landing: nlLanding,
     expenses: nlExpenses,
+    demo: nlDemo,
+    seo: nlSeo,
   },
   en: {
     common: enCommon,
@@ -55,6 +63,8 @@ const resources = {
     profile: enProfile,
     landing: enLanding,
     expenses: enExpenses,
+    demo: enDemo,
+    seo: enSeo,
   },
   fr: {
     common: frCommon,
@@ -66,6 +76,8 @@ const resources = {
     profile: frProfile,
     landing: frLanding,
     expenses: frExpenses,
+    demo: frDemo,
+    seo: frSeo,
   },
 };
 
@@ -76,7 +88,7 @@ i18n
     resources,
     fallbackLng: 'nl', // Nederlands als fallback
     defaultNS: 'common',
-    ns: ['common', 'auth', 'weddings', 'guests', 'events', 'billing', 'profile', 'landing', 'expenses'],
+    ns: ['common', 'auth', 'weddings', 'guests', 'events', 'billing', 'profile', 'landing', 'expenses', 'demo', 'seo'],
     interpolation: {
       escapeValue: false, // React escapes by default
     },

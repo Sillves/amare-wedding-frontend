@@ -1,0 +1,17 @@
+{
+  "banner": {
+    "message": "This is a demo wedding. Feel free to explore! Your changes won't be saved."
+  },
+  "exitDemo": "Exit Demo",
+  "demoUser": "Demo User",
+  "tryRsvp": {
+    "title": "Try the RSVP Feature",
+    "description": "Experience what your guests will see when they receive their wedding invitation.",
+    "button": "Open RSVP Page"
+  },
+  "demoNote": {
+    "title": "Demo Mode",
+    "changes": "Changes are temporary and won't be saved",
+    "explore": "Feel free to explore all features"
+  }
+}
