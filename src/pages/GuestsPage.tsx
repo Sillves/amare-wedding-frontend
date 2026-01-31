@@ -152,8 +152,8 @@ export function GuestsPage() {
         <header className="border-b bg-background">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
             <h1 className="text-xl font-bold">{t('common:appName')}</h1>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">{user?.name}</span>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
               <Button variant="outline" size="sm" onClick={logout}>
                 {t('auth:logout')}
               </Button>
@@ -180,8 +180,8 @@ export function GuestsPage() {
             </Button>
             <h1 className="text-xl font-bold">{t('common:appName')}</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">{user?.name}</span>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
             <Button variant="outline" size="sm" onClick={logout}>
               {t('auth:logout')}
             </Button>
@@ -215,7 +215,7 @@ export function GuestsPage() {
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
           <Card
             className={`cursor-pointer hover:bg-muted/50 transition-colors ${!statusFilter ? 'ring-2 ring-primary' : ''}`}
             onClick={() => setFilter(null)}

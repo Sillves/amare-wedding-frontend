@@ -119,13 +119,17 @@ export function HomePage() {
               </Link>
             </nav>
           </div>
-          <div className="flex items-center gap-3">
-            <ThemeSwitcher />
-            <LanguageSwitcher />
-            <Button variant="ghost" onClick={() => navigate('/login')}>
+          <div className="flex items-center gap-1 sm:gap-3">
+            <div className="hidden sm:flex items-center gap-1 sm:gap-3">
+              <ThemeSwitcher />
+              <LanguageSwitcher />
+            </div>
+            <Button variant="ghost" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/login')}>
               {t('auth:login.title')}
             </Button>
-            <Button onClick={() => navigate('/register')}>{t('auth:register.title')}</Button>
+            <Button size="sm" className="px-2 sm:px-4" onClick={() => navigate('/register')}>
+              {t('auth:register.title')}
+            </Button>
           </div>
         </div>
       </header>
@@ -134,7 +138,7 @@ export function HomePage() {
       <section className="py-20 md:py-32 bg-gradient-to-b from-secondary/50 to-background">
         <div className="container mx-auto px-4 text-center space-y-8">
           <div className="space-y-4 max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-script text-primary">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-script text-primary">
               {t('landing:hero.headline')}
             </h1>
             <p className="text-xl text-muted-foreground">{t('landing:hero.subheadline')}</p>

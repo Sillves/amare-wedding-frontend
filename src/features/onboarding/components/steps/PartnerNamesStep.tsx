@@ -45,8 +45,8 @@ export function PartnerNamesStep({ form }: PartnerNamesStepProps) {
         <p className="text-muted-foreground">{t('wizard.partners.subtitle')}</p>
       </div>
 
-      <div className="flex items-center justify-center gap-4 max-w-lg mx-auto">
-        <div className="flex-1 space-y-2">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
+        <div className="w-full sm:flex-1 space-y-2">
           <Label htmlFor="partner1Name">{t('wizard.partners.partner1')}</Label>
           <Input
             id="partner1Name"
@@ -59,11 +59,11 @@ export function PartnerNamesStep({ form }: PartnerNamesStepProps) {
           )}
         </div>
 
-        <div className="flex items-center justify-center pt-6">
+        <div className="flex items-center justify-center sm:pt-6">
           <Heart className="h-8 w-8 text-primary fill-primary" />
         </div>
 
-        <div className="flex-1 space-y-2">
+        <div className="w-full sm:flex-1 space-y-2">
           <Label htmlFor="partner2Name">{t('wizard.partners.partner2')}</Label>
           <Input
             id="partner2Name"

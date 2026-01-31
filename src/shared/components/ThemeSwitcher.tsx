@@ -14,9 +14,11 @@ export function ThemeSwitcher() {
 
   return (
     <Select value={themeName} onValueChange={setTheme}>
-      <SelectTrigger className="w-[160px] h-9">
-        <Palette className="h-4 w-4 mr-2" />
-        <SelectValue placeholder="Theme" />
+      <SelectTrigger className="w-auto sm:w-[160px] h-9">
+        <Palette className="h-4 w-4 sm:mr-2" />
+        <span className="hidden sm:inline">
+          <SelectValue placeholder="Theme" />
+        </span>
       </SelectTrigger>
       <SelectContent>
         {themes.map((theme) => (

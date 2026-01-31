@@ -23,13 +23,13 @@ export function WizardStepper({ currentStep }: WizardStepperProps) {
               <div className="flex flex-col items-center">
                 <div
                   className={cn(
-                    'w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-colors',
+                    'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium transition-colors',
                     isCompleted && 'bg-primary text-primary-foreground',
-                    isCurrent && 'bg-primary text-primary-foreground ring-4 ring-primary/20',
+                    isCurrent && 'bg-primary text-primary-foreground ring-2 sm:ring-4 ring-primary/20',
                     !isCompleted && !isCurrent && 'bg-muted text-muted-foreground'
                   )}
                 >
-                  {isCompleted ? <Check className="h-5 w-5" /> : step.id}
+                  {isCompleted ? <Check className="h-4 w-4 sm:h-5 sm:w-5" /> : step.id}
                 </div>
                 <span
                   className={cn(

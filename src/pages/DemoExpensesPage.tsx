@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Wallet, TrendingUp, CheckCircle2, Circle, ClipboardList, ChevronDown, Heart } from 'lucide-react';
+import { Plus, Wallet, TrendingUp, CheckCircle2, Circle, ClipboardList, ChevronDown, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,7 +15,7 @@ import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 
 function DemoExpensesContent() {
-  const { t } = useTranslation(['expenses', 'common', 'demo']);
+  const { t } = useTranslation(['expenses', 'common', 'demo', 'guests', 'events']);
   const navigate = useNavigate();
 
   const summary = DEMO_EXPENSE_SUMMARY;
@@ -61,31 +61,55 @@ function DemoExpensesContent() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/40">
+    <div className="min-h-screen bg-muted/40 overflow-x-hidden">
       {/* Header */}
       <header className="border-b bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/demo')}>
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2">
-              <Heart className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">{t('common:appName')}</span>
-              <Badge variant="secondary" className="ml-2">
-                Demo
-              </Badge>
-            </div>
+          <div className="flex items-center gap-2">
+            <Heart className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold">{t('common:appName')}</span>
+            <Badge variant="secondary" className="ml-2">
+              Demo
+            </Badge>
           </div>
-          <div className="flex items-center gap-3">
-            <ThemeSwitcher />
-            <LanguageSwitcher />
-            <Button variant="outline" size="sm" onClick={() => navigate('/')}>
+          <div className="flex items-center gap-1 sm:gap-3">
+            <div className="hidden sm:flex items-center gap-1 sm:gap-3">
+              <ThemeSwitcher />
+              <LanguageSwitcher />
+            </div>
+            <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/')}>
               {t('demo:exitDemo')}
             </Button>
           </div>
         </div>
       </header>
+
+      {/* Navigation */}
+      <nav className="border-b bg-background">
+        <div className="container mx-auto px-4">
+          <div className="flex gap-4 overflow-x-auto">
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo')}>
+              {t('common:dashboard.title')}
+            </Button>
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/guests')}>
+              {t('guests:title')}
+            </Button>
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/events')}>
+              {t('events:title')}
+            </Button>
+            <Button
+              variant="ghost"
+              className="rounded-none border-b-2 border-primary"
+              onClick={() => navigate('/demo/expenses')}
+            >
+              {t('expenses:title')}
+            </Button>
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/rsvp')}>
+              RSVP
+            </Button>
+          </div>
+        </div>
+      </nav>
 
       <main className="container mx-auto p-4 space-y-6">
         {/* Demo Banner */}

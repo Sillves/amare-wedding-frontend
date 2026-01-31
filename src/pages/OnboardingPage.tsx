@@ -36,7 +36,7 @@ export function OnboardingPage() {
             <Heart className="h-6 w-6 text-primary" />
             <span className="text-2xl font-script text-primary">{t('appName')}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-1 sm:gap-3">
             <ThemeSwitcher />
             <LanguageSwitcher />
           </div>

@@ -65,8 +65,8 @@ export function EventsPage() {
         <header className="border-b bg-background">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
             <h1 className="text-xl font-bold">{t('common:appName')}</h1>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">{user?.name}</span>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
               <Button variant="outline" size="sm" onClick={logout}>
                 {t('auth:logout')}
               </Button>
@@ -93,8 +93,8 @@ export function EventsPage() {
             </Button>
             <h1 className="text-xl font-bold">{t('common:appName')}</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">{user?.name}</span>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
             <Button variant="outline" size="sm" onClick={logout}>
               {t('auth:logout')}
             </Button>

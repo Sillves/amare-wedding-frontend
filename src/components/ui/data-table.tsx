@@ -116,8 +116,8 @@ export function DataTable<T>({
   return (
     <div className="space-y-4">
       {/* Table with fixed height and scroll */}
-      <div className="rounded-md border">
-        <div className="overflow-y-auto" style={{ maxHeight }}>
+      <div className="rounded-md border overflow-x-auto">
+        <div className="overflow-y-auto min-w-[640px]" style={{ maxHeight }}>
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>

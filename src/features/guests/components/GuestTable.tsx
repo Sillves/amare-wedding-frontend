@@ -187,8 +187,8 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
       )}
 
       {/* Table with fixed height and scroll */}
-      <div className="rounded-md border">
-        <div className="max-h-[600px] overflow-y-auto">
+      <div className="rounded-md border overflow-x-auto">
+        <div className="max-h-[600px] overflow-y-auto min-w-[640px]">
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>

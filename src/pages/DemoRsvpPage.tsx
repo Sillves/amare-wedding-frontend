@@ -64,7 +64,7 @@ function DemoRsvpContent() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950 dark:to-pink-950">
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950 dark:to-pink-950 overflow-x-hidden">
         {/* Header */}
         <header className="border-b bg-background/80 backdrop-blur">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -105,7 +105,7 @@ function DemoRsvpContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950 dark:to-pink-950">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950 dark:to-pink-950 overflow-x-hidden">
       {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">

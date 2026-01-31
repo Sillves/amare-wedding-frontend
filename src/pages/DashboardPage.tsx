@@ -138,8 +138,8 @@ export function DashboardPage() {
       <header className="border-b bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <h1 className="text-xl font-bold">{t('common:appName')}</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">{user?.email}</span>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="hidden sm:inline text-sm text-muted-foreground">{user?.email}</span>
             <Button variant="ghost" size="sm" onClick={() => navigate('/profile')}>
               {t('common:profile')}
             </Button>
@@ -201,7 +201,7 @@ export function DashboardPage() {
         {/* Guest Statistics */}
         <div>
           <h3 className="text-lg font-semibold mb-3">{t('guests:title')}</h3>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
             <Card
               className="cursor-pointer hover:bg-muted/50 transition-colors"
               onClick={() => navigate(`/guests?weddingId=${wedding?.id}`)}
