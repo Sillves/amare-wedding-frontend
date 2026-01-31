@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const languages = [
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'nl', label: 'Nederlands', flag: '🇳🇱' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'en', label: 'English', abbr: 'EN', flag: '🇬🇧' },
+  { code: 'nl', label: 'Nederlands', abbr: 'NL', flag: '🇳🇱' },
+  { code: 'fr', label: 'Français', abbr: 'FR', flag: '🇫🇷' },
 ];
 
 export function LanguageSwitcher() {
@@ -28,7 +28,7 @@ export function LanguageSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
           <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline">{currentLanguage.flag} {currentLanguage.label}</span>
+          <span className="hidden sm:inline">{currentLanguage.abbr}</span>
           <span className="sm:hidden">{currentLanguage.flag}</span>
         </Button>
       </DropdownMenuTrigger>

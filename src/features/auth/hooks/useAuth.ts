@@ -98,13 +98,16 @@ export function useRegister() {
 
 /**
  * Hook for handling user logout
- * @returns Logout function that clears auth state and redirects to login
+ * @returns Logout function that clears auth state, React Query cache, and redirects to login
  */
 export function useLogout() {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
+  const queryClient = useQueryClient();
 
   return () => {
+    // Clear all cached data to prevent data leakage between users
+    queryClient.clear();
     logout();
     navigate('/login');
   };
