@@ -39,11 +39,6 @@ export function WizardStepper({ currentStep }: WizardStepperProps) {
                   )}
                 >
                   {t(step.labelKey)}
-                  {step.optional && (
-                    <span className="block text-[10px] text-muted-foreground/70">
-                      ({t('wizard.navigation.skip')})
-                    </span>
-                  )}
                 </span>
               </div>
               {!isLast && (
