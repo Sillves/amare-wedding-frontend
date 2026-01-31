@@ -7,30 +7,36 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ExpenseTable } from '@/features/expenses/components/ExpenseTable';
 import { ExpenseCategoryChart } from '@/features/expenses/components/ExpenseCategoryChart';
-import { DemoProvider } from '@/features/demo/context/DemoContext';
+import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
-import { DEMO_EXPENSE_SUMMARY } from '@/features/demo/data/mockExpenses';
+import { DemoExpenseDialog, DemoDeleteExpenseDialog } from '@/features/demo/components/DemoExpenseDialogs';
 import { EXPENSE_CATEGORIES } from '@/features/expenses/utils/expenseCategory';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import type { WeddingExpenseDto } from '@/features/expenses/api/expensesApi';
 
 function DemoExpensesContent() {
   const { t } = useTranslation(['expenses', 'common', 'demo', 'guests', 'events']);
   const navigate = useNavigate();
+  const { expenseSummary } = useDemoContext();
 
-  const summary = DEMO_EXPENSE_SUMMARY;
   const [isChartExpanded, setIsChartExpanded] = useState(false);
 
-  const categoryTotals = useMemo(() => {
-    if (!summary?.categoryTotals) return [];
+  // Dialog states
+  const [expenseDialogOpen, setExpenseDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState<WeddingExpenseDto | null>(null);
 
-    return Object.entries(summary.categoryTotals)
+  const categoryTotals = useMemo(() => {
+    if (!expenseSummary?.categoryTotals) return [];
+
+    return Object.entries(expenseSummary.categoryTotals)
       .filter(([, value]) => value && value > 0)
       .map(([key, value]) => ({
         name: key,
         value: value || 0,
       }));
-  }, [summary]);
+  }, [expenseSummary]);
 
   // Budget checklist - which categories have expenses
   const budgetChecklist = useMemo(() => {
@@ -56,8 +62,19 @@ function DemoExpensesContent() {
     }).format(amount);
   };
 
-  const handleDemoAction = () => {
-    // Demo mode - actions are disabled
+  const handleCreate = () => {
+    setSelectedExpense(null);
+    setExpenseDialogOpen(true);
+  };
+
+  const handleEdit = (expense: WeddingExpenseDto) => {
+    setSelectedExpense(expense);
+    setExpenseDialogOpen(true);
+  };
+
+  const handleDelete = (expense: WeddingExpenseDto) => {
+    setSelectedExpense(expense);
+    setDeleteDialogOpen(true);
   };
 
   return (
@@ -121,7 +138,7 @@ function DemoExpensesContent() {
             <h2 className="text-3xl font-bold">{t('expenses:title')}</h2>
             <p className="text-muted-foreground">{t('expenses:subtitle')}</p>
           </div>
-          <Button disabled>
+          <Button onClick={handleCreate}>
             <Plus className="h-4 w-4 mr-2" />
             {t('expenses:addExpense')}
           </Button>
@@ -138,10 +155,10 @@ function DemoExpensesContent() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {formatCurrency(summary?.totalAmount || 0)}
+                {formatCurrency(expenseSummary?.totalAmount || 0)}
               </div>
               <p className="text-xs text-muted-foreground">
-                {summary?.expenses?.length || 0} {t('expenses:title').toLowerCase()}
+                {expenseSummary?.expenses?.length || 0} {t('expenses:title').toLowerCase()}
               </p>
             </CardContent>
           </Card>
@@ -204,16 +221,16 @@ function DemoExpensesContent() {
           <CardHeader>
             <CardTitle>{t('expenses:title')}</CardTitle>
             <CardDescription>
-              {summary?.expenses?.length
-                ? `${summary.expenses.length} expense${summary.expenses.length !== 1 ? 's' : ''} recorded`
+              {expenseSummary?.expenses?.length
+                ? `${expenseSummary.expenses.length} expense${expenseSummary.expenses.length !== 1 ? 's' : ''} recorded`
                 : t('expenses:noExpensesDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <ExpenseTable
-              expenses={summary?.expenses || []}
-              onEdit={handleDemoAction}
-              onDelete={handleDemoAction}
+              expenses={expenseSummary?.expenses || []}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           </CardContent>
         </Card>
@@ -245,6 +262,18 @@ function DemoExpensesContent() {
           </Card>
         )}
       </main>
+
+      {/* Dialogs */}
+      <DemoExpenseDialog
+        expense={selectedExpense}
+        open={expenseDialogOpen}
+        onOpenChange={setExpenseDialogOpen}
+      />
+      <DemoDeleteExpenseDialog
+        expense={selectedExpense}
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+      />
     </div>
   );
 }

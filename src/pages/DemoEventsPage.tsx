@@ -1,21 +1,32 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Heart } from 'lucide-react';
+import { Calendar, Heart, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { EventCard } from '@/features/events/components/EventCard';
-import { DemoProvider } from '@/features/demo/context/DemoContext';
+import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
-import { DEMO_EVENTS } from '@/features/demo/data/mockEvents';
+import {
+  DemoCreateEventDialog,
+  DemoEditEventDialog,
+  DemoDeleteEventDialog,
+} from '@/features/demo/components/DemoEventDialogs';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import type { EventDto } from '@/features/weddings/types';
 
 function DemoEventsContent() {
   const { t } = useTranslation(['events', 'common', 'demo', 'guests', 'expenses']);
   const navigate = useNavigate();
+  const { events } = useDemoContext();
 
-  const events = DEMO_EVENTS;
+  // Dialog states
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<EventDto | null>(null);
 
   // Sort events by start date
   const sortedEvents = [...events].sort((a, b) => {
@@ -23,8 +34,18 @@ function DemoEventsContent() {
     return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
   });
 
-  const handleDemoAction = () => {
-    // Demo mode - actions are disabled
+  const handleEdit = (event: EventDto) => {
+    setSelectedEvent(event);
+    setEditDialogOpen(true);
+  };
+
+  const handleDelete = (event: EventDto) => {
+    setSelectedEvent(event);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleManageGuests = () => {
+    // Demo - guest management would open a dialog
   };
 
   return (
@@ -88,8 +109,8 @@ function DemoEventsContent() {
             <h2 className="text-3xl font-bold">{t('events:title')}</h2>
             <p className="text-muted-foreground">{t('events:manageDescription')}</p>
           </div>
-          <Button disabled>
-            <Calendar className="h-4 w-4 mr-2" />
+          <Button onClick={() => setCreateDialogOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
             {t('events:addEvent')}
           </Button>
         </div>
@@ -109,15 +130,28 @@ function DemoEventsContent() {
                   key={event.id}
                   event={event}
                   guestCount={0}
-                  onEdit={handleDemoAction}
-                  onDelete={handleDemoAction}
-                  onManageGuests={handleDemoAction}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onManageGuests={handleManageGuests}
                 />
               ))}
             </div>
           </CardContent>
         </Card>
       </main>
+
+      {/* Dialogs */}
+      <DemoCreateEventDialog open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+      <DemoEditEventDialog
+        event={selectedEvent}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+      />
+      <DemoDeleteEventDialog
+        event={selectedEvent}
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+      />
     </div>
   );
 }

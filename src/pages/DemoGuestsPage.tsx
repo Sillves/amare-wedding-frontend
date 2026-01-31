@@ -1,15 +1,21 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Users, UserCheck, UserX, Clock, Heart } from 'lucide-react';
+import { Users, UserCheck, UserX, Clock, Heart, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { GuestTable } from '@/features/guests/components/GuestTable';
 import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
+import {
+  DemoCreateGuestDialog,
+  DemoEditGuestDialog,
+  DemoDeleteGuestDialog,
+} from '@/features/demo/components/DemoGuestDialogs';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import type { GuestDto } from '@/features/weddings/types';
 
 function DemoGuestsContent() {
   const { t } = useTranslation(['guests', 'common', 'demo', 'events', 'expenses']);
@@ -17,6 +23,12 @@ function DemoGuestsContent() {
   const { guests } = useDemoContext();
 
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+
+  // Dialog states
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedGuest, setSelectedGuest] = useState<GuestDto | null>(null);
 
   // Filter guests based on status
   const filteredGuests = useMemo(() => {
@@ -47,8 +59,18 @@ function DemoGuestsContent() {
     };
   }, [guests]);
 
-  const handleDemoAction = () => {
-    // Demo mode - show friendly message instead of actual action
+  const handleEdit = (guest: GuestDto) => {
+    setSelectedGuest(guest);
+    setEditDialogOpen(true);
+  };
+
+  const handleDelete = (guest: GuestDto) => {
+    setSelectedGuest(guest);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleSendInvitation = () => {
+    // Demo - just show it works but don't actually send
   };
 
   return (
@@ -112,7 +134,10 @@ function DemoGuestsContent() {
             <h2 className="text-3xl font-bold">{t('guests:title')}</h2>
             <p className="text-muted-foreground">{t('guests:manageDescription')}</p>
           </div>
-          <Button disabled>{t('guests:addGuest')}</Button>
+          <Button onClick={() => setCreateDialogOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            {t('guests:addGuest')}
+          </Button>
         </div>
 
         {/* Statistics Cards */}
@@ -210,14 +235,27 @@ function DemoGuestsContent() {
           <CardContent>
             <GuestTable
               guests={filteredGuests}
-              onEdit={handleDemoAction}
-              onDelete={handleDemoAction}
-              onSendInvitation={handleDemoAction}
-              onBulkSendInvitations={handleDemoAction}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onSendInvitation={handleSendInvitation}
+              onBulkSendInvitations={handleSendInvitation}
             />
           </CardContent>
         </Card>
       </main>
+
+      {/* Dialogs */}
+      <DemoCreateGuestDialog open={createDialogOpen} onOpenChange={setCreateDialogOpen} />
+      <DemoEditGuestDialog
+        guest={selectedGuest}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+      />
+      <DemoDeleteGuestDialog
+        guest={selectedGuest}
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+      />
     </div>
   );
 }

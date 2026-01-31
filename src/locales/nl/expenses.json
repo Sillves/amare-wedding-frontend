@@ -2,7 +2,11 @@
   "title": "Kosten",
   "subtitle": "Beheer en volg je trouwbudget",
   "addExpense": "Kosten toevoegen",
+  "addExpenseDescription": "Voeg een nieuwe uitgave toe om je trouwbudget bij te houden.",
   "editExpense": "Kosten bewerken",
+  "editExpenseDescription": "Werk de details van deze uitgave bij.",
+  "deleteExpense": "Kosten verwijderen",
+  "deleteExpenseConfirmation": "Weet je zeker dat je \"{{description}}\" wilt verwijderen? Dit kan niet ongedaan worden gemaakt.",
   "noExpenses": "Nog geen kosten",
   "noExpensesDescription": "Begin met het bijhouden van je trouwkosten door je eerste uitgave toe te voegen.",
   "deleteConfirmTitle": "Kosten verwijderen",
@@ -40,10 +44,17 @@
     "description": "Beschrijving",
     "descriptionPlaceholder": "bijv. Aanbetaling locatie",
     "date": "Datum",
+    "datePlaceholder": "Selecteer een datum",
     "notes": "Notities (optioneel)",
     "notesPlaceholder": "Extra details...",
     "save": "Opslaan",
     "cancel": "Annuleren"
+  },
+  "actions": {
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "create": "Toevoegen",
+    "delete": "Verwijderen"
   },
   "toast": {
     "created": "Kosten succesvol toegevoegd",

@@ -2,7 +2,11 @@
   "title": "Expenses",
   "subtitle": "Track and manage your wedding budget",
   "addExpense": "Add Expense",
+  "addExpenseDescription": "Add a new expense to track your wedding budget.",
   "editExpense": "Edit Expense",
+  "editExpenseDescription": "Update the details of this expense.",
+  "deleteExpense": "Delete Expense",
+  "deleteExpenseConfirmation": "Are you sure you want to delete \"{{description}}\"? This action cannot be undone.",
   "noExpenses": "No expenses yet",
   "noExpensesDescription": "Start tracking your wedding costs by adding your first expense.",
   "deleteConfirmTitle": "Delete Expense",
@@ -40,10 +44,17 @@
     "description": "Description",
     "descriptionPlaceholder": "e.g., Venue deposit",
     "date": "Date",
+    "datePlaceholder": "Select a date",
     "notes": "Notes (optional)",
     "notesPlaceholder": "Additional details...",
     "save": "Save Expense",
     "cancel": "Cancel"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "create": "Create",
+    "delete": "Delete"
   },
   "toast": {
     "created": "Expense added successfully",

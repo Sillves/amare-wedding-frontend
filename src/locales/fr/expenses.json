@@ -2,7 +2,11 @@
   "title": "Dépenses",
   "subtitle": "Suivez et gérez votre budget de mariage",
   "addExpense": "Ajouter une dépense",
+  "addExpenseDescription": "Ajoutez une nouvelle dépense pour suivre votre budget de mariage.",
   "editExpense": "Modifier la dépense",
+  "editExpenseDescription": "Mettez à jour les détails de cette dépense.",
+  "deleteExpense": "Supprimer la dépense",
+  "deleteExpenseConfirmation": "Êtes-vous sûr de vouloir supprimer \"{{description}}\" ? Cette action est irréversible.",
   "noExpenses": "Pas encore de dépenses",
   "noExpensesDescription": "Commencez à suivre vos coûts de mariage en ajoutant votre première dépense.",
   "deleteConfirmTitle": "Supprimer la dépense",
@@ -40,10 +44,17 @@
     "description": "Description",
     "descriptionPlaceholder": "ex. Acompte du lieu",
     "date": "Date",
+    "datePlaceholder": "Sélectionner une date",
     "notes": "Notes (optionnel)",
     "notesPlaceholder": "Détails supplémentaires...",
     "save": "Enregistrer",
     "cancel": "Annuler"
+  },
+  "actions": {
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "create": "Créer",
+    "delete": "Supprimer"
   },
   "toast": {
     "created": "Dépense ajoutée avec succès",
