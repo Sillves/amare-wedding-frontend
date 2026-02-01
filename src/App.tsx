@@ -6,6 +6,7 @@ import { queryClient } from './lib/queryClient';
 import { router } from './lib/router';
 import { useThemeStore } from './lib/themeStore';
 import { applyTheme, getThemeByName } from './lib/themes';
+import { Toaster } from './components/ui/toaster';
 import './lib/i18n'; // Initialize i18n
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <Toaster />
       </QueryClientProvider>
     </HelmetProvider>
   );

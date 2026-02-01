@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCreateGuest } from '../hooks/useGuests';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { CreateGuestRequest } from '@/features/weddings/types';
 
 interface CreateGuestDialogProps {
@@ -26,6 +27,7 @@ export function CreateGuestDialog({ weddingId, children }: CreateGuestDialogProp
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const createGuest = useCreateGuest();
+  const { showError, showSuccess } = useErrorToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,11 +44,12 @@ export function CreateGuestDialog({ weddingId, children }: CreateGuestDialogProp
 
     try {
       await createGuest.mutateAsync({ weddingId, data });
+      showSuccess(t('messages.created'));
       setOpen(false);
       setName('');
       setEmail('');
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

@@ -1,0 +1,183 @@
+{
+  "title": "Wedding Website",
+  "description": "Create your beautiful wedding website",
+  "loading": "Loading website...",
+  "noWebsite": "No website found",
+  "published": "Published",
+  "unsavedChanges": "Unsaved changes",
+  "tabs": {
+    "template": "Template",
+    "hero": "Hero",
+    "story": "Our Story",
+    "details": "Details",
+    "events": "Events",
+    "gallery": "Gallery",
+    "rsvp": "RSVP",
+    "footer": "Footer"
+  },
+  "actions": {
+    "save": "Save",
+    "saving": "Saving...",
+    "publish": "Publish",
+    "publishing": "Publishing...",
+    "unpublish": "Unpublish",
+    "unpublishing": "Unpublishing...",
+    "viewLive": "View Live"
+  },
+  "preview": {
+    "title": "Preview"
+  },
+  "templates": {
+    "title": "Choose Template",
+    "description": "Select a beautiful template for your wedding website",
+    "ElegantClassic": {
+      "name": "Elegant Classic",
+      "description": "Timeless elegance with romantic serif fonts and soft neutral tones"
+    },
+    "ModernMinimal": {
+      "name": "Modern Minimal",
+      "description": "Clean and contemporary with bold typography and generous whitespace"
+    },
+    "RomanticGarden": {
+      "name": "Romantic Garden",
+      "description": "Whimsical and organic with botanical illustrations and watercolor accents"
+    }
+  },
+  "hero": {
+    "title": "Hero Section",
+    "coupleNames": "Couple Names",
+    "coupleNamesPlaceholder": "Emma & James",
+    "date": "Wedding Date",
+    "tagline": "Tagline",
+    "taglinePlaceholder": "We're getting married!",
+    "backgroundImage": "Background Image",
+    "displayStyle": "Display Style",
+    "styles": {
+      "centered": "Centered",
+      "left": "Left Aligned",
+      "overlay": "Overlay"
+    }
+  },
+  "story": {
+    "title": "Our Story",
+    "enabled": "Show Section",
+    "sectionTitle": "Section Title",
+    "displayType": "Display Type",
+    "types": {
+      "timeline": "Timeline",
+      "narrative": "Narrative"
+    },
+    "items": "Story Items",
+    "addItem": "Add Item",
+    "untitledItem": "New Item",
+    "noItems": "No items yet. Click 'Add Item' to get started.",
+    "item": {
+      "title": "Title",
+      "titlePlaceholder": "e.g. First Meeting",
+      "date": "Date",
+      "description": "Description",
+      "image": "Image"
+    },
+    "removeItem": "Remove"
+  },
+  "details": {
+    "title": "Wedding Details",
+    "enabled": "Show Section",
+    "sectionTitle": "Section Title",
+    "show": "Show",
+    "venueTitle": "Title",
+    "venue": "Venue Name",
+    "venuePlaceholder": "e.g. The Grand Ballroom",
+    "address": "Address",
+    "addressPlaceholder": "e.g. 123 Main Street, New York",
+    "dateTime": "Date & Time",
+    "description": "Description",
+    "descriptionPlaceholder": "Optional description...",
+    "mapUrl": "Google Maps URL",
+    "ceremony": {
+      "title": "Ceremony",
+      "enabled": "Show Ceremony",
+      "sectionTitle": "Title",
+      "venue": "Venue Name",
+      "address": "Address",
+      "date": "Date & Time",
+      "mapUrl": "Google Maps URL"
+    },
+    "reception": {
+      "title": "Reception",
+      "enabled": "Show Reception",
+      "sectionTitle": "Title",
+      "venue": "Venue Name",
+      "address": "Address",
+      "date": "Date & Time",
+      "mapUrl": "Google Maps URL"
+    }
+  },
+  "events": {
+    "title": "Events Section",
+    "enabled": "Show Section",
+    "sectionTitle": "Section Title",
+    "showFromWedding": "Show Wedding Events",
+    "showFromWeddingDescription": "Display events from your wedding planning dashboard"
+  },
+  "gallery": {
+    "title": "Photo Gallery",
+    "enabled": "Show Section",
+    "sectionTitle": "Section Title",
+    "displayType": "Display Type",
+    "types": {
+      "grid": "Grid",
+      "masonry": "Masonry",
+      "carousel": "Carousel"
+    },
+    "images": "Gallery Images",
+    "addImage": "Add Image",
+    "noImages": "No images yet. Click 'Add Image' to get started.",
+    "caption": "Caption",
+    "removeImage": "Remove"
+  },
+  "rsvp": {
+    "title": "RSVP Section",
+    "enabled": "Show Section",
+    "sectionTitle": "Section Title",
+    "description": "Description",
+    "descriptionPlaceholder": "Please let us know if you can make it...",
+    "deadline": "RSVP Deadline",
+    "buttonText": "Button Text",
+    "buttonTextPlaceholder": "RSVP Now",
+    "linkNote": "The RSVP button automatically links to your RSVP page where guests can respond."
+  },
+  "footer": {
+    "title": "Footer",
+    "enabled": "Show Footer",
+    "contactEmail": "Contact Email",
+    "contactEmailPlaceholder": "e.g. wedding@example.com",
+    "customMessage": "Custom Message",
+    "customMessagePlaceholder": "We can't wait to celebrate with you!"
+  },
+  "upload": {
+    "dropzone": "Drag and drop an image here or click to select",
+    "browse": "Browse",
+    "uploading": "Uploading...",
+    "change": "Change",
+    "fileTooLarge": "File is too large (max {{max}}MB)",
+    "invalidType": "Invalid file type",
+    "error": "An error occurred while uploading"
+  },
+  "upgrade": {
+    "title": "Upgrade to Access",
+    "description": "The wedding website builder is available on Starter and Pro plans. Upgrade your subscription to create your beautiful wedding website.",
+    "viewPlans": "View Plans"
+  },
+  "noWedding": {
+    "title": "No Wedding Found",
+    "description": "You need to create a wedding first before you can build your website.",
+    "createWedding": "Go to Dashboard"
+  },
+  "create": {
+    "title": "Create Your Website",
+    "description": "Ready to share your special day with the world? Create your wedding website and start customizing it with our beautiful templates.",
+    "button": "Create Website",
+    "creating": "Creating..."
+  }
+}

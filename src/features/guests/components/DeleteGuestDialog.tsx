@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteGuest } from '../hooks/useGuests';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { GuestDto } from '@/features/weddings/types';
 
 interface DeleteGuestDialogProps {
@@ -21,6 +22,7 @@ interface DeleteGuestDialogProps {
 export function DeleteGuestDialog({ guest, open, onOpenChange }: DeleteGuestDialogProps) {
   const { t } = useTranslation('guests');
   const deleteGuest = useDeleteGuest();
+  const { showError, showSuccess } = useErrorToast();
 
   const handleDelete = async () => {
     if (!guest) return;
@@ -30,9 +32,10 @@ export function DeleteGuestDialog({ guest, open, onOpenChange }: DeleteGuestDial
         guestId: guest.id!,
         weddingId: guest.weddingId!,
       });
+      showSuccess(t('messages.deleted'));
       onOpenChange(false);
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

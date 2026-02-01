@@ -6,6 +6,101 @@
   "profile": "Profil",
   "error": "Une erreur s'est produite",
   "success": "Succès!",
+  "errors": {
+    "generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "http": {
+      "badRequest": "Requête invalide. Veuillez vérifier vos données.",
+      "unauthorized": "Veuillez vous connecter pour continuer.",
+      "forbidden": "Vous n'avez pas la permission d'effectuer cette action.",
+      "notFound": "La ressource demandée n'a pas été trouvée.",
+      "conflict": "Cette action entre en conflit avec des données existantes.",
+      "tooLarge": "Le fichier est trop volumineux. Veuillez en télécharger un plus petit.",
+      "tooManyRequests": "Trop de requêtes. Veuillez patienter et réessayer.",
+      "serverError": "Erreur serveur. Veuillez réessayer plus tard.",
+      "badGateway": "Erreur de service externe. Veuillez réessayer plus tard."
+    },
+    "network": {
+      "timeout": "Délai d'attente dépassé. Vérifiez votre connexion.",
+      "offline": "Pas de connexion Internet. Vérifiez votre réseau."
+    },
+    "auth": {
+      "invalidCredentials": "Email ou mot de passe invalide.",
+      "registrationFailed": "Échec de l'inscription. Veuillez réessayer.",
+      "registrationDisabled": "Les inscriptions sont actuellement désactivées.",
+      "invalidRegistrationCode": "Code d'inscription invalide.",
+      "userNotFound": "Utilisateur non trouvé."
+    },
+    "guests": {
+      "nameRequired": "Le nom de l'invité est requis.",
+      "emailRequired": "L'email de l'invité est requis.",
+      "emailInvalid": "Veuillez entrer une adresse email valide.",
+      "languageNotSupported": "La langue sélectionnée n'est pas prise en charge.",
+      "notFound": "Invité non trouvé.",
+      "notFoundWithId": "Invité non trouvé.",
+      "notFoundByEmail": "Aucun invité trouvé avec cette adresse email.",
+      "emailExists": "Un invité avec cet email existe déjà.",
+      "wrongWedding": "Cet invité n'appartient pas à ce mariage.",
+      "invitationFailed": "Échec de l'envoi de l'invitation. Veuillez réessayer.",
+      "someNotFound": "Certains invités n'ont pas été trouvés."
+    },
+    "events": {
+      "nameRequired": "Le nom de l'événement est requis.",
+      "locationRequired": "Le lieu de l'événement est requis.",
+      "startDateRequired": "La date de début est requise.",
+      "endDateRequired": "La date de fin est requise.",
+      "endDateBeforeStart": "La date de fin doit être égale ou postérieure à la date de début.",
+      "notFound": "Événement non trouvé.",
+      "notFoundWithId": "Événement non trouvé.",
+      "notFoundByName": "Événement non trouvé.",
+      "eventOrGuestNotFound": "Événement ou invité non trouvé.",
+      "notAllowed": "Vous n'avez pas la permission de modifier cet événement.",
+      "guestAlreadyInEvent": "Cet invité est déjà ajouté à cet événement.",
+      "guestNotInEvent": "Cet invité ne fait pas partie de cet événement."
+    },
+    "expenses": {
+      "amountRequired": "Le montant doit être supérieur à 0.",
+      "descriptionRequired": "La description de la dépense est requise.",
+      "descriptionTooLong": "La description ne doit pas dépasser 500 caractères.",
+      "notesTooLong": "Les notes ne doivent pas dépasser 1000 caractères.",
+      "notFoundWithId": "Dépense non trouvée."
+    },
+    "weddings": {
+      "notFound": "Mariage non trouvé.",
+      "notFoundWithId": "Mariage non trouvé.",
+      "notFoundBySlug": "Mariage non trouvé.",
+      "invalidId": "ID de mariage invalide.",
+      "userAlreadyAdded": "Cet utilisateur est déjà ajouté au mariage.",
+      "userNotInWedding": "Cet utilisateur ne fait pas partie du mariage."
+    },
+    "billing": {
+      "freeNoCheckout": "Le forfait gratuit ne nécessite pas de paiement.",
+      "priceNotFound": "Informations de prix non trouvées.",
+      "checkoutFailed": "Impossible de créer la session de paiement. Veuillez réessayer.",
+      "noCustomer": "Aucun compte de facturation trouvé. Contactez le support.",
+      "portalFailed": "Impossible d'ouvrir le portail de facturation. Veuillez réessayer.",
+      "lifetimeCheckout": "Les forfaits à vie doivent être achetés via le paiement.",
+      "freeNoPaid": "Le forfait gratuit ne nécessite pas d'abonnement payant.",
+      "noActiveSubscription": "Aucun abonnement actif trouvé.",
+      "subscriptionItemsNotFound": "Détails de l'abonnement non trouvés.",
+      "invalidSignature": "Signature de paiement invalide.",
+      "updateFailed": "Échec de la mise à jour de l'abonnement. Veuillez réessayer."
+    },
+    "website": {
+      "notFound": "Site web non trouvé.",
+      "subscriptionRequired": "Le créateur de site nécessite un abonnement Starter ou Pro.",
+      "alreadyExists": "Un site web existe déjà pour ce mariage.",
+      "notPublished": "Ce site web n'est pas publié."
+    },
+    "media": {
+      "invalidId": "ID média invalide.",
+      "notFound": "Média non trouvé."
+    },
+    "limits": {
+      "guestLimitReached": "Vous avez atteint la limite d'invités de votre forfait. Passez à un forfait supérieur pour ajouter plus d'invités.",
+      "eventLimitReached": "Vous avez atteint la limite d'événements de votre forfait. Passez à un forfait supérieur pour ajouter plus d'événements.",
+      "emailLimitReached": "Vous avez atteint la limite mensuelle d'emails de votre forfait. Passez à un forfait supérieur ou attendez le mois prochain."
+    }
+  },
   "cancel": "Annuler",
   "save": "Enregistrer",
   "delete": "Supprimer",
@@ -68,6 +163,10 @@
     "sendInvites": "Envoyer les invitations",
     "upgradePlan": "Passez à un forfait supérieur",
     "upgradePlanDescription": "Débloquez plus d'invités, d'événements et de fonctionnalités premium",
-    "viewPlans": "Voir les forfaits"
+    "viewPlans": "Voir les forfaits",
+    "createWebsite": "Créez votre site de mariage",
+    "createWebsiteDescription": "Partagez votre jour spécial avec un magnifique site web",
+    "editWebsite": "Modifier le site",
+    "websiteBuilder": "Créateur de site"
   }
 }

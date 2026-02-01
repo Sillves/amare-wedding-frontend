@@ -6,6 +6,101 @@
   "profile": "Profiel",
   "error": "Er is een fout opgetreden",
   "success": "Gelukt!",
+  "errors": {
+    "generic": "Er is iets misgegaan. Probeer het opnieuw.",
+    "http": {
+      "badRequest": "Ongeldige aanvraag. Controleer uw invoer.",
+      "unauthorized": "Log in om door te gaan.",
+      "forbidden": "U heeft geen toestemming voor deze actie.",
+      "notFound": "De gevraagde bron is niet gevonden.",
+      "conflict": "Deze actie conflicteert met bestaande gegevens.",
+      "tooLarge": "Het bestand is te groot. Upload een kleiner bestand.",
+      "tooManyRequests": "Te veel verzoeken. Wacht even en probeer het opnieuw.",
+      "serverError": "Serverfout. Probeer het later opnieuw.",
+      "badGateway": "Externe servicefout. Probeer het later opnieuw."
+    },
+    "network": {
+      "timeout": "Verzoek verlopen. Controleer uw verbinding.",
+      "offline": "Geen internetverbinding. Controleer uw netwerk."
+    },
+    "auth": {
+      "invalidCredentials": "Ongeldig e-mailadres of wachtwoord.",
+      "registrationFailed": "Registratie mislukt. Probeer het opnieuw.",
+      "registrationDisabled": "Registratie is momenteel uitgeschakeld.",
+      "invalidRegistrationCode": "Ongeldige registratiecode.",
+      "userNotFound": "Gebruiker niet gevonden."
+    },
+    "guests": {
+      "nameRequired": "Naam van de gast is verplicht.",
+      "emailRequired": "E-mailadres van de gast is verplicht.",
+      "emailInvalid": "Voer een geldig e-mailadres in.",
+      "languageNotSupported": "De geselecteerde taal wordt niet ondersteund.",
+      "notFound": "Gast niet gevonden.",
+      "notFoundWithId": "Gast niet gevonden.",
+      "notFoundByEmail": "Geen gast gevonden met dit e-mailadres.",
+      "emailExists": "Er bestaat al een gast met dit e-mailadres.",
+      "wrongWedding": "Deze gast hoort niet bij deze bruiloft.",
+      "invitationFailed": "Uitnodigingsmail kon niet worden verzonden. Probeer het opnieuw.",
+      "someNotFound": "Sommige gasten konden niet worden gevonden."
+    },
+    "events": {
+      "nameRequired": "Naam van het evenement is verplicht.",
+      "locationRequired": "Locatie van het evenement is verplicht.",
+      "startDateRequired": "Startdatum van het evenement is verplicht.",
+      "endDateRequired": "Einddatum van het evenement is verplicht.",
+      "endDateBeforeStart": "Einddatum moet op of na de startdatum zijn.",
+      "notFound": "Evenement niet gevonden.",
+      "notFoundWithId": "Evenement niet gevonden.",
+      "notFoundByName": "Evenement niet gevonden.",
+      "eventOrGuestNotFound": "Evenement of gast niet gevonden.",
+      "notAllowed": "U heeft geen toestemming om dit evenement te wijzigen.",
+      "guestAlreadyInEvent": "Deze gast is al toegevoegd aan dit evenement.",
+      "guestNotInEvent": "Deze gast zit niet in dit evenement."
+    },
+    "expenses": {
+      "amountRequired": "Bedrag moet groter zijn dan 0.",
+      "descriptionRequired": "Beschrijving van de uitgave is verplicht.",
+      "descriptionTooLong": "Beschrijving mag niet meer dan 500 tekens bevatten.",
+      "notesTooLong": "Notities mogen niet meer dan 1000 tekens bevatten.",
+      "notFoundWithId": "Uitgave niet gevonden."
+    },
+    "weddings": {
+      "notFound": "Bruiloft niet gevonden.",
+      "notFoundWithId": "Bruiloft niet gevonden.",
+      "notFoundBySlug": "Bruiloft niet gevonden.",
+      "invalidId": "Ongeldig bruiloft-ID.",
+      "userAlreadyAdded": "Deze gebruiker is al toegevoegd aan de bruiloft.",
+      "userNotInWedding": "Deze gebruiker maakt geen deel uit van de bruiloft."
+    },
+    "billing": {
+      "freeNoCheckout": "Gratis abonnement vereist geen afrekening.",
+      "priceNotFound": "Prijsinformatie niet gevonden.",
+      "checkoutFailed": "Kon geen betaalsessie aanmaken. Probeer het opnieuw.",
+      "noCustomer": "Geen factureringsaccount gevonden. Neem contact op met support.",
+      "portalFailed": "Kon factureringsportaal niet openen. Probeer het opnieuw.",
+      "lifetimeCheckout": "Levenslange abonnementen moeten via afrekening worden gekocht.",
+      "freeNoPaid": "Gratis abonnement vereist geen betaald abonnement.",
+      "noActiveSubscription": "Geen actief abonnement gevonden.",
+      "subscriptionItemsNotFound": "Abonnementsgegevens niet gevonden.",
+      "invalidSignature": "Ongeldige betalingshandtekening.",
+      "updateFailed": "Kon abonnement niet bijwerken. Probeer het opnieuw."
+    },
+    "website": {
+      "notFound": "Website niet gevonden.",
+      "subscriptionRequired": "Website builder vereist een Starter of Pro abonnement.",
+      "alreadyExists": "Er bestaat al een website voor deze bruiloft.",
+      "notPublished": "Deze website is niet gepubliceerd."
+    },
+    "media": {
+      "invalidId": "Ongeldig media-ID.",
+      "notFound": "Media niet gevonden."
+    },
+    "limits": {
+      "guestLimitReached": "U heeft de gastenlimiet voor uw abonnement bereikt. Upgrade om meer gasten toe te voegen.",
+      "eventLimitReached": "U heeft de evenementenlimiet voor uw abonnement bereikt. Upgrade om meer evenementen toe te voegen.",
+      "emailLimitReached": "U heeft de maandelijkse e-maillimiet voor uw abonnement bereikt. Upgrade of wacht tot volgende maand."
+    }
+  },
   "cancel": "Annuleren",
   "save": "Opslaan",
   "delete": "Verwijderen",
@@ -68,6 +163,10 @@
     "sendInvites": "Uitnodigingen versturen",
     "upgradePlan": "Upgrade uw abonnement",
     "upgradePlanDescription": "Ontgrendel meer gasten, evenementen en premium functies",
-    "viewPlans": "Bekijk abonnementen"
+    "viewPlans": "Bekijk abonnementen",
+    "createWebsite": "Maak uw trouwwebsite",
+    "createWebsiteDescription": "Deel uw speciale dag met een mooie website",
+    "editWebsite": "Website bewerken",
+    "websiteBuilder": "Website Builder"
   }
 }

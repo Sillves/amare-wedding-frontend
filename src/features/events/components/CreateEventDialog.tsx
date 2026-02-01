@@ -15,6 +15,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { useCreateEvent } from '../hooks/useEvents';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { CreateEventRequest } from '@/features/weddings/types';
 
 interface CreateEventDialogProps {
@@ -31,6 +32,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const createEvent = useCreateEvent();
+  const { showError, showSuccess } = useErrorToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +55,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
 
     try {
       await createEvent.mutateAsync({ weddingId, data });
+      showSuccess(t('messages.created'));
       setOpen(false);
       // Reset form
       setName('');
@@ -61,7 +64,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
       setLocation('');
       setDescription('');
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

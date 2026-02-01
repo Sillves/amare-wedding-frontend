@@ -5,6 +5,7 @@ import { ArrowLeft, Users, UserCheck, UserX, Clock, X } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useGuests, useSendGuestInvitations } from '@/features/guests/hooks/useGuests';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -36,6 +37,7 @@ export function GuestsPage() {
   const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
   const { data: allGuests, isLoading: guestsLoading, error } = useGuests(selectedWeddingId);
   const sendBulkInvitations = useSendGuestInvitations();
+  const { showError, showSuccess } = useErrorToast();
 
   // Filter guests based on status
   const guests = useMemo(() => {
@@ -129,10 +131,10 @@ export function GuestsPage() {
         weddingId: selectedWeddingId,
         guestIds: bulkInviteGuestIds
       });
-      // Success - React Query will handle cache invalidation
+      showSuccess(t('guests:messages.invitationsSent', { count: bulkInviteGuestIds.length }));
       setBulkInviteGuestIds([]);
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

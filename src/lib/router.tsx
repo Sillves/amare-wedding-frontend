@@ -1,67 +1,86 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { HomePage } from '@/pages/HomePage';
-import { LoginPage } from '@/pages/LoginPage';
-import { RegisterPage } from '@/pages/RegisterPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { OnboardingPage } from '@/pages/OnboardingPage';
-import { GuestsPage } from '@/pages/GuestsPage';
-import { EventsPage } from '@/pages/EventsPage';
-import { ExpensesPage } from '@/pages/ExpensesPage';
-import { RsvpPage } from '@/pages/RsvpPage';
-import { PricingPage } from '@/pages/PricingPage';
-import { ProfilePage } from '@/pages/ProfilePage';
-import { BillingSuccessPage } from '@/pages/BillingSuccessPage';
-import { BillingCancelPage } from '@/pages/BillingCancelPage';
+import { lazy, Suspense } from 'react';
 import { ProtectedRoute } from '@/shared/components/ProtectedRoute';
 
+// Loading component for lazy-loaded routes
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  </div>
+);
+
+// Lazy load pages for code splitting
+const HomePage = lazy(() => import('@/pages/HomePage').then(m => ({ default: m.HomePage })));
+const LoginPage = lazy(() => import('@/pages/LoginPage').then(m => ({ default: m.LoginPage })));
+const RegisterPage = lazy(() => import('@/pages/RegisterPage').then(m => ({ default: m.RegisterPage })));
+const DashboardPage = lazy(() => import('@/pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
+const OnboardingPage = lazy(() => import('@/pages/OnboardingPage').then(m => ({ default: m.OnboardingPage })));
+const GuestsPage = lazy(() => import('@/pages/GuestsPage').then(m => ({ default: m.GuestsPage })));
+const EventsPage = lazy(() => import('@/pages/EventsPage').then(m => ({ default: m.EventsPage })));
+const ExpensesPage = lazy(() => import('@/pages/ExpensesPage').then(m => ({ default: m.ExpensesPage })));
+const RsvpPage = lazy(() => import('@/pages/RsvpPage').then(m => ({ default: m.RsvpPage })));
+const PricingPage = lazy(() => import('@/pages/PricingPage').then(m => ({ default: m.PricingPage })));
+const ProfilePage = lazy(() => import('@/pages/ProfilePage').then(m => ({ default: m.ProfilePage })));
+const BillingSuccessPage = lazy(() => import('@/pages/BillingSuccessPage').then(m => ({ default: m.BillingSuccessPage })));
+const BillingCancelPage = lazy(() => import('@/pages/BillingCancelPage').then(m => ({ default: m.BillingCancelPage })));
+const WebsiteEditorPage = lazy(() => import('@/pages/WebsiteEditorPage').then(m => ({ default: m.WebsiteEditorPage })));
+const PublicWebsitePage = lazy(() => import('@/pages/PublicWebsitePage').then(m => ({ default: m.PublicWebsitePage })));
+
 // Demo pages (public, no auth required)
-import { DemoPage } from '@/pages/DemoPage';
-import { DemoGuestsPage } from '@/pages/DemoGuestsPage';
-import { DemoEventsPage } from '@/pages/DemoEventsPage';
-import { DemoExpensesPage } from '@/pages/DemoExpensesPage';
-import { DemoRsvpPage } from '@/pages/DemoRsvpPage';
+const DemoPage = lazy(() => import('@/pages/DemoPage').then(m => ({ default: m.DemoPage })));
+const DemoGuestsPage = lazy(() => import('@/pages/DemoGuestsPage').then(m => ({ default: m.DemoGuestsPage })));
+const DemoEventsPage = lazy(() => import('@/pages/DemoEventsPage').then(m => ({ default: m.DemoEventsPage })));
+const DemoExpensesPage = lazy(() => import('@/pages/DemoExpensesPage').then(m => ({ default: m.DemoExpensesPage })));
+const DemoRsvpPage = lazy(() => import('@/pages/DemoRsvpPage').then(m => ({ default: m.DemoRsvpPage })));
+
+// Helper to wrap lazy components with Suspense
+const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType>) => (
+  <Suspense fallback={<PageLoader />}>
+    <Component />
+  </Suspense>
+);
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: withSuspense(HomePage),
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: withSuspense(LoginPage),
   },
   {
     path: '/register',
-    element: <RegisterPage />,
+    element: withSuspense(RegisterPage),
   },
   {
     path: '/rsvp/:weddingId',
-    element: <RsvpPage />,
+    element: withSuspense(RsvpPage),
   },
   {
     path: '/pricing',
-    element: <PricingPage />,
+    element: withSuspense(PricingPage),
   },
   // Demo routes (public, no auth required)
   {
     path: '/demo',
-    element: <DemoPage />,
+    element: withSuspense(DemoPage),
   },
   {
     path: '/demo/guests',
-    element: <DemoGuestsPage />,
+    element: withSuspense(DemoGuestsPage),
   },
   {
     path: '/demo/events',
-    element: <DemoEventsPage />,
+    element: withSuspense(DemoEventsPage),
   },
   {
     path: '/demo/expenses',
-    element: <DemoExpensesPage />,
+    element: withSuspense(DemoExpensesPage),
   },
   {
     path: '/demo/rsvp',
-    element: <DemoRsvpPage />,
+    element: withSuspense(DemoRsvpPage),
   },
   {
     path: '/billing',
@@ -71,19 +90,23 @@ export const router = createBrowserRouter([
     path: '/billing/success',
     element: (
       <ProtectedRoute>
-        <BillingSuccessPage />
+        <Suspense fallback={<PageLoader />}>
+          <BillingSuccessPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
   {
     path: '/billing/cancel',
-    element: <BillingCancelPage />,
+    element: withSuspense(BillingCancelPage),
   },
   {
     path: '/dashboard',
     element: (
       <ProtectedRoute>
-        <DashboardPage />
+        <Suspense fallback={<PageLoader />}>
+          <DashboardPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -91,7 +114,9 @@ export const router = createBrowserRouter([
     path: '/onboarding',
     element: (
       <ProtectedRoute>
-        <OnboardingPage />
+        <Suspense fallback={<PageLoader />}>
+          <OnboardingPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -99,7 +124,9 @@ export const router = createBrowserRouter([
     path: '/guests',
     element: (
       <ProtectedRoute>
-        <GuestsPage />
+        <Suspense fallback={<PageLoader />}>
+          <GuestsPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -107,7 +134,9 @@ export const router = createBrowserRouter([
     path: '/events',
     element: (
       <ProtectedRoute>
-        <EventsPage />
+        <Suspense fallback={<PageLoader />}>
+          <EventsPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -115,7 +144,9 @@ export const router = createBrowserRouter([
     path: '/expenses',
     element: (
       <ProtectedRoute>
-        <ExpensesPage />
+        <Suspense fallback={<PageLoader />}>
+          <ExpensesPage />
+        </Suspense>
       </ProtectedRoute>
     ),
   },
@@ -123,8 +154,25 @@ export const router = createBrowserRouter([
     path: '/profile',
     element: (
       <ProtectedRoute>
-        <ProfilePage />
+        <Suspense fallback={<PageLoader />}>
+          <ProfilePage />
+        </Suspense>
       </ProtectedRoute>
     ),
+  },
+  {
+    path: '/website',
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<PageLoader />}>
+          <WebsiteEditorPage />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+  },
+  // Public wedding website (no auth required)
+  {
+    path: '/w/:slug',
+    element: withSuspense(PublicWebsitePage),
   },
 ]);

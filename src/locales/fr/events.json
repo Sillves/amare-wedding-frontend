@@ -69,5 +69,10 @@
     "duration": "Durée",
     "upcomingEvent": "À venir",
     "pastEvent": "Passé"
+  },
+  "messages": {
+    "created": "Événement créé avec succès!",
+    "updated": "Événement mis à jour avec succès!",
+    "deleted": "Événement supprimé avec succès!"
   }
 }

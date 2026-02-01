@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useSendGuestInvitation } from '../hooks/useGuests';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { GuestDto } from '@/features/weddings/types';
 
 interface SendInvitationDialogProps {
@@ -21,6 +22,7 @@ interface SendInvitationDialogProps {
 export function SendInvitationDialog({ guest, open, onOpenChange }: SendInvitationDialogProps) {
   const { t } = useTranslation('guests');
   const sendInvitation = useSendGuestInvitation();
+  const { showError, showSuccess } = useErrorToast();
 
   const handleSend = async () => {
     if (!guest || !guest.email) return;
@@ -30,9 +32,10 @@ export function SendInvitationDialog({ guest, open, onOpenChange }: SendInvitati
         weddingId: guest.weddingId!,
         guestId: guest.id!,
       });
+      showSuccess(t('sendInvitationConfirm.successMessage', { email: guest.email }));
       onOpenChange(false);
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

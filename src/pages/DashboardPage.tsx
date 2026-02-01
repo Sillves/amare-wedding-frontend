@@ -13,12 +13,14 @@ import {
   ArrowRight,
   CalendarDays,
   Sparkles,
-  Wallet
+  Wallet,
+  Globe
 } from 'lucide-react';
 import { useAuth, useLogout, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useGuests } from '@/features/guests/hooks/useGuests';
 import { useEvents } from '@/features/events/hooks/useEvents';
+import { useWebsite } from '@/features/website/hooks/useWebsite';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -41,6 +43,10 @@ export function DashboardPage() {
   const wedding = weddings?.[0];
   const { data: guests } = useGuests(wedding?.id || '', { enabled: !!wedding?.id });
   const { data: events } = useEvents(wedding?.id || '', { enabled: !!wedding?.id });
+  const { data: website } = useWebsite(wedding?.id || '', { enabled: !!wedding?.id });
+
+  // Check if user can access website builder (Starter or Pro tier)
+  const canAccessWebsite = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
 
   // Calculate wedding countdown
   const weddingCountdown = useMemo(() => {
@@ -194,6 +200,16 @@ export function DashboardPage() {
                   </div>
                 </div>
               </div>
+              {canAccessWebsite && (
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate(`/website?weddingId=${wedding.id}`)}
+                >
+                  <Globe className="h-4 w-4 mr-2" />
+                  {website ? t('common:dashboard.editWebsite') : t('common:dashboard.createWebsite')}
+                </Button>
+              )}
             </CardContent>
           </Card>
         )}
@@ -315,6 +331,17 @@ export function DashboardPage() {
                 <Wallet className="h-4 w-4 mr-2" />
                 {t('common:dashboard.viewExpenses')}
               </Button>
+
+              {canAccessWebsite && (
+                <Button
+                  className="w-full justify-start"
+                  variant="outline"
+                  onClick={() => navigate(`/website?weddingId=${wedding?.id}`)}
+                >
+                  <Globe className="h-4 w-4 mr-2" />
+                  {t('common:dashboard.websiteBuilder')}
+                </Button>
+              )}
             </CardContent>
           </Card>
 
@@ -423,6 +450,22 @@ export function DashboardPage() {
                   </div>
                   <Button size="sm" onClick={() => navigate(`/guests?weddingId=${wedding?.id}`)}>
                     {t('common:dashboard.sendInvites')}
+                  </Button>
+                </div>
+              )}
+
+              {/* Website creation prompt for Starter/Pro users without a website */}
+              {canAccessWebsite && !website && (
+                <div className="flex items-start gap-3 p-3 rounded-lg border border-primary/30 bg-primary/5">
+                  <Globe className="h-5 w-5 text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">{t('common:dashboard.createWebsite')}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t('common:dashboard.createWebsiteDescription')}
+                    </p>
+                  </div>
+                  <Button size="sm" variant="default" onClick={() => navigate(`/website?weddingId=${wedding?.id}`)}>
+                    {t('common:create')}
                   </Button>
                 </div>
               )}

@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useUpdateGuest } from '../hooks/useGuests';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { GuestDto, UpdateGuestRequest, RsvpStatus } from '@/features/weddings/types';
 
 interface EditGuestDialogProps {
@@ -33,6 +34,7 @@ export function EditGuestDialog({ guest, open, onOpenChange }: EditGuestDialogPr
   const [email, setEmail] = useState('');
   const [rsvpStatus, setRsvpStatus] = useState<RsvpStatus>(0);
   const updateGuest = useUpdateGuest();
+  const { showError, showSuccess } = useErrorToast();
 
   useEffect(() => {
     if (guest) {
@@ -57,9 +59,10 @@ export function EditGuestDialog({ guest, open, onOpenChange }: EditGuestDialogPr
 
     try {
       await updateGuest.mutateAsync({ guestId: guest.id!, data });
+      showSuccess(t('messages.updated'));
       onOpenChange(false);
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

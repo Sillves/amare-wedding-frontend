@@ -1,0 +1,183 @@
+{
+  "title": "Site de Mariage",
+  "description": "Créez votre magnifique site de mariage",
+  "loading": "Chargement du site...",
+  "noWebsite": "Aucun site trouvé",
+  "published": "Publié",
+  "unsavedChanges": "Modifications non enregistrées",
+  "tabs": {
+    "template": "Modèle",
+    "hero": "Hero",
+    "story": "Notre Histoire",
+    "details": "Détails",
+    "events": "Événements",
+    "gallery": "Galerie",
+    "rsvp": "RSVP",
+    "footer": "Pied de page"
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "publish": "Publier",
+    "publishing": "Publication...",
+    "unpublish": "Dépublier",
+    "unpublishing": "Dépublication...",
+    "viewLive": "Voir en direct"
+  },
+  "preview": {
+    "title": "Aperçu"
+  },
+  "templates": {
+    "title": "Choisir un Modèle",
+    "description": "Sélectionnez un magnifique modèle pour votre site de mariage",
+    "ElegantClassic": {
+      "name": "Élégant Classique",
+      "description": "Élégance intemporelle avec des polices serif romantiques et des tons neutres doux"
+    },
+    "ModernMinimal": {
+      "name": "Moderne Minimal",
+      "description": "Propre et contemporain avec une typographie audacieuse et de grands espaces blancs"
+    },
+    "RomanticGarden": {
+      "name": "Jardin Romantique",
+      "description": "Fantaisiste et organique avec des illustrations botaniques et des accents aquarelle"
+    }
+  },
+  "hero": {
+    "title": "Section Hero",
+    "coupleNames": "Noms du Couple",
+    "coupleNamesPlaceholder": "Emma & James",
+    "date": "Date du Mariage",
+    "tagline": "Slogan",
+    "taglinePlaceholder": "Nous allons nous marier!",
+    "backgroundImage": "Image de Fond",
+    "displayStyle": "Style d'Affichage",
+    "styles": {
+      "centered": "Centré",
+      "left": "Aligné à Gauche",
+      "overlay": "Superposition"
+    }
+  },
+  "story": {
+    "title": "Notre Histoire",
+    "enabled": "Afficher la Section",
+    "sectionTitle": "Titre de la Section",
+    "displayType": "Type d'Affichage",
+    "types": {
+      "timeline": "Chronologie",
+      "narrative": "Narration"
+    },
+    "items": "Éléments de l'Histoire",
+    "addItem": "Ajouter",
+    "untitledItem": "Nouvel Élément",
+    "noItems": "Pas encore d'éléments. Cliquez sur 'Ajouter' pour commencer.",
+    "item": {
+      "title": "Titre",
+      "titlePlaceholder": "ex. Première Rencontre",
+      "date": "Date",
+      "description": "Description",
+      "image": "Image"
+    },
+    "removeItem": "Supprimer"
+  },
+  "details": {
+    "title": "Détails du Mariage",
+    "enabled": "Afficher la Section",
+    "sectionTitle": "Titre de la Section",
+    "show": "Afficher",
+    "venueTitle": "Titre",
+    "venue": "Nom du Lieu",
+    "venuePlaceholder": "ex. Le Château de Versailles",
+    "address": "Adresse",
+    "addressPlaceholder": "ex. 1 Rue du Château, Versailles",
+    "dateTime": "Date & Heure",
+    "description": "Description",
+    "descriptionPlaceholder": "Description optionnelle...",
+    "mapUrl": "URL Google Maps",
+    "ceremony": {
+      "title": "Cérémonie",
+      "enabled": "Afficher la Cérémonie",
+      "sectionTitle": "Titre",
+      "venue": "Nom du Lieu",
+      "address": "Adresse",
+      "date": "Date & Heure",
+      "mapUrl": "URL Google Maps"
+    },
+    "reception": {
+      "title": "Réception",
+      "enabled": "Afficher la Réception",
+      "sectionTitle": "Titre",
+      "venue": "Nom du Lieu",
+      "address": "Adresse",
+      "date": "Date & Heure",
+      "mapUrl": "URL Google Maps"
+    }
+  },
+  "events": {
+    "title": "Section Événements",
+    "enabled": "Afficher la Section",
+    "sectionTitle": "Titre de la Section",
+    "showFromWedding": "Afficher les Événements du Mariage",
+    "showFromWeddingDescription": "Afficher les événements de votre tableau de bord de planification"
+  },
+  "gallery": {
+    "title": "Galerie Photo",
+    "enabled": "Afficher la Section",
+    "sectionTitle": "Titre de la Section",
+    "displayType": "Type d'Affichage",
+    "types": {
+      "grid": "Grille",
+      "masonry": "Masonry",
+      "carousel": "Carrousel"
+    },
+    "images": "Images de la Galerie",
+    "addImage": "Ajouter une Image",
+    "noImages": "Pas encore d'images. Cliquez sur 'Ajouter une Image' pour commencer.",
+    "caption": "Légende",
+    "removeImage": "Supprimer"
+  },
+  "rsvp": {
+    "title": "Section RSVP",
+    "enabled": "Afficher la Section",
+    "sectionTitle": "Titre de la Section",
+    "description": "Description",
+    "descriptionPlaceholder": "Veuillez nous faire savoir si vous pouvez venir...",
+    "deadline": "Date Limite RSVP",
+    "buttonText": "Texte du Bouton",
+    "buttonTextPlaceholder": "RSVP Maintenant",
+    "linkNote": "Le bouton RSVP renvoie automatiquement vers votre page RSVP où les invités peuvent répondre."
+  },
+  "footer": {
+    "title": "Pied de Page",
+    "enabled": "Afficher le Pied de Page",
+    "contactEmail": "Email de Contact",
+    "contactEmailPlaceholder": "ex. mariage@exemple.fr",
+    "customMessage": "Message Personnalisé",
+    "customMessagePlaceholder": "Nous avons hâte de célébrer avec vous!"
+  },
+  "upload": {
+    "dropzone": "Glissez-déposez une image ici ou cliquez pour sélectionner",
+    "browse": "Parcourir",
+    "uploading": "Téléchargement...",
+    "change": "Modifier",
+    "fileTooLarge": "Le fichier est trop volumineux (max {{max}}Mo)",
+    "invalidType": "Type de fichier invalide",
+    "error": "Une erreur s'est produite lors du téléchargement"
+  },
+  "upgrade": {
+    "title": "Mettez à niveau pour Accéder",
+    "description": "Le constructeur de site de mariage est disponible pour les abonnements Starter et Pro. Mettez à niveau votre abonnement pour créer votre magnifique site de mariage.",
+    "viewPlans": "Voir les Offres"
+  },
+  "noWedding": {
+    "title": "Aucun Mariage Trouvé",
+    "description": "Vous devez d'abord créer un mariage avant de pouvoir construire votre site.",
+    "createWedding": "Aller au Tableau de Bord"
+  },
+  "create": {
+    "title": "Créez Votre Site",
+    "description": "Prêt à partager votre jour spécial avec le monde? Créez votre site de mariage et commencez à le personnaliser avec nos magnifiques modèles.",
+    "button": "Créer le Site",
+    "creating": "Création..."
+  }
+}

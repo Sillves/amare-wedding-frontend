@@ -99,5 +99,11 @@
     "confirm": "Weet u zeker dat u wilt doorgaan?",
     "confirmButton": "Uitnodigingen versturen",
     "cancel": "Annuleren"
+  },
+  "messages": {
+    "created": "Gast succesvol toegevoegd!",
+    "updated": "Gast succesvol bijgewerkt!",
+    "deleted": "Gast succesvol verwijderd!",
+    "invitationsSent": "{{count}} uitnodiging(en) succesvol verstuurd!"
   }
 }

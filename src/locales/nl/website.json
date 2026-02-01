@@ -1,0 +1,183 @@
+{
+  "title": "Trouwwebsite",
+  "description": "Maak je mooie trouwwebsite",
+  "loading": "Website laden...",
+  "noWebsite": "Geen website gevonden",
+  "published": "Gepubliceerd",
+  "unsavedChanges": "Niet-opgeslagen wijzigingen",
+  "tabs": {
+    "template": "Sjabloon",
+    "hero": "Hero",
+    "story": "Ons Verhaal",
+    "details": "Details",
+    "events": "Evenementen",
+    "gallery": "Galerij",
+    "rsvp": "RSVP",
+    "footer": "Footer"
+  },
+  "actions": {
+    "save": "Opslaan",
+    "saving": "Opslaan...",
+    "publish": "Publiceren",
+    "publishing": "Publiceren...",
+    "unpublish": "Depubliceren",
+    "unpublishing": "Depubliceren...",
+    "viewLive": "Bekijk Live"
+  },
+  "preview": {
+    "title": "Voorbeeld"
+  },
+  "templates": {
+    "title": "Kies Sjabloon",
+    "description": "Selecteer een mooi sjabloon voor je trouwwebsite",
+    "ElegantClassic": {
+      "name": "Elegant Klassiek",
+      "description": "Tijdloze elegantie met romantische serif lettertypen en zachte neutrale tinten"
+    },
+    "ModernMinimal": {
+      "name": "Modern Minimaal",
+      "description": "Strak en eigentijds met gedurfde typografie en ruime witruimte"
+    },
+    "RomanticGarden": {
+      "name": "Romantische Tuin",
+      "description": "Speels en organisch met botanische illustraties en aquarel accenten"
+    }
+  },
+  "hero": {
+    "title": "Hero Sectie",
+    "coupleNames": "Namen van het Paar",
+    "coupleNamesPlaceholder": "Emma & James",
+    "date": "Trouwdatum",
+    "tagline": "Slogan",
+    "taglinePlaceholder": "Wij gaan trouwen!",
+    "backgroundImage": "Achtergrondafbeelding",
+    "displayStyle": "Weergavestijl",
+    "styles": {
+      "centered": "Gecentreerd",
+      "left": "Links Uitgelijnd",
+      "overlay": "Overlay"
+    }
+  },
+  "story": {
+    "title": "Ons Verhaal",
+    "enabled": "Sectie Tonen",
+    "sectionTitle": "Sectie Titel",
+    "displayType": "Weergavetype",
+    "types": {
+      "timeline": "Tijdlijn",
+      "narrative": "Verhaal"
+    },
+    "items": "Verhaal Items",
+    "addItem": "Item Toevoegen",
+    "untitledItem": "Nieuw Item",
+    "noItems": "Nog geen items. Klik op 'Item Toevoegen' om te beginnen.",
+    "item": {
+      "title": "Titel",
+      "titlePlaceholder": "bijv. Eerste Ontmoeting",
+      "date": "Datum",
+      "description": "Beschrijving",
+      "image": "Afbeelding"
+    },
+    "removeItem": "Verwijderen"
+  },
+  "details": {
+    "title": "Trouwdetails",
+    "enabled": "Sectie Tonen",
+    "sectionTitle": "Sectie Titel",
+    "show": "Tonen",
+    "venueTitle": "Titel",
+    "venue": "Locatie Naam",
+    "venuePlaceholder": "bijv. Kasteel de Haar",
+    "address": "Adres",
+    "addressPlaceholder": "bijv. Kasteellaan 1, Utrecht",
+    "dateTime": "Datum & Tijd",
+    "description": "Beschrijving",
+    "descriptionPlaceholder": "Optionele beschrijving...",
+    "mapUrl": "Google Maps URL",
+    "ceremony": {
+      "title": "Ceremonie",
+      "enabled": "Ceremonie Tonen",
+      "sectionTitle": "Titel",
+      "venue": "Locatie Naam",
+      "address": "Adres",
+      "date": "Datum & Tijd",
+      "mapUrl": "Google Maps URL"
+    },
+    "reception": {
+      "title": "Receptie",
+      "enabled": "Receptie Tonen",
+      "sectionTitle": "Titel",
+      "venue": "Locatie Naam",
+      "address": "Adres",
+      "date": "Datum & Tijd",
+      "mapUrl": "Google Maps URL"
+    }
+  },
+  "events": {
+    "title": "Evenementen Sectie",
+    "enabled": "Sectie Tonen",
+    "sectionTitle": "Sectie Titel",
+    "showFromWedding": "Bruiloft Evenementen Tonen",
+    "showFromWeddingDescription": "Toon evenementen van je bruiloft planning dashboard"
+  },
+  "gallery": {
+    "title": "Fotogalerij",
+    "enabled": "Sectie Tonen",
+    "sectionTitle": "Sectie Titel",
+    "displayType": "Weergavetype",
+    "types": {
+      "grid": "Raster",
+      "masonry": "Masonry",
+      "carousel": "Carrousel"
+    },
+    "images": "Galerij Afbeeldingen",
+    "addImage": "Afbeelding Toevoegen",
+    "noImages": "Nog geen afbeeldingen. Klik op 'Afbeelding Toevoegen' om te beginnen.",
+    "caption": "Bijschrift",
+    "removeImage": "Verwijderen"
+  },
+  "rsvp": {
+    "title": "RSVP Sectie",
+    "enabled": "Sectie Tonen",
+    "sectionTitle": "Sectie Titel",
+    "description": "Beschrijving",
+    "descriptionPlaceholder": "Laat ons weten of je erbij kunt zijn...",
+    "deadline": "RSVP Deadline",
+    "buttonText": "Knop Tekst",
+    "buttonTextPlaceholder": "RSVP Nu",
+    "linkNote": "De RSVP knop linkt automatisch naar je RSVP pagina waar gasten kunnen reageren."
+  },
+  "footer": {
+    "title": "Footer",
+    "enabled": "Footer Tonen",
+    "contactEmail": "Contact E-mail",
+    "contactEmailPlaceholder": "bijv. bruiloft@voorbeeld.nl",
+    "customMessage": "Aangepast Bericht",
+    "customMessagePlaceholder": "We kunnen niet wachten om met jullie te vieren!"
+  },
+  "upload": {
+    "dropzone": "Sleep een afbeelding hierheen of klik om te selecteren",
+    "browse": "Bladeren",
+    "uploading": "Uploaden...",
+    "change": "Wijzigen",
+    "fileTooLarge": "Bestand is te groot (max {{max}}MB)",
+    "invalidType": "Ongeldig bestandstype",
+    "error": "Er is een fout opgetreden bij het uploaden"
+  },
+  "upgrade": {
+    "title": "Upgrade om Toegang te Krijgen",
+    "description": "De trouwwebsite builder is beschikbaar voor Starter en Pro abonnementen. Upgrade je abonnement om je mooie trouwwebsite te maken.",
+    "viewPlans": "Bekijk Plannen"
+  },
+  "noWedding": {
+    "title": "Geen Bruiloft Gevonden",
+    "description": "Je moet eerst een bruiloft aanmaken voordat je je website kunt bouwen.",
+    "createWedding": "Ga naar Dashboard"
+  },
+  "create": {
+    "title": "Maak Je Website",
+    "description": "Klaar om je speciale dag met de wereld te delen? Maak je trouwwebsite en begin met aanpassen met onze mooie sjablonen.",
+    "button": "Website Maken",
+    "creating": "Maken..."
+  }
+}

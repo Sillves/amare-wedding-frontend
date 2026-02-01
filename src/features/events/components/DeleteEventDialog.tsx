@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteEvent } from '../hooks/useEvents';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { EventDto } from '@/features/weddings/types';
 
 interface DeleteEventDialogProps {
@@ -21,6 +22,7 @@ interface DeleteEventDialogProps {
 export function DeleteEventDialog({ event, open, onOpenChange }: DeleteEventDialogProps) {
   const { t } = useTranslation('events');
   const deleteEvent = useDeleteEvent();
+  const { showError, showSuccess } = useErrorToast();
 
   const handleDelete = async () => {
     if (!event) return;
@@ -30,9 +32,10 @@ export function DeleteEventDialog({ event, open, onOpenChange }: DeleteEventDial
         eventId: event.id!,
         weddingId: event.weddingId!,
       });
+      showSuccess(t('messages.deleted'));
       onOpenChange(false);
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 

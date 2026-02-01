@@ -99,5 +99,11 @@
     "confirm": "Êtes-vous sûr de vouloir continuer?",
     "confirmButton": "Envoyer les invitations",
     "cancel": "Annuler"
+  },
+  "messages": {
+    "created": "Invité ajouté avec succès!",
+    "updated": "Invité mis à jour avec succès!",
+    "deleted": "Invité supprimé avec succès!",
+    "invitationsSent": "{{count}} invitation(s) envoyée(s) avec succès!"
   }
 }

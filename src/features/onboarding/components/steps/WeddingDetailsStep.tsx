@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
-import { Calendar } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -45,14 +44,11 @@ export function WeddingDetailsStep({ form }: WeddingDetailsStepProps) {
 
         <div className="space-y-2">
           <Label>{t('wizard.details.weddingDate')}</Label>
-          <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-muted-foreground" />
-            <DatePicker
-              value={date}
-              onChange={(newDate) => setValue('date', newDate)}
-              disabled={dateNotDecided}
-            />
-          </div>
+          <DatePicker
+            value={date}
+            onChange={(newDate) => setValue('date', newDate)}
+            disabled={dateNotDecided}
+          />
           <div className="flex items-center space-x-2 pt-2">
             <Checkbox
               id="dateNotDecided"

@@ -69,5 +69,10 @@
     "duration": "Duur",
     "upcomingEvent": "Aankomend",
     "pastEvent": "Afgelopen"
+  },
+  "messages": {
+    "created": "Evenement succesvol aangemaakt!",
+    "updated": "Evenement succesvol bijgewerkt!",
+    "deleted": "Evenement succesvol verwijderd!"
   }
 }

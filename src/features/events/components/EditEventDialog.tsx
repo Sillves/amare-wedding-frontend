@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { useUpdateEvent } from '../hooks/useEvents';
+import { useErrorToast } from '@/hooks/useErrorToast';
 import type { EventDto, UpdateEventRequest } from '@/features/weddings/types';
 
 interface EditEventDialogProps {
@@ -30,6 +31,7 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const updateEvent = useUpdateEvent();
+  const { showError, showSuccess } = useErrorToast();
 
   useEffect(() => {
     if (event) {
@@ -62,9 +64,10 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
 
     try {
       await updateEvent.mutateAsync({ eventId: event.id!, data });
+      showSuccess(t('messages.updated'));
       onOpenChange(false);
     } catch (error) {
-      // Error handled by React Query
+      showError(error);
     }
   };
 
