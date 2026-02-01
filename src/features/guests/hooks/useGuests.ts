@@ -96,7 +96,8 @@ export function useSendGuestInvitation() {
     mutationFn: ({ weddingId, guestId }: { weddingId: string; guestId: string }) =>
       guestsApi.sendInvitation(weddingId, guestId),
     onSuccess: (_, variables) => {
-      // Only invalidate the specific guest detail - the guest list doesn't change
+      // Invalidate guest list to update invitationSentAt in the table
+      queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
       queryClient.invalidateQueries({ queryKey: ['guests', 'detail', variables.guestId] });
     },
   });
@@ -114,7 +115,9 @@ export function useSendGuestInvitations() {
     mutationFn: ({ weddingId, guestIds }: { weddingId: string; guestIds: string[] }) =>
       guestsApi.sendInvitations(weddingId, { guestIds }),
     onSuccess: (_, variables) => {
-      // Only invalidate the specific guest details - the guest list doesn't change
+      // Invalidate guest list to update invitationSentAt in the table
+      queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
+      // Also invalidate specific guest details
       variables.guestIds.forEach(guestId => {
         queryClient.invalidateQueries({ queryKey: ['guests', 'detail', guestId] });
       });

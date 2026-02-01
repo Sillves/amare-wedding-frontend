@@ -130,6 +130,8 @@
     "today": "Your wedding is today!",
     "past_one": "{{count}} day since your wedding",
     "past_other": "{{count}} days since your wedding",
+    "dateNotSet": "Set your wedding date",
+    "dateNotSetDescription": "Add a date to start the countdown",
     "overview": "Overview",
     "quickActions": "Quick Actions",
     "quickActionsDescription": "Common tasks to manage your wedding",
@@ -167,6 +169,15 @@
     "createWebsite": "Create your wedding website",
     "createWebsiteDescription": "Share your special day with a beautiful website",
     "editWebsite": "Edit Website",
-    "websiteBuilder": "Website Builder"
+    "websiteBuilder": "Wedding Website",
+    "websiteOnline": "Online",
+    "websiteOffline": "Offline",
+    "websiteNotCreated": "Not created",
+    "websiteRequiresUpgrade": "Upgrade required",
+    "websiteStatus": "Status",
+    "websitePublished": "Your website is live and visible to guests",
+    "websiteNotPublished": "Your website is not yet published",
+    "websiteUrl": "Website URL",
+    "websiteUpgradePrompt": "Upgrade to Starter or Pro to create your wedding website"
   }
 }

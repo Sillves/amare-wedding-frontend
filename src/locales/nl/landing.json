@@ -9,8 +9,12 @@
     }
   },
   "features": {
-    "title": "Alles Wat Je Nodig Hebt voor Jullie Speciale Dag",
+    "title": "Alles wat je nodig hebt voor jullie speciale dag",
     "subtitle": "Krachtige tools om het plannen van je bruiloft stressvrij te maken",
+    "websiteBuilder": {
+      "title": "Trouwwebsite",
+      "description": "Maak een prachtige trouwwebsite om jullie verhaal, evenementdetails en fotogalerij te delen met je gasten."
+    },
     "guestManagement": {
       "title": "Gastenbeheer",
       "description": "Houd al je gasten op één plek bij. Voeg details, dieetwensen en contactgegevens toe."

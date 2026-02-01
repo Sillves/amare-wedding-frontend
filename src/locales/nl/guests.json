@@ -15,6 +15,7 @@
   "showingAllGuests_other": "{{count}} gasten voor {{wedding}}",
   "noGuests": "Nog geen gasten",
   "noGuestsDescription": "Voeg uw eerste gast toe aan de gastenlijst",
+  "invitationSent": "Uitnodiging Verstuurd",
   "totalGuests": "Totaal aantal gasten",
   "attending": "Komt",
   "declined": "Komt niet",
@@ -105,5 +106,10 @@
     "updated": "Gast succesvol bijgewerkt!",
     "deleted": "Gast succesvol verwijderd!",
     "invitationsSent": "{{count}} uitnodiging(en) succesvol verstuurd!"
+  },
+  "upgrade": {
+    "sendInvitations": "E-mail Uitnodigingen Versturen",
+    "sendInvitationsDescription": "Upgrade naar Starter of Pro om digitale uitnodigingen naar je gasten te versturen.",
+    "viewPlans": "Bekijk Plannen"
   }
 }

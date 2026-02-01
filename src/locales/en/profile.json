@@ -6,6 +6,20 @@
     "title": "Account Information",
     "description": "Your personal details"
   },
+  "changePassword": {
+    "title": "Change Password",
+    "description": "Update your password to keep your account secure",
+    "currentPassword": "Current password",
+    "currentPasswordRequired": "Current password is required",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "submit": "Change Password",
+    "success": "Password changed successfully!"
+  },
+  "language": {
+    "title": "Language",
+    "description": "Choose your preferred language"
+  },
   "subscription": {
     "title": "Subscription",
     "description": "Your current plan and billing",

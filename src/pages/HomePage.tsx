@@ -13,6 +13,7 @@ import {
   LayoutGrid,
   Contact,
   Wallet,
+  Globe,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,6 +27,11 @@ export function HomePage() {
   const navigate = useNavigate();
 
   const features = [
+    {
+      icon: Globe,
+      titleKey: 'landing:features.websiteBuilder.title',
+      descriptionKey: 'landing:features.websiteBuilder.description',
+    },
     {
       icon: Users,
       titleKey: 'landing:features.guestManagement.title',

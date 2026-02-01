@@ -13,6 +13,8 @@ const PageLoader = () => (
 const HomePage = lazy(() => import('@/pages/HomePage').then(m => ({ default: m.HomePage })));
 const LoginPage = lazy(() => import('@/pages/LoginPage').then(m => ({ default: m.LoginPage })));
 const RegisterPage = lazy(() => import('@/pages/RegisterPage').then(m => ({ default: m.RegisterPage })));
+const ForgotPasswordPage = lazy(() => import('@/pages/ForgotPasswordPage').then(m => ({ default: m.ForgotPasswordPage })));
+const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const OnboardingPage = lazy(() => import('@/pages/OnboardingPage').then(m => ({ default: m.OnboardingPage })));
 const GuestsPage = lazy(() => import('@/pages/GuestsPage').then(m => ({ default: m.GuestsPage })));
@@ -52,6 +54,14 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     element: withSuspense(RegisterPage),
+  },
+  {
+    path: '/forgot-password',
+    element: withSuspense(ForgotPasswordPage),
+  },
+  {
+    path: '/reset-password',
+    element: withSuspense(ResetPasswordPage),
   },
   {
     path: '/rsvp/:weddingId',

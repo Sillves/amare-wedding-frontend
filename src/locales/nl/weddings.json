@@ -2,9 +2,12 @@
   "title": "Bruiloften",
   "myWeddings": "Mijn bruiloften",
   "createWedding": "Bruiloft aanmaken",
+  "editWedding": "Bruiloft bewerken",
   "selectWedding": "Selecteer een bruiloft",
   "createWeddingDescription": "Vul de details in om een nieuwe bruiloft aan te maken",
+  "editWeddingDescription": "Pas uw bruiloftgegevens aan",
   "createError": "Er is een fout opgetreden bij het aanmaken van de bruiloft",
+  "updateError": "Er is een fout opgetreden bij het bijwerken van de bruiloft",
   "noWeddings": "U heeft nog geen bruiloften",
   "noWeddingsDescription": "Maak uw eerste bruiloft aan om te beginnen",
   "form": {
@@ -41,6 +44,7 @@
   "validation": {
     "nameRequired": "Naam is verplicht",
     "dateRequired": "Datum is verplicht",
+    "dateInPast": "Trouwdatum kan niet in het verleden liggen",
     "locationRequired": "Locatie is verplicht"
   },
   "wizard": {
@@ -69,10 +73,10 @@
     "partners": {
       "title": "Het Gelukkige Stel",
       "subtitle": "Wie gaan er trouwen?",
-      "partner1": "Partner 1",
-      "partner1Placeholder": "Voornaam",
-      "partner2": "Partner 2",
-      "partner2Placeholder": "Voornaam",
+      "partner1": "Jij",
+      "partner1Placeholder": "Jouw naam",
+      "partner2": "Partner",
+      "partner2Placeholder": "Naam van je partner",
       "autoTitle": "{{partner1}} & {{partner2}}'s Bruiloft"
     },
     "location": {

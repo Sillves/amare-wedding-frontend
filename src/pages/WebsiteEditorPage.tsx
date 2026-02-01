@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
@@ -33,6 +33,14 @@ export function WebsiteEditorPage() {
   // Check subscription tier (0=Free, 1=Starter, 2=Pro)
   const canAccessWebsite =
     user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
+
+  // Check if wedding has a valid date (not epoch/default)
+  const hasValidWeddingDate = (() => {
+    if (!selectedWedding?.date) return false;
+    const date = new Date(selectedWedding.date);
+    // Check if date is valid and not epoch (1970) or year 1
+    return date.getFullYear() > 1970;
+  })();
 
   const handleCreateWebsite = async () => {
     if (!selectedWeddingId) return;
@@ -105,7 +113,7 @@ export function WebsiteEditorPage() {
     );
   }
 
-  // No website exists yet - show create prompt
+  // No website exists yet - show create prompt or date required message
   if (websiteError || (!websiteLoading && !website)) {
     return (
       <div className="min-h-screen bg-muted/40">
@@ -119,21 +127,34 @@ export function WebsiteEditorPage() {
         </header>
 
         <main className="container mx-auto p-4">
-          <div className="max-w-md mx-auto mt-16 text-center">
-            <Sparkles className="h-12 w-12 mx-auto text-primary mb-4" />
-            <h2 className="text-2xl font-bold mb-2">{t('website:create.title')}</h2>
-            <p className="text-muted-foreground mb-6">
-              {t('website:create.description')}
-            </p>
-            <Button
-              onClick={handleCreateWebsite}
-              disabled={createWebsite.isPending}
-            >
-              {createWebsite.isPending
-                ? t('website:create.creating')
-                : t('website:create.button')}
-            </Button>
-          </div>
+          {!hasValidWeddingDate ? (
+            <div className="max-w-md mx-auto mt-16 text-center">
+              <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+              <h2 className="text-2xl font-bold mb-2">{t('website:dateRequired.title')}</h2>
+              <p className="text-muted-foreground mb-6">
+                {t('website:dateRequired.description')}
+              </p>
+              <Button onClick={() => navigate('/dashboard')}>
+                {t('website:dateRequired.button')}
+              </Button>
+            </div>
+          ) : (
+            <div className="max-w-md mx-auto mt-16 text-center">
+              <Sparkles className="h-12 w-12 mx-auto text-primary mb-4" />
+              <h2 className="text-2xl font-bold mb-2">{t('website:create.title')}</h2>
+              <p className="text-muted-foreground mb-6">
+                {t('website:create.description')}
+              </p>
+              <Button
+                onClick={handleCreateWebsite}
+                disabled={createWebsite.isPending}
+              >
+                {createWebsite.isPending
+                  ? t('website:create.creating')
+                  : t('website:create.button')}
+              </Button>
+            </div>
+          )}
         </main>
       </div>
     );

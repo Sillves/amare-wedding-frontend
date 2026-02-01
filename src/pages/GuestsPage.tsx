@@ -24,6 +24,9 @@ export function GuestsPage() {
   const { user } = useAuth();
   const logout = useLogout();
 
+  // Check if user can send emails (Starter or Pro tier - Free has 0 emails/month)
+  const canSendEmails = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
+
   const weddingIdFromUrl = searchParams.get('weddingId');
   const statusFilter = searchParams.get('status'); // 'attending', 'pending', 'declined', or null for all
 
@@ -330,6 +333,8 @@ export function GuestsPage() {
                   onDelete={setDeletingGuest}
                   onSendInvitation={setSendingInvitationGuest}
                   onBulkSendInvitations={handleBulkSendInvitations}
+                  canSendEmails={canSendEmails}
+                  onUpgrade={() => navigate('/pricing')}
                 />
               )}
             </CardContent>

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -21,6 +22,13 @@ export function WeddingDetailsStep({ form }: WeddingDetailsStepProps) {
 
   const dateNotDecided = watch('dateNotDecided');
   const date = watch('date');
+
+  // Get today at midnight for minimum date
+  const today = useMemo(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, []);
 
   return (
     <div className="space-y-8 py-4">
@@ -48,6 +56,7 @@ export function WeddingDetailsStep({ form }: WeddingDetailsStepProps) {
             value={date}
             onChange={(newDate) => setValue('date', newDate)}
             disabled={dateNotDecided}
+            minDate={today}
           />
           <div className="flex items-center space-x-2 pt-2">
             <Checkbox

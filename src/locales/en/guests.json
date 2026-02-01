@@ -15,6 +15,7 @@
   "showingAllGuests_other": "Showing {{count}} guests for {{wedding}}",
   "noGuests": "No guests yet",
   "noGuestsDescription": "Add your first guest to the guest list",
+  "invitationSent": "Invitation Sent",
   "totalGuests": "Total Guests",
   "attending": "Attending",
   "declined": "Declined",
@@ -105,5 +106,10 @@
     "updated": "Guest updated successfully!",
     "deleted": "Guest deleted successfully!",
     "invitationsSent": "{{count}} invitation(s) sent successfully!"
+  },
+  "upgrade": {
+    "sendInvitations": "Send Email Invitations",
+    "sendInvitationsDescription": "Upgrade to Starter or Pro to send digital invitations to your guests.",
+    "viewPlans": "View Plans"
   }
 }

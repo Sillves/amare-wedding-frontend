@@ -9,8 +9,12 @@
     }
   },
   "features": {
-    "title": "Everything You Need for Your Special Day",
+    "title": "Everything you need for your special day",
     "subtitle": "Powerful tools to make wedding planning stress-free",
+    "websiteBuilder": {
+      "title": "Wedding Website",
+      "description": "Create a beautiful wedding website to share your story, event details, and photo gallery with your guests."
+    },
     "guestManagement": {
       "title": "Guest Management",
       "description": "Keep track of all your guests in one place. Add details, dietary requirements, and contact information."

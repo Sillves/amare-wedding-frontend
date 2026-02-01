@@ -179,5 +179,10 @@
     "description": "Prêt à partager votre jour spécial avec le monde? Créez votre site de mariage et commencez à le personnaliser avec nos magnifiques modèles.",
     "button": "Créer le Site",
     "creating": "Création..."
+  },
+  "dateRequired": {
+    "title": "Date de Mariage Requise",
+    "description": "Veuillez définir la date de votre mariage avant de créer votre site. La date est utilisée pour le compte à rebours et la date limite RSVP.",
+    "button": "Modifier le Mariage"
   }
 }

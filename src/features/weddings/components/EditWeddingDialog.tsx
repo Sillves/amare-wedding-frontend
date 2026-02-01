@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
-import { useCreateWedding } from '../hooks/useWeddings';
+import { useUpdateWedding } from '../hooks/useWeddings';
+import type { WeddingDto } from '../types';
 import {
   Dialog,
   DialogContent,
@@ -16,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '@/components/ui/date-time-picker';
+import { parseISO } from 'date-fns';
 
 // Get today at midnight for date comparison
 const getToday = () => {
@@ -24,7 +26,7 @@ const getToday = () => {
   return today;
 };
 
-const createWeddingSchema = z.object({
+const editWeddingSchema = z.object({
   title: z.string().min(1, 'weddings:validation.nameRequired'),
   date: z.date({ required_error: 'weddings:validation.dateRequired' })
     .refine((date) => date >= getToday(), {
@@ -33,16 +35,26 @@ const createWeddingSchema = z.object({
   location: z.string().min(1, 'weddings:validation.locationRequired'),
 });
 
-type CreateWeddingFormData = z.infer<typeof createWeddingSchema>;
+type EditWeddingFormData = z.infer<typeof editWeddingSchema>;
 
-interface CreateWeddingDialogProps {
+interface EditWeddingDialogProps {
+  wedding: WeddingDto;
   children: React.ReactNode;
 }
 
-export function CreateWeddingDialog({ children }: CreateWeddingDialogProps) {
+/**
+ * Check if a date string represents a valid, user-set date
+ */
+function isValidDate(dateString: string | null | undefined): boolean {
+  if (!dateString) return false;
+  const date = parseISO(dateString);
+  return !isNaN(date.getTime()) && date.getFullYear() > 1900;
+}
+
+export function EditWeddingDialog({ wedding, children }: EditWeddingDialogProps) {
   const { t } = useTranslation(['weddings', 'common']);
   const [open, setOpen] = useState(false);
-  const createWeddingMutation = useCreateWedding();
+  const updateWeddingMutation = useUpdateWedding();
 
   const {
     register,
@@ -50,26 +62,44 @@ export function CreateWeddingDialog({ children }: CreateWeddingDialogProps) {
     formState: { errors },
     reset,
     control,
-  } = useForm<CreateWeddingFormData>({
-    resolver: zodResolver(createWeddingSchema),
+  } = useForm<EditWeddingFormData>({
+    resolver: zodResolver(editWeddingSchema),
+    defaultValues: {
+      title: wedding.title || '',
+      date: isValidDate(wedding.date) ? parseISO(wedding.date!) : undefined,
+      location: wedding.location || '',
+    },
   });
 
-  const onSubmit = (data: CreateWeddingFormData) => {
+  // Reset form when wedding changes or dialog opens
+  useEffect(() => {
+    if (open) {
+      reset({
+        title: wedding.title || '',
+        date: isValidDate(wedding.date) ? parseISO(wedding.date!) : undefined,
+        location: wedding.location || '',
+      });
+    }
+  }, [open, wedding, reset]);
+
+  const onSubmit = (data: EditWeddingFormData) => {
     // Set time to noon to avoid timezone edge cases
     const dateWithNoon = new Date(data.date);
     dateWithNoon.setHours(12, 0, 0, 0);
     const isoDate = dateWithNoon.toISOString();
 
-    createWeddingMutation.mutate(
+    updateWeddingMutation.mutate(
       {
-        title: data.title,
-        date: isoDate,
-        location: data.location,
+        id: wedding.id!,
+        data: {
+          title: data.title,
+          date: isoDate,
+          location: data.location,
+        },
       },
       {
         onSuccess: () => {
           setOpen(false);
-          reset();
         },
       }
     );
@@ -80,8 +110,8 @@ export function CreateWeddingDialog({ children }: CreateWeddingDialogProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>{t('weddings:createWedding')}</DialogTitle>
-          <DialogDescription>{t('weddings:createWeddingDescription')}</DialogDescription>
+          <DialogTitle>{t('weddings:editWedding')}</DialogTitle>
+          <DialogDescription>{t('weddings:editWeddingDescription')}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
@@ -123,16 +153,16 @@ export function CreateWeddingDialog({ children }: CreateWeddingDialogProps) {
             )}
           </div>
 
-          {createWeddingMutation.isError && (
-            <p className="text-sm text-destructive">{t('weddings:createError')}</p>
+          {updateWeddingMutation.isError && (
+            <p className="text-sm text-destructive">{t('weddings:updateError')}</p>
           )}
 
           <div className="flex justify-end gap-3 pt-4">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               {t('common:cancel')}
             </Button>
-            <Button type="submit" disabled={createWeddingMutation.isPending}>
-              {createWeddingMutation.isPending ? t('common:loading') : t('common:create')}
+            <Button type="submit" disabled={updateWeddingMutation.isPending}>
+              {updateWeddingMutation.isPending ? t('common:loading') : t('common:save')}
             </Button>
           </div>
         </form>

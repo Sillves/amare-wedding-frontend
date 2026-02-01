@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { authApi } from '../api/authApi';
 import { useAuthStore } from '../store/authStore';
-import type { LoginRequest, RegisterRequest, User } from '../types';
+import type { LoginRequest, RegisterRequest, User, ForgotPasswordRequest, ResetPasswordRequest, ChangePasswordRequest } from '../types';
 import { isSuccessfulAuthResult } from '../types';
 
 /**
@@ -159,4 +159,34 @@ export function useCurrentUser(options?: { enabled?: boolean }) {
     ...query,
     refetchUser,
   };
+}
+
+/**
+ * Hook for requesting password reset email
+ * @returns React Query mutation for forgot password operation
+ */
+export function useForgotPassword() {
+  return useMutation({
+    mutationFn: (data: ForgotPasswordRequest) => authApi.forgotPassword(data),
+  });
+}
+
+/**
+ * Hook for resetting password with token
+ * @returns React Query mutation for reset password operation
+ */
+export function useResetPassword() {
+  return useMutation({
+    mutationFn: (data: ResetPasswordRequest) => authApi.resetPassword(data),
+  });
+}
+
+/**
+ * Hook for changing password (logged-in users)
+ * @returns React Query mutation for change password operation
+ */
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: (data: ChangePasswordRequest) => authApi.changePassword(data),
+  });
 }

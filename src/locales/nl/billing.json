@@ -44,7 +44,8 @@
   },
   "features": {
     "custom_domain": "Eigen domein",
-    "priority_support": "Prioriteitsondersteuning"
+    "priority_support": "Prioriteitsondersteuning",
+    "website_builder": "Bruiloft website bouwer"
   },
   "success": {
     "title": "Betaling geslaagd!",

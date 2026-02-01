@@ -130,6 +130,8 @@
     "today": "Votre mariage est aujourd'hui!",
     "past_one": "{{count}} jour depuis votre mariage",
     "past_other": "{{count}} jours depuis votre mariage",
+    "dateNotSet": "Définissez votre date de mariage",
+    "dateNotSetDescription": "Ajoutez une date pour lancer le compte à rebours",
     "overview": "Aperçu",
     "quickActions": "Actions rapides",
     "quickActionsDescription": "Tâches courantes pour gérer votre mariage",
@@ -167,6 +169,15 @@
     "createWebsite": "Créez votre site de mariage",
     "createWebsiteDescription": "Partagez votre jour spécial avec un magnifique site web",
     "editWebsite": "Modifier le site",
-    "websiteBuilder": "Créateur de site"
+    "websiteBuilder": "Site de mariage",
+    "websiteOnline": "En ligne",
+    "websiteOffline": "Hors ligne",
+    "websiteNotCreated": "Non créé",
+    "websiteRequiresUpgrade": "Mise à niveau requise",
+    "websiteStatus": "Statut",
+    "websitePublished": "Votre site est en ligne et visible par les invités",
+    "websiteNotPublished": "Votre site n'est pas encore publié",
+    "websiteUrl": "URL du site",
+    "websiteUpgradePrompt": "Passez à Starter ou Pro pour créer votre site de mariage"
   }
 }

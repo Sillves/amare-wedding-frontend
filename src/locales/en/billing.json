@@ -44,7 +44,8 @@
   },
   "features": {
     "custom_domain": "Custom domain",
-    "priority_support": "Priority support"
+    "priority_support": "Priority support",
+    "website_builder": "Wedding website builder"
   },
   "success": {
     "title": "Payment Successful!",

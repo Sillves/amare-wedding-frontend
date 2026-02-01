@@ -14,7 +14,11 @@ import {
   CalendarDays,
   Sparkles,
   Wallet,
-  Globe
+  Globe,
+  Pencil,
+  ExternalLink,
+  CircleCheck,
+  CircleX
 } from 'lucide-react';
 import { useAuth, useLogout, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
@@ -25,9 +29,21 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CreateWeddingDialog } from '@/features/weddings/components/CreateWeddingDialog';
+import { EditWeddingDialog } from '@/features/weddings/components/EditWeddingDialog';
 import { CreateGuestDialog } from '@/features/guests/components/CreateGuestDialog';
 import { CreateEventDialog } from '@/features/events/components/CreateEventDialog';
 import { format, formatDistanceToNow, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
+
+/**
+ * Check if a date string represents a valid, user-set date
+ * Returns false for null, empty, or default dates like 0001-01-01
+ */
+function isValidWeddingDate(dateString: string | null | undefined): boolean {
+  if (!dateString) return false;
+  const date = parseISO(dateString);
+  // Check if date is valid and not the default minimum date (year 1 or earlier)
+  return !isNaN(date.getTime()) && date.getFullYear() > 1900;
+}
 
 export function DashboardPage() {
   const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing']);
@@ -48,9 +64,15 @@ export function DashboardPage() {
   // Check if user can access website builder (Starter or Pro tier)
   const canAccessWebsite = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
 
+  // Check if user can send emails (Starter or Pro tier - Free has 0 emails/month)
+  const canSendEmails = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
+
+  // Check if wedding has a valid date set
+  const hasValidDate = isValidWeddingDate(wedding?.date);
+
   // Calculate wedding countdown
   const weddingCountdown = useMemo(() => {
-    if (!wedding?.date) return null;
+    if (!hasValidDate || !wedding?.date) return null;
 
     const weddingDate = parseISO(wedding.date);
     const daysUntil = differenceInDays(weddingDate, new Date());
@@ -70,7 +92,7 @@ export function DashboardPage() {
         text: t('common:dashboard.past', { count: Math.abs(daysUntil) })
       };
     }
-  }, [wedding?.date, t]);
+  }, [hasValidDate, wedding?.date, t]);
 
   // Calculate guest statistics
   const guestStats = useMemo(() => {
@@ -163,55 +185,139 @@ export function DashboardPage() {
           <p className="text-muted-foreground">{t('common:tagline')}</p>
         </div>
 
-        {/* Wedding Overview Card */}
+        {/* Wedding Overview & Website Cards */}
         {wedding && (
-          <Card className="border-2">
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div className="space-y-1">
-                  <CardTitle className="text-2xl">{wedding.title}</CardTitle>
-                  {weddingCountdown && (
-                    <Badge
-                      variant={weddingCountdown.type === 'today' ? 'default' : weddingCountdown.type === 'future' ? 'info' : 'secondary'}
-                      className="font-normal"
-                    >
-                      {weddingCountdown.text}
-                    </Badge>
-                  )}
+          <div className="grid gap-4 lg:grid-cols-2">
+            {/* Wedding Overview Card */}
+            <Card className="border-2">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-1">
+                    <CardTitle className="text-xl">{wedding.title}</CardTitle>
+                    {weddingCountdown ? (
+                      <Badge
+                        variant={weddingCountdown.type === 'today' ? 'default' : weddingCountdown.type === 'future' ? 'info' : 'secondary'}
+                        className="font-normal"
+                      >
+                        {weddingCountdown.text}
+                      </Badge>
+                    ) : (
+                      <Badge variant="warning" className="font-normal">
+                        {t('common:dashboard.dateNotSet')}
+                      </Badge>
+                    )}
+                  </div>
+                  <EditWeddingDialog wedding={wedding}>
+                    <Button variant="ghost" size="icon">
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                  </EditWeddingDialog>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
+              </CardHeader>
+              <CardContent className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <Calendar className="h-5 w-5 text-muted-foreground" />
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">{t('weddings:details.date')}</p>
                     <p className="text-sm text-muted-foreground">
-                      {wedding.date ? format(parseISO(wedding.date), 'PPP') : '-'}
+                      {hasValidDate && wedding.date ? format(parseISO(wedding.date), 'PPP') : t('common:dashboard.dateNotSetDescription')}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 text-muted-foreground" />
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">{t('weddings:details.location')}</p>
                     <p className="text-sm text-muted-foreground">{wedding.location || '-'}</p>
                   </div>
                 </div>
-              </div>
-              {canAccessWebsite && (
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => navigate(`/website?weddingId=${wedding.id}`)}
-                >
-                  <Globe className="h-4 w-4 mr-2" />
-                  {website ? t('common:dashboard.editWebsite') : t('common:dashboard.createWebsite')}
-                </Button>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* Website Card */}
+            <Card className="border-2">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-1">
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <Globe className="h-5 w-5" />
+                      {t('common:dashboard.websiteBuilder')}
+                    </CardTitle>
+                    {canAccessWebsite ? (
+                      website ? (
+                        <Badge variant={website.isPublished ? 'success' : 'secondary'} className="font-normal">
+                          {website.isPublished ? t('common:dashboard.websiteOnline') : t('common:dashboard.websiteOffline')}
+                        </Badge>
+                      ) : (
+                        <Badge variant="secondary" className="font-normal">
+                          {t('common:dashboard.websiteNotCreated')}
+                        </Badge>
+                      )
+                    ) : (
+                      <Badge variant="warning" className="font-normal">
+                        {t('common:dashboard.websiteRequiresUpgrade')}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {canAccessWebsite ? (
+                  <>
+                    {website && (
+                      <div className="flex items-center gap-3">
+                        {website.isPublished ? (
+                          <CircleCheck className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <CircleX className="h-4 w-4 text-muted-foreground" />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium">{t('common:dashboard.websiteStatus')}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {website.isPublished ? t('common:dashboard.websitePublished') : t('common:dashboard.websiteNotPublished')}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    {website?.isPublished && wedding.slug && (
+                      <div className="flex items-center gap-3">
+                        <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium">{t('common:dashboard.websiteUrl')}</p>
+                          <a
+                            href={`${window.location.origin}/w/${wedding.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-primary hover:underline truncate block"
+                          >
+                            {window.location.host}/w/{wedding.slug}
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                    <Button
+                      variant="outline"
+                      className="w-full mt-2"
+                      onClick={() => navigate(`/website?weddingId=${wedding.id}`)}
+                    >
+                      <Globe className="h-4 w-4 mr-2" />
+                      {website ? t('common:dashboard.editWebsite') : t('common:dashboard.createWebsite')}
+                    </Button>
+                  </>
+                ) : (
+                  <div className="text-center py-2">
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {t('common:dashboard.websiteUpgradePrompt')}
+                    </p>
+                    <Button variant="default" size="sm" onClick={() => navigate('/pricing')}>
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      {t('common:dashboard.viewPlans')}
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         )}
 
         {/* Guest Statistics */}
@@ -413,6 +519,36 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
+              {/* Upgrade prompt for Free tier users - FIRST for marketing */}
+              {(user?.subscriptionTier === undefined || user?.subscriptionTier === 0) && (
+                <div className="flex items-start gap-3 p-3 rounded-lg border border-primary/30 bg-primary/5">
+                  <Sparkles className="h-5 w-5 text-primary mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">{t('common:dashboard.upgradePlan')}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t('common:dashboard.upgradePlanDescription')}
+                    </p>
+                  </div>
+                  <Button size="sm" variant="default" className="min-w-[80px]" onClick={() => navigate('/pricing')}>
+                    {t('common:dashboard.viewPlans')}
+                  </Button>
+                </div>
+              )}
+
+              {/* Set wedding date prompt */}
+              {wedding && !hasValidDate && (
+                <div className="flex items-start gap-3 p-3 rounded-lg border border-warning/30 bg-warning/5">
+                  <Calendar className="h-5 w-5 text-warning mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">{t('common:dashboard.dateNotSet')}</p>
+                    <p className="text-xs text-muted-foreground">{t('common:dashboard.dateNotSetDescription')}</p>
+                  </div>
+                  <EditWeddingDialog wedding={wedding}>
+                    <Button size="sm" variant="outline" className="min-w-[80px]">{t('common:edit')}</Button>
+                  </EditWeddingDialog>
+                </div>
+              )}
+
               {!progress.hasGuests && (
                 <div className="flex items-start gap-3 p-3 rounded-lg border">
                   <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
@@ -421,7 +557,7 @@ export function DashboardPage() {
                     <p className="text-xs text-muted-foreground">{t('common:dashboard.addFirstGuestDescription')}</p>
                   </div>
                   <CreateGuestDialog weddingId={wedding?.id || ''}>
-                    <Button size="sm">{t('common:dashboard.addGuest')}</Button>
+                    <Button size="sm" className="min-w-[80px]">{t('common:dashboard.addGuest')}</Button>
                   </CreateGuestDialog>
                 </div>
               )}
@@ -434,12 +570,13 @@ export function DashboardPage() {
                     <p className="text-xs text-muted-foreground">{t('common:dashboard.createFirstEventDescription')}</p>
                   </div>
                   <CreateEventDialog weddingId={wedding?.id || ''}>
-                    <Button size="sm">{t('common:dashboard.addEvent')}</Button>
+                    <Button size="sm" className="min-w-[80px]">{t('common:dashboard.addEvent')}</Button>
                   </CreateEventDialog>
                 </div>
               )}
 
-              {progress.hasGuests && guestStats.notInvited > 0 && (
+              {/* Only show send invitations for users who can send emails (Starter/Pro) */}
+              {canSendEmails && progress.hasGuests && guestStats.notInvited > 0 && (
                 <div className="flex items-start gap-3 p-3 rounded-lg border">
                   <Send className="h-5 w-5 text-muted-foreground mt-0.5" />
                   <div className="flex-1">
@@ -448,7 +585,7 @@ export function DashboardPage() {
                       {t('common:dashboard.sendInvitationsDescription', { count: guestStats.notInvited })}
                     </p>
                   </div>
-                  <Button size="sm" onClick={() => navigate(`/guests?weddingId=${wedding?.id}`)}>
+                  <Button size="sm" className="min-w-[80px]" onClick={() => navigate(`/guests?weddingId=${wedding?.id}`)}>
                     {t('common:dashboard.sendInvites')}
                   </Button>
                 </div>
@@ -464,24 +601,8 @@ export function DashboardPage() {
                       {t('common:dashboard.createWebsiteDescription')}
                     </p>
                   </div>
-                  <Button size="sm" variant="default" onClick={() => navigate(`/website?weddingId=${wedding?.id}`)}>
+                  <Button size="sm" variant="default" className="min-w-[80px]" onClick={() => navigate(`/website?weddingId=${wedding?.id}`)}>
                     {t('common:create')}
-                  </Button>
-                </div>
-              )}
-
-              {/* Upgrade prompt for Free tier users */}
-              {(user?.subscriptionTier === undefined || user?.subscriptionTier === 0) && (
-                <div className="flex items-start gap-3 p-3 rounded-lg border border-primary/30 bg-primary/5">
-                  <Sparkles className="h-5 w-5 text-primary mt-0.5" />
-                  <div className="flex-1">
-                    <p className="font-medium text-sm">{t('common:dashboard.upgradePlan')}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {t('common:dashboard.upgradePlanDescription')}
-                    </p>
-                  </div>
-                  <Button size="sm" variant="default" onClick={() => navigate('/pricing')}>
-                    {t('common:dashboard.viewPlans')}
                   </Button>
                 </div>
               )}

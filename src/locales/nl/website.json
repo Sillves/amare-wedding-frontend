@@ -179,5 +179,10 @@
     "description": "Klaar om je speciale dag met de wereld te delen? Maak je trouwwebsite en begin met aanpassen met onze mooie sjablonen.",
     "button": "Website Maken",
     "creating": "Maken..."
+  },
+  "dateRequired": {
+    "title": "Trouwdatum Vereist",
+    "description": "Stel eerst je trouwdatum in voordat je je website maakt. De datum wordt gebruikt voor de afteltimer en RSVP deadline.",
+    "button": "Bruiloft Bewerken"
   }
 }

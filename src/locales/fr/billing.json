@@ -44,7 +44,8 @@
   },
   "features": {
     "custom_domain": "Domaine personnalisé",
-    "priority_support": "Support prioritaire"
+    "priority_support": "Support prioritaire",
+    "website_builder": "Créateur de site de mariage"
   },
   "success": {
     "title": "Paiement réussi!",

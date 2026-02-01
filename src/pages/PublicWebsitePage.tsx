@@ -1,9 +1,17 @@
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { usePublicWebsite } from '@/features/website/hooks/useWebsite';
+import { WebsiteTemplateNames } from '@/features/website/types';
 import { ElegantClassicTemplate } from '@/features/website/templates/ElegantClassic/ElegantClassicTemplate';
 import { ModernMinimalTemplate } from '@/features/website/templates/ModernMinimal/ModernMinimalTemplate';
 import { RomanticGardenTemplate } from '@/features/website/templates/RomanticGarden/RomanticGardenTemplate';
+
+// Map template names to components
+const templateComponents = {
+  ElegantClassic: ElegantClassicTemplate,
+  ModernMinimal: ModernMinimalTemplate,
+  RomanticGarden: RomanticGardenTemplate,
+};
 
 export function PublicWebsitePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -43,11 +51,9 @@ export function PublicWebsitePage() {
     );
   }
 
-  const TemplateComponent = {
-    ElegantClassic: ElegantClassicTemplate,
-    ModernMinimal: ModernMinimalTemplate,
-    RomanticGarden: RomanticGardenTemplate,
-  }[website.template];
+  // Convert numeric template value to string name, then get the component
+  const templateName = WebsiteTemplateNames[website.template] || 'ElegantClassic';
+  const TemplateComponent = templateComponents[templateName as keyof typeof templateComponents];
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

@@ -15,6 +15,7 @@
   "showingAllGuests_other": "{{count}} invités pour {{wedding}}",
   "noGuests": "Aucun invité",
   "noGuestsDescription": "Ajoutez votre premier invité à la liste",
+  "invitationSent": "Invitation Envoyée",
   "totalGuests": "Total des invités",
   "attending": "Présent",
   "declined": "Décliné",
@@ -105,5 +106,10 @@
     "updated": "Invité mis à jour avec succès!",
     "deleted": "Invité supprimé avec succès!",
     "invitationsSent": "{{count}} invitation(s) envoyée(s) avec succès!"
+  },
+  "upgrade": {
+    "sendInvitations": "Envoyer des Invitations par Email",
+    "sendInvitationsDescription": "Passez à Starter ou Pro pour envoyer des invitations numériques à vos invités.",
+    "viewPlans": "Voir les Forfaits"
   }
 }

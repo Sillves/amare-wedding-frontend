@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Trash2, Mail, ChevronLeft, ChevronRight, Send } from 'lucide-react';
+import { Pencil, Trash2, Mail, ChevronLeft, ChevronRight, Send, Check, X, Sparkles } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -27,6 +27,8 @@ interface GuestTableProps {
   onDelete: (guest: GuestDto) => void;
   onSendInvitation: (guest: GuestDto) => void;
   onBulkSendInvitations?: (guestIds: string[]) => void;
+  canSendEmails?: boolean;
+  onUpgrade?: () => void;
 }
 
 /**
@@ -66,7 +68,7 @@ function getRsvpStatusKey(status: RsvpStatus): string {
   }
 }
 
-export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkSendInvitations }: GuestTableProps) {
+export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkSendInvitations, canSendEmails = true, onUpgrade }: GuestTableProps) {
   const { t } = useTranslation('guests');
   const [sortField, setSortField] = useState<'name' | 'email' | 'rsvpStatus'>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -165,8 +167,24 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
 
   return (
     <div className="space-y-4">
-      {/* Bulk Actions */}
-      {onBulkSendInvitations && (
+      {/* Upgrade prompt for Free tier users */}
+      {!canSendEmails && onUpgrade && (
+        <div className="flex items-center justify-between p-3 bg-primary/5 border border-primary/20 rounded-md">
+          <div className="flex items-center gap-3">
+            <Sparkles className="h-5 w-5 text-primary" />
+            <div>
+              <p className="text-sm font-medium">{t('upgrade.sendInvitations')}</p>
+              <p className="text-xs text-muted-foreground">{t('upgrade.sendInvitationsDescription')}</p>
+            </div>
+          </div>
+          <Button onClick={onUpgrade} size="sm" variant="default">
+            {t('upgrade.viewPlans')}
+          </Button>
+        </div>
+      )}
+
+      {/* Bulk Actions - Only show if user can send emails */}
+      {canSendEmails && onBulkSendInvitations && (
         <div className="flex items-center justify-between p-3 bg-muted rounded-md min-h-[52px]">
           {selectedGuestIds.size > 0 ? (
             <>
@@ -192,7 +210,7 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
-                {onBulkSendInvitations && (
+                {canSendEmails && onBulkSendInvitations && (
                   <TableHead className="w-[50px]">
                     <Checkbox
                       checked={allSelectableSelected}
@@ -222,6 +240,7 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
                   {t('rsvp.title')}
                   {sortField === 'rsvpStatus' && (sortDirection === 'asc' ? ' ↑' : ' ↓')}
                 </TableHead>
+                <TableHead>{t('invitationSent')}</TableHead>
                 <TableHead className="text-right">{t('actions.title')}</TableHead>
               </TableRow>
             </TableHeader>
@@ -229,10 +248,10 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
               {paginatedGuests.map((guest) => (
                 <TableRow
                   key={guest.id}
-                  className={onBulkSendInvitations && guest.email ? "cursor-pointer" : ""}
+                  className={canSendEmails && onBulkSendInvitations && guest.email ? "cursor-pointer" : ""}
                   onClick={(e) => {
                     // Only toggle selection if clicking the row (not action buttons)
-                    if (onBulkSendInvitations && guest.email && guest.id) {
+                    if (canSendEmails && onBulkSendInvitations && guest.email && guest.id) {
                       const target = e.target as HTMLElement;
                       // Don't select if clicking buttons or their children
                       if (!target.closest('button')) {
@@ -241,7 +260,7 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
                     }
                   }}
                 >
-                  {onBulkSendInvitations && (
+                  {canSendEmails && onBulkSendInvitations && (
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <Checkbox
                         checked={guest.id ? selectedGuestIds.has(guest.id) : false}
@@ -258,17 +277,31 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
                       {t(getRsvpStatusKey(guest.rsvpStatus ?? 0))}
                     </Badge>
                   </TableCell>
+                  <TableCell>
+                    {guest.invitationSentAt ? (
+                      <div className="flex items-center gap-1 text-green-600">
+                        <Check className="h-4 w-4" />
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(guest.invitationSentAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    ) : (
+                      <X className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </TableCell>
                   <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
                     <div className="flex justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => onSendInvitation(guest)}
-                        title={t('actions.sendInvite')}
-                        disabled={!guest.email}
-                      >
-                        <Mail className="h-4 w-4" />
-                      </Button>
+                      {canSendEmails && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onSendInvitation(guest)}
+                          title={t('actions.sendInvite')}
+                          disabled={!guest.email}
+                        >
+                          <Mail className="h-4 w-4" />
+                        </Button>
+                      )}
                       <Button
                         variant="ghost"
                         size="icon"

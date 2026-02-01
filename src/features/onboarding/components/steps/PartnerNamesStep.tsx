@@ -47,7 +47,7 @@ export function PartnerNamesStep({ form }: PartnerNamesStepProps) {
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
         <div className="w-full sm:flex-1 space-y-2">
-          <Label htmlFor="partner1Name">{t('wizard.partners.partner1')}</Label>
+          <Label htmlFor="partner1Name" className="block text-center">{t('wizard.partners.partner1')}</Label>
           <Input
             id="partner1Name"
             placeholder={t('wizard.partners.partner1Placeholder')}
@@ -55,7 +55,7 @@ export function PartnerNamesStep({ form }: PartnerNamesStepProps) {
             className="text-center"
           />
           {errors.partner1Name && (
-            <p className="text-sm text-destructive">{t(errors.partner1Name.message!)}</p>
+            <p className="text-sm text-destructive text-center">{t(errors.partner1Name.message!)}</p>
           )}
         </div>
 
@@ -64,7 +64,7 @@ export function PartnerNamesStep({ form }: PartnerNamesStepProps) {
         </div>
 
         <div className="w-full sm:flex-1 space-y-2">
-          <Label htmlFor="partner2Name">{t('wizard.partners.partner2')}</Label>
+          <Label htmlFor="partner2Name" className="block text-center">{t('wizard.partners.partner2')}</Label>
           <Input
             id="partner2Name"
             placeholder={t('wizard.partners.partner2Placeholder')}
@@ -72,7 +72,7 @@ export function PartnerNamesStep({ form }: PartnerNamesStepProps) {
             className="text-center"
           />
           {errors.partner2Name && (
-            <p className="text-sm text-destructive">{t(errors.partner2Name.message!)}</p>
+            <p className="text-sm text-destructive text-center">{t(errors.partner2Name.message!)}</p>
           )}
         </div>
       </div>

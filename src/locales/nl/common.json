@@ -130,6 +130,8 @@
     "today": "Uw bruiloft is vandaag!",
     "past_one": "{{count}} dag sinds uw bruiloft",
     "past_other": "{{count}} dagen sinds uw bruiloft",
+    "dateNotSet": "Stel uw trouwdatum in",
+    "dateNotSetDescription": "Voeg een datum toe om af te tellen",
     "overview": "Overzicht",
     "quickActions": "Snelle acties",
     "quickActionsDescription": "Veelvoorkomende taken om je bruiloft te beheren",
@@ -141,9 +143,9 @@
     "recentActivity": "Recente activiteit",
     "nextSteps": "Volgende stappen",
     "nextStepsDescription": "Voorgestelde acties om uw planning op koers te houden",
-    "viewAllGuests": "Alle gasten bekijken",
-    "viewAllEvents": "Alle evenementen bekijken",
-    "viewExpenses": "Kosten bekijken",
+    "viewAllGuests": "Alle gasten beheren",
+    "viewAllEvents": "Alle evenementen beheren",
+    "viewExpenses": "Kosten beheren",
     "progress": "Planningsvoortgang",
     "guestsAdded": "Gasten toegevoegd",
     "invitationsSent": "Uitnodigingen verstuurd",
@@ -167,6 +169,15 @@
     "createWebsite": "Maak uw trouwwebsite",
     "createWebsiteDescription": "Deel uw speciale dag met een mooie website",
     "editWebsite": "Website bewerken",
-    "websiteBuilder": "Website Builder"
+    "websiteBuilder": "Trouwwebsite",
+    "websiteOnline": "Online",
+    "websiteOffline": "Offline",
+    "websiteNotCreated": "Niet aangemaakt",
+    "websiteRequiresUpgrade": "Upgrade vereist",
+    "websiteStatus": "Status",
+    "websitePublished": "Uw website is live en zichtbaar voor gasten",
+    "websiteNotPublished": "Uw website is nog niet gepubliceerd",
+    "websiteUrl": "Website URL",
+    "websiteUpgradePrompt": "Upgrade naar Starter of Pro om uw trouwwebsite te maken"
   }
 }

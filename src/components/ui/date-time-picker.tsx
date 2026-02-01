@@ -28,6 +28,7 @@ interface DateTimePickerProps {
   placeholder?: string;
   disabled?: boolean;
   showTime?: boolean;
+  minDate?: Date;
 }
 
 export function DateTimePicker({
@@ -36,6 +37,7 @@ export function DateTimePicker({
   placeholder = 'Pick a date',
   disabled = false,
   showTime = true,
+  minDate,
 }: DateTimePickerProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -98,6 +100,7 @@ export function DateTimePicker({
           selected={value}
           onSelect={handleDateSelect}
           initialFocus
+          disabled={minDate ? { before: minDate } : undefined}
         />
         {showTime && (
           <div className="border-t p-3">
@@ -141,6 +144,7 @@ interface DatePickerProps {
   onChange: (date: Date | undefined) => void;
   placeholder?: string;
   disabled?: boolean;
+  minDate?: Date;
 }
 
 export function DatePicker({
@@ -148,6 +152,7 @@ export function DatePicker({
   onChange,
   placeholder = 'Pick a date',
   disabled = false,
+  minDate,
 }: DatePickerProps) {
   return (
     <DateTimePicker
@@ -156,6 +161,7 @@ export function DatePicker({
       placeholder={placeholder}
       disabled={disabled}
       showTime={false}
+      minDate={minDate}
     />
   );
 }

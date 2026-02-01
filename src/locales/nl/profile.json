@@ -6,6 +6,20 @@
     "title": "Accountgegevens",
     "description": "Uw persoonlijke gegevens"
   },
+  "changePassword": {
+    "title": "Wachtwoord Wijzigen",
+    "description": "Wijzig uw wachtwoord om uw account veilig te houden",
+    "currentPassword": "Huidig wachtwoord",
+    "currentPasswordRequired": "Huidig wachtwoord is verplicht",
+    "newPassword": "Nieuw wachtwoord",
+    "confirmPassword": "Bevestig nieuw wachtwoord",
+    "submit": "Wachtwoord Wijzigen",
+    "success": "Wachtwoord succesvol gewijzigd!"
+  },
+  "language": {
+    "title": "Taal",
+    "description": "Kies uw voorkeurstaal"
+  },
   "subscription": {
     "title": "Abonnement",
     "description": "Uw huidige abonnement en facturering",

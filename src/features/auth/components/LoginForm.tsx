@@ -48,9 +48,14 @@ export function LoginForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium">
-              {t('auth:login.password')}
-            </label>
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className="text-sm font-medium">
+                {t('auth:login.password')}
+              </label>
+              <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+                {t('auth:login.forgotPassword')}
+              </Link>
+            </div>
             <Input id="password" type="password" {...register('password')} />
             {errors.password && <p className="text-sm text-destructive">{t(errors.password.message!)}</p>}
           </div>

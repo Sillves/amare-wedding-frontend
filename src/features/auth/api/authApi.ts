@@ -1,5 +1,13 @@
 import { apiClient } from '@/lib/axios';
-import type { LoginRequest, RegisterRequest, AuthResult, UserProfileDto } from '../types';
+import type {
+  LoginRequest,
+  RegisterRequest,
+  AuthResult,
+  UserProfileDto,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+  ChangePasswordRequest
+} from '../types';
 
 /**
  * Authentication API endpoints
@@ -36,5 +44,32 @@ export const authApi = {
   getCurrentUser: async (): Promise<UserProfileDto> => {
     const response = await apiClient.get<UserProfileDto>('/auth/me');
     return response.data;
+  },
+
+  /**
+   * Request password reset email
+   * @param data - Email and optional language
+   * @returns Promise<void>
+   */
+  forgotPassword: async (data: ForgotPasswordRequest): Promise<void> => {
+    await apiClient.post('/auth/forgot-password', data);
+  },
+
+  /**
+   * Reset password with token from email
+   * @param data - Email, token, and new password
+   * @returns Promise<void>
+   */
+  resetPassword: async (data: ResetPasswordRequest): Promise<void> => {
+    await apiClient.post('/auth/reset-password', data);
+  },
+
+  /**
+   * Change password for logged-in user
+   * @param data - Current and new password
+   * @returns Promise<void>
+   */
+  changePassword: async (data: ChangePasswordRequest): Promise<void> => {
+    await apiClient.post('/auth/change-password', data);
   },
 } as const;

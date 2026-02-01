@@ -249,7 +249,7 @@ export function PricingPage() {
               return (
                 <Card
                   key={tier}
-                  className={`relative ${
+                  className={`relative flex flex-col ${
                     isCurrentPlan
                       ? 'border-2 border-green-600 shadow-lg'
                       : isHighlighted
@@ -280,7 +280,7 @@ export function PricingPage() {
                       {t(`billing:plans.${tierName}.description`)}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-6">
+                  <CardContent className="flex flex-col flex-grow space-y-6">
                     {/* Price */}
                     <div className="text-center">
                       {tier === 0 ? (
@@ -303,69 +303,64 @@ export function PricingPage() {
                       )}
                     </div>
 
-                    {/* Limits */}
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-600" />
-                        {formatLimit(plan.maxGuests, 'guests')}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Check className="h-4 w-4 text-green-600" />
-                        {formatLimit(plan.maxEvents, 'events')}
-                      </div>
-                      {plan.maxEmailsPerMonth !== undefined && plan.maxEmailsPerMonth !== 0 && (
-                        <div className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-600" />
-                          {formatLimit(plan.maxEmailsPerMonth, 'emails')}
-                        </div>
-                      )}
-                    </div>
+                    {/* All Features */}
+                    <div className="flex-grow">
+                      {(() => {
+                        const includedFeatures = (plan.features ?? []).filter(
+                          (f) => !['guests', 'events', 'emails'].includes(f)
+                        );
+                        const notIncludedFeatures = (plan.notIncludedFeatures ?? []).filter(
+                          (f) => !['guests', 'events', 'emails'].includes(f)
+                        );
 
-                    {/* Features */}
-                    {plan.features && plan.features.length > 0 && (() => {
-                      // Filter out limit-related features (already shown above)
-                      const displayFeatures = plan.features.filter(
-                        (f) => !['guests', 'events', 'emails'].includes(f)
-                      );
-                      if (displayFeatures.length === 0) return null;
-                      return (
-                        <ul className="space-y-2">
-                          {displayFeatures.map((featureKey) => (
-                            <li key={featureKey} className="flex items-center gap-2 text-sm">
+                        return (
+                          <div className="space-y-2 text-sm">
+                            {/* Limits */}
+                            <div className="flex items-center gap-2">
                               <Check className="h-4 w-4 text-green-600" />
-                              {t(`billing:features.${featureKey}`)}
-                            </li>
-                          ))}
-                        </ul>
-                      );
-                    })()}
+                              {formatLimit(plan.maxGuests, 'guests')}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Check className="h-4 w-4 text-green-600" />
+                              {formatLimit(plan.maxEvents, 'events')}
+                            </div>
+                            {plan.maxEmailsPerMonth !== undefined && plan.maxEmailsPerMonth !== 0 && (
+                              <div className="flex items-center gap-2">
+                                <Check className="h-4 w-4 text-green-600" />
+                                {formatLimit(plan.maxEmailsPerMonth, 'emails')}
+                              </div>
+                            )}
 
-                    {/* Not Included Features */}
-                    {(() => {
-                      const notIncluded = (plan.notIncludedFeatures ?? []).filter(
-                        (f) => !['guests', 'events', 'emails'].includes(f)
-                      );
-                      if (notIncluded.length === 0) return null;
-                      return (
-                        <div className="space-y-2 pt-2 border-t">
-                          <p className="text-xs text-muted-foreground font-medium">
-                            {t('billing:notIncluded')}
-                          </p>
-                          <ul className="space-y-2">
-                            {notIncluded.map((featureKey) => (
-                              <li key={featureKey} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <X className="h-4 w-4 text-muted-foreground" />
+                            {/* Included Features */}
+                            {includedFeatures.map((featureKey) => (
+                              <div key={featureKey} className="flex items-center gap-2">
+                                <Check className="h-4 w-4 text-green-600" />
                                 {t(`billing:features.${featureKey}`)}
-                              </li>
+                              </div>
                             ))}
-                          </ul>
-                        </div>
-                      );
-                    })()}
+
+                            {/* Not Included Features */}
+                            {notIncludedFeatures.length > 0 && (
+                              <>
+                                <p className="text-xs text-muted-foreground font-medium pt-2">
+                                  {t('billing:notIncluded')}
+                                </p>
+                                {notIncludedFeatures.map((featureKey) => (
+                                  <div key={featureKey} className="flex items-center gap-2 text-muted-foreground">
+                                    <X className="h-4 w-4" />
+                                    {t(`billing:features.${featureKey}`)}
+                                  </div>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        );
+                      })()}
+                    </div>
 
                     {/* CTA Button */}
                     <Button
-                      className="w-full"
+                      className="w-full mt-auto"
                       variant={
                         isCurrentPlan ? 'secondary' : isHighlighted ? 'default' : 'outline'
                       }

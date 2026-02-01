@@ -9,8 +9,12 @@
     }
   },
   "features": {
-    "title": "Tout Ce Dont Vous Avez Besoin pour Votre Jour Spécial",
+    "title": "Tout ce dont vous avez besoin pour votre jour spécial",
     "subtitle": "Des outils puissants pour rendre la planification de mariage sans stress",
+    "websiteBuilder": {
+      "title": "Site de Mariage",
+      "description": "Créez un magnifique site de mariage pour partager votre histoire, les détails de l'événement et votre galerie photo avec vos invités."
+    },
     "guestManagement": {
       "title": "Gestion des Invités",
       "description": "Gardez une trace de tous vos invités en un seul endroit. Ajoutez des détails, des exigences alimentaires et des coordonnées."

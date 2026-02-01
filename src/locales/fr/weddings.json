@@ -2,9 +2,12 @@
   "title": "Mariages",
   "myWeddings": "Mes mariages",
   "createWedding": "Créer un mariage",
+  "editWedding": "Modifier le mariage",
   "selectWedding": "Sélectionner un mariage",
   "createWeddingDescription": "Remplissez les détails pour créer un nouveau mariage",
+  "editWeddingDescription": "Modifiez les détails de votre mariage",
   "createError": "Une erreur s'est produite lors de la création du mariage",
+  "updateError": "Une erreur s'est produite lors de la mise à jour du mariage",
   "noWeddings": "Vous n'avez pas encore de mariages",
   "noWeddingsDescription": "Créez votre premier mariage pour commencer",
   "form": {
@@ -41,6 +44,7 @@
   "validation": {
     "nameRequired": "Le nom est requis",
     "dateRequired": "La date est requise",
+    "dateInPast": "La date du mariage ne peut pas être dans le passé",
     "locationRequired": "Le lieu est requis"
   },
   "wizard": {
@@ -69,10 +73,10 @@
     "partners": {
       "title": "Les Heureux Élus",
       "subtitle": "Qui se marie?",
-      "partner1": "Partenaire 1",
-      "partner1Placeholder": "Prénom",
-      "partner2": "Partenaire 2",
-      "partner2Placeholder": "Prénom",
+      "partner1": "Vous",
+      "partner1Placeholder": "Votre prénom",
+      "partner2": "Partenaire",
+      "partner2Placeholder": "Prénom du partenaire",
       "autoTitle": "Mariage de {{partner1}} & {{partner2}}"
     },
     "location": {

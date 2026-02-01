@@ -6,6 +6,20 @@
     "title": "Informations du compte",
     "description": "Vos informations personnelles"
   },
+  "changePassword": {
+    "title": "Changer le Mot de Passe",
+    "description": "Mettez à jour votre mot de passe pour sécuriser votre compte",
+    "currentPassword": "Mot de passe actuel",
+    "currentPasswordRequired": "Le mot de passe actuel est requis",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "submit": "Changer le Mot de Passe",
+    "success": "Mot de passe changé avec succès!"
+  },
+  "language": {
+    "title": "Langue",
+    "description": "Choisissez votre langue préférée"
+  },
   "subscription": {
     "title": "Abonnement",
     "description": "Votre forfait actuel et facturation",

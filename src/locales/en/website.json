@@ -179,5 +179,10 @@
     "description": "Ready to share your special day with the world? Create your wedding website and start customizing it with our beautiful templates.",
     "button": "Create Website",
     "creating": "Creating..."
+  },
+  "dateRequired": {
+    "title": "Wedding Date Required",
+    "description": "Please set your wedding date before creating your website. The date is used to display your countdown timer and RSVP deadline.",
+    "button": "Edit Wedding Details"
   }
 }
