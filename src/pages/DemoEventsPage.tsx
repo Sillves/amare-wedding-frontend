@@ -19,7 +19,7 @@ import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import type { EventDto } from '@/features/weddings/types';
 
 function DemoEventsContent() {
-  const { t } = useTranslation(['events', 'common', 'demo', 'guests', 'expenses']);
+  const { t } = useTranslation(['events', 'common', 'demo', 'guests', 'expenses', 'website']);
   const navigate = useNavigate();
   const { events } = useDemoContext();
 
@@ -94,6 +94,9 @@ function DemoEventsContent() {
             </Button>
             <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/expenses')}>
               {t('expenses:title')}
+            </Button>
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/website')}>
+              {t('website:title')}
             </Button>
             <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/rsvp')}>
               RSVP

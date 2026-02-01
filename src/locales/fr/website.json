@@ -162,7 +162,9 @@
     "change": "Modifier",
     "fileTooLarge": "Le fichier est trop volumineux (max {{max}}Mo)",
     "invalidType": "Type de fichier invalide",
-    "error": "Une erreur s'est produite lors du téléchargement"
+    "error": "Une erreur s'est produite lors du téléchargement",
+    "disabled": "Le téléchargement d'images n'est pas disponible",
+    "disabledDemo": "Le téléchargement d'images n'est pas disponible en mode démo. Créez un compte pour télécharger vos propres photos!"
   },
   "upgrade": {
     "title": "Mettez à niveau pour Accéder",

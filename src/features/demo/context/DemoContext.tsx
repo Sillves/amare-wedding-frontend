@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useCallback, useMemo, useEffect, t
 import { useTranslation } from 'react-i18next';
 import type { GuestDto, RsvpStatus, EventDto } from '@/features/weddings/types';
 import type { WeddingExpenseDto, WeddingExpenseSummaryDto } from '@/features/expenses/api/expensesApi';
+import type { WeddingWebsite, WebsiteContent, WebsiteSettings, WebsiteTemplate } from '@/features/website/types';
+import { getDefaultSettings } from '@/features/website/utils/defaultContent';
 import { getDemoData } from '../data';
 
 // Category labels for summary calculation
@@ -38,6 +40,14 @@ interface DemoContextType {
   updateExpense: (expenseId: string, updates: Partial<WeddingExpenseDto>) => void;
   deleteExpense: (expenseId: string) => void;
 
+  // Website
+  website: WeddingWebsite;
+  updateWebsiteContent: (content: WebsiteContent) => void;
+  updateWebsiteSettings: (settings: WebsiteSettings) => void;
+  updateWebsiteTemplate: (template: WebsiteTemplate) => void;
+  publishWebsite: () => void;
+  unpublishWebsite: () => void;
+
   // Utility
   resetDemo: () => void;
 }
@@ -63,6 +73,7 @@ export function DemoProvider({ children }: DemoProviderProps) {
   const [guests, setGuests] = useState<GuestDto[]>(initialData.guests);
   const [events, setEvents] = useState<EventDto[]>(initialData.events);
   const [expenses, setExpenses] = useState<WeddingExpenseDto[]>(initialData.expenses);
+  const [website, setWebsite] = useState<WeddingWebsite>(initialData.website);
 
   // Reset data when language changes
   useEffect(() => {
@@ -70,6 +81,7 @@ export function DemoProvider({ children }: DemoProviderProps) {
     setGuests(data.guests);
     setEvents(data.events);
     setExpenses(data.expenses);
+    setWebsite(data.website);
   }, [currentLanguage]);
 
   // ==================== GUESTS ====================
@@ -196,6 +208,51 @@ export function DemoProvider({ children }: DemoProviderProps) {
     setExpenses((prev) => prev.filter((expense) => expense.id !== expenseId));
   }, []);
 
+  // ==================== WEBSITE ====================
+
+  const updateWebsiteContent = useCallback((content: WebsiteContent) => {
+    setWebsite((prev) => ({
+      ...prev,
+      content,
+      updatedAt: new Date().toISOString(),
+    }));
+  }, []);
+
+  const updateWebsiteSettings = useCallback((settings: WebsiteSettings) => {
+    setWebsite((prev) => ({
+      ...prev,
+      settings,
+      updatedAt: new Date().toISOString(),
+    }));
+  }, []);
+
+  const updateWebsiteTemplate = useCallback((template: WebsiteTemplate) => {
+    setWebsite((prev) => ({
+      ...prev,
+      template,
+      settings: getDefaultSettings(template),
+      updatedAt: new Date().toISOString(),
+    }));
+  }, []);
+
+  const publishWebsite = useCallback(() => {
+    setWebsite((prev) => ({
+      ...prev,
+      isPublished: true,
+      publishedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }));
+  }, []);
+
+  const unpublishWebsite = useCallback(() => {
+    setWebsite((prev) => ({
+      ...prev,
+      isPublished: false,
+      publishedAt: null,
+      updatedAt: new Date().toISOString(),
+    }));
+  }, []);
+
   // Calculate expense summary dynamically
   const expenseSummary = useMemo((): WeddingExpenseSummaryDto => {
     const categoryTotals: Record<string, number> = {};
@@ -219,6 +276,7 @@ export function DemoProvider({ children }: DemoProviderProps) {
     setGuests(data.guests);
     setEvents(data.events);
     setExpenses(data.expenses);
+    setWebsite(data.website);
   }, [currentLanguage]);
 
   const value = useMemo(
@@ -239,6 +297,12 @@ export function DemoProvider({ children }: DemoProviderProps) {
       addExpense,
       updateExpense,
       deleteExpense,
+      website,
+      updateWebsiteContent,
+      updateWebsiteSettings,
+      updateWebsiteTemplate,
+      publishWebsite,
+      unpublishWebsite,
       resetDemo,
     }),
     [
@@ -258,6 +322,12 @@ export function DemoProvider({ children }: DemoProviderProps) {
       addExpense,
       updateExpense,
       deleteExpense,
+      website,
+      updateWebsiteContent,
+      updateWebsiteSettings,
+      updateWebsiteTemplate,
+      publishWebsite,
+      unpublishWebsite,
       resetDemo,
     ]
   );

@@ -21,9 +21,11 @@ interface StoryEditorProps {
   weddingId: string;
   data: StoryContent;
   onChange: (data: StoryContent) => void;
+  disableImageUpload?: boolean;
+  imageUploadDisabledMessage?: string;
 }
 
-export function StoryEditor({ weddingId, data, onChange }: StoryEditorProps) {
+export function StoryEditor({ weddingId, data, onChange, disableImageUpload, imageUploadDisabledMessage }: StoryEditorProps) {
   const { t } = useTranslation('website');
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
@@ -211,6 +213,8 @@ export function StoryEditor({ weddingId, data, onChange }: StoryEditorProps) {
                               })
                             }
                             aspectRatio="4/3"
+                            disabled={disableImageUpload}
+                            disabledMessage={imageUploadDisabledMessage}
                           />
                         </div>
                       </div>

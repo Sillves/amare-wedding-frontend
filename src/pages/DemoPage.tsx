@@ -26,7 +26,7 @@ import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { SEO } from '@/shared/components/seo';
 
 function DemoDashboardContent() {
-  const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'demo', 'expenses']);
+  const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'demo', 'expenses', 'website']);
   const navigate = useNavigate();
   const { guests, events, expenseSummary } = useDemoContext();
 
@@ -136,6 +136,9 @@ function DemoDashboardContent() {
             </Button>
             <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/expenses')}>
               {t('expenses:title')}
+            </Button>
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/website')}>
+              {t('website:title')}
             </Button>
             <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/rsvp')}>
               RSVP

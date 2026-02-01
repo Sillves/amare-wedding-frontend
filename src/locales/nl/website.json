@@ -162,7 +162,9 @@
     "change": "Wijzigen",
     "fileTooLarge": "Bestand is te groot (max {{max}}MB)",
     "invalidType": "Ongeldig bestandstype",
-    "error": "Er is een fout opgetreden bij het uploaden"
+    "error": "Er is een fout opgetreden bij het uploaden",
+    "disabled": "Afbeelding uploaden is niet beschikbaar",
+    "disabledDemo": "Afbeelding uploaden is niet beschikbaar in demo modus. Maak een account aan om je eigen foto's te uploaden!"
   },
   "upgrade": {
     "title": "Upgrade om Toegang te Krijgen",

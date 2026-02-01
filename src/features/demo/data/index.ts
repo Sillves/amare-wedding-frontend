@@ -1,24 +1,28 @@
 import type { Wedding } from '@/features/weddings/types';
 import type { GuestDto, EventDto } from '@/features/weddings/types';
 import type { WeddingExpenseDto, WeddingExpenseSummaryDto } from '@/features/expenses/api/expensesApi';
+import type { WeddingWebsite } from '@/features/website/types';
 
 // English data
 import { DEMO_WEDDING_EN, DEMO_WEDDING_PUBLIC_EN } from './mockWedding.en';
 import { DEMO_GUESTS_EN } from './mockGuests.en';
 import { DEMO_EVENTS_EN } from './mockEvents.en';
 import { DEMO_EXPENSES_EN, DEMO_EXPENSE_SUMMARY_EN } from './mockExpenses.en';
+import { DEMO_WEBSITE_EN } from './mockWebsite.en';
 
 // Dutch data
 import { DEMO_WEDDING_NL, DEMO_WEDDING_PUBLIC_NL } from './mockWedding.nl';
 import { DEMO_GUESTS_NL } from './mockGuests.nl';
 import { DEMO_EVENTS_NL } from './mockEvents.nl';
 import { DEMO_EXPENSES_NL, DEMO_EXPENSE_SUMMARY_NL } from './mockExpenses.nl';
+import { DEMO_WEBSITE_NL } from './mockWebsite.nl';
 
 // French data
 import { DEMO_WEDDING_FR, DEMO_WEDDING_PUBLIC_FR } from './mockWedding.fr';
 import { DEMO_GUESTS_FR } from './mockGuests.fr';
 import { DEMO_EVENTS_FR } from './mockEvents.fr';
 import { DEMO_EXPENSES_FR, DEMO_EXPENSE_SUMMARY_FR } from './mockExpenses.fr';
+import { DEMO_WEBSITE_FR } from './mockWebsite.fr';
 
 export type SupportedLanguage = 'en' | 'nl' | 'fr';
 
@@ -29,6 +33,7 @@ interface LocalizedDemoData {
   events: EventDto[];
   expenses: WeddingExpenseDto[];
   expenseSummary: WeddingExpenseSummaryDto;
+  website: WeddingWebsite;
 }
 
 const demoDataByLanguage: Record<SupportedLanguage, LocalizedDemoData> = {
@@ -39,6 +44,7 @@ const demoDataByLanguage: Record<SupportedLanguage, LocalizedDemoData> = {
     events: DEMO_EVENTS_EN,
     expenses: DEMO_EXPENSES_EN,
     expenseSummary: DEMO_EXPENSE_SUMMARY_EN,
+    website: DEMO_WEBSITE_EN,
   },
   nl: {
     wedding: DEMO_WEDDING_NL,
@@ -47,6 +53,7 @@ const demoDataByLanguage: Record<SupportedLanguage, LocalizedDemoData> = {
     events: DEMO_EVENTS_NL,
     expenses: DEMO_EXPENSES_NL,
     expenseSummary: DEMO_EXPENSE_SUMMARY_NL,
+    website: DEMO_WEBSITE_NL,
   },
   fr: {
     wedding: DEMO_WEDDING_FR,
@@ -55,6 +62,7 @@ const demoDataByLanguage: Record<SupportedLanguage, LocalizedDemoData> = {
     events: DEMO_EVENTS_FR,
     expenses: DEMO_EXPENSES_FR,
     expenseSummary: DEMO_EXPENSE_SUMMARY_FR,
+    website: DEMO_WEBSITE_FR,
   },
 };
 

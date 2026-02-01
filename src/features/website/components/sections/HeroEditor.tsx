@@ -18,9 +18,11 @@ interface HeroEditorProps {
   weddingId: string;
   data: HeroContent;
   onChange: (data: HeroContent) => void;
+  disableImageUpload?: boolean;
+  imageUploadDisabledMessage?: string;
 }
 
-export function HeroEditor({ weddingId, data, onChange }: HeroEditorProps) {
+export function HeroEditor({ weddingId, data, onChange, disableImageUpload, imageUploadDisabledMessage }: HeroEditorProps) {
   const { t } = useTranslation('website');
 
   const handleChange = <K extends keyof HeroContent>(
@@ -105,6 +107,8 @@ export function HeroEditor({ weddingId, data, onChange }: HeroEditorProps) {
               });
             }}
             aspectRatio="16/9"
+            disabled={disableImageUpload}
+            disabledMessage={imageUploadDisabledMessage}
           />
         </div>
       </CardContent>

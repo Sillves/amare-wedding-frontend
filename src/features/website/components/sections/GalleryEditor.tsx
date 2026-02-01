@@ -20,9 +20,11 @@ interface GalleryEditorProps {
   weddingId: string;
   data: GalleryContent;
   onChange: (data: GalleryContent) => void;
+  disableImageUpload?: boolean;
+  imageUploadDisabledMessage?: string;
 }
 
-export function GalleryEditor({ weddingId, data, onChange }: GalleryEditorProps) {
+export function GalleryEditor({ weddingId, data, onChange, disableImageUpload, imageUploadDisabledMessage }: GalleryEditorProps) {
   const { t } = useTranslation('website');
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -131,28 +133,38 @@ export function GalleryEditor({ weddingId, data, onChange }: GalleryEditorProps)
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>{t('gallery.images')}</Label>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => inputRef.current?.click()}
-                disabled={uploadMedia.isPending}
-              >
-                <Plus className="h-4 w-4 mr-1" />
-                {uploadMedia.isPending ? t('upload.uploading') : t('gallery.addImage')}
-              </Button>
+              {!disableImageUpload && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => inputRef.current?.click()}
+                  disabled={uploadMedia.isPending}
+                >
+                  <Plus className="h-4 w-4 mr-1" />
+                  {uploadMedia.isPending ? t('upload.uploading') : t('gallery.addImage')}
+                </Button>
+              )}
             </div>
 
-            <input
-              ref={inputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              multiple
-              onChange={(e) => handleUploadImages(e.target.files)}
-              className="hidden"
-            />
+            {!disableImageUpload && (
+              <input
+                ref={inputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                onChange={(e) => handleUploadImages(e.target.files)}
+                className="hidden"
+              />
+            )}
 
             {error && <p className="text-sm text-destructive">{error}</p>}
+
+            {disableImageUpload && data.images.length === 0 && (
+              <p className="text-sm text-muted-foreground text-center py-8">
+                {imageUploadDisabledMessage || t('upload.disabled')}
+              </p>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {data.images.map((image) => (
@@ -162,15 +174,17 @@ export function GalleryEditor({ weddingId, data, onChange }: GalleryEditorProps)
                     alt={image.caption || ''}
                     className="w-full aspect-square object-cover rounded-lg"
                   />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleDeleteImage(image.id)}
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
+                  {!disableImageUpload && (
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => handleDeleteImage(image.id)}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  )}
                   <Input
                     value={image.caption || ''}
                     onChange={(e) => handleUpdateCaption(image.id, e.target.value)}
@@ -181,7 +195,7 @@ export function GalleryEditor({ weddingId, data, onChange }: GalleryEditorProps)
               ))}
             </div>
 
-            {data.images.length === 0 && (
+            {!disableImageUpload && data.images.length === 0 && (
               <p className="text-sm text-muted-foreground text-center py-8">
                 {t('gallery.noImages')}
               </p>

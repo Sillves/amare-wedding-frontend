@@ -34,6 +34,7 @@ const DemoGuestsPage = lazy(() => import('@/pages/DemoGuestsPage').then(m => ({ 
 const DemoEventsPage = lazy(() => import('@/pages/DemoEventsPage').then(m => ({ default: m.DemoEventsPage })));
 const DemoExpensesPage = lazy(() => import('@/pages/DemoExpensesPage').then(m => ({ default: m.DemoExpensesPage })));
 const DemoRsvpPage = lazy(() => import('@/pages/DemoRsvpPage').then(m => ({ default: m.DemoRsvpPage })));
+const DemoWebsitePage = lazy(() => import('@/pages/DemoWebsitePage').then(m => ({ default: m.DemoWebsitePage })));
 
 // Helper to wrap lazy components with Suspense
 const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType>) => (
@@ -91,6 +92,10 @@ export const router = createBrowserRouter([
   {
     path: '/demo/rsvp',
     element: withSuspense(DemoRsvpPage),
+  },
+  {
+    path: '/demo/website',
+    element: withSuspense(DemoWebsitePage),
   },
   {
     path: '/billing',

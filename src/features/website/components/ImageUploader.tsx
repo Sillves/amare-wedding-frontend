@@ -14,6 +14,8 @@ interface ImageUploaderProps {
   maxSizeMB?: number;
   aspectRatio?: string;
   className?: string;
+  disabled?: boolean;
+  disabledMessage?: string;
 }
 
 export function ImageUploader({
@@ -25,6 +27,8 @@ export function ImageUploader({
   maxSizeMB = 5,
   aspectRatio = '16/9',
   className = '',
+  disabled = false,
+  disabledMessage,
 }: ImageUploaderProps) {
   const { t } = useTranslation('website');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -104,6 +108,18 @@ export function ImageUploader({
             >
               <X className="h-4 w-4" />
             </Button>
+          </div>
+        </div>
+      ) : disabled ? (
+        <div
+          className="border-2 border-dashed rounded-lg p-8 text-center border-muted-foreground/25 bg-muted/50"
+          style={{ aspectRatio }}
+        >
+          <div className="flex flex-col items-center justify-center h-full gap-2">
+            <ImageIcon className="h-8 w-8 text-muted-foreground/50" />
+            <p className="text-sm text-muted-foreground">
+              {disabledMessage || t('upload.disabled')}
+            </p>
           </div>
         </div>
       ) : (

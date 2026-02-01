@@ -162,7 +162,9 @@
     "change": "Change",
     "fileTooLarge": "File is too large (max {{max}}MB)",
     "invalidType": "Invalid file type",
-    "error": "An error occurred while uploading"
+    "error": "An error occurred while uploading",
+    "disabled": "Image upload is not available",
+    "disabledDemo": "Image upload is not available in demo mode. Create an account to upload your own photos!"
   },
   "upgrade": {
     "title": "Upgrade to Access",

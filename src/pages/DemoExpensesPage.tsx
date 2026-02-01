@@ -16,7 +16,7 @@ import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import type { WeddingExpenseDto } from '@/features/expenses/api/expensesApi';
 
 function DemoExpensesContent() {
-  const { t } = useTranslation(['expenses', 'common', 'demo', 'guests', 'events']);
+  const { t } = useTranslation(['expenses', 'common', 'demo', 'guests', 'events', 'website']);
   const navigate = useNavigate();
   const { expenseSummary } = useDemoContext();
 
@@ -120,6 +120,9 @@ function DemoExpensesContent() {
               onClick={() => navigate('/demo/expenses')}
             >
               {t('expenses:title')}
+            </Button>
+            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/website')}>
+              {t('website:title')}
             </Button>
             <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/rsvp')}>
               RSVP
