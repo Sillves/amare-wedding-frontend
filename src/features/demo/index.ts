@@ -1,8 +1,5 @@
-// Data
-export { DEMO_WEDDING, DEMO_WEDDING_PUBLIC } from './data/mockWedding';
-export { DEMO_GUESTS } from './data/mockGuests';
-export { DEMO_EVENTS } from './data/mockEvents';
-export { DEMO_EXPENSES, DEMO_EXPENSE_SUMMARY } from './data/mockExpenses';
+// Data - Localized demo data
+export { getDemoData, DEMO_WEDDING, DEMO_WEDDING_PUBLIC, DEMO_GUESTS, DEMO_EVENTS, DEMO_EXPENSES, DEMO_EXPENSE_SUMMARY } from './data';
 
 // Context
 export { DemoProvider, useDemoContext, useDemoContextOptional } from './context/DemoContext';

@@ -1,9 +1,8 @@
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo, useEffect, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { GuestDto, RsvpStatus, EventDto } from '@/features/weddings/types';
-import type { WeddingExpenseDto, WeddingExpenseSummaryDto, ExpenseCategory } from '@/features/expenses/api/expensesApi';
-import { DEMO_GUESTS } from '../data/mockGuests';
-import { DEMO_EVENTS } from '../data/mockEvents';
-import { DEMO_EXPENSES } from '../data/mockExpenses';
+import type { WeddingExpenseDto, WeddingExpenseSummaryDto } from '@/features/expenses/api/expensesApi';
+import { getDemoData } from '../data';
 
 // Category labels for summary calculation
 const CATEGORY_LABELS: Record<number, string> = {
@@ -29,6 +28,8 @@ interface DemoContextType {
   addEvent: (event: Omit<EventDto, 'id' | 'weddingId'>) => EventDto;
   updateEvent: (eventId: string, updates: Partial<EventDto>) => void;
   deleteEvent: (eventId: string) => void;
+  addGuestsToEvent: (eventId: string, guestIds: string[]) => void;
+  removeGuestsFromEvent: (eventId: string, guestIds: string[]) => void;
 
   // Expenses
   expenses: WeddingExpenseDto[];
@@ -50,11 +51,26 @@ interface DemoProviderProps {
 /**
  * Provider for demo mode local state
  * Manages guests, events, and expenses in memory
+ * Data is localized based on the current language
  */
 export function DemoProvider({ children }: DemoProviderProps) {
-  const [guests, setGuests] = useState<GuestDto[]>(DEMO_GUESTS);
-  const [events, setEvents] = useState<EventDto[]>(DEMO_EVENTS);
-  const [expenses, setExpenses] = useState<WeddingExpenseDto[]>(DEMO_EXPENSES);
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+
+  // Get initial data based on current language
+  const initialData = getDemoData(currentLanguage);
+
+  const [guests, setGuests] = useState<GuestDto[]>(initialData.guests);
+  const [events, setEvents] = useState<EventDto[]>(initialData.events);
+  const [expenses, setExpenses] = useState<WeddingExpenseDto[]>(initialData.expenses);
+
+  // Reset data when language changes
+  useEffect(() => {
+    const data = getDemoData(currentLanguage);
+    setGuests(data.guests);
+    setEvents(data.events);
+    setExpenses(data.expenses);
+  }, [currentLanguage]);
 
   // ==================== GUESTS ====================
 
@@ -116,6 +132,38 @@ export function DemoProvider({ children }: DemoProviderProps) {
     setEvents((prev) => prev.filter((event) => event.id !== eventId));
   }, []);
 
+  const addGuestsToEvent = useCallback((eventId: string, guestIds: string[]) => {
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id !== eventId) return event;
+
+        const existingGuestIds = new Set(event.guestDtos?.map(g => g.id) || []);
+        const newGuestDtos = guests.filter(
+          (g) => guestIds.includes(g.id!) && !existingGuestIds.has(g.id)
+        );
+
+        return {
+          ...event,
+          guestDtos: [...(event.guestDtos || []), ...newGuestDtos],
+        };
+      })
+    );
+  }, [guests]);
+
+  const removeGuestsFromEvent = useCallback((eventId: string, guestIds: string[]) => {
+    const guestIdSet = new Set(guestIds);
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id !== eventId) return event;
+
+        return {
+          ...event,
+          guestDtos: (event.guestDtos || []).filter((g) => !guestIdSet.has(g.id!)),
+        };
+      })
+    );
+  }, []);
+
   // ==================== EXPENSES ====================
 
   const addExpense = useCallback(
@@ -167,10 +215,11 @@ export function DemoProvider({ children }: DemoProviderProps) {
   // ==================== UTILITY ====================
 
   const resetDemo = useCallback(() => {
-    setGuests(DEMO_GUESTS);
-    setEvents(DEMO_EVENTS);
-    setExpenses(DEMO_EXPENSES);
-  }, []);
+    const data = getDemoData(currentLanguage);
+    setGuests(data.guests);
+    setEvents(data.events);
+    setExpenses(data.expenses);
+  }, [currentLanguage]);
 
   const value = useMemo(
     () => ({
@@ -183,6 +232,8 @@ export function DemoProvider({ children }: DemoProviderProps) {
       addEvent,
       updateEvent,
       deleteEvent,
+      addGuestsToEvent,
+      removeGuestsFromEvent,
       expenses,
       expenseSummary,
       addExpense,
@@ -200,6 +251,8 @@ export function DemoProvider({ children }: DemoProviderProps) {
       addEvent,
       updateEvent,
       deleteEvent,
+      addGuestsToEvent,
+      removeGuestsFromEvent,
       expenses,
       expenseSummary,
       addExpense,

@@ -228,7 +228,7 @@ function DemoGuestsContent() {
             <CardTitle>{t('guests:guestList')}</CardTitle>
             <CardDescription>
               {statusFilter
-                ? `Showing ${filteredGuests.length} guests`
+                ? t('guests:showingAllGuests', { count: filteredGuests.length, wedding: 'Emma & James' })
                 : t('guests:guestListDescription', { wedding: 'Emma & James' })}
             </CardDescription>
           </CardHeader>

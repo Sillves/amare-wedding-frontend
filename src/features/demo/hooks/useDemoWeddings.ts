@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { DEMO_WEDDING } from '../data/mockWedding';
+import { useTranslation } from 'react-i18next';
+import { getDemoData } from '../data';
 import type { Wedding } from '@/features/weddings/types';
 
 interface UseDemoWeddingsReturn {
@@ -11,9 +12,11 @@ interface UseDemoWeddingsReturn {
 /**
  * Demo version of useWeddings hook
  * Returns the demo wedding wrapped in an array
+ * Data is localized based on the current language
  */
 export function useDemoWeddings(): UseDemoWeddingsReturn {
-  const data = useMemo(() => [DEMO_WEDDING], []);
+  const { i18n } = useTranslation();
+  const data = useMemo(() => [getDemoData(i18n.language).wedding], [i18n.language]);
 
   return {
     data,
@@ -31,10 +34,14 @@ interface UseDemoWeddingReturn {
 /**
  * Demo version of useWedding hook
  * Returns the demo wedding
+ * Data is localized based on the current language
  */
 export function useDemoWedding(): UseDemoWeddingReturn {
+  const { i18n } = useTranslation();
+  const wedding = useMemo(() => getDemoData(i18n.language).wedding, [i18n.language]);
+
   return {
-    data: DEMO_WEDDING,
+    data: wedding,
     isLoading: false,
     error: null,
   };

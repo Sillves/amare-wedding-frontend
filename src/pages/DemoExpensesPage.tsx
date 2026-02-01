@@ -56,9 +56,9 @@ function DemoExpensesContent() {
   }, [categoryTotals]);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-GB', {
+    return new Intl.NumberFormat('nl-NL', {
       style: 'currency',
-      currency: 'GBP',
+      currency: 'EUR',
     }).format(amount);
   };
 
@@ -222,7 +222,7 @@ function DemoExpensesContent() {
             <CardTitle>{t('expenses:title')}</CardTitle>
             <CardDescription>
               {expenseSummary?.expenses?.length
-                ? `${expenseSummary.expenses.length} expense${expenseSummary.expenses.length !== 1 ? 's' : ''} recorded`
+                ? t('summary.expensesRecorded', { count: expenseSummary.expenses.length })
                 : t('expenses:noExpensesDescription')}
             </CardDescription>
           </CardHeader>

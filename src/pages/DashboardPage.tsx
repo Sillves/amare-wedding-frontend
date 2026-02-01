@@ -272,7 +272,7 @@ export function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t('common:dashboard.quickActions')}</CardTitle>
-              <CardDescription>Common tasks to manage your wedding</CardDescription>
+              <CardDescription>{t('common:dashboard.quickActionsDescription')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <CreateGuestDialog weddingId={wedding?.id || ''}>
@@ -324,8 +324,8 @@ export function DashboardPage() {
               <CardTitle>{t('common:dashboard.upcomingEvents')}</CardTitle>
               <CardDescription>
                 {upcomingEvents.length > 0
-                  ? `Next ${upcomingEvents.length} event${upcomingEvents.length > 1 ? 's' : ''}`
-                  : 'Your event schedule'}
+                  ? t('common:dashboard.nextEvents', { count: upcomingEvents.length })
+                  : t('common:dashboard.eventSchedule')}
               </CardDescription>
             </CardHeader>
             <CardContent>

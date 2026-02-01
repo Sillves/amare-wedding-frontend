@@ -26,7 +26,9 @@
     "byCategory": "By Category",
     "activeCategories": "active categories",
     "checklist": "Budget Checklist",
-    "checklistDescription": "Track your wedding expenses"
+    "checklistDescription": "Track your wedding expenses",
+    "expensesRecorded": "{{count}} expense recorded",
+    "expensesRecorded_plural": "{{count}} expenses recorded"
   },
   "table": {
     "date": "Date",

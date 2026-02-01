@@ -20,20 +20,19 @@ import { Badge } from '@/components/ui/badge';
 import { format, differenceInDays, isToday, parseISO } from 'date-fns';
 import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
-import { DEMO_WEDDING } from '@/features/demo/data/mockWedding';
-import { DEMO_EVENTS } from '@/features/demo/data/mockEvents';
-import { DEMO_EXPENSE_SUMMARY } from '@/features/demo/data/mockExpenses';
+import { getDemoData } from '@/features/demo/data';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { SEO } from '@/shared/components/seo';
 
 function DemoDashboardContent() {
-  const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'demo', 'expenses']);
+  const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'demo', 'expenses']);
   const navigate = useNavigate();
-  const { guests } = useDemoContext();
+  const { guests, events, expenseSummary } = useDemoContext();
 
-  const wedding = DEMO_WEDDING;
-  const events = DEMO_EVENTS;
+  // Get localized demo data
+  const demoData = useMemo(() => getDemoData(i18n.language), [i18n.language]);
+  const wedding = demoData.wedding;
 
   // Calculate wedding countdown
   const weddingCountdown = useMemo(() => {
@@ -87,13 +86,10 @@ function DemoDashboardContent() {
       .slice(0, 3);
   }, [events]);
 
-  // Calculate expense summary
-  const expenseSummary = DEMO_EXPENSE_SUMMARY;
-
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-GB', {
+    return new Intl.NumberFormat('nl-NL', {
       style: 'currency',
-      currency: 'GBP',
+      currency: 'EUR',
     }).format(amount);
   };
 
@@ -314,8 +310,8 @@ function DemoDashboardContent() {
               </CardTitle>
               <CardDescription>
                 {upcomingEvents.length > 0
-                  ? `Next ${upcomingEvents.length} event${upcomingEvents.length > 1 ? 's' : ''}`
-                  : 'Your event schedule'}
+                  ? t('common:dashboard.nextEvents', { count: upcomingEvents.length })
+                  : t('common:dashboard.eventSchedule')}
               </CardDescription>
             </CardHeader>
             <CardContent>

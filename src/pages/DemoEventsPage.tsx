@@ -13,6 +13,7 @@ import {
   DemoEditEventDialog,
   DemoDeleteEventDialog,
 } from '@/features/demo/components/DemoEventDialogs';
+import { DemoManageEventGuestsDialog } from '@/features/demo/components/DemoManageEventGuestsDialog';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import type { EventDto } from '@/features/weddings/types';
@@ -26,6 +27,7 @@ function DemoEventsContent() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [manageGuestsDialogOpen, setManageGuestsDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventDto | null>(null);
 
   // Sort events by start date
@@ -44,8 +46,9 @@ function DemoEventsContent() {
     setDeleteDialogOpen(true);
   };
 
-  const handleManageGuests = () => {
-    // Demo - guest management would open a dialog
+  const handleManageGuests = (event: EventDto) => {
+    setSelectedEvent(event);
+    setManageGuestsDialogOpen(true);
   };
 
   return (
@@ -129,7 +132,7 @@ function DemoEventsContent() {
                 <EventCard
                   key={event.id}
                   event={event}
-                  guestCount={0}
+                  guestCount={event.guestDtos?.length || 0}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
                   onManageGuests={handleManageGuests}
@@ -151,6 +154,11 @@ function DemoEventsContent() {
         event={selectedEvent}
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
+      />
+      <DemoManageEventGuestsDialog
+        event={selectedEvent}
+        open={manageGuestsDialogOpen}
+        onOpenChange={setManageGuestsDialogOpen}
       />
     </div>
   );

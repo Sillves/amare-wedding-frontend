@@ -218,7 +218,7 @@ export function ExpensesPage() {
             <CardTitle>{t('expenses:title')}</CardTitle>
             <CardDescription>
               {summary?.expenses?.length
-                ? `${summary.expenses.length} expense${summary.expenses.length !== 1 ? 's' : ''} recorded`
+                ? t('summary.expensesRecorded', { count: summary.expenses.length })
                 : t('expenses:noExpensesDescription')}
             </CardDescription>
           </CardHeader>

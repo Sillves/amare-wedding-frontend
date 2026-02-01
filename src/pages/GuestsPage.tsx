@@ -307,7 +307,7 @@ export function GuestsPage() {
               {selectedWedding && (
                 <CardDescription>
                   {statusFilter
-                    ? `Showing ${guests.length} ${getFilterLabel()?.toLowerCase()} guest${guests.length !== 1 ? 's' : ''} for ${selectedWedding.title}`
+                    ? t('guests:showingGuests', { count: guests.length, status: getFilterLabel()?.toLowerCase(), wedding: selectedWedding.title })
                     : t('guests:guestListDescription', { wedding: selectedWedding.title })}
                 </CardDescription>
               )}

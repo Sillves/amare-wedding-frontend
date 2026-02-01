@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Heart, Check, X, HelpCircle, ArrowLeft } from 'lucide-react';
@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
-import { DEMO_WEDDING } from '@/features/demo/data/mockWedding';
+import { getDemoData } from '@/features/demo/data';
 import type { RsvpStatus } from '@/features/weddings/types';
 
 function DemoRsvpContent() {
@@ -23,7 +23,9 @@ function DemoRsvpContent() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const wedding = DEMO_WEDDING;
+  // Get localized demo data
+  const demoData = useMemo(() => getDemoData(i18n.language), [i18n.language]);
+  const wedding = demoData.wedding;
 
   const formatDate = (dateString: string) => {
     try {

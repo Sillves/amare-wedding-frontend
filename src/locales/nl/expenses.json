@@ -26,7 +26,9 @@
     "byCategory": "Per Categorie",
     "activeCategories": "actieve categorieën",
     "checklist": "Budget Checklist",
-    "checklistDescription": "Volg je bruiloftskosten"
+    "checklistDescription": "Volg je bruiloftskosten",
+    "expensesRecorded": "{{count}} uitgave geregistreerd",
+    "expensesRecorded_plural": "{{count}} uitgaven geregistreerd"
   },
   "table": {
     "date": "Datum",
