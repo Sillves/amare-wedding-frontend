@@ -24,6 +24,7 @@ import {
 } from './sections';
 import { getDefaultSettings } from '../utils/defaultContent';
 import type { WebsiteContent, WebsiteSettings, WebsiteTemplate } from '../types';
+import { WebsiteTemplateValues } from '../types';
 
 interface WebsiteEditorProps {
   weddingId: string;
@@ -40,7 +41,7 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
 
   const [content, setContent] = useState<WebsiteContent | null>(null);
   const [settings, setSettings] = useState<WebsiteSettings | null>(null);
-  const [template, setTemplate] = useState<WebsiteTemplate>('ElegantClassic');
+  const [template, setTemplate] = useState<WebsiteTemplate>(0); // 0 = ElegantClassic
   const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {

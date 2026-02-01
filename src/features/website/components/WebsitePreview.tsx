@@ -4,12 +4,20 @@ import { Monitor, Tablet, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { WebsiteContent, WebsiteSettings, WebsiteTemplate, EventDto } from '../types';
+import { WebsiteTemplateNames } from '../types';
 import type { EventDto as WeddingEventDto } from '@/features/weddings/types';
 
 // Import templates
 import { ElegantClassicTemplate } from '../templates/ElegantClassic/ElegantClassicTemplate';
 import { ModernMinimalTemplate } from '../templates/ModernMinimal/ModernMinimalTemplate';
 import { RomanticGardenTemplate } from '../templates/RomanticGarden/RomanticGardenTemplate';
+
+// Map template names to components
+const templateComponents = {
+  ElegantClassic: ElegantClassicTemplate,
+  ModernMinimal: ModernMinimalTemplate,
+  RomanticGarden: RomanticGardenTemplate,
+};
 
 interface WebsitePreviewProps {
   template: WebsiteTemplate;
@@ -37,11 +45,9 @@ export function WebsitePreview({
   const { t } = useTranslation('website');
   const [device, setDevice] = useState<DeviceSize>('desktop');
 
-  const TemplateComponent = {
-    ElegantClassic: ElegantClassicTemplate,
-    ModernMinimal: ModernMinimalTemplate,
-    RomanticGarden: RomanticGardenTemplate,
-  }[template];
+  // Convert numeric template value to string name, then get the component
+  const templateName = WebsiteTemplateNames[template] || 'ElegantClassic';
+  const TemplateComponent = templateComponents[templateName as keyof typeof templateComponents];
 
   // Convert wedding events to template EventDto format
   const templateEvents: EventDto[] | undefined = events?.map((event) => ({

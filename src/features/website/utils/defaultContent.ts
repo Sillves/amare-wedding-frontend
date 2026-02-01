@@ -1,4 +1,5 @@
 import type { WebsiteContent, WebsiteSettings, WebsiteTemplate } from '../types';
+import { WebsiteTemplateNames } from '../types';
 
 export function getDefaultContent(
   coupleNames: string,
@@ -70,7 +71,8 @@ export function getDefaultContent(
 }
 
 export function getDefaultSettings(template: WebsiteTemplate): WebsiteSettings {
-  const templateSettings: Record<WebsiteTemplate, WebsiteSettings['templateSettings']> = {
+  // Use string keys for the settings lookup
+  const templateSettings: Record<string, WebsiteSettings['templateSettings']> = {
     ElegantClassic: {
       primaryColor: '#8B7355',
       accentColor: '#D4AF37',
@@ -91,13 +93,17 @@ export function getDefaultSettings(template: WebsiteTemplate): WebsiteSettings {
     },
   };
 
+  // Convert numeric template to string name
+  const templateName = WebsiteTemplateNames[template] || 'ElegantClassic';
+
   return {
-    templateSettings: templateSettings[template],
+    templateSettings: templateSettings[templateName],
   };
 }
 
+// Use string keys for template info (accessed via WebsiteTemplateNames)
 export const TEMPLATE_INFO: Record<
-  WebsiteTemplate,
+  string,
   { name: string; description: string; previewImage: string }
 > = {
   ElegantClassic: {
