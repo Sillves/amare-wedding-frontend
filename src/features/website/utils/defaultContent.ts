@@ -74,10 +74,10 @@ export function getDefaultSettings(template: WebsiteTemplate): WebsiteSettings {
   // Use string keys for the settings lookup
   const templateSettings: Record<string, WebsiteSettings['templateSettings']> = {
     ElegantClassic: {
-      primaryColor: '#8B7355',
-      accentColor: '#D4AF37',
+      primaryColor: '#4A4A4A',
+      accentColor: '#BDB2A7',
       fontFamily: 'serif',
-      backgroundPattern: 'damask',
+      backgroundPattern: 'none',
     },
     ModernMinimal: {
       primaryColor: '#1A1A1A',
@@ -108,7 +108,7 @@ export const TEMPLATE_INFO: Record<
 > = {
   ElegantClassic: {
     name: 'Elegant Classic',
-    description: 'Timeless design with serif fonts, soft neutrals, and gold accents',
+    description: 'Timeless design with serif fonts, champagne tones, and refined charcoal accents',
     previewImage: '/templates/elegant-classic-preview.jpg',
   },
   ModernMinimal: {
