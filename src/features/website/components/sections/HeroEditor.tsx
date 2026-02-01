@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DatePicker } from '@/components/ui/date-time-picker';
 import { ImageUploader } from '../ImageUploader';
 import type { HeroContent } from '../../types';
 
@@ -46,12 +47,11 @@ export function HeroEditor({ weddingId, data, onChange }: HeroEditorProps) {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="date">{t('hero.date')}</Label>
-          <Input
-            id="date"
-            type="date"
-            value={data.date}
-            onChange={(e) => handleChange('date', e.target.value)}
+          <Label>{t('hero.date')}</Label>
+          <DatePicker
+            value={data.date ? new Date(data.date) : undefined}
+            onChange={(date) => handleChange('date', date ? date.toISOString().split('T')[0] : '')}
+            placeholder={t('hero.datePlaceholder')}
           />
         </div>
 

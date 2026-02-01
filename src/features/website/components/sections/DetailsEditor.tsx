@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { DateTimePicker } from '@/components/ui/date-time-picker';
 import type { DetailsContent, VenueDetails } from '../../types';
 
 interface DetailsEditorProps {
@@ -73,10 +74,10 @@ function VenueEditor({ label, data, onChange }: VenueEditorProps) {
 
           <div className="grid gap-2">
             <Label>{t('details.dateTime')}</Label>
-            <Input
-              type="datetime-local"
-              value={data.date ? data.date.slice(0, 16) : ''}
-              onChange={(e) => handleChange('date', e.target.value)}
+            <DateTimePicker
+              value={data.date ? new Date(data.date) : undefined}
+              onChange={(date) => handleChange('date', date ? date.toISOString() : '')}
+              placeholder={t('details.dateTimePlaceholder')}
             />
           </div>
 
