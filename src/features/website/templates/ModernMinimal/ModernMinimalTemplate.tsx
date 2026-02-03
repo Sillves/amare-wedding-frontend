@@ -1,5 +1,13 @@
+import { useTranslation } from 'react-i18next';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './modernMinimal.css';
+
+// Map i18n language codes to locale strings for date formatting
+const localeMap: Record<string, string> = {
+  en: 'en-US',
+  nl: 'nl-NL',
+  fr: 'fr-FR',
+};
 
 interface ModernMinimalTemplateProps {
   content: WebsiteContent;
@@ -35,19 +43,22 @@ export function ModernMinimalTemplate({
   weddingSlug,
   events,
 }: ModernMinimalTemplateProps) {
+  const { i18n } = useTranslation();
+  const locale = localeMap[i18n.language] || 'en-US';
+
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
 
   const formatDate = (dateString: string, style: 'full' | 'short' = 'full') => {
     const date = new Date(dateString);
     if (style === 'short') {
-      return date.toLocaleDateString('en-US', {
+      return date.toLocaleDateString(locale, {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
       });
     }
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(locale, {
       month: 'long',
       day: 'numeric',
       year: 'numeric',
@@ -56,7 +67,7 @@ export function ModernMinimalTemplate({
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
+    return date.toLocaleTimeString(locale, {
       hour: 'numeric',
       minute: '2-digit',
     });

@@ -1,5 +1,13 @@
+import { useTranslation } from 'react-i18next';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './romanticGarden.css';
+
+// Map i18n language codes to locale strings for date formatting
+const localeMap: Record<string, string> = {
+  en: 'en-US',
+  nl: 'nl-NL',
+  fr: 'fr-FR',
+};
 
 interface RomanticGardenTemplateProps {
   content: WebsiteContent;
@@ -120,12 +128,15 @@ export function RomanticGardenTemplate({
   weddingSlug,
   events,
 }: RomanticGardenTemplateProps) {
+  const { i18n } = useTranslation();
+  const locale = localeMap[i18n.language] || 'en-US';
+
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(locale, {
       weekday: 'long',
       month: 'long',
       day: 'numeric',
@@ -135,7 +146,7 @@ export function RomanticGardenTemplate({
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
+    return date.toLocaleTimeString(locale, {
       hour: 'numeric',
       minute: '2-digit',
     });

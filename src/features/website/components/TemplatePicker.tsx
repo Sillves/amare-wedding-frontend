@@ -62,8 +62,6 @@ const ElegantClassicPreview = () => (
 // Modern Minimal Preview - Clean contemporary design
 const ModernMinimalPreview = () => (
   <div className="h-full w-full bg-white flex flex-col items-center justify-center p-4 relative">
-    {/* Subtle border frame */}
-    <div className="absolute inset-3 border border-[#e5e5e5]" />
 
     {/* Label */}
     <span className="text-[8px] tracking-[0.3em] text-[#6b6b6b] uppercase mb-2">
