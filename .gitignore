@@ -48,3 +48,7 @@ build/
 
 # Vite
 .vite/
+.playwright-report/
+playwright-report/
+playwright-report/index.html
+test-results/.last-run.json

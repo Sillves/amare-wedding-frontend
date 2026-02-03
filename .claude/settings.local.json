@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npx tailwindcss init -p)"
+      "Bash(npx tailwindcss init -p)",
+      "Bash(claude mcp:*)",
+      "Bash(claude config:*)",
+      "mcp__postgres__query",
+      "mcp__memory__create_entities",
+      "Bash(dir:*)",
+      "Bash(npx playwright install)",
+      "mcp__ide__getDiagnostics",
+      "Bash(curl:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
