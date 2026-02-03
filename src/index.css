@@ -237,21 +237,15 @@
   }
 }
 
-/* Font size accessibility scaling */
+/* Font size accessibility scaling - applied to html element */
 @layer base {
-  /* Large text scale - 112.5% */
-  .text-scale-lg {
+  /* Large text scale - 112.5% base font */
+  html.text-scale-lg {
     font-size: 112.5%;
   }
-  .text-scale-lg body {
-    font-size: 1.125rem;
-  }
 
-  /* Extra large text scale - 125% */
-  .text-scale-xl {
+  /* Extra large text scale - 125% base font */
+  html.text-scale-xl {
     font-size: 125%;
-  }
-  .text-scale-xl body {
-    font-size: 1.25rem;
   }
 }

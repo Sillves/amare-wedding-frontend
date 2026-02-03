@@ -83,8 +83,15 @@ function ProgressRing({ progress, size = 120, strokeWidth = 8 }: { progress: num
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="relative" style={{ width: size, height: size }}>
-      <svg className="transform -rotate-90" width={size} height={size}>
+    <div
+      className="relative"
+      style={{ width: size, height: size }}
+      role="progressbar"
+      aria-valuenow={progress}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
+      <svg className="transform -rotate-90" width={size} height={size} aria-hidden="true">
         {/* Background circle */}
         <circle
           cx={size / 2}
@@ -128,7 +135,7 @@ function isValidWeddingDate(dateString: string | null | undefined): boolean {
 }
 
 export function DashboardPage() {
-  const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing']);
+  const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing', 'expenses', 'website']);
   const { user } = useAuth();
   const logout = useLogout();
   const navigate = useNavigate();
