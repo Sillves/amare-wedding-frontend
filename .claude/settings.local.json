@@ -1,18 +1,22 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm install:*)",
-      "Bash(npx tailwindcss init -p)",
-      "Bash(claude mcp:*)",
-      "Bash(claude config:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(dir:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(sleep:*)",
+      "Bash(curl:*)",
+      "Bash(claude:*)",
       "mcp__postgres__query",
       "mcp__memory__create_entities",
-      "Bash(dir:*)",
-      "Bash(npx playwright install)",
       "mcp__ide__getDiagnostics",
-      "Bash(curl:*)",
-      "Bash(npx playwright test:*)",
-      "Bash(git commit:*)"
+      "mcp__ide__executeCode"
     ]
   }
 }
