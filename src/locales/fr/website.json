@@ -29,7 +29,18 @@
     "tagline": "Nous allons nous marier",
     "and": "et",
     "weddingOf": "Le Mariage De",
-    "together": "Avec leurs familles"
+    "together": "Avec leurs familles",
+    "viewOnMap": "Voir sur la Carte",
+    "getDirections": "Itinéraire",
+    "viewLocation": "Voir l'Emplacement",
+    "respondBy": "Veuillez répondre avant le",
+    "kindlyRespondBy": "Merci de répondre avant le",
+    "rsvpNow": "RSVP Maintenant",
+    "respond": "Répondre",
+    "rsvpButton": "RSVP",
+    "ceremonyLabel": "Cérémonie",
+    "receptionLabel": "Réception",
+    "at": "à"
   },
   "templates": {
     "title": "Choisir un Modèle",

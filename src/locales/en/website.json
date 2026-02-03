@@ -29,7 +29,18 @@
     "tagline": "We're getting married",
     "and": "and",
     "weddingOf": "The Wedding Of",
-    "together": "Together with their families"
+    "together": "Together with their families",
+    "viewOnMap": "View on Map",
+    "getDirections": "Get Directions",
+    "viewLocation": "View Location",
+    "respondBy": "Please respond by",
+    "kindlyRespondBy": "Kindly respond by",
+    "rsvpNow": "RSVP Now",
+    "respond": "Respond",
+    "rsvpButton": "RSVP",
+    "ceremonyLabel": "Ceremony",
+    "receptionLabel": "Reception",
+    "at": "at"
   },
   "templates": {
     "title": "Choose Template",

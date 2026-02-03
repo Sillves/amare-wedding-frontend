@@ -18,15 +18,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, differenceInDays, isToday, parseISO } from 'date-fns';
-import { enUS, nl, fr } from 'date-fns/locale';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
-
-// Map i18n language codes to date-fns locales
-const localeMap: Record<string, typeof enUS> = {
-  en: enUS,
-  nl: nl,
-  fr: fr,
-};
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
 import { getDemoData } from '@/features/demo/data';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
@@ -34,7 +27,7 @@ import { SEO } from '@/shared/components/seo';
 
 function DemoDashboardContent() {
   const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'demo', 'expenses', 'website']);
-  const locale = localeMap[i18n.language] || enUS;
+  const locale = getDateFnsLocale(i18n.language);
   const navigate = useNavigate();
   const { guests, events, expenseSummary } = useDemoContext();
 

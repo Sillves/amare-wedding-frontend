@@ -29,7 +29,18 @@
     "tagline": "Wij gaan trouwen",
     "and": "en",
     "weddingOf": "De Bruiloft Van",
-    "together": "Samen met hun families"
+    "together": "Samen met hun families",
+    "viewOnMap": "Bekijk op Kaart",
+    "getDirections": "Routebeschrijving",
+    "viewLocation": "Bekijk Locatie",
+    "respondBy": "Graag reactie voor",
+    "kindlyRespondBy": "Graag reactie voor",
+    "rsvpNow": "RSVP Nu",
+    "respond": "Reageer",
+    "rsvpButton": "RSVP",
+    "ceremonyLabel": "Ceremonie",
+    "receptionLabel": "Receptie",
+    "at": "om"
   },
   "templates": {
     "title": "Kies Sjabloon",

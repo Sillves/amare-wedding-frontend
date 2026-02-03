@@ -1,13 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { getIntlLocale } from '@/lib/dateLocale';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './modernMinimal.css';
-
-// Map i18n language codes to locale strings for date formatting
-const localeMap: Record<string, string> = {
-  en: 'en-US',
-  nl: 'nl-NL',
-  fr: 'fr-FR',
-};
 
 interface ModernMinimalTemplateProps {
   content: WebsiteContent;
@@ -44,7 +38,7 @@ export function ModernMinimalTemplate({
   events,
 }: ModernMinimalTemplateProps) {
   const { t, i18n } = useTranslation('website');
-  const locale = localeMap[i18n.language] || 'en-US';
+  const locale = getIntlLocale(i18n.language);
 
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
@@ -132,7 +126,7 @@ export function ModernMinimalTemplate({
             <span className="mm-date-separator" />
             <div className="mm-date-details">
               <span className="mm-date-month">
-                {new Date(hero.date).toLocaleDateString('en-US', { month: 'long' })}
+                {new Date(hero.date).toLocaleDateString(locale, { month: 'long' })}
               </span>
               <span className="mm-date-year">
                 {new Date(hero.date).getFullYear()}
@@ -207,7 +201,7 @@ export function ModernMinimalTemplate({
           <div className="mm-details-container">
             {details.ceremony.enabled && (
               <div className="mm-detail-block">
-                <span className="mm-detail-label">Ceremony</span>
+                <span className="mm-detail-label">{t('preview.ceremonyLabel')}</span>
                 <h3>{details.ceremony.title}</h3>
                 <HorizontalLine />
                 <div className="mm-detail-info">
@@ -225,7 +219,7 @@ export function ModernMinimalTemplate({
                     rel="noopener noreferrer"
                     className="mm-link"
                   >
-                    Get Directions
+                    {t('preview.getDirections')}
                     <span className="mm-link-arrow">→</span>
                   </a>
                 )}
@@ -234,7 +228,7 @@ export function ModernMinimalTemplate({
 
             {details.reception.enabled && (
               <div className="mm-detail-block">
-                <span className="mm-detail-label">Reception</span>
+                <span className="mm-detail-label">{t('preview.receptionLabel')}</span>
                 <h3>{details.reception.title}</h3>
                 <HorizontalLine />
                 <div className="mm-detail-info">
@@ -252,7 +246,7 @@ export function ModernMinimalTemplate({
                     rel="noopener noreferrer"
                     className="mm-link"
                   >
-                    Get Directions
+                    {t('preview.getDirections')}
                     <span className="mm-link-arrow">→</span>
                   </a>
                 )}
@@ -317,11 +311,11 @@ export function ModernMinimalTemplate({
             <p>{rsvp.description}</p>
             {rsvp.deadline && (
               <p className="mm-deadline">
-                Kindly respond by {formatDate(rsvp.deadline)}
+                {t('preview.kindlyRespondBy')} {formatDate(rsvp.deadline)}
               </p>
             )}
             <a href={`/rsvp/${weddingSlug}`} className="mm-button">
-              Respond
+              {t('preview.respond')}
             </a>
           </div>
         </section>

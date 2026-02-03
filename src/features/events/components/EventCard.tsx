@@ -1,14 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
-import { enUS, nl, fr } from 'date-fns/locale';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { Calendar, MapPin, Clock, Users, Pencil, Trash2, UserPlus, MoreVertical } from 'lucide-react';
-
-// Map i18n language codes to date-fns locales
-const localeMap: Record<string, typeof enUS> = {
-  en: enUS,
-  nl: nl,
-  fr: fr,
-};
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -30,7 +23,7 @@ interface EventCardProps {
 
 export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGuests }: EventCardProps) {
   const { t, i18n } = useTranslation('events');
-  const locale = localeMap[i18n.language] || enUS;
+  const locale = getDateFnsLocale(i18n.language);
 
   const formatDateTime = (dateString: string) => {
     try {

@@ -4,15 +4,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
-import { enUS, nl, fr } from 'date-fns/locale';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { CalendarIcon } from 'lucide-react';
-
-// Map i18n language codes to date-fns locales
-const localeMap: Record<string, typeof enUS> = {
-  en: enUS,
-  nl: nl,
-  fr: fr,
-};
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -74,7 +67,7 @@ export function ExpenseDialog({
   onOpenChange,
 }: ExpenseDialogProps) {
   const { t, i18n } = useTranslation(['expenses', 'common']);
-  const locale = localeMap[i18n.language] || enUS;
+  const locale = getDateFnsLocale(i18n.language);
   const createExpense = useCreateExpense();
   const updateExpense = useUpdateExpense();
 

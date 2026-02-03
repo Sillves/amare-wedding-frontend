@@ -36,14 +36,7 @@ import { CreateEventDialog } from '@/features/events/components/CreateEventDialo
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { format, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
-import { enUS, nl, fr } from 'date-fns/locale';
-
-// Map i18n language codes to date-fns locales
-const localeMap: Record<string, typeof enUS> = {
-  en: enUS,
-  nl: nl,
-  fr: fr,
-};
+import { getDateFnsLocale } from '@/lib/dateLocale';
 
 /**
  * Floating decorative elements for premium dashboard aesthetic
@@ -143,7 +136,7 @@ function isValidWeddingDate(dateString: string | null | undefined): boolean {
 
 export function DashboardPage() {
   const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing', 'expenses', 'website']);
-  const locale = localeMap[i18n.language] || enUS;
+  const locale = getDateFnsLocale(i18n.language);
   const { user } = useAuth();
   const logout = useLogout();
   const navigate = useNavigate();

@@ -1,13 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { getIntlLocale } from '@/lib/dateLocale';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './elegantClassic.css';
-
-// Map i18n language codes to locale strings for date formatting
-const localeMap: Record<string, string> = {
-  en: 'en-US',
-  nl: 'nl-NL',
-  fr: 'fr-FR',
-};
 
 interface ElegantClassicTemplateProps {
   content: WebsiteContent;
@@ -138,7 +132,7 @@ export function ElegantClassicTemplate({
   events,
 }: ElegantClassicTemplateProps) {
   const { t, i18n } = useTranslation('website');
-  const locale = localeMap[i18n.language] || 'en-US';
+  const locale = getIntlLocale(i18n.language);
 
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
@@ -289,7 +283,7 @@ export function ElegantClassicTemplate({
                     rel="noopener noreferrer"
                     className="ec-map-link"
                   >
-                    View on Map
+                    {t('preview.viewOnMap')}
                   </a>
                 )}
               </div>
@@ -314,7 +308,7 @@ export function ElegantClassicTemplate({
                     rel="noopener noreferrer"
                     className="ec-map-link"
                   >
-                    View on Map
+                    {t('preview.viewOnMap')}
                   </a>
                 )}
               </div>
@@ -335,7 +329,7 @@ export function ElegantClassicTemplate({
                 <h3>{event.name}</h3>
                 <p className="ec-event-location">{event.location}</p>
                 <p className="ec-event-time">
-                  {formatDate(event.startDate)} at {formatTime(event.startDate)}
+                  {formatDate(event.startDate)} {t('preview.at')} {formatTime(event.startDate)}
                 </p>
                 {event.description && <p>{event.description}</p>}
               </div>
@@ -370,11 +364,11 @@ export function ElegantClassicTemplate({
           <p className="ec-rsvp-description">{rsvp.description}</p>
           {rsvp.deadline && (
             <p className="ec-rsvp-deadline">
-              Please respond by {formatDate(rsvp.deadline)}
+              {t('preview.respondBy')} {formatDate(rsvp.deadline)}
             </p>
           )}
           <a href={`/rsvp/${weddingSlug}`} className="ec-rsvp-button">
-            RSVP Now
+            {t('preview.rsvpNow')}
           </a>
         </section>
       )}

@@ -1,13 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { getIntlLocale } from '@/lib/dateLocale';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './romanticGarden.css';
-
-// Map i18n language codes to locale strings for date formatting
-const localeMap: Record<string, string> = {
-  en: 'en-US',
-  nl: 'nl-NL',
-  fr: 'fr-FR',
-};
 
 interface RomanticGardenTemplateProps {
   content: WebsiteContent;
@@ -129,7 +123,7 @@ export function RomanticGardenTemplate({
   events,
 }: RomanticGardenTemplateProps) {
   const { t, i18n } = useTranslation('website');
-  const locale = localeMap[i18n.language] || 'en-US';
+  const locale = getIntlLocale(i18n.language);
 
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
@@ -276,7 +270,7 @@ export function RomanticGardenTemplate({
                     rel="noopener noreferrer"
                     className="rg-map-link"
                   >
-                    View Location
+                    {t('preview.viewLocation')}
                   </a>
                 )}
               </div>
@@ -302,7 +296,7 @@ export function RomanticGardenTemplate({
                     rel="noopener noreferrer"
                     className="rg-map-link"
                   >
-                    View Location
+                    {t('preview.viewLocation')}
                   </a>
                 )}
               </div>
@@ -326,7 +320,7 @@ export function RomanticGardenTemplate({
                 <h3>{event.name}</h3>
                 <p className="rg-event-location">{event.location}</p>
                 <p className="rg-event-time">
-                  {formatDate(event.startDate)} at {formatTime(event.startDate)}
+                  {formatDate(event.startDate)} {t('preview.at')} {formatTime(event.startDate)}
                 </p>
                 {event.description && <p>{event.description}</p>}
               </div>
@@ -369,11 +363,11 @@ export function RomanticGardenTemplate({
             <p className="rg-rsvp-description">{rsvp.description}</p>
             {rsvp.deadline && (
               <p className="rg-rsvp-deadline">
-                Please respond by {formatDate(rsvp.deadline)}
+                {t('preview.respondBy')} {formatDate(rsvp.deadline)}
               </p>
             )}
             <a href={`/rsvp/${weddingSlug}`} className="rg-rsvp-button">
-              <span>RSVP</span>
+              <span>{t('preview.rsvpButton')}</span>
             </a>
           </div>
         </section>
