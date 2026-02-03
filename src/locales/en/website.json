@@ -25,7 +25,11 @@
     "viewLive": "View Live"
   },
   "preview": {
-    "title": "Preview"
+    "title": "Preview",
+    "tagline": "We're getting married",
+    "and": "and",
+    "weddingOf": "The Wedding Of",
+    "together": "Together with their families"
   },
   "templates": {
     "title": "Choose Template",

@@ -11,11 +11,26 @@ interface TemplatePickerProps {
   onSelect: (template: WebsiteTemplate) => void;
 }
 
+// Map i18n language codes to locale strings for date formatting
+const localeMap: Record<string, string> = {
+  en: 'en-US',
+  nl: 'nl-NL',
+  fr: 'fr-FR',
+};
+
+// Sample date for previews (June 15, 2026)
+const SAMPLE_DATE = new Date(2026, 5, 15);
+
+interface PreviewProps {
+  locale: string;
+  t: (key: string) => string;
+}
+
 // Template values as numbers (matching backend enum)
 const templates: WebsiteTemplate[] = [0, 1, 2]; // ElegantClassic, ModernMinimal, RomanticGarden
 
 // Elegant Classic Preview - Sophisticated serif design with initials
-const ElegantClassicPreview = () => (
+const ElegantClassicPreview = ({ locale, t }: PreviewProps) => (
   <div className="h-full w-full bg-[#faf9f7] flex flex-col items-center justify-center p-4 relative overflow-hidden">
     {/* Subtle decorative lines */}
     <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#c9b8a5]/40 to-transparent" />
@@ -33,7 +48,7 @@ const ElegantClassicPreview = () => (
       className="text-[#6a6a6a] text-sm italic mb-2"
       style={{ fontFamily: "'Pinyon Script', cursive" }}
     >
-      We're getting married
+      {t('preview.tagline')}
     </p>
 
     {/* Names */}
@@ -45,7 +60,7 @@ const ElegantClassicPreview = () => (
         className="block text-xs text-[#4a4a4a] my-0.5 italic"
         style={{ fontFamily: "'Pinyon Script', cursive" }}
       >
-        and
+        {t('preview.and')}
       </span>
       <span className="font-serif text-xs tracking-[0.2em] text-[#4a4a4a] uppercase">
         James
@@ -54,18 +69,18 @@ const ElegantClassicPreview = () => (
 
     {/* Date */}
     <p className="text-[#6a6a6a] text-[10px] tracking-[0.15em] mt-2 uppercase">
-      June 15, 2026
+      {SAMPLE_DATE.toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' })}
     </p>
   </div>
 );
 
 // Modern Minimal Preview - Clean contemporary design
-const ModernMinimalPreview = () => (
+const ModernMinimalPreview = ({ locale, t }: PreviewProps) => (
   <div className="h-full w-full bg-white flex flex-col items-center justify-center p-4 relative">
 
     {/* Label */}
     <span className="text-[8px] tracking-[0.3em] text-[#6b6b6b] uppercase mb-2">
-      The Wedding Of
+      {t('preview.weddingOf')}
     </span>
 
     {/* Names with ampersand */}
@@ -91,19 +106,21 @@ const ModernMinimalPreview = () => (
     {/* Date display */}
     <div className="flex items-center gap-2">
       <span className="font-serif text-2xl text-[#1a1a1a]" style={{ fontFamily: "'Playfair Display', serif" }}>
-        15
+        {SAMPLE_DATE.getDate()}
       </span>
       <div className="w-px h-6 bg-[#c4b5a0]" />
       <div className="text-left">
-        <span className="block text-[8px] tracking-[0.15em] text-[#1a1a1a] uppercase">June</span>
-        <span className="block text-[7px] tracking-[0.1em] text-[#6b6b6b]">2026</span>
+        <span className="block text-[8px] tracking-[0.15em] text-[#1a1a1a] uppercase">
+          {SAMPLE_DATE.toLocaleDateString(locale, { month: 'long' })}
+        </span>
+        <span className="block text-[7px] tracking-[0.1em] text-[#6b6b6b]">{SAMPLE_DATE.getFullYear()}</span>
       </div>
     </div>
   </div>
 );
 
 // Romantic Garden Preview - Whimsical floral design
-const RomanticGardenPreview = () => (
+const RomanticGardenPreview = ({ locale, t }: PreviewProps) => (
   <div className="h-full w-full bg-[#fdfbf9] flex flex-col items-center justify-center p-4 relative overflow-hidden">
     {/* Corner floral hints */}
     <div className="absolute -top-2 -left-2 w-12 h-12 opacity-30">
@@ -131,7 +148,7 @@ const RomanticGardenPreview = () => (
 
     {/* Together text */}
     <p className="text-[8px] text-[#8a7f74] italic mb-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-      Together with their families
+      {t('preview.together')}
     </p>
 
     {/* Names in script */}
@@ -149,7 +166,7 @@ const RomanticGardenPreview = () => (
         <path d="M8 8c-3-4-1-8-1-8s2 2 4 3c-3 0-3-2-3-2z" fill="#8fa882" opacity="0.7" />
       </svg>
       <span className="text-[10px] text-[#5a4f46]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-        June 15, 2026
+        {SAMPLE_DATE.toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' })}
       </span>
       <svg viewBox="0 0 20 15" className="w-4 h-3 scale-x-[-1]">
         <path d="M2 12 Q8 8 15 3" fill="none" stroke="#8fa882" strokeWidth="0.8" />
@@ -167,14 +184,15 @@ const RomanticGardenPreview = () => (
   </div>
 );
 
-const templatePreviews: Record<WebsiteTemplate, React.FC> = {
+const templatePreviews: Record<WebsiteTemplate, React.FC<PreviewProps>> = {
   0: ElegantClassicPreview,
   1: ModernMinimalPreview,
   2: RomanticGardenPreview,
 };
 
 export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
-  const { t } = useTranslation('website');
+  const { t, i18n } = useTranslation('website');
+  const locale = localeMap[i18n.language] || 'en-US';
 
   return (
     <div className="space-y-4">
@@ -201,7 +219,7 @@ export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
               <CardContent className="p-0">
                 {/* Template preview */}
                 <div className="h-44 relative">
-                  <PreviewComponent />
+                  <PreviewComponent locale={locale} t={t} />
 
                   {isSelected && (
                     <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-1 shadow-md">

@@ -25,7 +25,11 @@
     "viewLive": "Bekijk Live"
   },
   "preview": {
-    "title": "Voorbeeld"
+    "title": "Voorbeeld",
+    "tagline": "Wij gaan trouwen",
+    "and": "en",
+    "weddingOf": "De Bruiloft Van",
+    "together": "Samen met hun families"
   },
   "templates": {
     "title": "Kies Sjabloon",

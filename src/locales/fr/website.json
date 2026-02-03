@@ -25,7 +25,11 @@
     "viewLive": "Voir en direct"
   },
   "preview": {
-    "title": "Aperçu"
+    "title": "Aperçu",
+    "tagline": "Nous allons nous marier",
+    "and": "et",
+    "weddingOf": "Le Mariage De",
+    "together": "Avec leurs familles"
   },
   "templates": {
     "title": "Choisir un Modèle",
