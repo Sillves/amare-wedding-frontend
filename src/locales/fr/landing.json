@@ -1,12 +1,39 @@
 {
   "hero": {
+    "badge": "La Plateforme #1 de Planification de Mariage",
     "headline": "Planifiez Votre Mariage Parfait",
     "subheadline": "La plateforme tout-en-un de planification de mariage qui aide les couples à gérer les invités, suivre les RSVP et organiser chaque beau moment.",
+    "socialProof": "couples planifient leur jour parfait",
+    "socialProofCount": "500+",
     "cta": {
       "getStarted": "Commencer Gratuitement",
       "viewDemo": "Voir la Démo",
       "viewPricing": "Voir les Tarifs"
     }
+  },
+  "testimonials": {
+    "badge": "Histoires d'Amour",
+    "title": "Ce que Disent les Couples",
+    "testimonial1": {
+      "quote": "Amare a rendu la planification de notre mariage tellement plus facile. La gestion des invites seule nous a fait gagner des heures!",
+      "author": "Emma & David",
+      "location": "Amsterdam"
+    },
+    "testimonial2": {
+      "quote": "Enfin un planificateur de mariage qui fonctionne. Simple, beau et exactement ce dont nous avions besoin.",
+      "author": "Sophie & Thomas",
+      "location": "Rotterdam"
+    },
+    "testimonial3": {
+      "quote": "La fonction de suivi RSVP est brillante. Nous savions toujours exactement qui venait.",
+      "author": "Lisa & Mark",
+      "location": "Utrecht"
+    }
+  },
+  "trust": {
+    "free": "Gratuit pour commencer",
+    "noCard": "Pas de carte de crédit requise",
+    "cancel": "Annulez à tout moment"
   },
   "features": {
     "title": "Tout ce dont vous avez besoin pour votre jour spécial",

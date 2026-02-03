@@ -1,12 +1,39 @@
 {
   "hero": {
+    "badge": "The #1 Wedding Planning Platform",
     "headline": "Plan Your Perfect Wedding",
     "subheadline": "The all-in-one wedding planning platform that helps couples manage guests, track RSVPs, and organize every beautiful moment.",
+    "socialProof": "couples planning their perfect day",
+    "socialProofCount": "500+",
     "cta": {
       "getStarted": "Get Started Free",
       "viewDemo": "View Demo",
       "viewPricing": "View Pricing"
     }
+  },
+  "testimonials": {
+    "badge": "Love Stories",
+    "title": "What Couples Say",
+    "testimonial1": {
+      "quote": "Amare made our wedding planning so much easier. The guest management alone saved us countless hours!",
+      "author": "Emma & David",
+      "location": "Amsterdam"
+    },
+    "testimonial2": {
+      "quote": "Finally a wedding planner that just works. Simple, beautiful, and exactly what we needed.",
+      "author": "Sophie & Thomas",
+      "location": "Rotterdam"
+    },
+    "testimonial3": {
+      "quote": "The RSVP tracking feature is brilliant. We always knew exactly who was coming.",
+      "author": "Lisa & Mark",
+      "location": "Utrecht"
+    }
+  },
+  "trust": {
+    "free": "Free to start",
+    "noCard": "No credit card required",
+    "cancel": "Cancel anytime"
   },
   "features": {
     "title": "Everything you need for your special day",

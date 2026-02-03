@@ -1,12 +1,39 @@
 {
   "hero": {
+    "badge": "Het #1 Bruiloftsplanning Platform",
     "headline": "Plan Jullie Perfecte Bruiloft",
     "subheadline": "Het alles-in-één platform voor bruiloftsplanning dat koppels helpt bij het beheren van gasten, RSVP's bijhouden en elk mooi moment organiseren.",
+    "socialProof": "koppels plannen hun perfecte dag",
+    "socialProofCount": "500+",
     "cta": {
       "getStarted": "Gratis Beginnen",
       "viewDemo": "Bekijk Demo",
       "viewPricing": "Bekijk Prijzen"
     }
+  },
+  "testimonials": {
+    "badge": "Liefdesverhalen",
+    "title": "Wat Koppels Zeggen",
+    "testimonial1": {
+      "quote": "Amare heeft het plannen van onze bruiloft zoveel makkelijker gemaakt. Alleen al het gastenbeheer heeft ons talloze uren bespaard!",
+      "author": "Emma & David",
+      "location": "Amsterdam"
+    },
+    "testimonial2": {
+      "quote": "Eindelijk een bruiloftsplanner die gewoon werkt. Simpel, mooi en precies wat we nodig hadden.",
+      "author": "Sophie & Thomas",
+      "location": "Rotterdam"
+    },
+    "testimonial3": {
+      "quote": "De RSVP-tracking functie is briljant. We wisten altijd precies wie er zou komen.",
+      "author": "Lisa & Mark",
+      "location": "Utrecht"
+    }
+  },
+  "trust": {
+    "free": "Gratis starten",
+    "noCard": "Geen creditcard nodig",
+    "cancel": "Altijd opzegbaar"
   },
   "features": {
     "title": "Alles wat je nodig hebt voor jullie speciale dag",
