@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Users, UserCheck, UserX, Clock, X } from 'lucide-react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { ArrowLeft, Users, UserCheck, UserX, Clock, X, Heart, Sparkles, HelpCircle } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useGuests, useSendGuestInvitations } from '@/features/guests/hooks/useGuests';
@@ -15,7 +15,43 @@ import { EditGuestDialog } from '@/features/guests/components/EditGuestDialog';
 import { DeleteGuestDialog } from '@/features/guests/components/DeleteGuestDialog';
 import { SendInvitationDialog } from '@/features/guests/components/SendInvitationDialog';
 import { BulkInvitationDialog } from '@/features/guests/components/BulkInvitationDialog';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import type { GuestDto } from '@/features/weddings/types';
+
+/**
+ * Floating decorative elements for premium aesthetic
+ */
+function FloatingElements() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Floating hearts */}
+      <div className="absolute top-[15%] left-[8%] animate-float-slow opacity-15">
+        <Heart className="h-5 w-5 text-primary fill-primary" />
+      </div>
+      <div className="absolute top-[25%] right-[5%] animate-float-medium opacity-10">
+        <Heart className="h-4 w-4 text-primary fill-primary" />
+      </div>
+      <div className="absolute bottom-[30%] left-[15%] animate-float-fast opacity-10">
+        <Heart className="h-6 w-6 text-primary fill-primary" />
+      </div>
+
+      {/* Sparkles */}
+      <div className="absolute top-[20%] right-[15%] animate-pulse-slow opacity-20">
+        <Sparkles className="h-4 w-4 text-amber-400" />
+      </div>
+      <div className="absolute bottom-[25%] left-[20%] animate-pulse-medium opacity-15">
+        <Sparkles className="h-3 w-3 text-amber-400" />
+      </div>
+
+      {/* Decorative rings */}
+      <div className="absolute top-[35%] right-[3%] animate-spin-very-slow opacity-10">
+        <div className="w-10 h-10 rounded-full border-2 border-primary" />
+      </div>
+    </div>
+  );
+}
 
 export function GuestsPage() {
   const { t } = useTranslation(['guests', 'auth', 'common', 'weddings']);
@@ -80,10 +116,6 @@ export function GuestsPage() {
     };
   }, [allGuests]);
 
-  const handleWeddingChange = (weddingId: string) => {
-    setSearchParams({ weddingId });
-  };
-
   const clearFilter = () => {
     const params = new URLSearchParams(searchParams);
     params.delete('status');
@@ -145,18 +177,30 @@ export function GuestsPage() {
 
   if (weddingsLoading) {
     return (
-      <div className="min-h-screen bg-muted/40 flex items-center justify-center">
-        <p className="text-muted-foreground">{t('common:loading')}</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4 animate-fade-in">
+          <Heart className="h-12 w-12 text-primary mx-auto animate-pulse" />
+          <p className="text-muted-foreground font-serif">{t('common:loading')}</p>
+        </div>
       </div>
     );
   }
 
   if (!weddingIdFromUrl && (!weddings || weddings.length === 0)) {
     return (
-      <div className="min-h-screen bg-muted/40">
-        <header className="border-b bg-background">
+      <div className="min-h-screen bg-background relative">
+        {/* Background elements */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-blob" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-blob animation-delay-2000" />
+        </div>
+
+        <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <h1 className="text-xl font-bold">{t('common:appName')}</h1>
+            <Link to="/dashboard" className="flex items-center gap-2 group">
+              <Heart className="h-6 w-6 text-primary fill-primary transition-transform group-hover:scale-110" />
+              <span className="text-2xl font-script text-primary">{t('common:appName')}</span>
+            </Link>
             <div className="flex items-center gap-2 sm:gap-4">
               <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
               <Button variant="outline" size="sm" onClick={logout}>
@@ -165,10 +209,12 @@ export function GuestsPage() {
             </div>
           </div>
         </header>
-        <main className="container mx-auto p-4">
-          <div className="rounded-lg border border-dashed p-8 text-center">
+        <main className="container mx-auto p-4 relative">
+          <div className="rounded-2xl border border-dashed border-border/50 p-8 text-center bg-card/80 backdrop-blur-sm">
             <p className="mb-4 text-muted-foreground">{t('weddings:noWeddings')}</p>
-            <Button onClick={() => navigate('/dashboard')}>{t('weddings:createWedding')}</Button>
+            <Button onClick={() => navigate('/dashboard')} className="rounded-xl shadow-lg shadow-primary/25">
+              {t('weddings:createWedding')}
+            </Button>
           </div>
         </main>
       </div>
@@ -176,32 +222,55 @@ export function GuestsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-muted/40">
-      <header className="border-b bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Animated background gradients */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-blob" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-blob animation-delay-4000" />
+      </div>
+
+      <FloatingElements />
+
+      {/* Premium Header */}
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/dashboard')}
+              className="rounded-xl hover:bg-primary/10"
+            >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-bold">{t('common:appName')}</h1>
+            <Link to="/dashboard" className="flex items-center gap-2 group">
+              <Heart className="h-6 w-6 text-primary fill-primary transition-transform group-hover:scale-110" />
+              <span className="text-2xl font-script text-primary">{t('common:appName')}</span>
+            </Link>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
-            <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
-            <Button variant="outline" size="sm" onClick={logout}>
+            <div className="hidden sm:flex items-center gap-2">
+              <FontSizeSwitcher />
+              <ThemeSwitcher />
+              <LanguageSwitcher />
+            </div>
+            <span className="hidden md:inline text-sm text-muted-foreground">{user?.name}</span>
+            <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">
               {t('auth:logout')}
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto p-4 space-y-6">
-        {/* Header with wedding selector */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-3xl font-bold">{t('guests:title')}</h2>
+      <main className="container mx-auto px-4 py-8 space-y-8 relative">
+        {/* Header with title and action */}
+        <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between animate-fade-in">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <h1 className="text-4xl font-serif font-semibold">{t('guests:title')}</h1>
               {statusFilter && (
-                <Badge variant="secondary" className="flex items-center gap-1">
+                <Badge variant="secondary" className="flex items-center gap-1 px-3 py-1">
                   {getFilterLabel()}
                   <button
                     onClick={clearFilter}
@@ -215,130 +284,151 @@ export function GuestsPage() {
             <p className="text-muted-foreground">{t('guests:manageDescription')}</p>
           </div>
           <CreateGuestDialog weddingId={selectedWeddingId}>
-            <Button>{t('guests:addGuest')}</Button>
+            <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
+              <Users className="h-4 w-4 mr-2" />
+              {t('guests:addGuest')}
+            </Button>
           </CreateGuestDialog>
-        </div>
+        </section>
 
         {/* Statistics Cards */}
-        <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        <section className="grid gap-4 grid-cols-2 lg:grid-cols-5 animate-fade-in-up animation-delay-200">
+          {/* Total Guests */}
           <Card
-            className={`cursor-pointer hover:bg-muted/50 transition-colors ${!statusFilter ? 'ring-2 ring-primary' : ''}`}
+            className={`rounded-2xl border-border/50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group ${!statusFilter ? 'ring-2 ring-primary shadow-lg' : ''}`}
             onClick={() => setFilter(null)}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:totalGuests')}</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-muted/50 group-hover:bg-primary/10 transition-colors">
+                <Users className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.total}</div>
-              <p className="text-xs text-muted-foreground">{t('guests:stats.allGuests')}</p>
+              <div className="text-3xl font-serif font-bold">{stats.total}</div>
+              <p className="text-xs text-muted-foreground mt-1">{t('guests:stats.allGuests')}</p>
             </CardContent>
           </Card>
 
+          {/* Attending */}
           <Card
-            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'attending' ? 'ring-2 ring-green-600' : ''}`}
+            className={`rounded-2xl border-border/50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group hover:border-green-500/30 ${statusFilter === 'attending' ? 'ring-2 ring-green-600 shadow-lg' : ''}`}
             onClick={() => setFilter('attending')}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:attending')}</CardTitle>
-              <UserCheck className="h-4 w-4 text-green-600" />
+              <div className="p-2 rounded-lg bg-green-500/10 group-hover:bg-green-500/20 transition-colors">
+                <UserCheck className="h-4 w-4 text-green-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{stats.attending}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-serif font-bold text-green-600">{stats.attending}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {stats.total > 0 ? Math.round((stats.attending / stats.total) * 100) : 0}%{' '}
                 {t('guests:stats.confirmed')}
               </p>
             </CardContent>
           </Card>
 
+          {/* Declined */}
           <Card
-            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'declined' ? 'ring-2 ring-red-600' : ''}`}
+            className={`rounded-2xl border-border/50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group hover:border-red-500/30 ${statusFilter === 'declined' ? 'ring-2 ring-red-600 shadow-lg' : ''}`}
             onClick={() => setFilter('declined')}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:declined')}</CardTitle>
-              <UserX className="h-4 w-4 text-red-600" />
+              <div className="p-2 rounded-lg bg-red-500/10 group-hover:bg-red-500/20 transition-colors">
+                <UserX className="h-4 w-4 text-red-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">{stats.declined}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-serif font-bold text-red-600">{stats.declined}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {stats.total > 0 ? Math.round((stats.declined / stats.total) * 100) : 0}%{' '}
                 {t('guests:stats.declined')}
               </p>
             </CardContent>
           </Card>
 
+          {/* Pending */}
           <Card
-            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'pending' ? 'ring-2 ring-yellow-600' : ''}`}
+            className={`rounded-2xl border-border/50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group hover:border-amber-500/30 ${statusFilter === 'pending' ? 'ring-2 ring-amber-600 shadow-lg' : ''}`}
             onClick={() => setFilter('pending')}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:pending')}</CardTitle>
-              <Clock className="h-4 w-4 text-yellow-600" />
+              <div className="p-2 rounded-lg bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
+                <Clock className="h-4 w-4 text-amber-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-yellow-600">{stats.pending}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-serif font-bold text-amber-600">{stats.pending}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {stats.total > 0 ? Math.round((stats.pending / stats.total) * 100) : 0}%{' '}
                 {t('guests:stats.pending')}
               </p>
             </CardContent>
           </Card>
 
+          {/* Maybe */}
           <Card
-            className={`cursor-pointer hover:bg-muted/50 transition-colors ${statusFilter === 'maybe' ? 'ring-2 ring-blue-600' : ''}`}
+            className={`rounded-2xl border-border/50 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group hover:border-blue-500/30 ${statusFilter === 'maybe' ? 'ring-2 ring-blue-600 shadow-lg' : ''}`}
             onClick={() => setFilter('maybe')}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">{t('guests:maybe')}</CardTitle>
-              <Users className="h-4 w-4 text-blue-600" />
+              <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+                <HelpCircle className="h-4 w-4 text-blue-600" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{stats.maybe}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-serif font-bold text-blue-600">{stats.maybe}</div>
+              <p className="text-xs text-muted-foreground mt-1">
                 {stats.total > 0 ? Math.round((stats.maybe / stats.total) * 100) : 0}%{' '}
                 {t('guests:stats.maybe')}
               </p>
             </CardContent>
           </Card>
-        </div>
+        </section>
 
         {/* Guests Table */}
         {selectedWeddingId && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{t('guests:guestList')}</CardTitle>
-              {selectedWedding && (
-                <CardDescription>
-                  {statusFilter
-                    ? t('guests:showingGuests', { count: guests.length, status: getFilterLabel()?.toLowerCase(), wedding: selectedWedding.title })
-                    : t('guests:guestListDescription', { wedding: selectedWedding.title })}
-                </CardDescription>
-              )}
-            </CardHeader>
-            <CardContent>
-              {guestsLoading ? (
-                <div className="p-8 text-center">
-                  <p className="text-muted-foreground">{t('common:loading')}</p>
-                </div>
-              ) : error ? (
-                <div className="p-8 text-center">
-                  <p className="text-destructive">{t('common:error')}</p>
-                </div>
-              ) : (
-                <GuestTable
-                  guests={guests || []}
-                  onEdit={setEditingGuest}
-                  onDelete={setDeletingGuest}
-                  onSendInvitation={setSendingInvitationGuest}
-                  onBulkSendInvitations={handleBulkSendInvitations}
-                  canSendEmails={canSendEmails}
-                  onUpgrade={() => navigate('/pricing')}
-                />
-              )}
-            </CardContent>
-          </Card>
+          <section className="animate-fade-in-up animation-delay-400">
+            <Card className="rounded-2xl border-border/50 shadow-lg bg-card/80 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="font-serif text-xl">{t('guests:guestList')}</CardTitle>
+                {selectedWedding && (
+                  <CardDescription>
+                    {statusFilter
+                      ? t('guests:showingGuests', { count: guests.length, status: getFilterLabel()?.toLowerCase(), wedding: selectedWedding.title })
+                      : t('guests:guestListDescription', { wedding: selectedWedding.title })}
+                  </CardDescription>
+                )}
+              </CardHeader>
+              <CardContent>
+                {guestsLoading ? (
+                  <div className="p-8 text-center">
+                    <Heart className="h-8 w-8 text-primary mx-auto animate-pulse mb-4" />
+                    <p className="text-muted-foreground">{t('common:loading')}</p>
+                  </div>
+                ) : error ? (
+                  <div className="p-8 text-center">
+                    <p className="text-destructive">{t('common:error')}</p>
+                  </div>
+                ) : (
+                  <GuestTable
+                    guests={guests || []}
+                    onEdit={setEditingGuest}
+                    onDelete={setDeletingGuest}
+                    onSendInvitation={setSendingInvitationGuest}
+                    onBulkSendInvitations={handleBulkSendInvitations}
+                    canSendEmails={canSendEmails}
+                    onUpgrade={() => navigate('/pricing')}
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </section>
         )}
       </main>
 

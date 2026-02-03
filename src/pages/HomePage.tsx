@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/sheet';
 import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { SEO } from '@/shared/components/seo';
 
 // Floating decorative elements for the hero
@@ -407,6 +408,7 @@ export function HomePage() {
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="hidden sm:flex items-center gap-2">
+                <FontSizeSwitcher />
                 <ThemeSwitcher />
                 <LanguageSwitcher />
               </div>
@@ -450,6 +452,7 @@ export function HomePage() {
                     </SheetClose>
                     <hr className="my-2" />
                     <div className="flex items-center gap-2 py-2">
+                      <FontSizeSwitcher />
                       <ThemeSwitcher />
                       <LanguageSwitcher />
                     </div>
