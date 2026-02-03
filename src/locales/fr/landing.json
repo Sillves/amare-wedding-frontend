@@ -1,4 +1,17 @@
 {
+  "demoPreview": {
+    "guests": "Invités",
+    "attending": "Présents",
+    "pending": "En attente",
+    "events": "Événements",
+    "upcoming": "À venir",
+    "ceremony": "Cérémonie",
+    "ceremonyTime": "15 juin, 14h00",
+    "reception": "Réception",
+    "receptionTime": "15 juin, 17h00",
+    "budget": "Budget",
+    "budgetProgress": "65% de 19 000 €"
+  },
   "hero": {
     "badge": "La Plateforme #1 de Planification de Mariage",
     "headline": "Planifiez Votre Mariage Parfait",

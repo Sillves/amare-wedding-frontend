@@ -1,4 +1,17 @@
 {
+  "demoPreview": {
+    "guests": "Gasten",
+    "attending": "Aanwezig",
+    "pending": "In afwachting",
+    "events": "Evenementen",
+    "upcoming": "Binnenkort",
+    "ceremony": "Ceremonie",
+    "ceremonyTime": "15 juni, 14:00",
+    "reception": "Receptie",
+    "receptionTime": "15 juni, 17:00",
+    "budget": "Budget",
+    "budgetProgress": "65% van €19.000"
+  },
   "hero": {
     "badge": "Het #1 Bruiloftsplanning Platform",
     "headline": "Plan Jullie Perfecte Bruiloft",

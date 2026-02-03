@@ -1,4 +1,17 @@
 {
+  "demoPreview": {
+    "guests": "Guests",
+    "attending": "Attending",
+    "pending": "Pending",
+    "events": "Events",
+    "upcoming": "Upcoming",
+    "ceremony": "Ceremony",
+    "ceremonyTime": "June 15, 2:00 PM",
+    "reception": "Reception",
+    "receptionTime": "June 15, 5:00 PM",
+    "budget": "Budget",
+    "budgetProgress": "65% of €19,000"
+  },
   "hero": {
     "badge": "The #1 Wedding Planning Platform",
     "headline": "Plan Your Perfect Wedding",

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import {
   Heart,
   Users,
@@ -23,6 +23,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -111,14 +112,14 @@ function DemoPreview() {
             {/* Stats row */}
             <div className="grid grid-cols-4 gap-3">
               {[
-                { label: 'Guests', value: '124', color: 'text-foreground' },
-                { label: 'Attending', value: '89', color: 'text-green-600' },
-                { label: 'Pending', value: '28', color: 'text-amber-600' },
-                { label: 'Events', value: '5', color: 'text-primary' },
+                { labelKey: 'demoPreview.guests', value: '124', color: 'text-foreground' },
+                { labelKey: 'demoPreview.attending', value: '89', color: 'text-green-600' },
+                { labelKey: 'demoPreview.pending', value: '28', color: 'text-amber-600' },
+                { labelKey: 'demoPreview.events', value: '5', color: 'text-primary' },
               ].map((stat) => (
-                <div key={stat.label} className="bg-muted/30 rounded-lg p-3 text-center">
+                <div key={stat.labelKey} className="bg-muted/30 rounded-lg p-3 text-center">
                   <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-                  <div className="text-xs text-muted-foreground">{stat.label}</div>
+                  <div className="text-xs text-muted-foreground">{t(`landing:${stat.labelKey}`)}</div>
                 </div>
               ))}
             </div>
@@ -128,29 +129,29 @@ function DemoPreview() {
               <div className="bg-muted/20 rounded-lg p-3 space-y-2">
                 <div className="text-xs font-medium flex items-center gap-1.5">
                   <Calendar className="h-3 w-3" />
-                  Upcoming
+                  {t('landing:demoPreview.upcoming')}
                 </div>
                 <div className="space-y-1.5">
                   <div className="bg-background rounded px-2 py-1.5 text-xs">
-                    <div className="font-medium">Ceremony</div>
-                    <div className="text-muted-foreground">June 15, 2:00 PM</div>
+                    <div className="font-medium">{t('landing:demoPreview.ceremony')}</div>
+                    <div className="text-muted-foreground">{t('landing:demoPreview.ceremonyTime')}</div>
                   </div>
                   <div className="bg-background rounded px-2 py-1.5 text-xs">
-                    <div className="font-medium">Reception</div>
-                    <div className="text-muted-foreground">June 15, 5:00 PM</div>
+                    <div className="font-medium">{t('landing:demoPreview.reception')}</div>
+                    <div className="text-muted-foreground">{t('landing:demoPreview.receptionTime')}</div>
                   </div>
                 </div>
               </div>
               <div className="bg-muted/20 rounded-lg p-3 space-y-2">
                 <div className="text-xs font-medium flex items-center gap-1.5">
                   <Wallet className="h-3 w-3" />
-                  Budget
+                  {t('landing:demoPreview.budget')}
                 </div>
                 <div className="text-lg font-bold">€12,450</div>
                 <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                   <div className="h-full w-[65%] bg-primary rounded-full" />
                 </div>
-                <div className="text-xs text-muted-foreground">65% of €19,000</div>
+                <div className="text-xs text-muted-foreground">{t('landing:demoPreview.budgetProgress')}</div>
               </div>
             </div>
           </div>
@@ -179,30 +180,31 @@ const testimonialKeys = ['testimonial1', 'testimonial2', 'testimonial3'] as cons
 function TestimonialCarousel() {
   const { t } = useTranslation(['landing']);
   const [current, setCurrent] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const startAutoPlay = () => {
+  const stopAutoPlay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
+  const startAutoPlay = useCallback(() => {
+    stopAutoPlay();
     intervalRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % testimonialKeys.length);
     }, 8000);
-  };
-
-  const stopAutoPlay = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-  };
+  }, [stopAutoPlay]);
 
   useEffect(() => {
     startAutoPlay();
     return () => stopAutoPlay();
-  }, []);
+  }, [startAutoPlay, stopAutoPlay]);
 
-  const goTo = (index: number) => {
-    stopAutoPlay();
+  const goTo = useCallback((index: number) => {
     setCurrent(index);
     startAutoPlay();
-  };
+  }, [startAutoPlay]);
 
   const prev = () => goTo((current - 1 + testimonialKeys.length) % testimonialKeys.length);
   const next = () => goTo((current + 1) % testimonialKeys.length);
@@ -430,30 +432,38 @@ export function HomePage() {
                     </SheetTitle>
                   </SheetHeader>
                   <nav className="flex flex-col gap-4 mt-8">
-                    <Link
-                      to="/demo"
-                      className="text-base font-medium text-foreground hover:text-primary transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
-                    >
-                      {t('landing:nav.demo')}
-                    </Link>
-                    <Link
-                      to="/pricing"
-                      className="text-base font-medium text-foreground hover:text-primary transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
-                    >
-                      {t('landing:nav.pricing')}
-                    </Link>
+                    <SheetClose asChild>
+                      <Link
+                        to="/demo"
+                        className="text-base font-medium text-foreground hover:text-primary transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
+                      >
+                        {t('landing:nav.demo')}
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        to="/pricing"
+                        className="text-base font-medium text-foreground hover:text-primary transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
+                      >
+                        {t('landing:nav.pricing')}
+                      </Link>
+                    </SheetClose>
                     <hr className="my-2" />
                     <div className="flex items-center gap-2 py-2">
                       <ThemeSwitcher />
                       <LanguageSwitcher />
                     </div>
                     <hr className="my-2" />
-                    <Button variant="ghost" onClick={() => navigate('/login')} className="justify-start focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-                      {t('auth:login.title')}
-                    </Button>
-                    <Button onClick={() => navigate('/register')} className="shadow-lg shadow-primary/25 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-                      {t('auth:register.title')}
-                    </Button>
+                    <SheetClose asChild>
+                      <Button variant="ghost" onClick={() => navigate('/login')} className="justify-start focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+                        {t('auth:login.title')}
+                      </Button>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Button onClick={() => navigate('/register')} className="shadow-lg shadow-primary/25 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+                        {t('auth:register.title')}
+                      </Button>
+                    </SheetClose>
                   </nav>
                 </SheetContent>
               </Sheet>
@@ -576,21 +586,23 @@ export function HomePage() {
               <p className="text-lg text-muted-foreground">{t('landing:howItWorks.subtitle')}</p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-3 max-w-4xl mx-auto">
-              {steps.map((step, index) => (
-                <div key={step.number} className="relative text-center space-y-4">
-                  {/* Connector line */}
-                  {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-8 left-1/2 w-full h-[2px] bg-gradient-to-r from-primary/50 to-primary/10" />
-                  )}
+            <div className="relative max-w-4xl mx-auto">
+              {/* Connector line - spans across all steps on desktop */}
+              <div className="hidden md:block absolute top-8 left-[calc(16.67%+32px)] right-[calc(16.67%+32px)] h-[2px] bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30" />
 
-                  <div className="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center text-2xl font-serif font-bold shadow-lg shadow-primary/25">
-                    {step.number}
+              <div className="grid gap-8 md:grid-cols-3">
+                {steps.map((step) => (
+                  <div key={step.number} className="relative text-center">
+                    <div className="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center text-2xl font-serif font-bold shadow-lg shadow-primary/25">
+                      {step.number}
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      <h3 className="font-serif text-xl font-semibold">{t(step.titleKey)}</h3>
+                      <p className="text-muted-foreground text-sm max-w-xs mx-auto">{t(step.descriptionKey)}</p>
+                    </div>
                   </div>
-                  <h3 className="font-serif text-xl font-semibold">{t(step.titleKey)}</h3>
-                  <p className="text-muted-foreground text-sm max-w-xs mx-auto">{t(step.descriptionKey)}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
