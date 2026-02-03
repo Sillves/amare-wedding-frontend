@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { CalendarIcon, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -39,6 +41,8 @@ export function DateTimePicker({
   showTime = true,
   minDate,
 }: DateTimePickerProps) {
+  const { i18n } = useTranslation();
+  const locale = getDateFnsLocale(i18n.language);
   const [open, setOpen] = React.useState(false);
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -88,7 +92,7 @@ export function DateTimePicker({
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {value ? (
-            showTime ? format(value, 'PPP HH:mm') : format(value, 'PPP')
+            showTime ? format(value, 'PPP HH:mm', { locale }) : format(value, 'PPP', { locale })
           ) : (
             <span>{placeholder}</span>
           )}

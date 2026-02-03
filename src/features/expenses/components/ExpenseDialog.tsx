@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -65,7 +66,8 @@ export function ExpenseDialog({
   open,
   onOpenChange,
 }: ExpenseDialogProps) {
-  const { t } = useTranslation(['expenses', 'common']);
+  const { t, i18n } = useTranslation(['expenses', 'common']);
+  const locale = getDateFnsLocale(i18n.language);
   const createExpense = useCreateExpense();
   const updateExpense = useUpdateExpense();
 
@@ -236,9 +238,9 @@ export function ExpenseDialog({
                           )}
                         >
                           {field.value ? (
-                            format(field.value, 'PPP')
+                            format(field.value, 'PPP', { locale })
                           ) : (
-                            <span>Pick a date</span>
+                            <span>{t('expenses:form.datePlaceholder')}</span>
                           )}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>

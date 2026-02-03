@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus, Trash2, GripVertical } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Plus, Trash2, BookHeart, ChevronDown, ChevronUp } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -73,49 +73,68 @@ export function StoryEditor({ weddingId, data, onChange, disableImageUpload, ima
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle>{t('story.title')}</CardTitle>
-          <div className="flex items-center gap-2">
-            <Label htmlFor="story-enabled" className="text-sm font-normal">
-              {t('story.enabled')}
-            </Label>
-            <Switch
-              id="story-enabled"
-              checked={data.enabled}
-              onCheckedChange={handleToggleEnabled}
-            />
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-pink-100 dark:bg-pink-900/30">
+              <BookHeart className="h-5 w-5 text-pink-600 dark:text-pink-400" />
+            </div>
+            <div>
+              <CardTitle>{t('story.title')}</CardTitle>
+              <CardDescription>{t('story.subtitle')}</CardDescription>
+            </div>
           </div>
+          <Switch
+            checked={data.enabled}
+            onCheckedChange={handleToggleEnabled}
+          />
         </div>
       </CardHeader>
 
       {data.enabled && (
-        <CardContent className="space-y-4">
-          <div className="grid gap-2">
-            <Label htmlFor="story-title">{t('story.sectionTitle')}</Label>
-            <Input
-              id="story-title"
-              value={data.title}
-              onChange={(e) => handleTitleChange(e.target.value)}
-            />
+        <CardContent className="space-y-6">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="story-title" className="text-sm font-medium">
+                {t('story.sectionTitle')}
+              </Label>
+              <Input
+                id="story-title"
+                value={data.title}
+                onChange={(e) => handleTitleChange(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">{t('story.displayType')}</Label>
+              <Select value={data.displayType} onValueChange={handleDisplayTypeChange}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="timeline">
+                    <div className="flex flex-col items-start">
+                      <span>{t('story.types.timeline')}</span>
+                      <span className="text-xs text-muted-foreground">{t('story.types.timelineDesc')}</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="narrative">
+                    <div className="flex flex-col items-start">
+                      <span>{t('story.types.narrative')}</span>
+                      <span className="text-xs text-muted-foreground">{t('story.types.narrativeDesc')}</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          <div className="grid gap-2">
-            <Label>{t('story.displayType')}</Label>
-            <Select value={data.displayType} onValueChange={handleDisplayTypeChange}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="timeline">{t('story.types.timeline')}</SelectItem>
-                <SelectItem value="narrative">{t('story.types.narrative')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label>{t('story.items')}</Label>
+              <div>
+                <Label className="text-sm font-medium">{t('story.items')}</Label>
+                <p className="text-xs text-muted-foreground">{t('story.itemsHint')}</p>
+              </div>
               <Button type="button" variant="outline" size="sm" onClick={handleAddItem}>
                 <Plus className="h-4 w-4 mr-1" />
                 {t('story.addItem')}
@@ -123,58 +142,59 @@ export function StoryEditor({ weddingId, data, onChange, disableImageUpload, ima
             </div>
 
             <div className="space-y-2">
-              {data.items.map((item) => (
-                <Card
+              {data.items.map((item, index) => (
+                <div
                   key={item.id}
-                  className="cursor-pointer"
-                  onClick={() =>
-                    setExpandedItem(expandedItem === item.id ? null : item.id)
-                  }
+                  className={`rounded-lg border transition-colors ${expandedItem === item.id ? 'bg-card ring-1 ring-primary/20' : 'bg-muted/30'}`}
                 >
-                  <CardContent className="p-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <GripVertical className="h-4 w-4 text-muted-foreground" />
+                  <div
+                    className="flex items-center justify-between p-3 cursor-pointer"
+                    onClick={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-xs font-medium">
+                        {index + 1}
+                      </div>
+                      <div>
                         <span className="font-medium">
                           {item.title || t('story.untitledItem')}
                         </span>
                         {item.date && (
-                          <span className="text-sm text-muted-foreground">
-                            ({item.date})
+                          <span className="block text-xs text-muted-foreground">
+                            {new Date(item.date).toLocaleDateString()}
                           </span>
                         )}
                       </div>
+                    </div>
+                    <div className="flex items-center gap-1">
                       <Button
                         type="button"
                         variant="ghost"
                         size="sm"
+                        className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleDeleteItem(item.id);
                         }}
                       >
-                        <Trash2 className="h-4 w-4 text-destructive" />
+                        <Trash2 className="h-4 w-4" />
                       </Button>
+                      {expandedItem === item.id ? (
+                        <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                      )}
                     </div>
+                  </div>
 
-                    {expandedItem === item.id && (
-                      <div
-                        className="mt-4 space-y-3 pt-3 border-t"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="grid gap-2">
-                          <Label>{t('story.item.date')}</Label>
-                          <Input
-                            type="date"
-                            value={item.date}
-                            onChange={(e) =>
-                              handleUpdateItem(item.id, { date: e.target.value })
-                            }
-                          />
-                        </div>
-
-                        <div className="grid gap-2">
-                          <Label>{t('story.item.title')}</Label>
+                  {expandedItem === item.id && (
+                    <div
+                      className="px-3 pb-4 pt-2 space-y-4 border-t"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm">{t('story.item.title')}</Label>
                           <Input
                             value={item.title}
                             onChange={(e) =>
@@ -183,50 +203,69 @@ export function StoryEditor({ weddingId, data, onChange, disableImageUpload, ima
                             placeholder={t('story.item.titlePlaceholder')}
                           />
                         </div>
-
-                        <div className="grid gap-2">
-                          <Label>{t('story.item.description')}</Label>
-                          <Textarea
-                            value={item.description}
+                        <div className="space-y-2">
+                          <Label className="text-sm">{t('story.item.date')}</Label>
+                          <Input
+                            type="date"
+                            value={item.date}
                             onChange={(e) =>
-                              handleUpdateItem(item.id, { description: e.target.value })
+                              handleUpdateItem(item.id, { date: e.target.value })
                             }
-                            rows={3}
-                          />
-                        </div>
-
-                        <div className="grid gap-2">
-                          <Label>{t('story.item.image')}</Label>
-                          <ImageUploader
-                            weddingId={weddingId}
-                            currentImageUrl={item.imageUrl}
-                            onUpload={(media) =>
-                              handleUpdateItem(item.id, {
-                                imageId: media.id,
-                                imageUrl: media.url,
-                              })
-                            }
-                            onRemove={() =>
-                              handleUpdateItem(item.id, {
-                                imageId: undefined,
-                                imageUrl: undefined,
-                              })
-                            }
-                            aspectRatio="4/3"
-                            disabled={disableImageUpload}
-                            disabledMessage={imageUploadDisabledMessage}
                           />
                         </div>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
+
+                      <div className="space-y-2">
+                        <Label className="text-sm">{t('story.item.description')}</Label>
+                        <Textarea
+                          value={item.description}
+                          onChange={(e) =>
+                            handleUpdateItem(item.id, { description: e.target.value })
+                          }
+                          rows={3}
+                          className="resize-none"
+                          placeholder={t('story.item.descriptionPlaceholder')}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-sm">{t('story.item.image')}</Label>
+                        <ImageUploader
+                          weddingId={weddingId}
+                          currentImageUrl={item.imageUrl}
+                          onUpload={(media) =>
+                            handleUpdateItem(item.id, {
+                              imageId: media.id,
+                              imageUrl: media.url,
+                            })
+                          }
+                          onRemove={() =>
+                            handleUpdateItem(item.id, {
+                              imageId: undefined,
+                              imageUrl: undefined,
+                            })
+                          }
+                          aspectRatio="4/3"
+                          disabled={disableImageUpload}
+                          disabledMessage={imageUploadDisabledMessage}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
 
               {data.items.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-4">
-                  {t('story.noItems')}
-                </p>
+                <div className="rounded-lg border border-dashed p-8 text-center">
+                  <BookHeart className="h-8 w-8 mx-auto text-muted-foreground/50 mb-2" />
+                  <p className="text-sm text-muted-foreground">
+                    {t('story.noItems')}
+                  </p>
+                  <Button type="button" variant="outline" size="sm" className="mt-3" onClick={handleAddItem}>
+                    <Plus className="h-4 w-4 mr-1" />
+                    {t('story.addFirstItem')}
+                  </Button>
+                </div>
               )}
             </div>
           </div>

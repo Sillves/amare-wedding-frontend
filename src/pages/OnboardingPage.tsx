@@ -4,7 +4,6 @@ import { Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { WeddingWizard } from '@/features/onboarding';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 
 export function OnboardingPage() {
@@ -38,7 +37,6 @@ export function OnboardingPage() {
           </div>
           <div className="hidden sm:flex items-center gap-1 sm:gap-3">
             <ThemeSwitcher />
-            <LanguageSwitcher />
           </div>
         </div>
       </header>

@@ -33,10 +33,10 @@ import { Badge } from '@/components/ui/badge';
 import { EditWeddingDialog } from '@/features/weddings/components/EditWeddingDialog';
 import { CreateGuestDialog } from '@/features/guests/components/CreateGuestDialog';
 import { CreateEventDialog } from '@/features/events/components/CreateEventDialog';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { format, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 
 /**
  * Floating decorative elements for premium dashboard aesthetic
@@ -135,7 +135,8 @@ function isValidWeddingDate(dateString: string | null | undefined): boolean {
 }
 
 export function DashboardPage() {
-  const { t } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing', 'expenses', 'website']);
+  const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing', 'expenses', 'website']);
+  const locale = getDateFnsLocale(i18n.language);
   const { user } = useAuth();
   const logout = useLogout();
   const navigate = useNavigate();
@@ -249,7 +250,6 @@ export function DashboardPage() {
             <div className="hidden sm:flex items-center gap-2">
               <FontSizeSwitcher />
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <span className="hidden md:inline text-sm text-muted-foreground">{user?.email}</span>
             <Button
@@ -348,7 +348,7 @@ export function DashboardPage() {
                   <div>
                     <p className="text-sm font-medium">{t('weddings:details.date')}</p>
                     <p className="text-sm text-muted-foreground">
-                      {hasValidDate && wedding.date ? format(parseISO(wedding.date), 'PPP') : t('common:dashboard.dateNotSetDescription')}
+                      {hasValidDate && wedding.date ? format(parseISO(wedding.date), 'PPP', { locale }) : t('common:dashboard.dateNotSetDescription')}
                     </p>
                   </div>
                 </div>
@@ -644,7 +644,7 @@ export function DashboardPage() {
                         <p className="font-medium">{event.name}</p>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Calendar className="h-3 w-3" />
-                          {event.startDate && format(parseISO(event.startDate), 'PPp')}
+                          {event.startDate && format(parseISO(event.startDate), 'PPp', { locale })}
                         </div>
                         {event.location && (
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">

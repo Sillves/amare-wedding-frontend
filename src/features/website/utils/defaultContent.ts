@@ -1,34 +1,61 @@
 import type { WebsiteContent, WebsiteSettings, WebsiteTemplate } from '../types';
 import { WebsiteTemplateNames } from '../types';
 
+/**
+ * Translation function type for getDefaultContent
+ * @param key - Translation key (e.g., 'defaults.hero.tagline')
+ * @returns Translated string
+ */
+type TranslationFn = (key: string) => string;
+
+/**
+ * Get default localized content for a new wedding website
+ * @param coupleNames - Names of the couple
+ * @param weddingDate - Wedding date string
+ * @param weddingLocation - Wedding location
+ * @param t - Translation function from useTranslation('website')
+ */
 export function getDefaultContent(
   coupleNames: string,
   weddingDate: string,
-  weddingLocation: string
+  weddingLocation: string,
+  t?: TranslationFn
 ): WebsiteContent {
   const date = new Date(weddingDate);
   const deadlineDate = new Date(date);
   deadlineDate.setMonth(deadlineDate.getMonth() - 1);
 
+  // Use translations if available, otherwise fallback to English defaults
+  // Ensure fallback is used if translation returns undefined or the key itself
+  const translate = (key: string, fallback: string): string => {
+    if (!t) return fallback;
+    const translated = t(key);
+    // Check if translation was found (not empty, not the key, not key with namespace prefix)
+    if (!translated) return fallback;
+    if (translated === key) return fallback;
+    if (translated.includes(key)) return fallback; // Handles "namespace:key" returns
+    return translated;
+  };
+
   return {
     hero: {
       coupleNames,
       date: weddingDate,
-      tagline: "We're getting married!",
+      tagline: translate('defaults.hero.tagline', "We're getting married!"),
       displayStyle: 'centered',
     },
     story: {
       enabled: true,
-      title: 'Our Story',
+      title: translate('defaults.story.title', 'Our Story'),
       displayType: 'timeline',
       items: [],
     },
     details: {
       enabled: true,
-      title: 'Wedding Details',
+      title: translate('defaults.details.title', 'Wedding Details'),
       ceremony: {
         enabled: true,
-        title: 'Ceremony',
+        title: translate('defaults.details.ceremony', 'Ceremony'),
         venue: '',
         address: weddingLocation,
         date: weddingDate,
@@ -37,7 +64,7 @@ export function getDefaultContent(
       },
       reception: {
         enabled: true,
-        title: 'Reception',
+        title: translate('defaults.details.reception', 'Reception'),
         venue: '',
         address: '',
         date: weddingDate,
@@ -47,25 +74,25 @@ export function getDefaultContent(
     },
     events: {
       enabled: true,
-      title: 'Schedule',
+      title: translate('defaults.events.title', 'Schedule'),
       showFromWeddingEvents: true,
     },
     gallery: {
       enabled: true,
-      title: 'Gallery',
+      title: translate('defaults.gallery.title', 'Gallery'),
       displayType: 'grid',
       images: [],
     },
     rsvp: {
       enabled: true,
-      title: 'RSVP',
-      description: 'Please let us know if you can attend',
+      title: translate('defaults.rsvp.title', 'RSVP'),
+      description: translate('defaults.rsvp.description', 'Please let us know if you can attend'),
       deadline: deadlineDate.toISOString().split('T')[0],
     },
     footer: {
       enabled: true,
       contactEmail: '',
-      customMessage: "We can't wait to celebrate with you!",
+      customMessage: translate('defaults.footer.message', "We can't wait to celebrate with you!"),
     },
   };
 }

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { Calendar, MapPin, Clock, Users, Pencil, Trash2, UserPlus, MoreVertical } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -21,11 +22,12 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGuests }: EventCardProps) {
-  const { t } = useTranslation('events');
+  const { t, i18n } = useTranslation('events');
+  const locale = getDateFnsLocale(i18n.language);
 
   const formatDateTime = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'PPp');
+      return format(new Date(dateString), 'PPp', { locale });
     } catch {
       return dateString;
     }
@@ -33,7 +35,7 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
 
   const formatDateShort = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'MMM d, p');
+      return format(new Date(dateString), 'MMM d, p', { locale });
     } catch {
       return dateString;
     }
@@ -41,7 +43,7 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
 
   const formatTime = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'p');
+      return format(new Date(dateString), 'p', { locale });
     } catch {
       return dateString;
     }

@@ -12,7 +12,6 @@ import { CreateEventDialog } from '@/features/events/components/CreateEventDialo
 import { EditEventDialog } from '@/features/events/components/EditEventDialog';
 import { DeleteEventDialog } from '@/features/events/components/DeleteEventDialog';
 import { ManageEventGuestsDialog } from '@/features/events/components/ManageEventGuestsDialog';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import type { EventDto } from '@/features/weddings/types';
@@ -182,7 +181,6 @@ export function EventsPage() {
             <div className="hidden sm:flex items-center gap-2">
               <FontSizeSwitcher />
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <span className="hidden md:inline text-sm text-muted-foreground">{user?.name}</span>
             <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">

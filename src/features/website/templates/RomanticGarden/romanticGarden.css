@@ -1,12 +1,24 @@
-.romantic-garden {
-  --rg-primary: #8B4513;
-  --rg-accent: #FFB6C1;
-  --rg-bg: #FFF9F9;
-  --rg-bg-cream: #FDF5E6;
-  --rg-text: #5D4037;
-  --rg-text-light: #8D6E63;
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
+.romantic-garden {
+  /* Refined Garden Palette - warm and romantic */
+  --rg-primary: #6b5c4c;
+  --rg-accent: #d4a5a5;
+  --rg-bg: #fdfbf9;
+  --rg-bg-cream: #f9f5f0;
+  --rg-text: #5a4f46;
+  --rg-text-light: #8a7f74;
+  --rg-leaf: #8fa882;
+  --rg-leaf-dark: #6b8a5e;
+
+  /* Font families */
+  --rg-font-display: 'Great Vibes', cursive;
+  --rg-font-serif: 'Cormorant Garamond', Georgia, serif;
+  --rg-font-body: 'Lora', Georgia, serif;
+
+  font-family: var(--rg-font-body);
+  font-weight: 400;
   color: var(--rg-text);
   background-color: var(--rg-bg);
   line-height: 1.8;
@@ -15,14 +27,38 @@
   container-type: inline-size;
 }
 
-/* Floral Corner Decorations */
-.rg-floral-corner {
+/* SVG Styling - Base classes for all botanical elements */
+.romantic-garden .rg-svg-stem {
+  stroke: var(--rg-leaf-dark);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.romantic-garden .rg-svg-leaf {
+  fill: var(--rg-leaf);
+  stroke: var(--rg-leaf-dark);
+  stroke-width: 0.5;
+  opacity: 0.85;
+}
+
+.romantic-garden .rg-svg-flower {
+  fill: var(--rg-accent);
+  stroke: var(--rg-primary);
+  stroke-width: 0.5;
+  opacity: 0.9;
+}
+
+.romantic-garden .rg-svg-flower-center {
+  fill: var(--rg-primary);
+  opacity: 0.6;
+}
+
+/* Corner Floral SVG Decorations */
+.rg-corner-svg {
   position: fixed;
-  width: 200px;
-  height: 200px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.3;
+  width: 180px;
+  height: 180px;
+  opacity: 0.4;
   pointer-events: none;
   z-index: 0;
 }
@@ -30,28 +66,66 @@
 .rg-corner-tl {
   top: 0;
   left: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23FFB6C1' d='M0,0 Q30,20 20,50 Q10,80 0,100 L0,0 Z'/%3E%3Cpath fill='%2390EE90' d='M0,0 Q50,10 80,30 Q60,20 40,10 Q20,5 0,0 Z' opacity='0.6'/%3E%3C/svg%3E");
 }
 
 .rg-corner-tr {
   top: 0;
   right: 0;
   transform: scaleX(-1);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23FFB6C1' d='M0,0 Q30,20 20,50 Q10,80 0,100 L0,0 Z'/%3E%3Cpath fill='%2390EE90' d='M0,0 Q50,10 80,30 Q60,20 40,10 Q20,5 0,0 Z' opacity='0.6'/%3E%3C/svg%3E");
 }
 
 .rg-corner-bl {
   bottom: 0;
   left: 0;
   transform: scaleY(-1);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23FFB6C1' d='M0,0 Q30,20 20,50 Q10,80 0,100 L0,0 Z'/%3E%3Cpath fill='%2390EE90' d='M0,0 Q50,10 80,30 Q60,20 40,10 Q20,5 0,0 Z' opacity='0.6'/%3E%3C/svg%3E");
 }
 
 .rg-corner-br {
   bottom: 0;
   right: 0;
   transform: scale(-1);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23FFB6C1' d='M0,0 Q30,20 20,50 Q10,80 0,100 L0,0 Z'/%3E%3Cpath fill='%2390EE90' d='M0,0 Q50,10 80,30 Q60,20 40,10 Q20,5 0,0 Z' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* SVG Divider */
+.rg-svg-divider {
+  width: min(350px, 80%);
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Leaf Sprig */
+.rg-svg-sprig {
+  width: 50px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+/* Flower Accent for section headers */
+.rg-svg-accent {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+/* Icon SVGs for detail cards */
+.rg-icon-svg {
+  width: 56px;
+  height: 56px;
+  stroke: var(--rg-accent);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.rg-icon-svg path,
+.rg-icon-svg circle {
+  stroke: var(--rg-accent);
+  fill: none;
+}
+
+.rg-icon-svg circle {
+  fill: var(--rg-accent);
+  opacity: 0.3;
 }
 
 /* Hero Section */
@@ -71,45 +145,43 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(255, 249, 249, 0.9) 0%,
-    rgba(255, 249, 249, 0.85) 50%,
-    rgba(255, 249, 249, 0.9) 100%
+    rgba(253, 251, 249, 0.92) 0%,
+    rgba(253, 251, 249, 0.88) 50%,
+    rgba(253, 251, 249, 0.92) 100%
   );
 }
 
 .rg-hero-content {
   position: relative;
   z-index: 1;
-  padding: 3rem;
-}
-
-.rg-floral-divider {
-  height: 30px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30'%3E%3Cpath fill='none' stroke='%23FFB6C1' stroke-width='1' d='M0,15 Q25,5 50,15 T100,15 T150,15 T200,15'/%3E%3Ccircle cx='100' cy='15' r='4' fill='%23FFB6C1'/%3E%3Ccircle cx='50' cy='15' r='3' fill='%2390EE90'/%3E%3Ccircle cx='150' cy='15' r='3' fill='%2390EE90'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 1rem 0;
+  padding: 3rem 2rem;
+  max-width: 700px;
 }
 
 .rg-together {
-  font-size: 1rem;
+  font-family: var(--rg-font-serif);
+  font-size: 1.1rem;
   font-style: italic;
+  font-weight: 300;
   color: var(--rg-text-light);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
 }
 
 .rg-couple-names {
-  font-family: 'Great Vibes', 'Brush Script MT', cursive;
-  font-size: clamp(3rem, 10vw, 6rem);
+  font-family: var(--rg-font-display);
+  font-size: clamp(3rem, 10vw, 5.5rem);
   font-weight: 400;
   color: var(--rg-primary);
-  margin: 0;
-  line-height: 1.2;
+  margin: 0.5rem 0;
+  line-height: 1.1;
 }
 
 .rg-tagline {
+  font-family: var(--rg-font-serif);
   font-size: 1.25rem;
   font-style: italic;
+  font-weight: 300;
   color: var(--rg-text-light);
   margin: 1rem 0;
 }
@@ -118,17 +190,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-top: 1.5rem;
 }
 
-.rg-leaf {
-  font-size: 1.5rem;
-}
-
 .rg-date {
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
+  font-family: var(--rg-font-serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--rg-text);
 }
 
 /* Sections */
@@ -143,21 +214,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.25rem;
   margin-bottom: 3rem;
 }
 
 .rg-section-header h2 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3rem;
+  font-family: var(--rg-font-display);
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
   font-weight: 400;
   color: var(--rg-primary);
   margin: 0;
-}
-
-.rg-flower {
-  color: var(--rg-accent);
-  font-size: 1.5rem;
 }
 
 /* Story Timeline */
@@ -191,20 +257,20 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
-  background: var(--rg-accent);
+  width: 14px;
+  height: 14px;
+  background: var(--rg-bg);
+  border: 2px solid var(--rg-accent);
   border-radius: 50%;
-  border: 3px solid var(--rg-bg);
   z-index: 1;
 }
 
 .rg-timeline-card {
   width: calc(50% - 3rem);
   background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(139, 69, 19, 0.1);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(107, 92, 76, 0.08);
   position: relative;
 }
 
@@ -214,22 +280,23 @@
 
 .rg-timeline-image-wrapper {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .rg-timeline-image-wrapper img {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .rg-image-frame {
   position: absolute;
-  inset: -4px;
-  border: 2px solid var(--rg-accent);
-  border-radius: 10px;
+  inset: -5px;
+  border: 1px solid var(--rg-accent);
+  border-radius: 14px;
   pointer-events: none;
+  opacity: 0.6;
 }
 
 .rg-timeline-text {
@@ -237,25 +304,29 @@
 }
 
 .rg-timeline-date {
-  font-size: 0.875rem;
+  font-family: var(--rg-font-serif);
+  font-size: 0.9rem;
   color: var(--rg-accent);
   font-style: italic;
 }
 
 .rg-timeline-text h3 {
-  font-size: 1.25rem;
+  font-family: var(--rg-font-display);
+  font-size: 1.5rem;
   color: var(--rg-primary);
   margin: 0.5rem 0;
 }
 
 .rg-timeline-text p {
+  font-family: var(--rg-font-body);
   color: var(--rg-text-light);
   font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 /* Narrative Style */
 .rg-narrative {
-  max-width: 800px;
+  max-width: 850px;
   margin: 0 auto;
 }
 
@@ -280,14 +351,20 @@
   width: 100%;
   aspect-ratio: 4/5;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(107, 92, 76, 0.12);
 }
 
 .rg-narrative-content h3 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2rem;
+  font-family: var(--rg-font-display);
+  font-size: 2.25rem;
   color: var(--rg-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.rg-narrative-content p {
+  color: var(--rg-text-light);
+  line-height: 1.8;
 }
 
 /* Details */
@@ -300,9 +377,11 @@
 .rg-watercolor-bg {
   position: absolute;
   inset: 0;
-  opacity: 0.1;
-  background-image: radial-gradient(circle at 20% 30%, var(--rg-accent) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, #90EE90 0%, transparent 40%);
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 30%, var(--rg-accent) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, var(--rg-leaf) 0%, transparent 35%),
+    radial-gradient(circle at 60% 20%, var(--rg-leaf) 0%, transparent 25%);
 }
 
 .rg-details-cards {
@@ -315,71 +394,85 @@
 
 .rg-detail-card {
   background: white;
-  padding: 2.5rem;
-  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
   text-align: center;
   min-width: 300px;
-  max-width: 400px;
+  max-width: 380px;
   position: relative;
-  box-shadow: 0 8px 30px rgba(139, 69, 19, 0.1);
+  box-shadow: 0 8px 32px rgba(107, 92, 76, 0.1);
 }
 
 .rg-card-corner {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
   border: 1px solid var(--rg-accent);
-  border-radius: 12px;
+  border-radius: 16px;
   pointer-events: none;
+  opacity: 0.5;
 }
 
 .rg-card-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
 }
 
 .rg-detail-card h3 {
-  font-family: 'Great Vibes', cursive;
+  font-family: var(--rg-font-display);
   font-size: 2rem;
   color: var(--rg-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .rg-venue {
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-family: var(--rg-font-serif);
+  font-weight: 500;
+  font-size: 1.15rem;
   margin-bottom: 0.25rem;
+  color: var(--rg-text);
 }
 
 .rg-address {
+  font-family: var(--rg-font-body);
   color: var(--rg-text-light);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
 }
 
 .rg-time {
+  font-family: var(--rg-font-serif);
   font-size: 1.25rem;
   color: var(--rg-accent);
   margin: 1rem 0;
+  font-weight: 500;
 }
 
 .rg-description {
   font-style: italic;
   color: var(--rg-text-light);
   font-size: 0.95rem;
+  margin-top: 0.75rem;
 }
 
 .rg-map-link {
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   color: var(--rg-primary);
   text-decoration: none;
+  font-family: var(--rg-font-serif);
   font-style: italic;
+  font-size: 0.95rem;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
 }
 
 .rg-map-link:hover {
-  color: var(--rg-accent);
+  border-color: var(--rg-accent);
 }
 
 /* Events */
@@ -392,28 +485,32 @@
 
 .rg-event-card {
   background: white;
-  padding: 2rem;
-  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
   text-align: center;
   min-width: 280px;
-  box-shadow: 0 4px 20px rgba(139, 69, 19, 0.08);
-  border: 1px solid rgba(255, 182, 193, 0.3);
+  box-shadow: 0 4px 20px rgba(107, 92, 76, 0.08);
+  border: 1px solid rgba(212, 165, 165, 0.2);
 }
 
 .rg-event-card h3 {
-  font-family: 'Great Vibes', cursive;
+  font-family: var(--rg-font-display);
   font-size: 1.75rem;
   color: var(--rg-primary);
   margin-bottom: 0.5rem;
 }
 
 .rg-event-location {
+  font-family: var(--rg-font-body);
   color: var(--rg-text-light);
+  font-size: 0.95rem;
 }
 
 .rg-event-time {
+  font-family: var(--rg-font-serif);
   color: var(--rg-accent);
   margin: 0.5rem 0;
+  font-style: italic;
 }
 
 /* Gallery */
@@ -455,16 +552,17 @@
 .rg-gallery-item img {
   width: 100%;
   display: block;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(139, 69, 19, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(107, 92, 76, 0.12);
 }
 
 .rg-gallery-item .rg-image-frame {
-  border-radius: 14px;
+  border-radius: 18px;
 }
 
 .rg-caption {
   text-align: center;
+  font-family: var(--rg-font-serif);
   font-style: italic;
   color: var(--rg-text-light);
   margin-top: 1rem;
@@ -478,27 +576,31 @@
 
 .rg-rsvp-card {
   background: white;
-  max-width: 600px;
+  max-width: 580px;
   margin: 0 auto;
-  padding: 3rem;
-  border-radius: 20px;
-  box-shadow: 0 8px 40px rgba(139, 69, 19, 0.12);
+  padding: 3.5rem 3rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(107, 92, 76, 0.1);
   position: relative;
 }
 
 .rg-corner-all {
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border-radius: 20px;
 }
 
 .rg-rsvp-description {
+  font-family: var(--rg-font-body);
   font-size: 1.1rem;
   margin-bottom: 1rem;
+  color: var(--rg-text);
 }
 
 .rg-rsvp-deadline {
+  font-family: var(--rg-font-serif);
   color: var(--rg-text-light);
   font-style: italic;
   margin-bottom: 2rem;
@@ -506,55 +608,65 @@
 
 .rg-rsvp-button {
   display: inline-block;
-  padding: 1rem 3rem;
-  background: linear-gradient(135deg, var(--rg-accent), #FFD1DC);
+  padding: 1rem 3.5rem;
+  background: linear-gradient(135deg, var(--rg-accent), #e8c4c4);
   color: var(--rg-primary);
   text-decoration: none;
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.5rem;
+  font-family: var(--rg-font-display);
+  font-size: 1.75rem;
   border-radius: 50px;
-  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+  box-shadow: 0 4px 16px rgba(212, 165, 165, 0.35);
   transition: all 0.3s ease;
 }
 
 .rg-rsvp-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(255, 182, 193, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 165, 165, 0.45);
 }
 
 /* Footer */
 .rg-footer {
   text-align: center;
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
   background: var(--rg-bg-cream);
 }
 
 .rg-footer-message {
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.75rem;
+  font-family: var(--rg-font-display);
+  font-size: 2rem;
   color: var(--rg-primary);
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
 .rg-footer-contact a {
+  font-family: var(--rg-font-body);
   color: var(--rg-accent);
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.rg-footer-contact a:hover {
+  color: var(--rg-primary);
 }
 
 .rg-footer-decoration {
-  margin-top: 1.5rem;
-  font-size: 1.5rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 /* Responsive - using container queries for preview compatibility */
 @container (max-width: 768px) {
   .rg-section {
-    padding: 3rem 1rem;
+    padding: 3.5rem 1.5rem;
   }
 
-  .rg-floral-corner {
-    width: 80px;
-    height: 80px;
+  .rg-corner-svg {
+    width: 100px;
+    height: 100px;
+    opacity: 0.25;
   }
 
   .rg-timeline {
@@ -575,11 +687,11 @@
   .rg-timeline-card.rg-right {
     width: calc(100% - 45px);
     margin-left: 45px;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .rg-timeline-text h3 {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
   }
 
   .rg-timeline-text p {
@@ -607,16 +719,21 @@
   .rg-detail-card {
     width: 100%;
     max-width: none;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 
   .rg-rsvp-card {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .rg-svg-divider {
+    width: 90%;
+    height: 40px;
   }
 }
 
 @container (max-width: 480px) {
-  .rg-floral-corner {
+  .rg-corner-svg {
     display: none;
   }
 
@@ -625,15 +742,15 @@
   }
 
   .rg-couple-names {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .rg-section-header h2 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .rg-hero-content {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .rg-timeline-card,
@@ -641,17 +758,27 @@
     width: calc(100% - 35px);
     margin-left: 35px;
   }
+
+  .rg-date-wrapper {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rg-svg-sprig {
+    display: none;
+  }
 }
 
 /* Fallback media queries for actual mobile devices */
 @media (max-width: 768px) {
   .romantic-garden .rg-section {
-    padding: 3rem 1rem;
+    padding: 3.5rem 1.5rem;
   }
 
-  .romantic-garden .rg-floral-corner {
-    width: 80px;
-    height: 80px;
+  .romantic-garden .rg-corner-svg {
+    width: 100px;
+    height: 100px;
+    opacity: 0.25;
   }
 
   .romantic-garden .rg-timeline {
@@ -672,11 +799,11 @@
   .romantic-garden .rg-timeline-card.rg-right {
     width: calc(100% - 45px);
     margin-left: 45px;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .romantic-garden .rg-timeline-text h3 {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
   }
 
   .romantic-garden .rg-timeline-text p {
@@ -704,16 +831,21 @@
   .romantic-garden .rg-detail-card {
     width: 100%;
     max-width: none;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 
   .romantic-garden .rg-rsvp-card {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .romantic-garden .rg-svg-divider {
+    width: 90%;
+    height: 40px;
   }
 }
 
 @media (max-width: 480px) {
-  .romantic-garden .rg-floral-corner {
+  .romantic-garden .rg-corner-svg {
     display: none;
   }
 
@@ -722,20 +854,29 @@
   }
 
   .romantic-garden .rg-couple-names {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .romantic-garden .rg-section-header h2 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .romantic-garden .rg-hero-content {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .romantic-garden .rg-timeline-card,
   .romantic-garden .rg-timeline-card.rg-right {
     width: calc(100% - 35px);
     margin-left: 35px;
+  }
+
+  .romantic-garden .rg-date-wrapper {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .romantic-garden .rg-svg-sprig {
+    display: none;
   }
 }

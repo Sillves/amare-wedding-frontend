@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import { getIntlLocale } from '@/lib/dateLocale';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './modernMinimal.css';
 
@@ -8,25 +10,49 @@ interface ModernMinimalTemplateProps {
   events?: EventDto[];
 }
 
+// Minimal geometric decorations
+const DiamondDivider = () => (
+  <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mm-diamond-divider">
+    <line x1="0" y1="10" x2="85" y2="10" className="mm-svg-line" />
+    <rect x="92" y="3" width="14" height="14" transform="rotate(45 99 10)" className="mm-svg-diamond" />
+    <line x1="115" y1="10" x2="200" y2="10" className="mm-svg-line" />
+  </svg>
+);
+
+const HorizontalLine = () => (
+  <div className="mm-line" />
+);
+
+// Geometric accent for section markers
+const SectionMarker = ({ number }: { number: string }) => (
+  <div className="mm-section-marker">
+    <span className="mm-section-number">{number}</span>
+    <div className="mm-section-line" />
+  </div>
+);
+
 export function ModernMinimalTemplate({
   content,
   settings,
   weddingSlug,
   events,
 }: ModernMinimalTemplateProps) {
+  const { t, i18n } = useTranslation('website');
+  const locale = getIntlLocale(i18n.language);
+
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
 
   const formatDate = (dateString: string, style: 'full' | 'short' = 'full') => {
     const date = new Date(dateString);
     if (style === 'short') {
-      return date.toLocaleDateString('en-US', {
+      return date.toLocaleDateString(locale, {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
       });
     }
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(locale, {
       month: 'long',
       day: 'numeric',
       year: 'numeric',
@@ -35,11 +61,25 @@ export function ModernMinimalTemplate({
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
+    return date.toLocaleTimeString(locale, {
       hour: 'numeric',
       minute: '2-digit',
     });
   };
+
+  // Parse couple names for display
+  const parseCoupleNames = (names: string): { name1: string; name2: string } => {
+    const separators = [' & ', ' + ', ' and ', ' en ', ' et '];
+    for (const sep of separators) {
+      if (names.includes(sep)) {
+        const parts = names.split(sep);
+        return { name1: parts[0].trim(), name2: parts[1].trim() };
+      }
+    }
+    return { name1: names, name2: '' };
+  };
+
+  const coupleNames = parseCoupleNames(hero.coupleNames);
 
   return (
     <div
@@ -61,19 +101,37 @@ export function ModernMinimalTemplate({
         }}
       >
         <div className={`mm-hero-content mm-hero-${hero.displayStyle}`}>
-          <span className="mm-hero-label">THE WEDDING OF</span>
-          <h1 className="mm-couple-names">{hero.coupleNames}</h1>
+          <span className="mm-hero-label">{t('preview.weddingOf')}</span>
+
+          <h1 className="mm-couple-names">
+            {coupleNames.name2 ? (
+              <>
+                <span className="mm-name">{coupleNames.name1}</span>
+                <span className="mm-ampersand">&</span>
+                <span className="mm-name">{coupleNames.name2}</span>
+              </>
+            ) : (
+              <span className="mm-name">{hero.coupleNames}</span>
+            )}
+          </h1>
+
           {hero.tagline && <p className="mm-tagline">{hero.tagline}</p>}
+
+          <DiamondDivider />
+
           <div className="mm-date">
-            <span className="mm-date-number">
-              {new Date(hero.date).getDate()}
+            <span className="mm-date-day">
+              {String(new Date(hero.date).getDate()).padStart(2, '0')}
             </span>
-            <span className="mm-date-month">
-              {new Date(hero.date).toLocaleDateString('en-US', {
-                month: 'long',
-                year: 'numeric',
-              })}
-            </span>
+            <span className="mm-date-separator" />
+            <div className="mm-date-details">
+              <span className="mm-date-month">
+                {new Date(hero.date).toLocaleDateString(locale, { month: 'long' })}
+              </span>
+              <span className="mm-date-year">
+                {new Date(hero.date).getFullYear()}
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -81,7 +139,10 @@ export function ModernMinimalTemplate({
       {/* Story Section */}
       {story.enabled && story.items.length > 0 && (
         <section className="mm-section mm-story">
-          <h2 className="mm-section-title">{story.title}</h2>
+          <div className="mm-section-header">
+            <SectionMarker number="01" />
+            <h2 className="mm-section-title">{story.title}</h2>
+          </div>
 
           {story.displayType === 'timeline' ? (
             <div className="mm-timeline">
@@ -132,13 +193,17 @@ export function ModernMinimalTemplate({
       {/* Details Section */}
       {details.enabled && (
         <section className="mm-section mm-details">
-          <h2 className="mm-section-title">{details.title}</h2>
+          <div className="mm-section-header mm-centered">
+            <SectionMarker number="02" />
+            <h2 className="mm-section-title">{details.title}</h2>
+          </div>
 
           <div className="mm-details-container">
             {details.ceremony.enabled && (
               <div className="mm-detail-block">
-                <span className="mm-detail-label">01</span>
+                <span className="mm-detail-label">{t('preview.ceremonyLabel')}</span>
                 <h3>{details.ceremony.title}</h3>
+                <HorizontalLine />
                 <div className="mm-detail-info">
                   <p className="mm-venue">{details.ceremony.venue}</p>
                   <p className="mm-address">{details.ceremony.address}</p>
@@ -154,7 +219,8 @@ export function ModernMinimalTemplate({
                     rel="noopener noreferrer"
                     className="mm-link"
                   >
-                    Get Directions →
+                    {t('preview.getDirections')}
+                    <span className="mm-link-arrow">→</span>
                   </a>
                 )}
               </div>
@@ -162,8 +228,9 @@ export function ModernMinimalTemplate({
 
             {details.reception.enabled && (
               <div className="mm-detail-block">
-                <span className="mm-detail-label">02</span>
+                <span className="mm-detail-label">{t('preview.receptionLabel')}</span>
                 <h3>{details.reception.title}</h3>
+                <HorizontalLine />
                 <div className="mm-detail-info">
                   <p className="mm-venue">{details.reception.venue}</p>
                   <p className="mm-address">{details.reception.address}</p>
@@ -179,7 +246,8 @@ export function ModernMinimalTemplate({
                     rel="noopener noreferrer"
                     className="mm-link"
                   >
-                    Get Directions →
+                    {t('preview.getDirections')}
+                    <span className="mm-link-arrow">→</span>
                   </a>
                 )}
               </div>
@@ -191,7 +259,10 @@ export function ModernMinimalTemplate({
       {/* Events Section */}
       {content.events.enabled && content.events.showFromWeddingEvents && events && events.length > 0 && (
         <section className="mm-section mm-events">
-          <h2 className="mm-section-title">{content.events.title}</h2>
+          <div className="mm-section-header">
+            <SectionMarker number="03" />
+            <h2 className="mm-section-title">{content.events.title}</h2>
+          </div>
 
           <div className="mm-events-grid">
             {events.map((event, index) => (
@@ -215,7 +286,10 @@ export function ModernMinimalTemplate({
       {/* Gallery Section */}
       {gallery.enabled && gallery.images.length > 0 && (
         <section className="mm-section mm-gallery">
-          <h2 className="mm-section-title">{gallery.title}</h2>
+          <div className="mm-section-header">
+            <SectionMarker number="04" />
+            <h2 className="mm-section-title">{gallery.title}</h2>
+          </div>
 
           <div className={`mm-gallery-${gallery.displayType}`}>
             {gallery.images.map((image) => (
@@ -232,15 +306,16 @@ export function ModernMinimalTemplate({
       {rsvp.enabled && (
         <section className="mm-section mm-rsvp">
           <div className="mm-rsvp-content">
+            <DiamondDivider />
             <h2>{rsvp.title}</h2>
             <p>{rsvp.description}</p>
             {rsvp.deadline && (
               <p className="mm-deadline">
-                Kindly respond by {formatDate(rsvp.deadline)}
+                {t('preview.kindlyRespondBy')} {formatDate(rsvp.deadline)}
               </p>
             )}
             <a href={`/rsvp/${weddingSlug}`} className="mm-button">
-              Respond
+              {t('preview.respond')}
             </a>
           </div>
         </section>
@@ -249,9 +324,10 @@ export function ModernMinimalTemplate({
       {/* Footer */}
       {footer.enabled && (
         <footer className="mm-footer">
-          {footer.customMessage && <p>{footer.customMessage}</p>}
+          <DiamondDivider />
+          {footer.customMessage && <p className="mm-footer-message">{footer.customMessage}</p>}
           {footer.contactEmail && (
-            <a href={`mailto:${footer.contactEmail}`}>{footer.contactEmail}</a>
+            <a href={`mailto:${footer.contactEmail}`} className="mm-footer-email">{footer.contactEmail}</a>
           )}
         </footer>
       )}

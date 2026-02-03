@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MapPin, Church, PartyPopper, ExternalLink } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,13 +14,16 @@ interface DetailsEditorProps {
 }
 
 interface VenueEditorProps {
-  label: string;
+  type: 'ceremony' | 'reception';
   data: VenueDetails;
   onChange: (data: VenueDetails) => void;
 }
 
-function VenueEditor({ label, data, onChange }: VenueEditorProps) {
+function VenueEditor({ type, data, onChange }: VenueEditorProps) {
   const { t } = useTranslation('website');
+  const Icon = type === 'ceremony' ? Church : PartyPopper;
+  const iconBg = type === 'ceremony' ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-amber-100 dark:bg-amber-900/30';
+  const iconColor = type === 'ceremony' ? 'text-purple-600 dark:text-purple-400' : 'text-amber-600 dark:text-amber-400';
 
   const handleChange = <K extends keyof VenueDetails>(
     field: K,
@@ -29,42 +33,46 @@ function VenueEditor({ label, data, onChange }: VenueEditorProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 border rounded-lg">
-      <div className="flex items-center justify-between">
-        <h4 className="font-medium">{label}</h4>
-        <div className="flex items-center gap-2">
-          <Label htmlFor={`${label}-enabled`} className="text-sm font-normal">
-            {t('details.show')}
-          </Label>
-          <Switch
-            id={`${label}-enabled`}
-            checked={data.enabled}
-            onCheckedChange={(enabled) => handleChange('enabled', enabled)}
-          />
+    <div className={`rounded-lg border ${data.enabled ? 'bg-card' : 'bg-muted/30'} transition-colors`}>
+      <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center gap-3">
+          <div className={`flex h-8 w-8 items-center justify-center rounded-md ${iconBg}`}>
+            <Icon className={`h-4 w-4 ${iconColor}`} />
+          </div>
+          <div>
+            <h4 className="font-medium">{t(`details.${type}.title`)}</h4>
+            <p className="text-xs text-muted-foreground">{t(`details.${type}.description`)}</p>
+          </div>
         </div>
+        <Switch
+          checked={data.enabled}
+          onCheckedChange={(enabled) => handleChange('enabled', enabled)}
+        />
       </div>
 
       {data.enabled && (
-        <div className="space-y-3">
-          <div className="grid gap-2">
-            <Label>{t('details.venueTitle')}</Label>
-            <Input
-              value={data.title}
-              onChange={(e) => handleChange('title', e.target.value)}
-            />
+        <div className="p-4 space-y-4">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-sm">{t('details.venueTitle')}</Label>
+              <Input
+                value={data.title}
+                onChange={(e) => handleChange('title', e.target.value)}
+                placeholder={t(`details.${type}.titlePlaceholder`)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-sm">{t('details.venue')}</Label>
+              <Input
+                value={data.venue}
+                onChange={(e) => handleChange('venue', e.target.value)}
+                placeholder={t('details.venuePlaceholder')}
+              />
+            </div>
           </div>
 
-          <div className="grid gap-2">
-            <Label>{t('details.venue')}</Label>
-            <Input
-              value={data.venue}
-              onChange={(e) => handleChange('venue', e.target.value)}
-              placeholder={t('details.venuePlaceholder')}
-            />
-          </div>
-
-          <div className="grid gap-2">
-            <Label>{t('details.address')}</Label>
+          <div className="space-y-2">
+            <Label className="text-sm">{t('details.address')}</Label>
             <Input
               value={data.address}
               onChange={(e) => handleChange('address', e.target.value)}
@@ -72,8 +80,8 @@ function VenueEditor({ label, data, onChange }: VenueEditorProps) {
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label>{t('details.dateTime')}</Label>
+          <div className="space-y-2">
+            <Label className="text-sm">{t('details.dateTime')}</Label>
             <DateTimePicker
               value={data.date ? new Date(data.date) : undefined}
               onChange={(date) => handleChange('date', date ? date.toISOString() : '')}
@@ -81,24 +89,29 @@ function VenueEditor({ label, data, onChange }: VenueEditorProps) {
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label>{t('details.description')}</Label>
+          <div className="space-y-2">
+            <Label className="text-sm">{t('details.description')}</Label>
             <Textarea
               value={data.description}
               onChange={(e) => handleChange('description', e.target.value)}
               placeholder={t('details.descriptionPlaceholder')}
               rows={2}
+              className="resize-none"
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label>{t('details.mapUrl')}</Label>
+          <div className="space-y-2">
+            <Label className="text-sm flex items-center gap-1">
+              {t('details.mapUrl')}
+              <ExternalLink className="h-3 w-3 text-muted-foreground" />
+            </Label>
             <Input
               type="url"
               value={data.mapUrl}
               onChange={(e) => handleChange('mapUrl', e.target.value)}
               placeholder="https://maps.google.com/..."
             />
+            <p className="text-xs text-muted-foreground">{t('details.mapUrlHint')}</p>
           </div>
         </div>
       )}
@@ -127,26 +140,30 @@ export function DetailsEditor({ data, onChange }: DetailsEditorProps) {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle>{t('details.title')}</CardTitle>
-          <div className="flex items-center gap-2">
-            <Label htmlFor="details-enabled" className="text-sm font-normal">
-              {t('details.enabled')}
-            </Label>
-            <Switch
-              id="details-enabled"
-              checked={data.enabled}
-              onCheckedChange={handleToggleEnabled}
-            />
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30">
+              <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <CardTitle>{t('details.title')}</CardTitle>
+              <CardDescription>{t('details.subtitle')}</CardDescription>
+            </div>
           </div>
+          <Switch
+            checked={data.enabled}
+            onCheckedChange={handleToggleEnabled}
+          />
         </div>
       </CardHeader>
 
       {data.enabled && (
-        <CardContent className="space-y-4">
-          <div className="grid gap-2">
-            <Label htmlFor="details-title">{t('details.sectionTitle')}</Label>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="details-title" className="text-sm font-medium">
+              {t('details.sectionTitle')}
+            </Label>
             <Input
               id="details-title"
               value={data.title}
@@ -155,13 +172,13 @@ export function DetailsEditor({ data, onChange }: DetailsEditorProps) {
           </div>
 
           <VenueEditor
-            label={t('details.ceremony.title')}
+            type="ceremony"
             data={data.ceremony}
             onChange={handleCeremonyChange}
           />
 
           <VenueEditor
-            label={t('details.reception.title')}
+            type="reception"
             data={data.reception}
             onChange={handleReceptionChange}
           />

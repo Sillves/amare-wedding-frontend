@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import { getIntlLocale } from '@/lib/dateLocale';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './elegantClassic.css';
 
@@ -108,14 +110,19 @@ const parseCoupleNames = (coupleNames: string): { name1: string; name2: string }
   return { name1: coupleNames, name2: '' };
 };
 
-// Get localized "and" connector based on detected language
-const getLocalizedConnector = (coupleNames: string): string => {
-  // Detect language from the original connector used
+// Get connector based on what was typed, with i18n fallback
+const getConnector = (coupleNames: string, i18nConnector: string): string => {
+  // First check for symbol connectors - preserve as-is
+  if (coupleNames.includes(' & ')) return '&';
+  if (coupleNames.includes(' + ')) return '+';
+  // Check for word connectors - preserve what user typed
   if (coupleNames.includes(' en ')) return 'en'; // Dutch
   if (coupleNames.includes(' und ')) return 'und'; // German
   if (coupleNames.includes(' et ')) return 'et'; // French
+  if (coupleNames.includes(' and ')) return 'and'; // English
   if (coupleNames.includes(' e ')) return 'e'; // Italian/Portuguese
-  return 'and'; // Default English
+  // Default to localized connector from i18n
+  return i18nConnector;
 };
 
 export function ElegantClassicTemplate({
@@ -124,16 +131,20 @@ export function ElegantClassicTemplate({
   weddingSlug,
   events,
 }: ElegantClassicTemplateProps) {
+  const { t, i18n } = useTranslation('website');
+  const locale = getIntlLocale(i18n.language);
+
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
 
   const initials = getInitials(hero.coupleNames);
   const coupleNamesParsed = parseCoupleNames(hero.coupleNames);
-  const localizedConnector = getLocalizedConnector(hero.coupleNames);
+  // Get connector - preserves "&" or "+" if typed, otherwise uses i18n "and"
+  const connector = getConnector(hero.coupleNames, t('preview.and'));
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(locale, {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -143,7 +154,7 @@ export function ElegantClassicTemplate({
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
+    return date.toLocaleTimeString(locale, {
       hour: 'numeric',
       minute: '2-digit',
     });
@@ -183,7 +194,7 @@ export function ElegantClassicTemplate({
           {coupleNamesParsed.name2 ? (
             <h1 className="ec-couple-names">
               <span className="ec-name">{coupleNamesParsed.name1}</span>
-              <span className="ec-couple-names-connector">{localizedConnector}</span>
+              <span className="ec-couple-names-connector">{connector}</span>
               <span className="ec-name">{coupleNamesParsed.name2}</span>
             </h1>
           ) : (
@@ -272,7 +283,7 @@ export function ElegantClassicTemplate({
                     rel="noopener noreferrer"
                     className="ec-map-link"
                   >
-                    View on Map
+                    {t('preview.viewOnMap')}
                   </a>
                 )}
               </div>
@@ -297,7 +308,7 @@ export function ElegantClassicTemplate({
                     rel="noopener noreferrer"
                     className="ec-map-link"
                   >
-                    View on Map
+                    {t('preview.viewOnMap')}
                   </a>
                 )}
               </div>
@@ -318,7 +329,7 @@ export function ElegantClassicTemplate({
                 <h3>{event.name}</h3>
                 <p className="ec-event-location">{event.location}</p>
                 <p className="ec-event-time">
-                  {formatDate(event.startDate)} at {formatTime(event.startDate)}
+                  {formatDate(event.startDate)} {t('preview.at')} {formatTime(event.startDate)}
                 </p>
                 {event.description && <p>{event.description}</p>}
               </div>
@@ -353,11 +364,11 @@ export function ElegantClassicTemplate({
           <p className="ec-rsvp-description">{rsvp.description}</p>
           {rsvp.deadline && (
             <p className="ec-rsvp-deadline">
-              Please respond by {formatDate(rsvp.deadline)}
+              {t('preview.respondBy')} {formatDate(rsvp.deadline)}
             </p>
           )}
           <a href={`/rsvp/${weddingSlug}`} className="ec-rsvp-button">
-            RSVP Now
+            {t('preview.rsvpNow')}
           </a>
         </section>
       )}

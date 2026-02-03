@@ -15,7 +15,6 @@ import { EditGuestDialog } from '@/features/guests/components/EditGuestDialog';
 import { DeleteGuestDialog } from '@/features/guests/components/DeleteGuestDialog';
 import { SendInvitationDialog } from '@/features/guests/components/SendInvitationDialog';
 import { BulkInvitationDialog } from '@/features/guests/components/BulkInvitationDialog';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import type { GuestDto } from '@/features/weddings/types';
@@ -253,7 +252,6 @@ export function GuestsPage() {
             <div className="hidden sm:flex items-center gap-2">
               <FontSizeSwitcher />
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <span className="hidden md:inline text-sm text-muted-foreground">{user?.name}</span>
             <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">

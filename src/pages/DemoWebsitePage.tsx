@@ -18,7 +18,6 @@ import {
   RsvpEditor,
   FooterEditor,
 } from '@/features/website/components/sections';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import type { WebsiteContent, WebsiteTemplate } from '@/features/website/types';
 
@@ -82,7 +81,6 @@ function DemoWebsiteContent() {
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="hidden sm:flex items-center gap-1 sm:gap-3">
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/')}>
               {t('demo:exitDemo')}

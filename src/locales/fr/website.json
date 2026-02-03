@@ -25,7 +25,22 @@
     "viewLive": "Voir en direct"
   },
   "preview": {
-    "title": "Aperçu"
+    "title": "Aperçu",
+    "tagline": "Nous allons nous marier",
+    "and": "et",
+    "weddingOf": "Le Mariage De",
+    "together": "Avec leurs familles",
+    "viewOnMap": "Voir sur la Carte",
+    "getDirections": "Itinéraire",
+    "viewLocation": "Voir l'Emplacement",
+    "respondBy": "Veuillez répondre avant le",
+    "kindlyRespondBy": "Merci de répondre avant le",
+    "rsvpNow": "RSVP Maintenant",
+    "respond": "Répondre",
+    "rsvpButton": "RSVP",
+    "ceremonyLabel": "Cérémonie",
+    "receptionLabel": "Réception",
+    "at": "à"
   },
   "templates": {
     "title": "Choisir un Modèle",
@@ -45,43 +60,57 @@
   },
   "hero": {
     "title": "Section Hero",
+    "subtitle": "La première chose que vos invités voient",
     "coupleNames": "Noms du Couple",
     "coupleNamesPlaceholder": "Emma & James",
+    "coupleNamesHint": "Utilisez '&' ou 'et' pour séparer les noms",
     "date": "Date du Mariage",
+    "datePlaceholder": "Sélectionnez la date du mariage",
     "tagline": "Slogan",
     "taglinePlaceholder": "Nous allons nous marier!",
     "backgroundImage": "Image de Fond",
+    "backgroundImageHint": "Une belle photo aide à définir le ton de votre site",
     "displayStyle": "Style d'Affichage",
     "styles": {
       "centered": "Centré",
+      "centeredDesc": "Noms et date centrés sur la page",
       "left": "Aligné à Gauche",
-      "overlay": "Superposition"
+      "leftDesc": "Noms et date alignés à gauche",
+      "overlay": "Superposition",
+      "overlayDesc": "Texte superposé sur l'image de fond"
     }
   },
   "story": {
     "title": "Notre Histoire",
+    "subtitle": "Partagez votre parcours ensemble",
     "enabled": "Afficher la Section",
     "sectionTitle": "Titre de la Section",
     "displayType": "Type d'Affichage",
     "types": {
       "timeline": "Chronologie",
-      "narrative": "Narration"
+      "timelineDesc": "Jalons chronologiques avec dates",
+      "narrative": "Narration",
+      "narrativeDesc": "Histoire fluide avec images alternées"
     },
     "items": "Éléments de l'Histoire",
+    "itemsHint": "Ajoutez des moments clés de votre relation",
     "addItem": "Ajouter",
+    "addFirstItem": "Ajoutez Votre Premier Moment",
     "untitledItem": "Nouvel Élément",
-    "noItems": "Pas encore d'éléments. Cliquez sur 'Ajouter' pour commencer.",
+    "noItems": "Pas encore d'éléments. Ajoutez des moments de votre histoire d'amour.",
     "item": {
       "title": "Titre",
       "titlePlaceholder": "ex. Première Rencontre",
       "date": "Date",
       "description": "Description",
+      "descriptionPlaceholder": "Racontez l'histoire de ce moment...",
       "image": "Image"
     },
     "removeItem": "Supprimer"
   },
   "details": {
     "title": "Détails du Mariage",
+    "subtitle": "Aidez les invités à trouver vos lieux",
     "enabled": "Afficher la Section",
     "sectionTitle": "Titre de la Section",
     "show": "Afficher",
@@ -91,11 +120,15 @@
     "address": "Adresse",
     "addressPlaceholder": "ex. 1 Rue du Château, Versailles",
     "dateTime": "Date & Heure",
+    "dateTimePlaceholder": "Sélectionnez la date et l'heure",
     "description": "Description",
     "descriptionPlaceholder": "Description optionnelle...",
-    "mapUrl": "URL Google Maps",
+    "mapUrl": "Lien Google Maps",
+    "mapUrlHint": "Collez un lien pour que les invités puissent obtenir l'itinéraire",
     "ceremony": {
       "title": "Cérémonie",
+      "description": "Où vous direz 'oui'",
+      "titlePlaceholder": "La Cérémonie",
       "enabled": "Afficher la Cérémonie",
       "sectionTitle": "Titre",
       "venue": "Nom du Lieu",
@@ -105,6 +138,8 @@
     },
     "reception": {
       "title": "Réception",
+      "description": "Où vous célébrerez",
+      "titlePlaceholder": "La Réception",
       "enabled": "Afficher la Réception",
       "sectionTitle": "Titre",
       "venue": "Nom du Lieu",
@@ -122,37 +157,53 @@
   },
   "gallery": {
     "title": "Galerie Photo",
+    "subtitle": "Partagez vos photos préférées",
     "enabled": "Afficher la Section",
     "sectionTitle": "Titre de la Section",
     "displayType": "Type d'Affichage",
     "types": {
       "grid": "Grille",
+      "gridDesc": "Tuiles uniformes dans une grille propre",
       "masonry": "Masonry",
-      "carousel": "Carrousel"
+      "masonryDesc": "Style Pinterest avec hauteurs variées",
+      "carousel": "Carrousel",
+      "carouselDesc": "Diaporama à faire défiler"
     },
     "images": "Images de la Galerie",
-    "addImage": "Ajouter une Image",
+    "imageCount": "{{count}} photos",
+    "imageCount_one": "{{count}} photo",
+    "noImagesYet": "Aucune photo ajoutée",
+    "addImage": "Ajouter des Photos",
     "noImages": "Pas encore d'images. Cliquez sur 'Ajouter une Image' pour commencer.",
-    "caption": "Légende",
-    "removeImage": "Supprimer"
+    "caption": "Ajouter une légende...",
+    "remove": "Supprimer",
+    "removeImage": "Supprimer",
+    "dropzone": "Cliquez pour ajouter des photos",
+    "dropzoneHint": "JPEG, PNG ou WebP jusqu'à 5Mo"
   },
   "rsvp": {
     "title": "Section RSVP",
+    "subtitle": "Permettez aux invités de répondre à votre invitation",
     "enabled": "Afficher la Section",
     "sectionTitle": "Titre de la Section",
     "description": "Description",
     "descriptionPlaceholder": "Veuillez nous faire savoir si vous pouvez venir...",
     "deadline": "Date Limite RSVP",
+    "deadlinePlaceholder": "Sélectionnez la date limite",
+    "deadlineHint": "Donnez aux invités assez de temps pour répondre, mais pas trop!",
     "buttonText": "Texte du Bouton",
     "buttonTextPlaceholder": "RSVP Maintenant",
-    "linkNote": "Le bouton RSVP renvoie automatiquement vers votre page RSVP où les invités peuvent répondre."
+    "linkNoteTitle": "Comment fonctionne le RSVP",
+    "linkNote": "Les invités seront dirigés vers votre page RSVP où ils pourront répondre avec leur présence et leurs exigences alimentaires."
   },
   "footer": {
     "title": "Pied de Page",
+    "subtitle": "Informations de contact et message de clôture",
     "enabled": "Afficher le Pied de Page",
     "contactEmail": "Email de Contact",
     "contactEmailPlaceholder": "ex. mariage@exemple.fr",
-    "customMessage": "Message Personnalisé",
+    "contactEmailHint": "Un email où les invités peuvent vous joindre pour des questions",
+    "customMessage": "Message de Clôture",
     "customMessagePlaceholder": "Nous avons hâte de célébrer avec vous!"
   },
   "upload": {
@@ -186,5 +237,31 @@
     "title": "Date de Mariage Requise",
     "description": "Veuillez définir la date de votre mariage avant de créer votre site. La date est utilisée pour le compte à rebours et la date limite RSVP.",
     "button": "Modifier le Mariage"
+  },
+  "defaults": {
+    "hero": {
+      "tagline": "Nous allons nous marier!"
+    },
+    "story": {
+      "title": "Notre Histoire"
+    },
+    "details": {
+      "title": "Détails du Mariage",
+      "ceremony": "Cérémonie",
+      "reception": "Réception"
+    },
+    "events": {
+      "title": "Programme"
+    },
+    "gallery": {
+      "title": "Galerie"
+    },
+    "rsvp": {
+      "title": "RSVP",
+      "description": "Veuillez nous faire savoir si vous pouvez assister"
+    },
+    "footer": {
+      "message": "Nous avons hâte de célébrer avec vous!"
+    }
   }
 }

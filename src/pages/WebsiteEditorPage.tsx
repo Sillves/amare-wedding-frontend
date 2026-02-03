@@ -7,9 +7,10 @@ import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import {
   useWebsite,
   useCreateWebsite,
+  useUpdateWebsite,
 } from '@/features/website/hooks/useWebsite';
+import { getDefaultContent, getDefaultSettings } from '@/features/website/utils/defaultContent';
 import { WebsiteEditor } from '@/features/website/components/WebsiteEditor';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 
@@ -48,6 +49,7 @@ export function WebsiteEditorPage() {
   const { user } = useAuth();
   const { isLoading: userLoading } = useCurrentUser();
   const createWebsite = useCreateWebsite();
+  const updateWebsite = useUpdateWebsite();
 
   const weddingIdFromUrl = searchParams.get('weddingId');
   const { data: weddings, isLoading: weddingsLoading } = useWeddings();
@@ -74,10 +76,34 @@ export function WebsiteEditorPage() {
   })();
 
   const handleCreateWebsite = async () => {
-    if (!selectedWeddingId) return;
+    if (!selectedWeddingId || !selectedWedding) return;
+
+    // Create the website with default template
     await createWebsite.mutateAsync({
       weddingId: selectedWeddingId,
       data: { template: 0 }, // 0 = ElegantClassic
+    });
+
+    // Get localized default content based on user's language
+    const coupleNames = selectedWedding.title || '';
+    const weddingDate = selectedWedding.date || new Date().toISOString();
+    const weddingLocation = selectedWedding.location || '';
+
+    // Use translation function with 'website' namespace
+    const localizedContent = getDefaultContent(
+      coupleNames,
+      weddingDate,
+      weddingLocation,
+      (key: string) => t(`website:${key}`)
+    );
+
+    // Get default settings for the template (ensures consistent colors)
+    const defaultSettings = getDefaultSettings(0); // 0 = ElegantClassic
+
+    // Update the website with localized content and correct settings
+    await updateWebsite.mutateAsync({
+      weddingId: selectedWeddingId,
+      data: { content: localizedContent, settings: defaultSettings },
     });
   };
 
@@ -250,11 +276,11 @@ export function WebsiteEditorPage() {
               </p>
               <Button
                 onClick={handleCreateWebsite}
-                disabled={createWebsite.isPending}
+                disabled={createWebsite.isPending || updateWebsite.isPending}
                 className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow"
               >
                 <Sparkles className="h-4 w-4 mr-2" />
-                {createWebsite.isPending
+                {(createWebsite.isPending || updateWebsite.isPending)
                   ? t('website:create.creating')
                   : t('website:create.button')}
               </Button>
@@ -303,7 +329,6 @@ export function WebsiteEditorPage() {
             <div className="hidden sm:flex items-center gap-2">
               <FontSizeSwitcher />
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
           </div>
         </div>

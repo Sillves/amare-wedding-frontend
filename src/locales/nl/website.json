@@ -25,7 +25,22 @@
     "viewLive": "Bekijk Live"
   },
   "preview": {
-    "title": "Voorbeeld"
+    "title": "Voorbeeld",
+    "tagline": "Wij gaan trouwen",
+    "and": "en",
+    "weddingOf": "De Bruiloft Van",
+    "together": "Samen met hun families",
+    "viewOnMap": "Bekijk op Kaart",
+    "getDirections": "Routebeschrijving",
+    "viewLocation": "Bekijk Locatie",
+    "respondBy": "Graag reactie voor",
+    "kindlyRespondBy": "Graag reactie voor",
+    "rsvpNow": "RSVP Nu",
+    "respond": "Reageer",
+    "rsvpButton": "RSVP",
+    "ceremonyLabel": "Ceremonie",
+    "receptionLabel": "Receptie",
+    "at": "om"
   },
   "templates": {
     "title": "Kies Sjabloon",
@@ -45,43 +60,57 @@
   },
   "hero": {
     "title": "Hero Sectie",
+    "subtitle": "Het eerste wat gasten op je website zien",
     "coupleNames": "Namen van het Paar",
     "coupleNamesPlaceholder": "Emma & James",
+    "coupleNamesHint": "Gebruik '&' of 'en' om namen te scheiden voor de beste weergave",
     "date": "Trouwdatum",
+    "datePlaceholder": "Selecteer je trouwdatum",
     "tagline": "Slogan",
     "taglinePlaceholder": "Wij gaan trouwen!",
     "backgroundImage": "Achtergrondafbeelding",
+    "backgroundImageHint": "Een mooie foto helpt de toon van je website te zetten",
     "displayStyle": "Weergavestijl",
     "styles": {
       "centered": "Gecentreerd",
+      "centeredDesc": "Namen en datum gecentreerd op de pagina",
       "left": "Links Uitgelijnd",
-      "overlay": "Overlay"
+      "leftDesc": "Namen en datum links uitgelijnd",
+      "overlay": "Overlay",
+      "overlayDesc": "Tekst over de achtergrondafbeelding"
     }
   },
   "story": {
     "title": "Ons Verhaal",
+    "subtitle": "Deel jullie reis samen",
     "enabled": "Sectie Tonen",
     "sectionTitle": "Sectie Titel",
     "displayType": "Weergavetype",
     "types": {
       "timeline": "Tijdlijn",
-      "narrative": "Verhaal"
+      "timelineDesc": "Chronologische mijlpalen met datums",
+      "narrative": "Verhaal",
+      "narrativeDesc": "Vloeiend verhaal met afwisselende afbeeldingen"
     },
     "items": "Verhaal Items",
+    "itemsHint": "Voeg mijlpalen uit jullie relatie toe",
     "addItem": "Item Toevoegen",
+    "addFirstItem": "Voeg Je Eerste Moment Toe",
     "untitledItem": "Nieuw Item",
-    "noItems": "Nog geen items. Klik op 'Item Toevoegen' om te beginnen.",
+    "noItems": "Nog geen items. Voeg momenten uit jullie liefdesverhaal toe.",
     "item": {
       "title": "Titel",
       "titlePlaceholder": "bijv. Eerste Ontmoeting",
       "date": "Datum",
       "description": "Beschrijving",
+      "descriptionPlaceholder": "Vertel het verhaal van dit moment...",
       "image": "Afbeelding"
     },
     "removeItem": "Verwijderen"
   },
   "details": {
     "title": "Trouwdetails",
+    "subtitle": "Help gasten je locaties te vinden",
     "enabled": "Sectie Tonen",
     "sectionTitle": "Sectie Titel",
     "show": "Tonen",
@@ -91,11 +120,15 @@
     "address": "Adres",
     "addressPlaceholder": "bijv. Kasteellaan 1, Utrecht",
     "dateTime": "Datum & Tijd",
+    "dateTimePlaceholder": "Selecteer datum en tijd",
     "description": "Beschrijving",
     "descriptionPlaceholder": "Optionele beschrijving...",
-    "mapUrl": "Google Maps URL",
+    "mapUrl": "Google Maps Link",
+    "mapUrlHint": "Plak een link zodat gasten de route kunnen vinden",
     "ceremony": {
       "title": "Ceremonie",
+      "description": "Waar jullie 'ja' zeggen",
+      "titlePlaceholder": "De Ceremonie",
       "enabled": "Ceremonie Tonen",
       "sectionTitle": "Titel",
       "venue": "Locatie Naam",
@@ -105,6 +138,8 @@
     },
     "reception": {
       "title": "Receptie",
+      "description": "Waar jullie vieren",
+      "titlePlaceholder": "De Receptie",
       "enabled": "Receptie Tonen",
       "sectionTitle": "Titel",
       "venue": "Locatie Naam",
@@ -122,37 +157,53 @@
   },
   "gallery": {
     "title": "Fotogalerij",
+    "subtitle": "Deel je favoriete foto's",
     "enabled": "Sectie Tonen",
     "sectionTitle": "Sectie Titel",
     "displayType": "Weergavetype",
     "types": {
       "grid": "Raster",
+      "gridDesc": "Uniforme tegels in een strak raster",
       "masonry": "Masonry",
-      "carousel": "Carrousel"
+      "masonryDesc": "Pinterest-stijl met variërende hoogtes",
+      "carousel": "Carrousel",
+      "carouselDesc": "Veegbare slideshow"
     },
     "images": "Galerij Afbeeldingen",
-    "addImage": "Afbeelding Toevoegen",
+    "imageCount": "{{count}} foto's",
+    "imageCount_one": "{{count}} foto",
+    "noImagesYet": "Nog geen foto's toegevoegd",
+    "addImage": "Foto's Toevoegen",
     "noImages": "Nog geen afbeeldingen. Klik op 'Afbeelding Toevoegen' om te beginnen.",
-    "caption": "Bijschrift",
-    "removeImage": "Verwijderen"
+    "caption": "Voeg een bijschrift toe...",
+    "remove": "Verwijderen",
+    "removeImage": "Verwijderen",
+    "dropzone": "Klik om foto's toe te voegen",
+    "dropzoneHint": "JPEG, PNG of WebP tot 5MB"
   },
   "rsvp": {
     "title": "RSVP Sectie",
+    "subtitle": "Laat gasten reageren op je uitnodiging",
     "enabled": "Sectie Tonen",
     "sectionTitle": "Sectie Titel",
     "description": "Beschrijving",
     "descriptionPlaceholder": "Laat ons weten of je erbij kunt zijn...",
     "deadline": "RSVP Deadline",
+    "deadlinePlaceholder": "Selecteer deadline datum",
+    "deadlineHint": "Geef gasten genoeg tijd om te reageren, maar niet te lang!",
     "buttonText": "Knop Tekst",
     "buttonTextPlaceholder": "RSVP Nu",
-    "linkNote": "De RSVP knop linkt automatisch naar je RSVP pagina waar gasten kunnen reageren."
+    "linkNoteTitle": "Hoe RSVP Werkt",
+    "linkNote": "Gasten worden doorgestuurd naar je RSVP pagina waar ze kunnen reageren met hun aanwezigheid en eventuele dieetwensen."
   },
   "footer": {
     "title": "Footer",
+    "subtitle": "Contactgegevens en afsluitend bericht",
     "enabled": "Footer Tonen",
     "contactEmail": "Contact E-mail",
     "contactEmailPlaceholder": "bijv. bruiloft@voorbeeld.nl",
-    "customMessage": "Aangepast Bericht",
+    "contactEmailHint": "Een e-mailadres waar gasten je kunnen bereiken met vragen",
+    "customMessage": "Afsluitend Bericht",
     "customMessagePlaceholder": "We kunnen niet wachten om met jullie te vieren!"
   },
   "upload": {
@@ -186,5 +237,31 @@
     "title": "Trouwdatum Vereist",
     "description": "Stel eerst je trouwdatum in voordat je je website maakt. De datum wordt gebruikt voor de afteltimer en RSVP deadline.",
     "button": "Bruiloft Bewerken"
+  },
+  "defaults": {
+    "hero": {
+      "tagline": "Wij gaan trouwen!"
+    },
+    "story": {
+      "title": "Ons Verhaal"
+    },
+    "details": {
+      "title": "Trouwdetails",
+      "ceremony": "Ceremonie",
+      "reception": "Receptie"
+    },
+    "events": {
+      "title": "Programma"
+    },
+    "gallery": {
+      "title": "Galerij"
+    },
+    "rsvp": {
+      "title": "RSVP",
+      "description": "Laat ons weten of je erbij kunt zijn"
+    },
+    "footer": {
+      "message": "We kunnen niet wachten om met jullie te vieren!"
+    }
   }
 }

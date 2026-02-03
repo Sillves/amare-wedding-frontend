@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
+import { getDateFnsLocale } from '@/lib/dateLocale';
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +22,8 @@ interface ExpenseTableProps {
 }
 
 export function ExpenseTable({ expenses, onEdit, onDelete }: ExpenseTableProps) {
-  const { t } = useTranslation(['expenses', 'common']);
+  const { t, i18n } = useTranslation(['expenses', 'common']);
+  const locale = getDateFnsLocale(i18n.language);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('nl-NL', {
@@ -50,7 +52,7 @@ export function ExpenseTable({ expenses, onEdit, onDelete }: ExpenseTableProps) 
       sortable: true,
       render: (expense) => (
         <span className="font-medium">
-          {expense.date ? format(new Date(expense.date), 'dd MMM yyyy') : '-'}
+          {expense.date ? format(new Date(expense.date), 'dd MMM yyyy', { locale }) : '-'}
         </span>
       ),
       sortFn: (a, b) => {
