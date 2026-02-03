@@ -1,8 +1,17 @@
 import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
+import { useTranslation } from 'react-i18next';
+import { enUS, nl, fr } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
+
+// Map i18n language codes to date-fns locales
+const localeMap: Record<string, typeof enUS> = {
+  en: enUS,
+  nl: nl,
+  fr: fr,
+};
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -13,6 +22,8 @@ function Calendar({
   captionLayout = 'dropdown',
   ...props
 }: CalendarProps) {
+  const { i18n } = useTranslation();
+  const locale = localeMap[i18n.language] || enUS;
   // Default date range for dropdown: 10 years back, 10 years forward
   const currentYear = new Date().getFullYear();
   const defaultStartMonth = props.startMonth || new Date(currentYear - 10, 0);
@@ -20,6 +31,7 @@ function Calendar({
 
   return (
     <DayPicker
+      locale={locale}
       showOutsideDays={showOutsideDays}
       captionLayout={captionLayout}
       startMonth={defaultStartMonth}

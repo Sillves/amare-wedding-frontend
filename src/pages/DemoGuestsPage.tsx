@@ -13,7 +13,6 @@ import {
   DemoEditGuestDialog,
   DemoDeleteGuestDialog,
 } from '@/features/demo/components/DemoGuestDialogs';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import type { GuestDto } from '@/features/weddings/types';
 
@@ -88,7 +87,6 @@ function DemoGuestsContent() {
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="hidden sm:flex items-center gap-1 sm:gap-3">
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/')}>
               {t('demo:exitDemo')}

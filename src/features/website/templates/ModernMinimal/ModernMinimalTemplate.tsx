@@ -43,7 +43,7 @@ export function ModernMinimalTemplate({
   weddingSlug,
   events,
 }: ModernMinimalTemplateProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('website');
   const locale = localeMap[i18n.language] || 'en-US';
 
   const { hero, story, details, gallery, rsvp, footer } = content;
@@ -107,7 +107,7 @@ export function ModernMinimalTemplate({
         }}
       >
         <div className={`mm-hero-content mm-hero-${hero.displayStyle}`}>
-          <span className="mm-hero-label">The Wedding Of</span>
+          <span className="mm-hero-label">{t('preview.weddingOf')}</span>
 
           <h1 className="mm-couple-names">
             {coupleNames.name2 ? (

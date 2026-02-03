@@ -226,5 +226,31 @@
     "title": "Trouwdatum Vereist",
     "description": "Stel eerst je trouwdatum in voordat je je website maakt. De datum wordt gebruikt voor de afteltimer en RSVP deadline.",
     "button": "Bruiloft Bewerken"
+  },
+  "defaults": {
+    "hero": {
+      "tagline": "Wij gaan trouwen!"
+    },
+    "story": {
+      "title": "Ons Verhaal"
+    },
+    "details": {
+      "title": "Trouwdetails",
+      "ceremony": "Ceremonie",
+      "reception": "Receptie"
+    },
+    "events": {
+      "title": "Programma"
+    },
+    "gallery": {
+      "title": "Galerij"
+    },
+    "rsvp": {
+      "title": "RSVP",
+      "description": "Laat ons weten of je erbij kunt zijn"
+    },
+    "footer": {
+      "message": "We kunnen niet wachten om met jullie te vieren!"
+    }
   }
 }

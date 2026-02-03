@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { SEO } from '@/shared/components/seo';
 
 type BillingCycle = 'Monthly' | 'Annual' | 'Lifetime';
@@ -144,7 +143,6 @@ export function PricingPage() {
             {t('common:appName')}
           </h1>
           <div className="flex items-center gap-4">
-            <LanguageSwitcher />
             {isAuthenticated ? (
               <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
                 {t('billing:backToDashboard')}

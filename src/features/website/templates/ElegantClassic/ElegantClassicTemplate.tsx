@@ -116,14 +116,19 @@ const parseCoupleNames = (coupleNames: string): { name1: string; name2: string }
   return { name1: coupleNames, name2: '' };
 };
 
-// Get localized "and" connector based on detected language
-const getLocalizedConnector = (coupleNames: string): string => {
-  // Detect language from the original connector used
+// Get connector based on what was typed, with i18n fallback
+const getConnector = (coupleNames: string, i18nConnector: string): string => {
+  // First check for symbol connectors - preserve as-is
+  if (coupleNames.includes(' & ')) return '&';
+  if (coupleNames.includes(' + ')) return '+';
+  // Check for word connectors - preserve what user typed
   if (coupleNames.includes(' en ')) return 'en'; // Dutch
   if (coupleNames.includes(' und ')) return 'und'; // German
   if (coupleNames.includes(' et ')) return 'et'; // French
+  if (coupleNames.includes(' and ')) return 'and'; // English
   if (coupleNames.includes(' e ')) return 'e'; // Italian/Portuguese
-  return 'and'; // Default English
+  // Default to localized connector from i18n
+  return i18nConnector;
 };
 
 export function ElegantClassicTemplate({
@@ -132,7 +137,7 @@ export function ElegantClassicTemplate({
   weddingSlug,
   events,
 }: ElegantClassicTemplateProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('website');
   const locale = localeMap[i18n.language] || 'en-US';
 
   const { hero, story, details, gallery, rsvp, footer } = content;
@@ -140,7 +145,8 @@ export function ElegantClassicTemplate({
 
   const initials = getInitials(hero.coupleNames);
   const coupleNamesParsed = parseCoupleNames(hero.coupleNames);
-  const localizedConnector = getLocalizedConnector(hero.coupleNames);
+  // Get connector - preserves "&" or "+" if typed, otherwise uses i18n "and"
+  const connector = getConnector(hero.coupleNames, t('preview.and'));
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -194,7 +200,7 @@ export function ElegantClassicTemplate({
           {coupleNamesParsed.name2 ? (
             <h1 className="ec-couple-names">
               <span className="ec-name">{coupleNamesParsed.name1}</span>
-              <span className="ec-couple-names-connector">{localizedConnector}</span>
+              <span className="ec-couple-names-connector">{connector}</span>
               <span className="ec-name">{coupleNamesParsed.name2}</span>
             </h1>
           ) : (

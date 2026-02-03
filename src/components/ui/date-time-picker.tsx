@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { format } from 'date-fns';
+import { enUS, nl, fr } from 'date-fns/locale';
+import { useTranslation } from 'react-i18next';
 import { CalendarIcon, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -16,6 +18,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+
+// Map i18n language codes to date-fns locales
+const localeMap: Record<string, typeof enUS> = {
+  en: enUS,
+  nl: nl,
+  fr: fr,
+};
 
 // Generate hour options (00-23)
 const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
@@ -39,6 +48,8 @@ export function DateTimePicker({
   showTime = true,
   minDate,
 }: DateTimePickerProps) {
+  const { i18n } = useTranslation();
+  const locale = localeMap[i18n.language] || enUS;
   const [open, setOpen] = React.useState(false);
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -88,7 +99,7 @@ export function DateTimePicker({
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {value ? (
-            showTime ? format(value, 'PPP HH:mm') : format(value, 'PPP')
+            showTime ? format(value, 'PPP HH:mm', { locale }) : format(value, 'PPP', { locale })
           ) : (
             <span>{placeholder}</span>
           )}

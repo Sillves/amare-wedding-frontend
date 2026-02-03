@@ -128,7 +128,7 @@ export function RomanticGardenTemplate({
   weddingSlug,
   events,
 }: RomanticGardenTemplateProps) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('website');
   const locale = localeMap[i18n.language] || 'en-US';
 
   const { hero, story, details, gallery, rsvp, footer } = content;
@@ -180,7 +180,7 @@ export function RomanticGardenTemplate({
         <div className="rg-hero-overlay" />
         <div className={`rg-hero-content rg-hero-${hero.displayStyle}`}>
           <FloralDivider />
-          <p className="rg-together">Together with their families</p>
+          <p className="rg-together">{t('preview.together')}</p>
           <h1 className="rg-couple-names">{hero.coupleNames}</h1>
           {hero.tagline && <p className="rg-tagline">{hero.tagline}</p>}
           <div className="rg-date-wrapper">

@@ -1,6 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
+import { enUS, nl, fr } from 'date-fns/locale';
 import { Calendar, MapPin, Clock, Users, Pencil, Trash2, UserPlus, MoreVertical } from 'lucide-react';
+
+// Map i18n language codes to date-fns locales
+const localeMap: Record<string, typeof enUS> = {
+  en: enUS,
+  nl: nl,
+  fr: fr,
+};
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -21,11 +29,12 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGuests }: EventCardProps) {
-  const { t } = useTranslation('events');
+  const { t, i18n } = useTranslation('events');
+  const locale = localeMap[i18n.language] || enUS;
 
   const formatDateTime = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'PPp');
+      return format(new Date(dateString), 'PPp', { locale });
     } catch {
       return dateString;
     }
@@ -33,7 +42,7 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
 
   const formatDateShort = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'MMM d, p');
+      return format(new Date(dateString), 'MMM d, p', { locale });
     } catch {
       return dateString;
     }
@@ -41,7 +50,7 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
 
   const formatTime = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'p');
+      return format(new Date(dateString), 'p', { locale });
     } catch {
       return dateString;
     }

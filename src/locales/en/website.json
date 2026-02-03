@@ -226,5 +226,31 @@
     "title": "Wedding Date Required",
     "description": "Please set your wedding date before creating your website. The date is used to display your countdown timer and RSVP deadline.",
     "button": "Edit Wedding Details"
+  },
+  "defaults": {
+    "hero": {
+      "tagline": "We're getting married!"
+    },
+    "story": {
+      "title": "Our Story"
+    },
+    "details": {
+      "title": "Wedding Details",
+      "ceremony": "Ceremony",
+      "reception": "Reception"
+    },
+    "events": {
+      "title": "Schedule"
+    },
+    "gallery": {
+      "title": "Gallery"
+    },
+    "rsvp": {
+      "title": "RSVP",
+      "description": "Please let us know if you can attend"
+    },
+    "footer": {
+      "message": "We can't wait to celebrate with you!"
+    }
   }
 }

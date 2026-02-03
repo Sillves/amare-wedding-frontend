@@ -18,15 +18,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, differenceInDays, isToday, parseISO } from 'date-fns';
+import { enUS, nl, fr } from 'date-fns/locale';
 import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
+
+// Map i18n language codes to date-fns locales
+const localeMap: Record<string, typeof enUS> = {
+  en: enUS,
+  nl: nl,
+  fr: fr,
+};
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
 import { getDemoData } from '@/features/demo/data';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { SEO } from '@/shared/components/seo';
 
 function DemoDashboardContent() {
   const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'demo', 'expenses', 'website']);
+  const locale = localeMap[i18n.language] || enUS;
   const navigate = useNavigate();
   const { guests, events, expenseSummary } = useDemoContext();
 
@@ -108,7 +116,6 @@ function DemoDashboardContent() {
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="hidden sm:flex items-center gap-1 sm:gap-3">
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/')}>
               {t('demo:exitDemo')}
@@ -189,7 +196,7 @@ function DemoDashboardContent() {
                 <div>
                   <p className="text-sm font-medium">{t('weddings:details.date')}</p>
                   <p className="text-sm text-muted-foreground">
-                    {wedding.date ? format(parseISO(wedding.date), 'PPP') : '-'}
+                    {wedding.date ? format(parseISO(wedding.date), 'PPP', { locale }) : '-'}
                   </p>
                 </div>
               </div>
@@ -335,7 +342,7 @@ function DemoDashboardContent() {
                         <p className="font-medium text-sm">{event.name}</p>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Calendar className="h-3 w-3" />
-                          {event.startDate && format(parseISO(event.startDate), 'PPp')}
+                          {event.startDate && format(parseISO(event.startDate), 'PPp', { locale })}
                         </div>
                         {event.location && (
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">

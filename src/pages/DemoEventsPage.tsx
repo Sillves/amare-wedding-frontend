@@ -14,7 +14,6 @@ import {
   DemoDeleteEventDialog,
 } from '@/features/demo/components/DemoEventDialogs';
 import { DemoManageEventGuestsDialog } from '@/features/demo/components/DemoManageEventGuestsDialog';
-import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import type { EventDto } from '@/features/weddings/types';
 
@@ -66,7 +65,6 @@ function DemoEventsContent() {
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="hidden sm:flex items-center gap-1 sm:gap-3">
               <ThemeSwitcher />
-              <LanguageSwitcher />
             </div>
             <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/')}>
               {t('demo:exitDemo')}
