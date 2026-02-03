@@ -45,43 +45,57 @@
   },
   "hero": {
     "title": "Hero Section",
+    "subtitle": "The first thing guests see on your website",
     "coupleNames": "Couple Names",
     "coupleNamesPlaceholder": "Emma & James",
+    "coupleNamesHint": "Use '&' or 'and' to separate names for best display",
     "date": "Wedding Date",
+    "datePlaceholder": "Select your wedding date",
     "tagline": "Tagline",
     "taglinePlaceholder": "We're getting married!",
     "backgroundImage": "Background Image",
+    "backgroundImageHint": "A beautiful photo helps set the tone for your website",
     "displayStyle": "Display Style",
     "styles": {
       "centered": "Centered",
+      "centeredDesc": "Names and date centered on the page",
       "left": "Left Aligned",
-      "overlay": "Overlay"
+      "leftDesc": "Names and date aligned to the left",
+      "overlay": "Overlay",
+      "overlayDesc": "Text overlaid on background image"
     }
   },
   "story": {
     "title": "Our Story",
+    "subtitle": "Share your journey together",
     "enabled": "Show Section",
     "sectionTitle": "Section Title",
     "displayType": "Display Type",
     "types": {
       "timeline": "Timeline",
-      "narrative": "Narrative"
+      "timelineDesc": "Chronological milestones with dates",
+      "narrative": "Narrative",
+      "narrativeDesc": "Flowing story with alternating images"
     },
     "items": "Story Items",
+    "itemsHint": "Add milestones from your relationship",
     "addItem": "Add Item",
+    "addFirstItem": "Add Your First Moment",
     "untitledItem": "New Item",
-    "noItems": "No items yet. Click 'Add Item' to get started.",
+    "noItems": "No items yet. Add moments from your love story.",
     "item": {
       "title": "Title",
       "titlePlaceholder": "e.g. First Meeting",
       "date": "Date",
       "description": "Description",
+      "descriptionPlaceholder": "Tell the story of this moment...",
       "image": "Image"
     },
     "removeItem": "Remove"
   },
   "details": {
     "title": "Wedding Details",
+    "subtitle": "Help guests find your venues",
     "enabled": "Show Section",
     "sectionTitle": "Section Title",
     "show": "Show",
@@ -91,11 +105,15 @@
     "address": "Address",
     "addressPlaceholder": "e.g. 123 Main Street, New York",
     "dateTime": "Date & Time",
+    "dateTimePlaceholder": "Select date and time",
     "description": "Description",
     "descriptionPlaceholder": "Optional description...",
-    "mapUrl": "Google Maps URL",
+    "mapUrl": "Google Maps Link",
+    "mapUrlHint": "Paste a link so guests can get directions",
     "ceremony": {
       "title": "Ceremony",
+      "description": "Where you'll say 'I do'",
+      "titlePlaceholder": "The Ceremony",
       "enabled": "Show Ceremony",
       "sectionTitle": "Title",
       "venue": "Venue Name",
@@ -105,6 +123,8 @@
     },
     "reception": {
       "title": "Reception",
+      "description": "Where you'll celebrate",
+      "titlePlaceholder": "The Reception",
       "enabled": "Show Reception",
       "sectionTitle": "Title",
       "venue": "Venue Name",
@@ -122,37 +142,53 @@
   },
   "gallery": {
     "title": "Photo Gallery",
+    "subtitle": "Share your favorite photos",
     "enabled": "Show Section",
     "sectionTitle": "Section Title",
     "displayType": "Display Type",
     "types": {
       "grid": "Grid",
+      "gridDesc": "Uniform tiles in a clean grid",
       "masonry": "Masonry",
-      "carousel": "Carousel"
+      "masonryDesc": "Pinterest-style varying heights",
+      "carousel": "Carousel",
+      "carouselDesc": "Swipeable slideshow"
     },
     "images": "Gallery Images",
-    "addImage": "Add Image",
+    "imageCount": "{{count}} photos",
+    "imageCount_one": "{{count}} photo",
+    "noImagesYet": "No photos added yet",
+    "addImage": "Add Photos",
     "noImages": "No images yet. Click 'Add Image' to get started.",
-    "caption": "Caption",
-    "removeImage": "Remove"
+    "caption": "Add a caption...",
+    "remove": "Remove",
+    "removeImage": "Remove",
+    "dropzone": "Click to add photos",
+    "dropzoneHint": "JPEG, PNG, or WebP up to 5MB"
   },
   "rsvp": {
     "title": "RSVP Section",
+    "subtitle": "Let guests respond to your invitation",
     "enabled": "Show Section",
     "sectionTitle": "Section Title",
     "description": "Description",
     "descriptionPlaceholder": "Please let us know if you can make it...",
     "deadline": "RSVP Deadline",
+    "deadlinePlaceholder": "Select deadline date",
+    "deadlineHint": "Give guests enough time to respond, but not too long!",
     "buttonText": "Button Text",
     "buttonTextPlaceholder": "RSVP Now",
-    "linkNote": "The RSVP button automatically links to your RSVP page where guests can respond."
+    "linkNoteTitle": "How RSVP Works",
+    "linkNote": "Guests will be directed to your RSVP page where they can respond with their attendance and any dietary requirements."
   },
   "footer": {
     "title": "Footer",
+    "subtitle": "Contact info and closing message",
     "enabled": "Show Footer",
     "contactEmail": "Contact Email",
     "contactEmailPlaceholder": "e.g. wedding@example.com",
-    "customMessage": "Custom Message",
+    "contactEmailHint": "An email where guests can reach you with questions",
+    "customMessage": "Closing Message",
     "customMessagePlaceholder": "We can't wait to celebrate with you!"
   },
   "upload": {

@@ -8,6 +8,112 @@ interface RomanticGardenTemplateProps {
   events?: EventDto[];
 }
 
+// SVG Botanical Decorations - Elegant line-art style
+const FloralDivider = () => (
+  <svg viewBox="0 0 400 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="rg-svg-divider">
+    {/* Center rose */}
+    <g transform="translate(180, 10)">
+      <path d="M20 25c-3-8-10-12-10-12s3 8 0 15c-3-7-10-15-10-15s7 4 4 12c8-5 16 0 16 0z"
+            strokeLinecap="round" strokeLinejoin="round" className="rg-svg-flower" />
+      <circle cx="20" cy="28" r="4" className="rg-svg-flower-center" />
+    </g>
+    {/* Left branch with leaves */}
+    <path d="M180 30 Q140 30 100 25 Q60 20 20 30" strokeLinecap="round" className="rg-svg-stem" />
+    <path d="M140 28c-5-10-2-18-2-18s5 6 10 8c-8-2-8-8-8-8z" className="rg-svg-leaf" />
+    <path d="M100 24c-4-8-1-15-1-15s4 5 8 6c-6-1-7-6-7-6z" className="rg-svg-leaf" />
+    <path d="M60 26c-3-6 0-12 0-12s3 4 6 5c-5 0-6-4-6-4z" className="rg-svg-leaf" />
+    {/* Right branch with leaves */}
+    <path d="M220 30 Q260 30 300 25 Q340 20 380 30" strokeLinecap="round" className="rg-svg-stem" />
+    <path d="M260 28c5-10 2-18 2-18s-5 6-10 8c8-2 8-8 8-8z" className="rg-svg-leaf" />
+    <path d="M300 24c4-8 1-15 1-15s-4 5-8 6c6-1 7-6 7-6z" className="rg-svg-leaf" />
+    <path d="M340 26c3-6 0-12 0-12s-3 4-6 5c5 0 6-4 6-4z" className="rg-svg-leaf" />
+  </svg>
+);
+
+const LeafSprig = ({ flip = false }: { flip?: boolean }) => (
+  <svg viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+       className="rg-svg-sprig" style={{ transform: flip ? 'scaleX(-1)' : undefined }}>
+    <path d="M5 35 Q20 30 35 20 Q45 12 55 5" strokeLinecap="round" className="rg-svg-stem" />
+    <path d="M20 28c-6-8-3-16-3-16s5 5 9 7c-7-1-6-6-6-6z" className="rg-svg-leaf" />
+    <path d="M35 18c-5-7-2-13-2-13s4 4 7 5c-5-1-5-5-5-5z" className="rg-svg-leaf" />
+    <path d="M48 10c-3-5-1-10-1-10s3 3 5 4c-4-1-4-4-4-4z" className="rg-svg-leaf" />
+  </svg>
+);
+
+const FlowerAccent = () => (
+  <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="rg-svg-accent">
+    <path d="M20 10c-3 5-8 6-8 6s5 1 6 6c-5-3-10-2-10-2s5-2 4-8c4 5 8 4 8 4s-3-3 0-6z"
+          className="rg-svg-flower" />
+    <circle cx="20" cy="16" r="3" className="rg-svg-flower-center" />
+  </svg>
+);
+
+// Ceremony icon - elegant garden arch with flowers
+const CeremonyIcon = () => (
+  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="rg-icon-svg">
+    {/* Arch */}
+    <path d="M12 56V28c0-12 8-20 20-20s20 8 20 20v28" strokeLinecap="round" strokeLinejoin="round" />
+    {/* Ground line */}
+    <path d="M8 56h48" strokeLinecap="round" />
+    {/* Top floral decoration */}
+    <path d="M32 12c-2 3-5 4-5 4s3 0 4 3c-3-2-6-1-6-1s3-1 2-5c2 3 5 2 5 2s-2-2 0-3z" />
+    <circle cx="32" cy="14" r="2" />
+    {/* Left side leaves */}
+    <path d="M16 35c-4-6-2-12-2-12s3 4 6 5c-5-1-4-4-4-4z" />
+    <path d="M14 45c-3-5-1-10-1-10s3 3 5 4c-4-1-4-4-4-4z" />
+    {/* Right side leaves */}
+    <path d="M48 35c4-6 2-12 2-12s-3 4-6 5c5-1 4-4 4-4z" />
+    <path d="M50 45c3-5 1-10 1-10s-3 3-5 4c4-1 4-4 4-4z" />
+  </svg>
+);
+
+// Reception icon - elegant table with floral centerpiece
+const ReceptionIcon = () => (
+  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="rg-icon-svg">
+    {/* Table top */}
+    <path d="M8 40h48" strokeLinecap="round" strokeWidth="2" />
+    {/* Table legs */}
+    <path d="M16 40v16M48 40v16" strokeLinecap="round" />
+    {/* Vase */}
+    <path d="M28 40v-4c0-1 1-2 4-2s4 1 4 2v4" strokeLinecap="round" strokeLinejoin="round" />
+    {/* Flowers */}
+    <path d="M32 24c-2 4-6 5-6 5s4 0 5 5c-4-3-8-2-8-2s4-2 3-7c3 4 6 3 6 3s-2-3 0-4z" />
+    <circle cx="32" cy="27" r="2.5" />
+    {/* Left flower */}
+    <path d="M24 28c-1 3-4 3-4 3s3 0 3 3c-2-2-5-1-5-1s3-1 2-4c2 2 4 2 4 2s-1-2 0-3z" />
+    <circle cx="24" cy="29" r="1.5" />
+    {/* Right flower */}
+    <path d="M40 28c1 3 4 3 4 3s-3 0-3 3c2-2 5-1 5-1s-3-1-2-4c-2 2-4 2-4 2s1-2 0-3z" />
+    <circle cx="40" cy="29" r="1.5" />
+    {/* Stems */}
+    <path d="M24 32v2M32 30v4M40 32v2" strokeLinecap="round" />
+  </svg>
+);
+
+const CornerFloral = ({ position }: { position: 'tl' | 'tr' | 'bl' | 'br' }) => (
+  <svg viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg"
+       className={`rg-corner-svg rg-corner-${position}`}>
+    {/* Main branch */}
+    <path d="M0 0 Q40 20 60 60 Q80 100 100 150" className="rg-svg-stem" strokeWidth="1.5" />
+    <path d="M0 40 Q30 50 50 80" className="rg-svg-stem" />
+    {/* Leaves along main branch */}
+    <path d="M30 25c-8-12-4-24-4-24s6 8 12 10c-10-2-8-10-8-10z" className="rg-svg-leaf" />
+    <path d="M50 55c-7-10-3-20-3-20s5 7 10 8c-8-1-7-8-7-8z" className="rg-svg-leaf" />
+    <path d="M70 90c-6-9-2-17-2-17s4 5 8 7c-7-1-6-7-6-7z" className="rg-svg-leaf" />
+    {/* Rose at corner */}
+    <path d="M15 12c-4 7-12 9-12 9s8 0 10 9c-6-5-14-3-14-3s8-3 6-12c6 7 10 5 10 5s-4-4 0-8z"
+          className="rg-svg-flower" />
+    <circle cx="15" cy="18" r="4" className="rg-svg-flower-center" />
+    {/* Small flower */}
+    <path d="M40 45c-2 4-6 5-6 5s4 0 5 5c-3-3-7-2-7-2s4-2 3-6c3 4 5 3 5 3s-2-2 0-5z"
+          className="rg-svg-flower" />
+    <circle cx="40" cy="48" r="2.5" className="rg-svg-flower-center" />
+    {/* Additional leaves */}
+    <path d="M20 50c-5-7-2-14-2-14s4 5 7 6c-6-1-5-5-5-5z" className="rg-svg-leaf" />
+    <path d="M60 75c-4-6-1-12-1-12s3 4 6 5c-5 0-5-4-5-4z" className="rg-svg-leaf" />
+  </svg>
+);
+
 export function RomanticGardenTemplate({
   content,
   settings,
@@ -45,11 +151,11 @@ export function RomanticGardenTemplate({
         } as React.CSSProperties
       }
     >
-      {/* Floral Corner Decorations */}
-      <div className="rg-floral-corner rg-corner-tl" />
-      <div className="rg-floral-corner rg-corner-tr" />
-      <div className="rg-floral-corner rg-corner-bl" />
-      <div className="rg-floral-corner rg-corner-br" />
+      {/* Corner Floral Decorations */}
+      <CornerFloral position="tl" />
+      <CornerFloral position="tr" />
+      <CornerFloral position="bl" />
+      <CornerFloral position="br" />
 
       {/* Hero Section */}
       <section
@@ -62,16 +168,16 @@ export function RomanticGardenTemplate({
       >
         <div className="rg-hero-overlay" />
         <div className={`rg-hero-content rg-hero-${hero.displayStyle}`}>
-          <div className="rg-floral-divider" />
+          <FloralDivider />
           <p className="rg-together">Together with their families</p>
           <h1 className="rg-couple-names">{hero.coupleNames}</h1>
           {hero.tagline && <p className="rg-tagline">{hero.tagline}</p>}
           <div className="rg-date-wrapper">
-            <span className="rg-leaf">🌿</span>
+            <LeafSprig />
             <span className="rg-date">{formatDate(hero.date)}</span>
-            <span className="rg-leaf">🌿</span>
+            <LeafSprig flip />
           </div>
-          <div className="rg-floral-divider" />
+          <FloralDivider />
         </div>
       </section>
 
@@ -79,9 +185,9 @@ export function RomanticGardenTemplate({
       {story.enabled && story.items.length > 0 && (
         <section className="rg-section rg-story">
           <div className="rg-section-header">
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
             <h2>{story.title}</h2>
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
           </div>
 
           {story.displayType === 'timeline' ? (
@@ -133,16 +239,18 @@ export function RomanticGardenTemplate({
         <section className="rg-section rg-details">
           <div className="rg-watercolor-bg" />
           <div className="rg-section-header">
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
             <h2>{details.title}</h2>
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
           </div>
 
           <div className="rg-details-cards">
             {details.ceremony.enabled && (
               <div className="rg-detail-card">
                 <div className="rg-card-corner" />
-                <div className="rg-card-icon">💒</div>
+                <div className="rg-card-icon">
+                  <CeremonyIcon />
+                </div>
                 <h3>{details.ceremony.title}</h3>
                 <p className="rg-venue">{details.ceremony.venue}</p>
                 <p className="rg-address">{details.ceremony.address}</p>
@@ -166,7 +274,9 @@ export function RomanticGardenTemplate({
             {details.reception.enabled && (
               <div className="rg-detail-card">
                 <div className="rg-card-corner" />
-                <div className="rg-card-icon">🥂</div>
+                <div className="rg-card-icon">
+                  <ReceptionIcon />
+                </div>
                 <h3>{details.reception.title}</h3>
                 <p className="rg-venue">{details.reception.venue}</p>
                 <p className="rg-address">{details.reception.address}</p>
@@ -194,9 +304,9 @@ export function RomanticGardenTemplate({
       {content.events.enabled && content.events.showFromWeddingEvents && events && events.length > 0 && (
         <section className="rg-section rg-events">
           <div className="rg-section-header">
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
             <h2>{content.events.title}</h2>
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
           </div>
 
           <div className="rg-events-list">
@@ -218,9 +328,9 @@ export function RomanticGardenTemplate({
       {gallery.enabled && gallery.images.length > 0 && (
         <section className="rg-section rg-gallery">
           <div className="rg-section-header">
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
             <h2>{gallery.title}</h2>
-            <span className="rg-flower">✿</span>
+            <FlowerAccent />
           </div>
 
           <div className={`rg-gallery-${gallery.displayType}`}>
@@ -241,9 +351,9 @@ export function RomanticGardenTemplate({
           <div className="rg-rsvp-card">
             <div className="rg-card-corner rg-corner-all" />
             <div className="rg-section-header">
-              <span className="rg-flower">✿</span>
+              <FlowerAccent />
               <h2>{rsvp.title}</h2>
-              <span className="rg-flower">✿</span>
+              <FlowerAccent />
             </div>
             <p className="rg-rsvp-description">{rsvp.description}</p>
             {rsvp.deadline && (
@@ -261,7 +371,7 @@ export function RomanticGardenTemplate({
       {/* Footer */}
       {footer.enabled && (
         <footer className="rg-footer">
-          <div className="rg-floral-divider" />
+          <FloralDivider />
           {footer.customMessage && (
             <p className="rg-footer-message">{footer.customMessage}</p>
           )}
@@ -270,7 +380,11 @@ export function RomanticGardenTemplate({
               <a href={`mailto:${footer.contactEmail}`}>{footer.contactEmail}</a>
             </p>
           )}
-          <div className="rg-footer-decoration">🌸 🌿 🌸</div>
+          <div className="rg-footer-decoration">
+            <LeafSprig />
+            <FlowerAccent />
+            <LeafSprig flip />
+          </div>
         </footer>
       )}
     </div>
