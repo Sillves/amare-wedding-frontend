@@ -48,8 +48,10 @@ build/
 
 # Vite
 .vite/
+
+# Playwright
+.playwright-mcp/
 .playwright-report/
 playwright-report/
-playwright-report/index.html
-test-results/.last-run.json
+test-results/
 nul

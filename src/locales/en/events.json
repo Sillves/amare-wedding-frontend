@@ -68,7 +68,15 @@
     "totalGuests_plural": "{{count}} guests invited",
     "duration": "Duration",
     "upcomingEvent": "Upcoming",
-    "pastEvent": "Past"
+    "pastEvent": "Past",
+    "totalEvents": "Total Events",
+    "allEvents": "All scheduled events",
+    "upcoming": "Upcoming",
+    "comingSoon": "Coming soon",
+    "past": "Past",
+    "completed": "Completed",
+    "guestsAssigned": "Guests Assigned",
+    "acrossEvents": "Across all events"
   },
   "messages": {
     "created": "Event created successfully!",

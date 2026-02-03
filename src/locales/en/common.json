@@ -178,6 +178,14 @@
     "websitePublished": "Your website is live and visible to guests",
     "websiteNotPublished": "Your website is not yet published",
     "websiteUrl": "Website URL",
-    "websiteUpgradePrompt": "Upgrade to Starter or Pro to create your wedding website"
+    "websiteUpgradePrompt": "Upgrade to Starter or Pro to create your wedding website",
+    "viewAllEventsCount_one": "View all {{count}} event",
+    "viewAllEventsCount_other": "View all {{count}} events"
+  },
+  "accessibility": {
+    "fontSize": "Text size",
+    "fontNormal": "Normal",
+    "fontLarge": "Large",
+    "fontXLarge": "Extra Large"
   }
 }

@@ -178,6 +178,14 @@
     "websitePublished": "Votre site est en ligne et visible par les invités",
     "websiteNotPublished": "Votre site n'est pas encore publié",
     "websiteUrl": "URL du site",
-    "websiteUpgradePrompt": "Passez à Starter ou Pro pour créer votre site de mariage"
+    "websiteUpgradePrompt": "Passez à Starter ou Pro pour créer votre site de mariage",
+    "viewAllEventsCount_one": "Voir tous les {{count}} événement",
+    "viewAllEventsCount_other": "Voir tous les {{count}} événements"
+  },
+  "accessibility": {
+    "fontSize": "Taille du texte",
+    "fontNormal": "Normal",
+    "fontLarge": "Grand",
+    "fontXLarge": "Très grand"
   }
 }

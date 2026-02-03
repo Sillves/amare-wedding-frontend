@@ -68,7 +68,15 @@
     "totalGuests_plural": "{{count}} gasten uitgenodigd",
     "duration": "Duur",
     "upcomingEvent": "Aankomend",
-    "pastEvent": "Afgelopen"
+    "pastEvent": "Afgelopen",
+    "totalEvents": "Totaal Evenementen",
+    "allEvents": "Alle geplande evenementen",
+    "upcoming": "Aankomend",
+    "comingSoon": "Binnenkort",
+    "past": "Afgelopen",
+    "completed": "Voltooid",
+    "guestsAssigned": "Gasten Toegewezen",
+    "acrossEvents": "Over alle evenementen"
   },
   "messages": {
     "created": "Evenement succesvol aangemaakt!",

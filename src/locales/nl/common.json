@@ -178,6 +178,14 @@
     "websitePublished": "Uw website is live en zichtbaar voor gasten",
     "websiteNotPublished": "Uw website is nog niet gepubliceerd",
     "websiteUrl": "Website URL",
-    "websiteUpgradePrompt": "Upgrade naar Starter of Pro om uw trouwwebsite te maken"
+    "websiteUpgradePrompt": "Upgrade naar Starter of Pro om uw trouwwebsite te maken",
+    "viewAllEventsCount_one": "Bekijk alle {{count}} evenement",
+    "viewAllEventsCount_other": "Bekijk alle {{count}} evenementen"
+  },
+  "accessibility": {
+    "fontSize": "Tekstgrootte",
+    "fontNormal": "Normaal",
+    "fontLarge": "Groot",
+    "fontXLarge": "Extra groot"
   }
 }

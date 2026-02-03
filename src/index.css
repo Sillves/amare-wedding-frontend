@@ -236,3 +236,22 @@
     animation: none !important;
   }
 }
+
+/* Font size accessibility scaling */
+@layer base {
+  /* Large text scale - 112.5% */
+  .text-scale-lg {
+    font-size: 112.5%;
+  }
+  .text-scale-lg body {
+    font-size: 1.125rem;
+  }
+
+  /* Extra large text scale - 125% */
+  .text-scale-xl {
+    font-size: 125%;
+  }
+  .text-scale-xl body {
+    font-size: 1.25rem;
+  }
+}
