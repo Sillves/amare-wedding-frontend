@@ -67,14 +67,10 @@ export const websiteApi = {
   ): Promise<MediaUploadResponse> => {
     const formData = new FormData();
     formData.append('file', file);
+    // Don't set Content-Type header - browser will set it automatically with boundary
     const response = await apiClient.post<MediaUploadResponse>(
       `/weddings/${weddingId}/media`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+      formData
     );
     return response.data;
   },
