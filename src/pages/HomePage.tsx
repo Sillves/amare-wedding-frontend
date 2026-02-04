@@ -29,7 +29,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { SEO } from '@/shared/components/seo';
 
@@ -408,7 +408,7 @@ export function HomePage() {
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="hidden sm:flex items-center gap-2">
                 <FontSizeSwitcher />
-                <ThemeSwitcher />
+                <LanguageSwitcher />
               </div>
               <Button variant="ghost" size="sm" onClick={() => navigate('/login')} className="hidden sm:inline-flex focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 {t('auth:login.title')}
@@ -451,7 +451,7 @@ export function HomePage() {
                     <hr className="my-2" />
                     <div className="flex items-center gap-2 py-2">
                       <FontSizeSwitcher />
-                      <ThemeSwitcher />
+                      <LanguageSwitcher />
                     </div>
                     <hr className="my-2" />
                     <SheetClose asChild>

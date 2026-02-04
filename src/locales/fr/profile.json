@@ -20,6 +20,12 @@
     "title": "Langue",
     "description": "Choisissez votre langue préférée"
   },
+  "timeFormat": {
+    "title": "Format de l'heure",
+    "description": "Choisissez comment les heures sont affichées",
+    "12h": "12 heures",
+    "24h": "24 heures"
+  },
   "subscription": {
     "title": "Abonnement",
     "description": "Votre forfait actuel et facturation",

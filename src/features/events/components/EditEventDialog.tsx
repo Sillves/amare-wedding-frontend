@@ -37,7 +37,9 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
     if (event) {
       setName(event.name || '');
       setStartDate(event.startDate ? new Date(event.startDate) : undefined);
-      setEndDate(event.endDate ? new Date(event.endDate) : undefined);
+      // Only set endDate if it's different from startDate (treat same date as "no end date")
+      const hasDistinctEndDate = event.endDate && event.startDate && event.endDate !== event.startDate;
+      setEndDate(hasDistinctEndDate ? new Date(event.endDate) : undefined);
       setLocation(event.location || '');
       setDescription(event.description || '');
     }
@@ -52,7 +54,7 @@ export function EditEventDialog({ event, open, onOpenChange }: EditEventDialogPr
 
     // Convert Date to ISO 8601
     const startDateISO = startDate.toISOString();
-    const endDateISO = endDate ? endDate.toISOString() : startDateISO;
+    const endDateISO = endDate ? endDate.toISOString() : undefined;
 
     const data: UpdateEventRequest = {
       name: name.trim(),

@@ -10,7 +10,7 @@ import type {
 
 /**
  * Billing API endpoints
- * Handles Stripe checkout session creation and plan changes
+ * Handles Stripe checkout session creation for one-time payments
  */
 export const billingApi = {
   /**
@@ -23,9 +23,9 @@ export const billingApi = {
   },
 
   /**
-   * Create a Stripe Checkout session for subscription purchase
+   * Create a Stripe Checkout session for one-time purchase
    * @param tier - The subscription tier (Starter=1, Pro=2)
-   * @param interval - The billing interval (Monthly=0, Annual=1, Lifetime=2)
+   * @param interval - The billing interval (Lifetime=0 for one-time)
    * @returns Promise<BillingCheckoutSession> - Contains sessionId and redirect URL
    */
   createCheckoutSession: async (
@@ -41,22 +41,8 @@ export const billingApi = {
   },
 
   /**
-   * Change the current subscription plan
-   * For users who already have an active subscription
-   * @param tier - The new subscription tier
-   * @param interval - The new billing interval
-   */
-  changePlan: async (
-    tier: SubscriptionTier,
-    interval: BillingInterval
-  ): Promise<void> => {
-    const request: BillingPlanRequest = { tier, interval };
-    await apiClient.post('/billing/change-plan', request);
-  },
-
-  /**
    * Create a Stripe Billing Portal session
-   * For existing subscribers to manage their subscription
+   * For existing customers to view their payment history
    * @returns Promise<BillingPortalSession> - Contains sessionId and redirect URL
    */
   createPortalSession: async (): Promise<BillingPortalSession> => {

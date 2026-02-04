@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { User, Mail, CreditCard, Crown, ArrowRight, Settings, Loader2, Lock, Eye, EyeOff, CheckCircle, Globe } from 'lucide-react';
+import { User, Mail, CreditCard, Crown, ArrowRight, Settings, Loader2, Lock, Eye, EyeOff, CheckCircle, Globe, Clock } from 'lucide-react';
 import { useAuth, useCurrentUser, useChangePassword } from '@/features/auth/hooks/useAuth';
 import { SubscriptionTierLabel, usePortalSession } from '@/features/billing';
 import { Button } from '@/components/ui/button';
@@ -14,11 +14,17 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useErrorToast } from '@/hooks/useErrorToast';
+import { useDateFormat, type TimeFormatPreference } from '@/hooks/useDateFormat';
 
 const SUPPORTED_LANGUAGES = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
   { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
+];
+
+const TIME_FORMAT_OPTIONS: { value: TimeFormatPreference; label: string; example: string }[] = [
+  { value: '24h', label: '24-hour', example: '14:30' },
+  { value: '12h', label: '12-hour', example: '2:30 PM' },
 ];
 
 const changePasswordSchema = z.object({
@@ -43,6 +49,8 @@ export function ProfilePage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [passwordChanged, setPasswordChanged] = useState(false);
+
+  const { timeFormat, setTimeFormat } = useDateFormat();
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
@@ -247,6 +255,34 @@ export function ProfilePage() {
                     <span className="flex items-center gap-2">
                       <span>{lang.flag}</span>
                       <span>{lang.name}</span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+
+        {/* Time Format */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5" />
+              {t('profile:timeFormat.title')}
+            </CardTitle>
+            <CardDescription>{t('profile:timeFormat.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Select value={timeFormat} onValueChange={(value) => setTimeFormat(value as TimeFormatPreference)}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {TIME_FORMAT_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    <span className="flex items-center gap-2">
+                      <span>{t(`profile:timeFormat.${option.value}`)}</span>
+                      <span className="text-muted-foreground">({option.example})</span>
                     </span>
                   </SelectItem>
                 ))}

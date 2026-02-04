@@ -20,6 +20,12 @@
     "title": "Language",
     "description": "Choose your preferred language"
   },
+  "timeFormat": {
+    "title": "Time Format",
+    "description": "Choose how times are displayed",
+    "12h": "12-hour",
+    "24h": "24-hour"
+  },
   "subscription": {
     "title": "Subscription",
     "description": "Your current plan and billing",

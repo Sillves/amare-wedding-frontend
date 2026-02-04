@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Heart, Check, X, HelpCircle, ArrowLeft } from 'lucide-react';
+import { Heart, Check, X, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { DemoProvider, useDemoContext } from '@/features/demo/context/DemoContext';
 import { DemoBanner } from '@/features/demo/components/DemoBanner';
 import { getDemoData } from '@/features/demo/data';
+import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
 import type { RsvpStatus } from '@/features/weddings/types';
 
 function DemoRsvpContent() {
@@ -70,11 +72,20 @@ function DemoRsvpContent() {
         {/* Header */}
         <header className="border-b bg-background/80 backdrop-blur">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <Button variant="ghost" onClick={() => navigate('/demo')}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              {t('demo:exitDemo')}
-            </Button>
-            <Badge variant="secondary">Demo</Badge>
+            <div className="flex items-center gap-2">
+              <Heart className="h-6 w-6 text-primary" />
+              <span className="text-xl font-script text-primary">{t('common:appName')}</span>
+              <Badge variant="secondary" className="ml-2">
+                Demo
+              </Badge>
+            </div>
+            <div className="flex items-center gap-1 sm:gap-2">
+              <LanguageSwitcher />
+              <ThemeSwitcher />
+              <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/demo')}>
+                {t('demo:exitDemo')}
+              </Button>
+            </div>
           </div>
         </header>
 
@@ -111,11 +122,20 @@ function DemoRsvpContent() {
       {/* Header */}
       <header className="border-b bg-background/80 backdrop-blur">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Button variant="ghost" onClick={() => navigate('/demo')}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('demo:exitDemo')}
-          </Button>
-          <Badge variant="secondary">Demo</Badge>
+          <div className="flex items-center gap-2">
+            <Heart className="h-6 w-6 text-primary" />
+            <span className="text-xl font-script text-primary">{t('common:appName')}</span>
+            <Badge variant="secondary" className="ml-2">
+              Demo
+            </Badge>
+          </div>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+            <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/demo')}>
+              {t('demo:exitDemo')}
+            </Button>
+          </div>
         </div>
       </header>
 

@@ -100,22 +100,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/billing/change-plan": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["ChangeBillingPlan"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/billing/checkout-session": {
         parameters: {
             query?: never;
@@ -543,7 +527,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        put: operations["UpdateWedding"];
         post?: never;
         delete: operations["DeleteWedding"];
         options?: never;
@@ -640,7 +624,7 @@ export interface components {
          * Format: int32
          * @enum {integer}
          */
-        BillingInterval: 0 | 1 | 2;
+        BillingInterval: 0;
         BillingPlanDto: {
             tier?: components["schemas"]["SubscriptionTier"];
             name?: string | null;
@@ -679,7 +663,7 @@ export interface components {
             /** Format: date-time */
             startDate?: string;
             /** Format: date-time */
-            endDate?: string;
+            endDate?: string | null;
             location?: string | null;
             description?: string | null;
         };
@@ -721,7 +705,7 @@ export interface components {
             /** Format: date-time */
             startDate: string;
             /** Format: date-time */
-            endDate?: string;
+            endDate?: string | null;
             location: string | null;
             description?: string | null;
             guests?: components["schemas"]["Guest"][] | null;
@@ -736,7 +720,7 @@ export interface components {
             /** Format: date-time */
             startDate?: string;
             /** Format: date-time */
-            endDate?: string;
+            endDate?: string | null;
             location?: string | null;
             description?: string | null;
             guestDtos?: components["schemas"]["GuestDto"][] | null;
@@ -892,7 +876,7 @@ export interface components {
             /** Format: date-time */
             startDate?: string;
             /** Format: date-time */
-            endDate?: string;
+            endDate?: string | null;
             location?: string | null;
             description?: string | null;
         };
@@ -910,6 +894,12 @@ export interface components {
             /** Format: date-time */
             date?: string;
             notes?: string | null;
+        };
+        UpdateWeddingRequestDto: {
+            title?: string | null;
+            /** Format: date-time */
+            date?: string | null;
+            location?: string | null;
         };
         UpdateWeddingWebsiteRequestDto: {
             template?: components["schemas"]["WebsiteTemplate"];
@@ -1356,55 +1346,6 @@ export interface operations {
             };
             /** @description Not Found */
             404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-        };
-    };
-    ChangeBillingPlan: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BillingPlanRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Conflict */
-            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3401,6 +3342,59 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    UpdateWedding: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateWeddingRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

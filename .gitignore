@@ -55,3 +55,4 @@ build/
 playwright-report/
 test-results/
 nul
+*.png

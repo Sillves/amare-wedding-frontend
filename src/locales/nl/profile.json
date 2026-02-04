@@ -20,6 +20,12 @@
     "title": "Taal",
     "description": "Kies uw voorkeurstaal"
   },
+  "timeFormat": {
+    "title": "Tijdnotatie",
+    "description": "Kies hoe tijden worden weergegeven",
+    "12h": "12-uurs",
+    "24h": "24-uurs"
+  },
   "subscription": {
     "title": "Abonnement",
     "description": "Uw huidige abonnement en facturering",

@@ -8,12 +8,12 @@ export type SubscriptionTier = components['schemas']['SubscriptionTier'];
 
 /**
  * Billing interval enum values
- * 0 = Monthly, 1 = Annual, 2 = Lifetime
+ * 0 = Lifetime (one-time payment)
  */
 export type BillingInterval = components['schemas']['BillingInterval'];
 
 /**
- * Request payload for checkout session and plan change
+ * Request payload for checkout session
  */
 export type BillingPlanRequest = components['schemas']['BillingPlanRequest'];
 
@@ -50,15 +50,6 @@ export const SubscriptionTierLabel: Record<SubscriptionTier, string> = {
 };
 
 /**
- * Billing interval labels for display
- */
-export const BillingIntervalLabel: Record<BillingInterval, string> = {
-  0: 'Monthly',
-  1: 'Annual',
-  2: 'Lifetime',
-};
-
-/**
  * Helper to convert tier enum to string
  */
 export function tierToString(tier: SubscriptionTier): 'Free' | 'Starter' | 'Pro' {
@@ -68,16 +59,4 @@ export function tierToString(tier: SubscriptionTier): 'Free' | 'Starter' | 'Pro'
     2: 'Pro',
   };
   return map[tier];
-}
-
-/**
- * Helper to convert string interval to enum value
- */
-export function intervalToEnum(interval: 'Monthly' | 'Annual' | 'Lifetime'): BillingInterval {
-  const map: Record<string, BillingInterval> = {
-    Monthly: 0,
-    Annual: 1,
-    Lifetime: 2,
-  };
-  return map[interval];
 }

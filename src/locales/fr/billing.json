@@ -1,21 +1,16 @@
 {
   "title": "Choisissez votre forfait",
-  "subtitle": "Commencez à planifier votre mariage parfait avec le forfait qui vous convient",
-  "monthly": "Mensuel",
-  "annual": "Annuel",
-  "lifetime": "À vie",
-  "oneTime": "Paiement unique",
-  "savePercent": "Économisez {{percent}}%",
+  "subtitle": "Obtenez un accès à vie pour planifier votre mariage parfait",
+  "oneTimePayment": "Paiement unique, accès à vie",
+  "oneTime": "paiement unique",
   "popular": "Le plus populaire",
   "currentPlan": "Forfait actuel",
   "free": "Gratuit",
-  "perMonth": "/mois",
-  "perYear": "/an",
-  "subscribe": "S'abonner",
+  "buyNow": "Acheter maintenant",
   "getStartedFree": "Commencer gratuitement",
   "notAvailable": "Non disponible",
   "notIncluded": "Non inclus",
-  "cancelAnytime": "Tous les forfaits payants incluent une garantie de remboursement de 14 jours. Annulez à tout moment.",
+  "moneyBackGuarantee": "Tous les forfaits payants incluent une garantie de remboursement de 14 jours.",
   "backToDashboard": "Retour au tableau de bord",
   "limits": {
     "guests_one": "{{count}} invité",
@@ -49,19 +44,10 @@
   },
   "success": {
     "title": "Paiement réussi!",
-    "description": "Merci pour votre abonnement. Votre forfait a été activé.",
-    "processingNote": "Votre abonnement est en cours de traitement. Il peut falloir quelques instants pour que toutes les fonctionnalités soient disponibles.",
+    "description": "Merci pour votre achat. Votre forfait a été activé.",
+    "processingNote": "Votre forfait est en cours de traitement. Il peut falloir quelques instants pour que toutes les fonctionnalités soient disponibles.",
     "goToDashboard": "Aller au tableau de bord",
     "redirecting": "Redirection dans {{seconds}} secondes...",
     "sessionId": "ID de session"
-  },
-  "changePlan": {
-    "title": "Changer de forfait",
-    "description": "Mettez à jour votre abonnement",
-    "currentPlan": "Forfait actuel",
-    "newPlan": "Nouveau forfait",
-    "confirm": "Confirmer le changement",
-    "success": "Forfait modifié avec succès",
-    "error": "Échec du changement de forfait"
   }
 }

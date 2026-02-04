@@ -1,7 +1,18 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Plus, Wallet, TrendingUp, CheckCircle2, Circle, ClipboardList, ChevronDown } from 'lucide-react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import {
+  ArrowLeft,
+  Plus,
+  Wallet,
+  TrendingUp,
+  CheckCircle2,
+  Circle,
+  ClipboardList,
+  ChevronDown,
+  Heart,
+  Sparkles,
+} from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useExpenseSummary } from '@/features/expenses/hooks/useExpenses';
@@ -11,8 +22,43 @@ import { ExpenseTable } from '@/features/expenses/components/ExpenseTable';
 import { ExpenseDialog } from '@/features/expenses/components/ExpenseDialog';
 import { DeleteExpenseDialog } from '@/features/expenses/components/DeleteExpenseDialog';
 import { ExpenseCategoryChart } from '@/features/expenses/components/ExpenseCategoryChart';
+import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import type { WeddingExpenseDto } from '@/features/expenses';
 import { EXPENSE_CATEGORIES } from '@/features/expenses/utils/expenseCategory';
+
+/**
+ * Floating decorative elements for premium aesthetic
+ */
+function FloatingElements() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Floating hearts */}
+      <div className="absolute top-[15%] left-[8%] animate-float-slow opacity-15">
+        <Heart className="h-5 w-5 text-primary fill-primary" />
+      </div>
+      <div className="absolute top-[25%] right-[5%] animate-float-medium opacity-10">
+        <Heart className="h-4 w-4 text-primary fill-primary" />
+      </div>
+      <div className="absolute bottom-[30%] left-[15%] animate-float-fast opacity-10">
+        <Heart className="h-6 w-6 text-primary fill-primary" />
+      </div>
+
+      {/* Sparkles */}
+      <div className="absolute top-[20%] right-[15%] animate-pulse-slow opacity-20">
+        <Sparkles className="h-4 w-4 text-amber-400" />
+      </div>
+      <div className="absolute bottom-[25%] left-[20%] animate-pulse-medium opacity-15">
+        <Sparkles className="h-3 w-3 text-amber-400" />
+      </div>
+
+      {/* Decorative rings */}
+      <div className="absolute top-[35%] right-[3%] animate-spin-very-slow opacity-10">
+        <div className="w-10 h-10 rounded-full border-2 border-primary" />
+      </div>
+    </div>
+  );
+}
 
 export function ExpensesPage() {
   const { t } = useTranslation(['expenses', 'auth', 'common', 'weddings']);
@@ -76,30 +122,42 @@ export function ExpensesPage() {
 
   if (weddingsLoading) {
     return (
-      <div className="min-h-screen bg-muted/40 flex items-center justify-center">
-        <p className="text-muted-foreground">{t('common:loading')}</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4 animate-fade-in">
+          <Heart className="h-12 w-12 text-primary mx-auto animate-pulse" />
+          <p className="text-muted-foreground font-serif">{t('common:loading')}</p>
+        </div>
       </div>
     );
   }
 
   if (!weddingIdFromUrl && (!weddings || weddings.length === 0)) {
     return (
-      <div className="min-h-screen bg-muted/40">
-        <header className="border-b bg-background">
+      <div className="min-h-screen bg-background relative">
+        {/* Background elements */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-blob" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-blob animation-delay-2000" />
+        </div>
+
+        <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
-            <h1 className="text-xl font-bold">{t('common:appName')}</h1>
+            <Link to="/dashboard" className="flex items-center gap-2 group">
+              <Heart className="h-6 w-6 text-primary fill-primary transition-transform group-hover:scale-110" />
+              <span className="text-2xl font-script text-primary">{t('common:appName')}</span>
+            </Link>
             <div className="flex items-center gap-2 sm:gap-4">
               <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
-              <Button variant="outline" size="sm" onClick={logout}>
+              <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">
                 {t('auth:logout')}
               </Button>
             </div>
           </div>
         </header>
-        <main className="container mx-auto p-4">
-          <div className="rounded-lg border border-dashed p-8 text-center">
+        <main className="container mx-auto p-4 relative">
+          <div className="rounded-2xl border border-dashed border-border/50 p-8 text-center bg-card/80 backdrop-blur-sm">
             <p className="mb-4 text-muted-foreground">{t('weddings:noWeddings')}</p>
-            <Button onClick={() => navigate('/dashboard')}>
+            <Button onClick={() => navigate('/dashboard')} className="rounded-xl shadow-lg shadow-primary/25">
               {t('weddings:createWedding')}
             </Button>
           </div>
@@ -109,62 +167,93 @@ export function ExpensesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-muted/40">
-      <header className="border-b bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Animated background gradients */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-blob" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-blob animation-delay-4000" />
+      </div>
+
+      <FloatingElements />
+
+      {/* Premium Header */}
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/dashboard')}
+              className="rounded-xl hover:bg-primary/10"
+            >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <h1 className="text-xl font-bold">{t('common:appName')}</h1>
+            <Link to="/dashboard" className="flex items-center gap-2 group">
+              <Heart className="h-6 w-6 text-primary fill-primary transition-transform group-hover:scale-110" />
+              <span className="text-2xl font-script text-primary">{t('common:appName')}</span>
+            </Link>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
-            <span className="hidden sm:inline text-sm text-muted-foreground">{user?.name}</span>
-            <Button variant="outline" size="sm" onClick={logout}>
+            <div className="hidden sm:flex items-center gap-2">
+              <FontSizeSwitcher />
+              <ThemeSwitcher />
+            </div>
+            <span className="hidden md:inline text-sm text-muted-foreground">{user?.name}</span>
+            <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">
               {t('auth:logout')}
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto p-4 space-y-6">
-        {/* Header */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-3xl font-bold">{t('expenses:title')}</h2>
+      <main className="container mx-auto px-4 py-8 space-y-8 relative">
+        {/* Header with title and action */}
+        <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between animate-fade-in">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-serif font-semibold">{t('expenses:title')}</h1>
             <p className="text-muted-foreground">{t('expenses:subtitle')}</p>
           </div>
-          <Button onClick={() => setIsAddDialogOpen(true)}>
+          <Button
+            onClick={() => setIsAddDialogOpen(true)}
+            className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow"
+          >
             <Plus className="h-4 w-4 mr-2" />
             {t('expenses:addExpense')}
           </Button>
-        </div>
+        </section>
 
         {/* Summary Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Card>
+        <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 animate-fade-in-up animation-delay-200">
+          {/* Total Spent Card */}
+          <Card className="rounded-2xl border-border/50 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {t('expenses:summary.totalSpent')}
               </CardTitle>
-              <Wallet className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Wallet className="h-4 w-4 text-primary" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="text-3xl font-serif font-bold">
                 {summaryLoading ? '...' : formatCurrency(summary?.totalAmount || 0)}
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground mt-1">
                 {summary?.expenses?.length || 0} {t('expenses:title').toLowerCase()}
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          {/* Category Breakdown Card */}
+          <Card className="rounded-2xl border-border/50 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {t('expenses:summary.title')}
               </CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-green-500/10 group-hover:bg-green-500/20 transition-colors">
+                <TrendingUp className="h-4 w-4 text-green-600" />
+              </div>
             </CardHeader>
             <CardContent>
               {categoryTotals.length > 0 ? (
@@ -186,12 +275,15 @@ export function ExpensesPage() {
             </CardContent>
           </Card>
 
-          <Card className="md:col-span-2 lg:col-span-1">
+          {/* Budget Checklist Card */}
+          <Card className="rounded-2xl border-border/50 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-card/80 backdrop-blur-sm group md:col-span-2 lg:col-span-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {t('expenses:summary.checklist')}
               </CardTitle>
-              <ClipboardList className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 rounded-lg bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
+                <ClipboardList className="h-4 w-4 text-amber-600" />
+              </div>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-1">
@@ -210,73 +302,81 @@ export function ExpensesPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </section>
 
         {/* Expenses Table */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('expenses:title')}</CardTitle>
-            <CardDescription>
-              {summary?.expenses?.length
-                ? t('summary.expensesRecorded', { count: summary.expenses.length })
-                : t('expenses:noExpensesDescription')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {summaryLoading ? (
-              <div className="p-8 text-center">
-                <p className="text-muted-foreground">{t('common:loading')}</p>
-              </div>
-            ) : error ? (
-              <div className="p-8 text-center">
-                <p className="text-destructive">{t('common:error')}</p>
-              </div>
-            ) : !summary?.expenses?.length ? (
-              <div className="p-8 text-center border border-dashed rounded-lg">
-                <Wallet className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-muted-foreground mb-4">
-                  {t('expenses:noExpensesDescription')}
-                </p>
-                <Button onClick={() => setIsAddDialogOpen(true)}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t('expenses:addExpense')}
-                </Button>
-              </div>
-            ) : (
-              <ExpenseTable
-                expenses={summary.expenses}
-                onEdit={setEditingExpense}
-                onDelete={setDeletingExpense}
-              />
-            )}
-          </CardContent>
-        </Card>
+        <section className="animate-fade-in-up animation-delay-400">
+          <Card className="rounded-2xl border-border/50 shadow-lg bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="font-serif text-xl">{t('expenses:title')}</CardTitle>
+              <CardDescription>
+                {summary?.expenses?.length
+                  ? t('summary.expensesRecorded', { count: summary.expenses.length })
+                  : t('expenses:noExpensesDescription')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {summaryLoading ? (
+                <div className="p-8 text-center">
+                  <Heart className="h-8 w-8 text-primary mx-auto animate-pulse mb-4" />
+                  <p className="text-muted-foreground">{t('common:loading')}</p>
+                </div>
+              ) : error ? (
+                <div className="p-8 text-center">
+                  <p className="text-destructive">{t('common:error')}</p>
+                </div>
+              ) : !summary?.expenses?.length ? (
+                <div className="p-8 text-center border border-dashed border-border/50 rounded-xl">
+                  <Wallet className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <p className="text-muted-foreground mb-4">
+                    {t('expenses:noExpensesDescription')}
+                  </p>
+                  <Button
+                    onClick={() => setIsAddDialogOpen(true)}
+                    className="rounded-xl shadow-lg shadow-primary/25"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    {t('expenses:addExpense')}
+                  </Button>
+                </div>
+              ) : (
+                <ExpenseTable
+                  expenses={summary.expenses}
+                  onEdit={setEditingExpense}
+                  onDelete={setDeletingExpense}
+                />
+              )}
+            </CardContent>
+          </Card>
+        </section>
 
         {/* Collapsible Category Chart */}
         {categoryTotals.length > 0 && (
-          <Card>
-            <CardHeader
-              className="cursor-pointer select-none"
-              onClick={() => setIsChartExpanded(!isChartExpanded)}
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-base">{t('expenses:summary.byCategory')}</CardTitle>
-                  <CardDescription>{t('expenses:subtitle')}</CardDescription>
+          <section className="animate-fade-in-up animation-delay-600">
+            <Card className="rounded-2xl border-border/50 shadow-lg bg-card/80 backdrop-blur-sm">
+              <CardHeader
+                className="cursor-pointer select-none hover:bg-muted/30 rounded-t-2xl transition-colors"
+                onClick={() => setIsChartExpanded(!isChartExpanded)}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="font-serif text-xl">{t('expenses:summary.byCategory')}</CardTitle>
+                    <CardDescription>{t('expenses:subtitle')}</CardDescription>
+                  </div>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${
+                      isChartExpanded ? 'rotate-180' : ''
+                    }`}
+                  />
                 </div>
-                <ChevronDown
-                  className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${
-                    isChartExpanded ? 'rotate-180' : ''
-                  }`}
-                />
-              </div>
-            </CardHeader>
-            {isChartExpanded && (
-              <CardContent>
-                <ExpenseCategoryChart data={categoryTotals} />
-              </CardContent>
-            )}
-          </Card>
+              </CardHeader>
+              {isChartExpanded && (
+                <CardContent>
+                  <ExpenseCategoryChart data={categoryTotals} />
+                </CardContent>
+              )}
+            </Card>
+          </section>
         )}
       </main>
 

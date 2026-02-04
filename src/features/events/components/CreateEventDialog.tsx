@@ -43,7 +43,7 @@ export function CreateEventDialog({ weddingId, children }: CreateEventDialogProp
 
     // Convert Date to ISO 8601
     const startDateISO = startDate.toISOString();
-    const endDateISO = endDate ? endDate.toISOString() : startDateISO;
+    const endDateISO = endDate ? endDate.toISOString() : undefined;
 
     const data: CreateEventRequest = {
       name: name.trim(),

@@ -11,7 +11,7 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      themeName: 'sage-rose',
+      themeName: 'rose-gold',
       setTheme: (themeName: string) => {
         const theme = getThemeByName(themeName);
         if (theme) {

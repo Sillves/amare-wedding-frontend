@@ -37,6 +37,7 @@ import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { format, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/dateLocale';
+import { useDateFormatListener, getTimeFormatPreference } from '@/hooks/useDateFormat';
 
 /**
  * Floating decorative elements for premium dashboard aesthetic
@@ -138,6 +139,11 @@ export function DashboardPage() {
   const { t, i18n } = useTranslation(['common', 'weddings', 'guests', 'events', 'auth', 'billing', 'expenses', 'website']);
   const locale = getDateFnsLocale(i18n.language);
   const { user } = useAuth();
+
+  // Re-render when date format preference changes
+  useDateFormatListener();
+  const timeFormat = getTimeFormatPreference();
+  const timeFormatStr = timeFormat === '12h' ? 'p' : 'HH:mm';
   const logout = useLogout();
   const navigate = useNavigate();
   const { data: weddings, isLoading } = useWeddings();
@@ -566,6 +572,16 @@ export function DashboardPage() {
 
                 <button
                   className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
+                  onClick={() => navigate(`/expenses?weddingId=${wedding?.id}`)}
+                >
+                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Plus className="h-5 w-5 text-primary" />
+                  </div>
+                  <span className="text-xs font-medium text-center">{t('expenses:addExpense')}</span>
+                </button>
+
+                <button
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
                   onClick={() => navigate(`/guests?weddingId=${wedding?.id}`)}
                 >
                   <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors">
@@ -593,18 +609,6 @@ export function DashboardPage() {
                   </div>
                   <span className="text-xs font-medium text-center">{t('expenses:title')}</span>
                 </button>
-
-                {canAccessWebsite && (
-                  <button
-                    className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
-                    onClick={() => navigate(`/website?weddingId=${wedding?.id}`)}
-                  >
-                    <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors">
-                      <Globe className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                    </div>
-                    <span className="text-xs font-medium text-center">{t('website:title')}</span>
-                  </button>
-                )}
               </div>
             </CardContent>
           </Card>
@@ -644,7 +648,7 @@ export function DashboardPage() {
                         <p className="font-medium">{event.name}</p>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Calendar className="h-3 w-3" />
-                          {event.startDate && format(parseISO(event.startDate), 'PPp', { locale })}
+                          {event.startDate && format(parseISO(event.startDate), `PPP ${timeFormatStr}`, { locale })}
                         </div>
                         {event.location && (
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">

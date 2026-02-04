@@ -65,6 +65,10 @@
   * {
     @apply border-border;
   }
+  html {
+    /* Prevent layout shift when scrollbar appears/disappears (e.g., when dropdowns open) */
+    scrollbar-gutter: stable;
+  }
   html,
   body {
     @apply overflow-x-hidden;

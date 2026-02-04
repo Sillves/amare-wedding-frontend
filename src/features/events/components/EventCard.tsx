@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/dateLocale';
 import { Calendar, MapPin, Clock, Users, Pencil, Trash2, UserPlus, MoreVertical } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useDateFormatListener, getTimeFormatPreference } from '@/hooks/useDateFormat';
 import type { EventDto } from '@/features/weddings/types';
 
 interface EventCardProps {
@@ -25,9 +26,14 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
   const { t, i18n } = useTranslation('events');
   const locale = getDateFnsLocale(i18n.language);
 
+  // Re-render when date format preference changes
+  useDateFormatListener();
+  const timeFormat = getTimeFormatPreference();
+  const timeFormatStr = timeFormat === '12h' ? 'p' : 'HH:mm';
+
   const formatDateTime = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'PPp', { locale });
+      return format(new Date(dateString), `PPP ${timeFormatStr}`, { locale });
     } catch {
       return dateString;
     }
@@ -35,7 +41,7 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
 
   const formatDateShort = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'MMM d, p', { locale });
+      return format(new Date(dateString), `MMM d, ${timeFormatStr}`, { locale });
     } catch {
       return dateString;
     }
@@ -43,10 +49,26 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
 
   const formatTime = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'p', { locale });
+      return format(new Date(dateString), timeFormatStr, { locale });
     } catch {
       return dateString;
     }
+  };
+
+  const formatDateOnly = (dateString: string) => {
+    try {
+      return format(new Date(dateString), 'PPP', { locale });
+    } catch {
+      return dateString;
+    }
+  };
+
+  // Check if end date is on a different day than start date
+  const hasEndDateOnDifferentDay = () => {
+    if (!event.startDate || !event.endDate || event.endDate === event.startDate) {
+      return false;
+    }
+    return !isSameDay(new Date(event.startDate), new Date(event.endDate));
   };
 
   const isUpcoming = event.startDate && new Date(event.startDate) > new Date();
@@ -155,14 +177,23 @@ export function EventCard({ event, guestCount = 0, onEdit, onDelete, onManageGue
           <div className="space-y-3">
             {/* Date and Time */}
             {event.startDate && (
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm flex-wrap">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
                 <span>{formatDateTime(event.startDate)}</span>
-                {event.endDate && (
+                {event.endDate && event.endDate !== event.startDate && (
                   <>
                     <span className="text-muted-foreground">→</span>
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span>{formatTime(event.endDate)}</span>
+                    {hasEndDateOnDifferentDay() ? (
+                      <>
+                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <span>{formatDateTime(event.endDate)}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Clock className="h-4 w-4 text-muted-foreground" />
+                        <span>{formatTime(event.endDate)}</span>
+                      </>
+                    )}
                   </>
                 )}
               </div>

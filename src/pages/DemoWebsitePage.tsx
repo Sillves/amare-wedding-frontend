@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Save, Globe, EyeOff, Heart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -13,17 +13,28 @@ import {
   HeroEditor,
   StoryEditor,
   DetailsEditor,
-  EventsEditor,
   GalleryEditor,
   RsvpEditor,
   FooterEditor,
 } from '@/features/website/components/sections';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/shared/components/LanguageSwitcher';
+import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import type { WebsiteContent, WebsiteTemplate } from '@/features/website/types';
+
+const navItems = [
+  { path: '/demo', labelKey: 'common:dashboard.title' },
+  { path: '/demo/guests', labelKey: 'guests:title' },
+  { path: '/demo/events', labelKey: 'events:title' },
+  { path: '/demo/expenses', labelKey: 'expenses:title' },
+  { path: '/demo/website', labelKey: 'website:title' },
+  { path: '/demo/rsvp', label: 'RSVP' },
+];
 
 function DemoWebsiteContent() {
   const { t } = useTranslation(['website', 'common', 'demo', 'guests', 'events', 'expenses']);
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     website,
     events,
@@ -36,6 +47,13 @@ function DemoWebsiteContent() {
   const [hasChanges, setHasChanges] = useState(false);
   const [localContent, setLocalContent] = useState<WebsiteContent>(website.content);
   const [localTemplate, setLocalTemplate] = useState<WebsiteTemplate>(website.template);
+
+  const isActive = (path: string) => {
+    if (path === '/demo') {
+      return location.pathname === '/demo';
+    }
+    return location.pathname.startsWith(path);
+  };
 
   const handleContentChange = <K extends keyof WebsiteContent>(
     section: K,
@@ -67,19 +85,21 @@ function DemoWebsiteContent() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/40 flex flex-col">
+    <div className="min-h-screen bg-muted/40 flex flex-col overflow-x-hidden">
       {/* Header */}
       <header className="border-b bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Heart className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">{t('common:appName')}</span>
+            <span className="text-xl font-script text-primary">{t('common:appName')}</span>
             <Badge variant="secondary" className="ml-2">
               Demo
             </Badge>
           </div>
-          <div className="flex items-center gap-1 sm:gap-3">
-            <div className="hidden sm:flex items-center gap-1 sm:gap-3">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <div className="hidden sm:flex items-center gap-1 sm:gap-2">
+              <FontSizeSwitcher />
+              <LanguageSwitcher />
               <ThemeSwitcher />
             </div>
             <Button variant="outline" size="sm" className="px-2 sm:px-4" onClick={() => navigate('/')}>
@@ -92,29 +112,22 @@ function DemoWebsiteContent() {
       {/* Navigation */}
       <nav className="border-b bg-background">
         <div className="container mx-auto px-4">
-          <div className="flex gap-4 overflow-x-auto">
-            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo')}>
-              {t('common:dashboard.title')}
-            </Button>
-            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/guests')}>
-              {t('guests:title')}
-            </Button>
-            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/events')}>
-              {t('events:title')}
-            </Button>
-            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/expenses')}>
-              {t('expenses:title')}
-            </Button>
-            <Button
-              variant="ghost"
-              className="rounded-none border-b-2 border-primary"
-              onClick={() => navigate('/demo/website')}
-            >
-              {t('website:title')}
-            </Button>
-            <Button variant="ghost" className="rounded-none" onClick={() => navigate('/demo/rsvp')}>
-              RSVP
-            </Button>
+          <div className="flex gap-1 sm:gap-2 overflow-x-auto scrollbar-hide">
+            {navItems.map((item) => (
+              <Button
+                key={item.path}
+                variant="ghost"
+                size="sm"
+                className={`rounded-none border-b-2 transition-colors whitespace-nowrap ${
+                  isActive(item.path)
+                    ? 'border-primary text-primary'
+                    : 'border-transparent hover:border-muted-foreground/30'
+                }`}
+                onClick={() => navigate(item.path)}
+              >
+                {item.label || t(item.labelKey!)}
+              </Button>
+            ))}
           </div>
         </div>
       </nav>
@@ -156,7 +169,6 @@ function DemoWebsiteContent() {
                   <TabsTrigger value="hero">{t('website:tabs.hero')}</TabsTrigger>
                   <TabsTrigger value="story">{t('website:tabs.story')}</TabsTrigger>
                   <TabsTrigger value="details">{t('website:tabs.details')}</TabsTrigger>
-                  <TabsTrigger value="events">{t('website:tabs.events')}</TabsTrigger>
                   <TabsTrigger value="gallery">{t('website:tabs.gallery')}</TabsTrigger>
                   <TabsTrigger value="rsvp">{t('website:tabs.rsvp')}</TabsTrigger>
                   <TabsTrigger value="footer">{t('website:tabs.footer')}</TabsTrigger>
@@ -194,14 +206,12 @@ function DemoWebsiteContent() {
                 <TabsContent value="details" className="mt-0">
                   <DetailsEditor
                     data={localContent.details}
+                    eventsData={localContent.events}
+                    eventCustomizations={localContent.eventCustomizations || []}
+                    weddingEvents={events}
                     onChange={(data) => handleContentChange('details', data)}
-                  />
-                </TabsContent>
-
-                <TabsContent value="events" className="mt-0">
-                  <EventsEditor
-                    data={localContent.events}
-                    onChange={(data) => handleContentChange('events', data)}
+                    onEventsChange={(data) => handleContentChange('events', data)}
+                    onCustomizationsChange={(customizations) => handleContentChange('eventCustomizations', customizations)}
                   />
                 </TabsContent>
 

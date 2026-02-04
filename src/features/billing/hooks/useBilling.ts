@@ -53,30 +53,8 @@ export function useCheckout() {
 }
 
 /**
- * Hook for changing an existing subscription plan
- * Usage: const { changePlan, isLoading } = useChangePlan();
- */
-export function useChangePlan() {
-  const mutation = useMutation({
-    mutationFn: async ({ tier, interval }: CheckoutParams) => {
-      await billingApi.changePlan(tier, interval);
-    },
-  });
-
-  return {
-    changePlan: mutation.mutate,
-    changePlanAsync: mutation.mutateAsync,
-    isLoading: mutation.isPending,
-    error: mutation.error,
-    isError: mutation.isError,
-    isSuccess: mutation.isSuccess,
-    reset: mutation.reset,
-  };
-}
-
-/**
  * Hook for opening Stripe Billing Portal
- * For existing subscribers to manage their subscription (upgrade, downgrade, cancel)
+ * For existing customers to view their payment history
  * Usage: const { openPortal, isLoading } = usePortalSession();
  */
 export function usePortalSession() {

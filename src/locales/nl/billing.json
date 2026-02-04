@@ -1,21 +1,16 @@
 {
-  "title": "Kies uw abonnement",
-  "subtitle": "Begin met het plannen van uw perfecte bruiloft met het juiste abonnement voor u",
-  "monthly": "Maandelijks",
-  "annual": "Jaarlijks",
-  "lifetime": "Levenslang",
-  "oneTime": "Eenmalig",
-  "savePercent": "Bespaar {{percent}}%",
+  "title": "Kies uw plan",
+  "subtitle": "Krijg levenslange toegang om uw perfecte bruiloft te plannen",
+  "oneTimePayment": "Eenmalige betaling, levenslange toegang",
+  "oneTime": "eenmalig",
   "popular": "Meest populair",
-  "currentPlan": "Huidig abonnement",
+  "currentPlan": "Huidig plan",
   "free": "Gratis",
-  "perMonth": "/maand",
-  "perYear": "/jaar",
-  "subscribe": "Abonneren",
+  "buyNow": "Nu kopen",
   "getStartedFree": "Gratis starten",
   "notAvailable": "Niet beschikbaar",
   "notIncluded": "Niet inbegrepen",
-  "cancelAnytime": "Alle betaalde abonnementen hebben een 14-dagen geld-terug-garantie. Op elk moment opzegbaar.",
+  "moneyBackGuarantee": "Alle betaalde plannen hebben een 14-dagen geld-terug-garantie.",
   "backToDashboard": "Terug naar dashboard",
   "limits": {
     "guests_one": "{{count}} gast",
@@ -49,19 +44,10 @@
   },
   "success": {
     "title": "Betaling geslaagd!",
-    "description": "Bedankt voor uw abonnement. Uw plan is geactiveerd.",
-    "processingNote": "Uw abonnement wordt verwerkt. Het kan even duren voordat alle functies beschikbaar zijn.",
+    "description": "Bedankt voor uw aankoop. Uw plan is geactiveerd.",
+    "processingNote": "Uw plan wordt verwerkt. Het kan even duren voordat alle functies beschikbaar zijn.",
     "goToDashboard": "Naar dashboard",
     "redirecting": "Doorsturen over {{seconds}} seconden...",
     "sessionId": "Sessie-ID"
-  },
-  "changePlan": {
-    "title": "Abonnement wijzigen",
-    "description": "Werk uw abonnement bij",
-    "currentPlan": "Huidig abonnement",
-    "newPlan": "Nieuw abonnement",
-    "confirm": "Wijziging bevestigen",
-    "success": "Abonnement succesvol gewijzigd",
-    "error": "Wijzigen van abonnement mislukt"
   }
 }

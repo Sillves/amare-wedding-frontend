@@ -2,7 +2,7 @@
 export { billingApi } from './api/billingApi';
 
 // Hooks
-export { usePlans, useCheckout, useChangePlan, usePortalSession } from './hooks/useBilling';
+export { usePlans, useCheckout, usePortalSession } from './hooks/useBilling';
 
 // Types
 export type {
@@ -14,9 +14,4 @@ export type {
   BillingPlanPriceDto,
 } from './types';
 
-export {
-  SubscriptionTierLabel,
-  BillingIntervalLabel,
-  tierToString,
-  intervalToEnum,
-} from './types';
+export { SubscriptionTierLabel, tierToString } from './types';

@@ -22,7 +22,7 @@ export function FontSizeSwitcher() {
   const currentOption = fontSizeOptions.find(o => o.value === fontSize) || fontSizeOptions[0];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
