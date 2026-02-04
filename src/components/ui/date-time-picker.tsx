@@ -6,11 +6,7 @@ import { CalendarIcon, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -31,6 +27,10 @@ interface DateTimePickerProps {
   disabled?: boolean;
   showTime?: boolean;
   minDate?: Date;
+  /** Start of the selectable date range (for year dropdown) */
+  fromYear?: number;
+  /** End of the selectable date range (for year dropdown) */
+  toYear?: number;
 }
 
 export function DateTimePicker({
@@ -40,10 +40,16 @@ export function DateTimePicker({
   disabled = false,
   showTime = true,
   minDate,
+  fromYear,
+  toYear,
 }: DateTimePickerProps) {
   const { i18n } = useTranslation();
   const locale = getDateFnsLocale(i18n.language);
   const [open, setOpen] = React.useState(false);
+
+  // Calculate start/end months for the calendar year dropdown
+  const startMonth = fromYear ? new Date(fromYear, 0) : undefined;
+  const endMonth = toYear ? new Date(toYear, 11) : undefined;
 
   const handleDateSelect = (date: Date | undefined) => {
     if (!date) {
@@ -75,9 +81,8 @@ export function DateTimePicker({
   const currentHour = value ? value.getHours().toString().padStart(2, '0') : '';
   const currentMinute = value ? value.getMinutes().toString().padStart(2, '0') : '';
   // Round to nearest 15 min for display, but allow exact value if set
-  const displayMinute = currentMinute && minutes.includes(currentMinute)
-    ? currentMinute
-    : currentMinute;
+  const displayMinute =
+    currentMinute && minutes.includes(currentMinute) ? currentMinute : currentMinute;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -92,7 +97,11 @@ export function DateTimePicker({
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {value ? (
-            showTime ? format(value, 'PPP HH:mm', { locale }) : format(value, 'PPP', { locale })
+            showTime ? (
+              format(value, 'PPP HH:mm', { locale })
+            ) : (
+              format(value, 'PPP', { locale })
+            )
           ) : (
             <span>{placeholder}</span>
           )}
@@ -105,6 +114,8 @@ export function DateTimePicker({
           onSelect={handleDateSelect}
           initialFocus
           disabled={minDate ? { before: minDate } : undefined}
+          startMonth={startMonth}
+          endMonth={endMonth}
         />
         {showTime && (
           <div className="border-t p-3">
@@ -149,6 +160,10 @@ interface DatePickerProps {
   placeholder?: string;
   disabled?: boolean;
   minDate?: Date;
+  /** Start of the selectable date range (for year dropdown) */
+  fromYear?: number;
+  /** End of the selectable date range (for year dropdown) */
+  toYear?: number;
 }
 
 export function DatePicker({
@@ -157,6 +172,8 @@ export function DatePicker({
   placeholder = 'Pick a date',
   disabled = false,
   minDate,
+  fromYear,
+  toYear,
 }: DatePickerProps) {
   return (
     <DateTimePicker
@@ -166,6 +183,8 @@ export function DatePicker({
       disabled={disabled}
       showTime={false}
       minDate={minDate}
+      fromYear={fromYear}
+      toYear={toYear}
     />
   );
 }

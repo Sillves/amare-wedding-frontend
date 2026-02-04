@@ -104,6 +104,7 @@ const DEMO_WEBSITE_CONTENT_EN: WebsiteContent = {
     contactEmail: 'emma.james@example.com',
     customMessage: 'We can\'t wait to celebrate with you!',
   },
+  eventCustomizations: [],
 };
 
 const DEMO_WEBSITE_SETTINGS_EN: WebsiteSettings = {

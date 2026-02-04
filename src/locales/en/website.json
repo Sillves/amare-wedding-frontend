@@ -56,6 +56,16 @@
     "RomanticGarden": {
       "name": "Romantic Garden",
       "description": "Whimsical and organic with botanical illustrations and watercolor accents"
+    },
+    "colorScheme": {
+      "title": "Color Scheme",
+      "description": "Choose a color palette for your website",
+      "bronsgoud": "Bronze Gold",
+      "softSage": "Soft Sage & Deep Evergreen",
+      "tintA": "Background",
+      "tintB": "Accent",
+      "tintC": "Headings",
+      "tintD": "Text"
     }
   },
   "hero": {
@@ -113,6 +123,13 @@
     "subtitle": "Help guests find your venues",
     "enabled": "Show Section",
     "sectionTitle": "Section Title",
+    "sourceLabel": "Event Source",
+    "sourceWedding": "Use Wedding Events",
+    "sourceWeddingDescription": "Show {{count}} events from your wedding dashboard",
+    "sourceWeddingEmpty": "No events created yet - add events in your dashboard",
+    "sourceStatic": "Use Custom Details",
+    "sourceStaticDescription": "Manually enter ceremony and reception details",
+    "eventsFromWedding": "Customize how each event appears on your website",
     "show": "Show",
     "venueTitle": "Title",
     "venue": "Venue Name",
@@ -146,6 +163,12 @@
       "address": "Address",
       "date": "Date & Time",
       "mapUrl": "Google Maps URL"
+    },
+    "customVenue": {
+      "add": "Add Other Detail",
+      "newTitle": "New Detail",
+      "subtitle": "Additional event or detail",
+      "titlePlaceholder": "e.g. Welcome Drinks, Brunch, Dress Code"
     }
   },
   "events": {
@@ -154,6 +177,28 @@
     "sectionTitle": "Section Title",
     "showFromWedding": "Show Wedding Events",
     "showFromWeddingDescription": "Display events from your wedding planning dashboard"
+  },
+  "eventCustomization": {
+    "title": "Event Display Settings",
+    "subtitle": "Customize how each event appears on your website",
+    "noEvents": "No events found. Add events in your wedding dashboard to customize them here.",
+    "icon": "Icon",
+    "iconType": "Display Icon",
+    "mapUrl": "Google Maps Link",
+    "mapUrlHint": "Paste a link so guests can get directions to this event",
+    "description": "Website Description",
+    "descriptionPlaceholder": "Add a custom description for your website...",
+    "descriptionHint": "This appears on your website (different from the event description in your dashboard)"
+  },
+  "eventIcons": {
+    "church": "Church / Ceremony",
+    "reception": "Reception / Champagne",
+    "dinner": "Dinner",
+    "party": "Party",
+    "rings": "Rings / Wedding",
+    "cake": "Cake",
+    "music": "Music / Dancing",
+    "car": "Transport / Departure"
   },
   "gallery": {
     "title": "Photo Gallery",

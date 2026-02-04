@@ -1,14 +1,18 @@
 import { useTranslation } from 'react-i18next';
 import { Check } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
-import type { WebsiteTemplate } from '../types';
+import type { WebsiteTemplate, WebsiteSettings, ElegantClassicColorScheme } from '../types';
 import { WebsiteTemplateNames } from '../types';
 import { TEMPLATE_INFO } from '../utils/defaultContent';
 
 interface TemplatePickerProps {
   selected: WebsiteTemplate;
   onSelect: (template: WebsiteTemplate) => void;
+  settings?: WebsiteSettings;
+  onSettingsChange?: (settings: WebsiteSettings) => void;
 }
 
 // Map i18n language codes to locale strings for date formatting
@@ -190,12 +194,37 @@ const templatePreviews: Record<WebsiteTemplate, React.FC<PreviewProps>> = {
   2: RomanticGardenPreview,
 };
 
-export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
+// Color scheme definitions for Elegant Classic
+const colorSchemes: { id: ElegantClassicColorScheme; colors: { a: string; b: string; c: string; d: string } }[] = [
+  {
+    id: 'bronsgoud',
+    colors: { a: '#F9F7F5', b: '#C9B7A6', c: '#9C846A', d: '#4A4A4A' },
+  },
+  {
+    id: 'softSage',
+    colors: { a: '#F2F2F0', b: '#B4B9AD', c: '#484D42', d: '#4A4A4A' },
+  },
+];
+
+export function TemplatePicker({ selected, onSelect, settings, onSettingsChange }: TemplatePickerProps) {
   const { t, i18n } = useTranslation('website');
   const locale = localeMap[i18n.language] || 'en-US';
 
+  const handleColorSchemeChange = (scheme: ElegantClassicColorScheme) => {
+    if (!settings || !onSettingsChange) return;
+    onSettingsChange({
+      ...settings,
+      templateSettings: {
+        ...settings.templateSettings,
+        colorScheme: scheme,
+      },
+    });
+  };
+
+  const currentColorScheme = settings?.templateSettings?.colorScheme || 'bronsgoud';
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold">{t('templates.title')}</h3>
         <p className="text-sm text-muted-foreground">{t('templates.description')}</p>
@@ -239,6 +268,64 @@ export function TemplatePicker({ selected, onSelect }: TemplatePickerProps) {
           );
         })}
       </div>
+
+      {/* Color Scheme Selector - Only for Elegant Classic */}
+      {selected === 0 && settings && onSettingsChange && (
+        <div className="space-y-4 pt-4 border-t">
+          <div>
+            <h4 className="font-medium">{t('templates.colorScheme.title')}</h4>
+            <p className="text-sm text-muted-foreground">{t('templates.colorScheme.description')}</p>
+          </div>
+
+          <RadioGroup
+            value={currentColorScheme}
+            onValueChange={(value) => handleColorSchemeChange(value as ElegantClassicColorScheme)}
+            className="grid gap-4 md:grid-cols-2"
+          >
+            {colorSchemes.map((scheme) => (
+              <Label
+                key={scheme.id}
+                htmlFor={scheme.id}
+                className={cn(
+                  'flex flex-col gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md',
+                  currentColorScheme === scheme.id
+                    ? 'border-primary bg-primary/5'
+                    : 'border-muted hover:border-muted-foreground/30'
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <RadioGroupItem value={scheme.id} id={scheme.id} />
+                  <span className="font-medium">{t(`templates.colorScheme.${scheme.id}`)}</span>
+                </div>
+
+                {/* Color swatches */}
+                <div className="flex gap-2">
+                  <div
+                    className="w-10 h-10 rounded border shadow-sm"
+                    style={{ backgroundColor: scheme.colors.a }}
+                    title={t('templates.colorScheme.tintA')}
+                  />
+                  <div
+                    className="w-10 h-10 rounded border shadow-sm"
+                    style={{ backgroundColor: scheme.colors.b }}
+                    title={t('templates.colorScheme.tintB')}
+                  />
+                  <div
+                    className="w-10 h-10 rounded border shadow-sm"
+                    style={{ backgroundColor: scheme.colors.c }}
+                    title={t('templates.colorScheme.tintC')}
+                  />
+                  <div
+                    className="w-10 h-10 rounded border shadow-sm"
+                    style={{ backgroundColor: scheme.colors.d }}
+                    title={t('templates.colorScheme.tintD')}
+                  />
+                </div>
+              </Label>
+            ))}
+          </RadioGroup>
+        </div>
+      )}
     </div>
   );
 }

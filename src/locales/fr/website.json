@@ -56,6 +56,16 @@
     "RomanticGarden": {
       "name": "Jardin Romantique",
       "description": "Fantaisiste et organique avec des illustrations botaniques et des accents aquarelle"
+    },
+    "colorScheme": {
+      "title": "Palette de Couleurs",
+      "description": "Choisissez une palette de couleurs pour votre site",
+      "bronsgoud": "Bronze Doré",
+      "softSage": "Sauge Douce & Vert Sapin",
+      "tintA": "Arrière-plan",
+      "tintB": "Accent",
+      "tintC": "Titres",
+      "tintD": "Texte"
     }
   },
   "hero": {
@@ -113,6 +123,13 @@
     "subtitle": "Aidez les invités à trouver vos lieux",
     "enabled": "Afficher la Section",
     "sectionTitle": "Titre de la Section",
+    "sourceLabel": "Source des Événements",
+    "sourceWedding": "Utiliser les Événements du Mariage",
+    "sourceWeddingDescription": "Afficher {{count}} événements de votre tableau de bord",
+    "sourceWeddingEmpty": "Aucun événement créé - ajoutez des événements dans votre tableau de bord",
+    "sourceStatic": "Utiliser des Détails Personnalisés",
+    "sourceStaticDescription": "Saisir manuellement les détails de la cérémonie et de la réception",
+    "eventsFromWedding": "Personnalisez l'apparence de chaque événement sur votre site",
     "show": "Afficher",
     "venueTitle": "Titre",
     "venue": "Nom du Lieu",
@@ -146,6 +163,12 @@
       "address": "Adresse",
       "date": "Date & Heure",
       "mapUrl": "URL Google Maps"
+    },
+    "customVenue": {
+      "add": "Ajouter un Autre Détail",
+      "newTitle": "Nouveau Détail",
+      "subtitle": "Événement ou détail supplémentaire",
+      "titlePlaceholder": "ex. Cocktail de Bienvenue, Brunch, Code Vestimentaire"
     }
   },
   "events": {
@@ -154,6 +177,28 @@
     "sectionTitle": "Titre de la Section",
     "showFromWedding": "Afficher les Événements du Mariage",
     "showFromWeddingDescription": "Afficher les événements de votre tableau de bord de planification"
+  },
+  "eventCustomization": {
+    "title": "Paramètres d'Affichage des Événements",
+    "subtitle": "Personnalisez l'apparence de chaque événement sur votre site",
+    "noEvents": "Aucun événement trouvé. Ajoutez des événements dans votre tableau de bord pour les personnaliser ici.",
+    "icon": "Icône",
+    "iconType": "Icône d'Affichage",
+    "mapUrl": "Lien Google Maps",
+    "mapUrlHint": "Collez un lien pour que les invités puissent obtenir l'itinéraire",
+    "description": "Description du Site",
+    "descriptionPlaceholder": "Ajoutez une description personnalisée pour votre site...",
+    "descriptionHint": "Ceci apparaît sur votre site (différent de la description de l'événement dans votre tableau de bord)"
+  },
+  "eventIcons": {
+    "church": "Église / Cérémonie",
+    "reception": "Réception / Champagne",
+    "dinner": "Dîner",
+    "party": "Fête",
+    "rings": "Alliances / Mariage",
+    "cake": "Gâteau",
+    "music": "Musique / Danse",
+    "car": "Transport / Départ"
   },
   "gallery": {
     "title": "Galerie Photo",

@@ -104,6 +104,7 @@ const DEMO_WEBSITE_CONTENT_NL: WebsiteContent = {
     contactEmail: 'sophie.thomas@example.nl',
     customMessage: 'We kunnen niet wachten om met jullie te vieren!',
   },
+  eventCustomizations: [],
 };
 
 const DEMO_WEBSITE_SETTINGS_NL: WebsiteSettings = {

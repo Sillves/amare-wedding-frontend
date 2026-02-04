@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { getIntlLocale } from '@/lib/dateLocale';
+import { getTimeFormatPreference } from '@/hooks/useDateFormat';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './modernMinimal.css';
 
@@ -42,6 +43,7 @@ export function ModernMinimalTemplate({
 
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
+  const timeFormatPref = getTimeFormatPreference();
 
   const formatDate = (dateString: string, style: 'full' | 'short' = 'full') => {
     const date = new Date(dateString);
@@ -62,8 +64,9 @@ export function ModernMinimalTemplate({
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString(locale, {
-      hour: 'numeric',
+      hour: timeFormatPref === '24h' ? '2-digit' : 'numeric',
       minute: '2-digit',
+      hour12: timeFormatPref === '12h',
     });
   };
 
@@ -273,7 +276,8 @@ export function ModernMinimalTemplate({
                 <div className="mm-event-details">
                   <h3>{event.name}</h3>
                   <p className="mm-event-meta">
-                    {formatDate(event.startDate, 'short')} · {event.location}
+                    {formatDate(event.startDate, 'short')}
+                    {event.endDate && event.endDate !== event.startDate && ` - ${formatDate(event.endDate, 'short')}`} · {event.location}
                   </p>
                   {event.description && <p>{event.description}</p>}
                 </div>

@@ -98,17 +98,46 @@ export interface VenueDetails {
   mapUrl: string;
 }
 
+export interface CustomVenueDetail {
+  id: string;
+  enabled: boolean;
+  iconType: 'church' | 'reception' | 'dinner' | 'party' | 'rings' | 'cake' | 'music' | 'car';
+  title: string;
+  venue: string;
+  address: string;
+  date: string;
+  description: string;
+  mapUrl: string;
+}
+
 export interface DetailsContent {
   enabled: boolean;
   title: string;
   ceremony: VenueDetails;
   reception: VenueDetails;
+  customVenues?: CustomVenueDetail[];
 }
 
 export interface EventsContent {
   enabled: boolean;
   title: string;
   showFromWeddingEvents: boolean;
+}
+
+/**
+ * Icon types available for event customization
+ */
+export type EventIconType = 'church' | 'reception' | 'dinner' | 'party' | 'rings' | 'cake' | 'music' | 'car';
+
+/**
+ * Customization options for individual events displayed on the website
+ */
+export interface EventCustomization {
+  eventId: string;
+  enabled: boolean;
+  iconType: EventIconType;
+  mapUrl?: string;
+  websiteDescription?: string;
 }
 
 export interface GalleryImage {
@@ -146,13 +175,20 @@ export interface WebsiteContent {
   gallery: GalleryContent;
   rsvp: RsvpContent;
   footer: FooterContent;
+  eventCustomizations: EventCustomization[];
 }
+
+/**
+ * Color scheme options for the Elegant Classic template
+ */
+export type ElegantClassicColorScheme = 'bronsgoud' | 'softSage';
 
 export interface TemplateSettings {
   primaryColor: string;
   accentColor: string;
   fontFamily: string;
-  [key: string]: string;
+  colorScheme?: ElegantClassicColorScheme;
+  [key: string]: string | undefined;
 }
 
 export interface WebsiteSettings {

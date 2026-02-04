@@ -1,26 +1,41 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300;400;500&family=Pinyon+Script&family=Montserrat:wght@100;200;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300;400;500&family=Pinyon+Script&family=Montserrat:wght@100;200;300;600&family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
 .elegant-classic {
-  /* Champagne & Charcoal Palette - refined and cohesive */
-  --ec-primary: #4a4a4a;
-  --ec-accent: #b8a99a;
-  --ec-bg: #faf9f7;
-  --ec-text: #4a4a4a;
-  --ec-text-light: #6a6a6a;
-  --ec-gold: #c9b8a5;
+  /* 4-Tint Color System - Bronsgoud (default) */
+  --ec-tint-a: #F9F7F5;  /* Background - warm off-white */
+  --ec-tint-b: #C9B7A6;  /* Accent/Secondary - warm taupe/gold */
+  --ec-tint-c: #9C846A;  /* Primary/Headings - bronze */
+  --ec-tint-d: #4A4A4A;  /* Text - charcoal */
+
+  /* Legacy variables mapped to new tint system for compatibility */
+  --ec-primary: var(--ec-tint-d);
+  --ec-accent: var(--ec-tint-b);
+  --ec-bg: var(--ec-tint-a);
+  --ec-text: var(--ec-tint-d);
+  --ec-text-light: var(--ec-tint-d);
+  --ec-gold: var(--ec-tint-b);
 
   /* Font families */
   --ec-font-display: 'Noto Serif Display', Georgia, serif;
   --ec-font-script: 'Pinyon Script', cursive;
   --ec-font-body: 'Montserrat', sans-serif;
+  --ec-font-heading: 'Bodoni Moda', Georgia, serif;
 
   font-family: var(--ec-font-body);
   font-weight: 300;
-  color: var(--ec-text);
-  background-color: var(--ec-bg);
+  color: var(--ec-tint-d);
+  background-color: var(--ec-tint-a);
   line-height: 1.6;
   container-type: inline-size;
+}
+
+/* Soft Sage & Deep Evergreen Color Scheme */
+.elegant-classic[data-color-scheme="softSage"] {
+  --ec-tint-a: #F2F2F0;  /* Background - cool off-white */
+  --ec-tint-b: #B4B9AD;  /* Accent/Secondary - soft sage */
+  --ec-tint-c: #484D42;  /* Primary/Headings - deep evergreen */
+  --ec-tint-d: #4A4A4A;  /* Text - charcoal */
 }
 
 /* Hero Initials - displayed at top of hero content */
@@ -30,11 +45,11 @@
   align-items: center;
   gap: 0;
   font-family: var(--ec-font-display);
-  font-size: clamp(5rem, 15vw, 8rem);
+  font-size: clamp(6rem, 18vw, 10rem);
   font-weight: 300;
   letter-spacing: 0;
-  color: var(--ec-primary);
-  margin-bottom: 2rem;
+  color: var(--ec-tint-d);
+  margin-bottom: 2.5rem;
   line-height: 1;
 }
 
@@ -51,7 +66,7 @@
   display: inline-block;
   width: 1px;
   height: 1.5em;
-  background-color: var(--ec-primary);
+  background-color: var(--ec-tint-d);
   margin: 0 0.3em;
   flex-shrink: 0;
 }
@@ -65,7 +80,7 @@
   text-align: center;
   background-size: cover;
   background-position: center;
-  background-color: var(--ec-bg);
+  background-color: var(--ec-tint-a);
   position: relative;
   padding: 15vh 2rem 0;
 }
@@ -80,7 +95,7 @@
 
 .ec-hero-content {
   padding: 0 2rem;
-  color: var(--ec-text);
+  color: var(--ec-tint-d);
   position: relative;
   z-index: 1;
   max-width: 700px;
@@ -107,21 +122,21 @@
 /* Tagline above names - italic script font */
 .ec-tagline {
   font-family: var(--ec-font-script);
-  font-size: clamp(1.3rem, 3vw, 2.2rem);
-  color: var(--ec-text-light);
-  margin: 0 0 1.5rem;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  color: var(--ec-tint-d);
+  margin: 0 0 2rem;
   letter-spacing: 0.02em;
 }
 
 /* Couple names in serif display font */
 .ec-couple-names {
   font-family: var(--ec-font-display);
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   font-weight: 400;
   letter-spacing: 0.2em;
   margin: 0;
   text-transform: uppercase;
-  color: var(--ec-primary);
+  color: var(--ec-tint-d);
   line-height: 1.4;
   text-align: center;
   padding-top: 1rem;
@@ -137,30 +152,30 @@
 .ec-couple-names-connector {
   display: block;
   font-family: var(--ec-font-script);
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   font-weight: 400;
   letter-spacing: 0.02em;
-  color: var(--ec-primary);
-  margin: 0.5rem 0;
+  color: var(--ec-tint-d);
+  margin: 0.75rem 0;
   text-transform: lowercase;
   text-align: center;
 }
 
 .ec-date {
   font-family: var(--ec-font-body);
-  font-size: 0.95rem;
-  font-weight: 300;
+  font-size: 1.15rem;
+  font-weight: 400;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  margin-top: 3rem;
-  color: var(--ec-text);
+  margin-top: 3.5rem;
+  color: var(--ec-tint-d);
 }
 
 /* Decorative line */
 .ec-line-divider {
   width: clamp(200px, 50vw, 400px);
   height: 1px;
-  background: var(--ec-gold);
+  background: var(--ec-tint-b);
   margin: 2.5rem auto;
 }
 
@@ -169,23 +184,24 @@
   padding: 6rem 2rem;
   max-width: 1100px;
   margin: 0 auto;
+  background-color: var(--ec-tint-a);
 }
 
 .ec-section-title {
-  font-family: var(--ec-font-script);
-  font-size: 2rem;
-  font-weight: 300;
+  font-family: var(--ec-font-heading);
+  font-size: 2.2rem;
+  font-weight: 500;
   text-align: center;
-  color: var(--ec-primary);
+  color: var(--ec-tint-c);
   margin-bottom: 0.5rem;
-  /* letter-spacing: 0.15em; */
-  /* text-transform: uppercase; */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .ec-divider {
   width: 80px;
   height: 2px;
-  background: var(--ec-gold);
+  background: var(--ec-tint-b);
   margin: 1.5rem auto 3rem;
 }
 
@@ -203,7 +219,7 @@
   transform: translateX(-50%);
   width: 1px;
   height: 100%;
-  background: var(--ec-accent);
+  background: var(--ec-tint-b);
 }
 
 .ec-timeline-item {
@@ -230,7 +246,7 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  background: var(--ec-gold);
+  background: var(--ec-tint-b);
   border-radius: 50%;
   top: 1.5rem;
 }
@@ -268,26 +284,27 @@
 }
 
 .ec-timeline-date {
-  font-size: 0.8rem;
-  color: var(--ec-gold);
+  font-family: var(--ec-font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ec-tint-b);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-weight: 500;
 }
 
 .ec-timeline-title {
-  font-family: var(--ec-font-display);
-  font-size: 1.25rem;
+  font-family: var(--ec-font-body);
+  font-size: 1.4rem;
+  font-weight: 600;
   margin: 0.75rem 0;
-  color: var(--ec-primary);
-  font-weight: 400;
+  color: var(--ec-tint-c);
 }
 
 .ec-timeline-description {
   font-family: var(--ec-font-body);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 300;
-  color: var(--ec-text-light);
+  color: #000000;
   line-height: 1.7;
 }
 
@@ -318,17 +335,30 @@
   width: 55%;
 }
 
+.ec-narrative-date {
+  font-family: var(--ec-font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ec-tint-b);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
 .ec-narrative-content h3 {
-  font-family: var(--ec-font-display);
-  color: var(--ec-primary);
+  font-family: var(--ec-font-body);
+  color: var(--ec-tint-c);
   margin-bottom: 1rem;
-  font-weight: 400;
-  font-size: 1.5rem;
+  font-weight: 600;
+  font-size: 1.6rem;
 }
 
 .ec-narrative-content p {
   font-family: var(--ec-font-body);
   font-weight: 300;
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.7;
 }
 
 /* Narrative without images - centered elegant text */
@@ -366,7 +396,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 1.5rem;
-  color: var(--ec-gold);
+  color: var(--ec-tint-c);
 }
 
 .ec-detail-icon svg,
@@ -383,7 +413,7 @@
 .ec-detail-card h3 {
   font-family: var(--ec-font-display);
   font-size: 1.3rem;
-  color: var(--ec-primary);
+  color: var(--ec-tint-d);
   margin-bottom: 1.5rem;
   font-weight: 400;
   letter-spacing: 0.1em;
@@ -392,50 +422,51 @@
 
 .ec-venue {
   font-family: var(--ec-font-display);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
-  color: var(--ec-primary);
+  color: #000000;
 }
 
 .ec-address {
   font-family: var(--ec-font-body);
+  font-size: 1.05rem;
   font-weight: 300;
-  color: var(--ec-text-light);
+  color: #000000;
   margin-bottom: 1rem;
   font-style: italic;
 }
 
 .ec-time {
-  font-size: 1.1rem;
-  color: var(--ec-gold);
+  font-size: 1.15rem;
+  color: #000000;
   margin: 1rem 0;
   letter-spacing: 0.1em;
 }
 
 .ec-description {
   font-style: italic;
-  color: var(--ec-text-light);
-  font-size: 0.95rem;
+  color: #000000;
+  font-size: 1.05rem;
   margin-top: 1rem;
 }
 
 .ec-map-link {
   display: inline-block;
   margin-top: 1.5rem;
-  color: var(--ec-gold);
+  color: var(--ec-tint-b);
   text-decoration: none;
   font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding-bottom: 2px;
-  border-bottom: 1px solid var(--ec-gold);
+  border-bottom: 1px solid var(--ec-tint-b);
   transition: all 0.3s ease;
 }
 
 .ec-map-link:hover {
-  color: var(--ec-primary);
-  border-color: var(--ec-primary);
+  color: var(--ec-tint-c);
+  border-color: var(--ec-tint-c);
 }
 
 /* Events */
@@ -454,31 +485,78 @@
   text-align: center;
 }
 
-.ec-event-card h3 {
-  font-family: var(--ec-font-display);
-  color: var(--ec-primary);
-  margin-bottom: 0.75rem;
+.ec-event-card h3,
+.ec-event-name {
+  font-family: var(--ec-font-script);
+  color: var(--ec-tint-d);
+  margin-bottom: 1rem;
   font-weight: 400;
-  font-size: 1.2rem;
-  letter-spacing: 0.05em;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+/* Event name in detail cards (when showing dynamic events) */
+.ec-detail-card .ec-event-name {
+  font-family: var(--ec-font-script);
+  color: var(--ec-tint-d);
+  margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.ec-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+
+.ec-event-info-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--ec-font-body);
+  font-weight: 300;
+  color: #000000;
+  font-size: 1.05rem;
+}
+
+.ec-event-info-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--ec-tint-b);
+  flex-shrink: 0;
 }
 
 .ec-event-location {
   font-family: var(--ec-font-body);
   font-weight: 300;
-  color: var(--ec-text-light);
-  font-style: italic;
+  color: #000000;
+  font-size: 1.05rem;
 }
 
 .ec-event-card p {
   font-family: var(--ec-font-body);
+  font-weight: 100;
+}
+
+.ec-event-description {
+  font-family: var(--ec-font-body);
   font-weight: 300;
+  font-style: italic;
+  color: #000000;
+  font-size: 1.05rem;
+  margin-top: 1rem;
 }
 
 .ec-event-time {
-  color: var(--ec-gold);
+  color: var(--ec-tint-d);
   margin: 0.75rem 0;
   font-size: 0.95rem;
+  font-weight: 100;
 }
 
 /* Gallery */
@@ -502,8 +580,34 @@
   display: flex;
   overflow-x: auto;
   gap: 1.5rem;
-  padding-bottom: 1rem;
+  padding-bottom: 1.5rem;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--ec-tint-b) var(--ec-tint-a);
+}
+
+/* Webkit (Chrome, Safari, Edge) scrollbar */
+.ec-gallery-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.ec-gallery-carousel::-webkit-scrollbar-track {
+  background: var(--ec-tint-a);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.ec-gallery-carousel::-webkit-scrollbar-thumb {
+  background: var(--ec-tint-b);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.ec-gallery-carousel::-webkit-scrollbar-thumb:hover {
+  background: var(--ec-tint-c);
 }
 
 .ec-gallery-carousel .ec-gallery-item {
@@ -526,7 +630,7 @@
 .ec-caption {
   text-align: center;
   font-style: italic;
-  color: var(--ec-text-light);
+  color: var(--ec-tint-d);
   margin-top: 1rem;
   font-size: 0.9rem;
 }
@@ -543,6 +647,7 @@
 
 .ec-rsvp .ec-section-title {
   margin-bottom: 0.5rem;
+  color: var(--ec-tint-c);
 }
 
 .ec-rsvp .ec-divider {
@@ -550,17 +655,20 @@
 }
 
 .ec-rsvp-description {
-  font-family: var(--ec-font-script);
-  font-size: 1.3rem;
+  font-family: var(--ec-font-body);
+  font-size: 1.1rem;
+  font-weight: 300;
   max-width: 500px;
   margin: 0 auto 1.5rem;
-  color: var(--ec-text-light);
+  color: #000000;
+  line-height: 1.7;
 }
 
 .ec-rsvp-deadline {
   font-family: var(--ec-font-body);
-  font-weight: 300;
-  color: var(--ec-text-light);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ec-tint-d);
   margin-bottom: 2rem;
   font-size: 0.95rem;
 }
@@ -568,18 +676,19 @@
 .ec-rsvp-button {
   display: inline-block;
   padding: 1rem 3rem;
-  background: transparent;
-  color: var(--ec-primary);
+  background: var(--ec-tint-c);
+  color: white;
   text-decoration: none;
   font-size: 0.9rem;
+  font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  border: 1px solid var(--ec-primary);
+  border: none;
   transition: all 0.3s ease;
 }
 
 .ec-rsvp-button:hover {
-  background: var(--ec-primary);
+  background: var(--ec-tint-d);
   color: white;
 }
 
@@ -587,26 +696,36 @@
 .ec-footer {
   text-align: center;
   padding: 4rem 2rem;
-  background: var(--ec-bg);
+  margin-top: 3rem;
+  background: var(--ec-tint-a);
   border-top: 1px solid rgba(189, 178, 167, 0.3);
   max-width: none;
 }
 
 .ec-footer-message {
-  font-family: var(--ec-font-script);
-  font-size: 1.5rem;
+  font-family: var(--ec-font-body);
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
   margin-bottom: 1.5rem;
-  color: var(--ec-text);
+  color: var(--ec-tint-c);
+  line-height: 1.7;
+}
+
+.ec-footer-contact {
+  font-family: var(--ec-font-body);
+  font-weight: 400;
+  font-style: italic;
 }
 
 .ec-footer-contact a {
-  color: var(--ec-gold);
+  color: var(--ec-tint-c);
   text-decoration: none;
   letter-spacing: 0.05em;
 }
 
 .ec-footer-contact a:hover {
-  color: var(--ec-primary);
+  color: var(--ec-tint-d);
 }
 
 .ec-footer-initials {
@@ -614,18 +733,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0;
   font-family: var(--ec-font-display);
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 300;
-  letter-spacing: 0.3em;
-  color: var(--ec-primary);
+  letter-spacing: 0;
+  color: var(--ec-tint-d);
+  line-height: 1;
+}
+
+.ec-footer-initials > span {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 1em;
+  text-align: center;
 }
 
 .ec-footer-initials-divider {
+  display: inline-block;
   width: 1px;
-  height: 1.5rem;
-  background: var(--ec-primary);
+  height: 1.2em;
+  background: var(--ec-tint-d);
+  margin: 0 0.3em;
+  flex-shrink: 0;
 }
 
 /* Responsive - using container queries for preview compatibility */
@@ -728,7 +859,7 @@
   }
 
   .ec-section-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .ec-hero-content {
@@ -840,7 +971,7 @@
   }
 
   .elegant-classic .ec-section-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .elegant-classic .ec-hero-content {

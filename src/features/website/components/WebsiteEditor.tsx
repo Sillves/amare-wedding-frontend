@@ -17,7 +17,6 @@ import {
   HeroEditor,
   StoryEditor,
   DetailsEditor,
-  EventsEditor,
   GalleryEditor,
   RsvpEditor,
   FooterEditor,
@@ -64,6 +63,11 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
   const handleTemplateChange = (newTemplate: WebsiteTemplate) => {
     setTemplate(newTemplate);
     setSettings(getDefaultSettings(newTemplate));
+    setHasChanges(true);
+  };
+
+  const handleSettingsChange = (newSettings: WebsiteSettings) => {
+    setSettings(newSettings);
     setHasChanges(true);
   };
 
@@ -133,7 +137,6 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
                 <TabsTrigger value="hero">{t('tabs.hero')}</TabsTrigger>
                 <TabsTrigger value="story">{t('tabs.story')}</TabsTrigger>
                 <TabsTrigger value="details">{t('tabs.details')}</TabsTrigger>
-                <TabsTrigger value="events">{t('tabs.events')}</TabsTrigger>
                 <TabsTrigger value="gallery">{t('tabs.gallery')}</TabsTrigger>
                 <TabsTrigger value="rsvp">{t('tabs.rsvp')}</TabsTrigger>
                 <TabsTrigger value="footer">{t('tabs.footer')}</TabsTrigger>
@@ -145,6 +148,8 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
                 <TemplatePicker
                   selected={template}
                   onSelect={handleTemplateChange}
+                  settings={settings}
+                  onSettingsChange={handleSettingsChange}
                 />
               </TabsContent>
 
@@ -167,14 +172,12 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
               <TabsContent value="details" className="mt-0">
                 <DetailsEditor
                   data={content.details}
+                  eventsData={content.events}
+                  eventCustomizations={content.eventCustomizations || []}
+                  weddingEvents={events}
                   onChange={(data) => handleContentChange('details', data)}
-                />
-              </TabsContent>
-
-              <TabsContent value="events" className="mt-0">
-                <EventsEditor
-                  data={content.events}
-                  onChange={(data) => handleContentChange('events', data)}
+                  onEventsChange={(data) => handleContentChange('events', data)}
+                  onCustomizationsChange={(customizations) => handleContentChange('eventCustomizations', customizations)}
                 />
               </TabsContent>
 

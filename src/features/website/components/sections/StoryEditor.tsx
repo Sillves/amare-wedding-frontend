@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DatePicker } from '@/components/ui/date-time-picker';
 import { ImageUploader } from '../ImageUploader';
 import type { StoryContent, StoryItem } from '../../types';
 
@@ -205,12 +206,13 @@ export function StoryEditor({ weddingId, data, onChange, disableImageUpload, ima
                         </div>
                         <div className="space-y-2">
                           <Label className="text-sm">{t('story.item.date')}</Label>
-                          <Input
-                            type="date"
-                            value={item.date}
-                            onChange={(e) =>
-                              handleUpdateItem(item.id, { date: e.target.value })
+                          <DatePicker
+                            value={item.date ? new Date(item.date) : undefined}
+                            onChange={(date) =>
+                              handleUpdateItem(item.id, { date: date ? date.toISOString().split('T')[0] : '' })
                             }
+                            fromYear={1950}
+                            toYear={new Date().getFullYear() + 10}
                           />
                         </div>
                       </div>

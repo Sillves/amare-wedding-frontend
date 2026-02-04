@@ -104,6 +104,7 @@ const DEMO_WEBSITE_CONTENT_FR: WebsiteContent = {
     contactEmail: 'marie.pierre@example.fr',
     customMessage: 'Nous avons hâte de célébrer avec vous!',
   },
+  eventCustomizations: [],
 };
 
 const DEMO_WEBSITE_SETTINGS_FR: WebsiteSettings = {

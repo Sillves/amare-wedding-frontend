@@ -56,6 +56,16 @@
     "RomanticGarden": {
       "name": "Romantische Tuin",
       "description": "Speels en organisch met botanische illustraties en aquarel accenten"
+    },
+    "colorScheme": {
+      "title": "Kleurenschema",
+      "description": "Kies een kleurenpalet voor je website",
+      "bronsgoud": "Bronsgoud",
+      "softSage": "Zacht Salie & Diep Dennegroen",
+      "tintA": "Achtergrond",
+      "tintB": "Accent",
+      "tintC": "Koppen",
+      "tintD": "Tekst"
     }
   },
   "hero": {
@@ -113,6 +123,13 @@
     "subtitle": "Help gasten je locaties te vinden",
     "enabled": "Sectie Tonen",
     "sectionTitle": "Sectie Titel",
+    "sourceLabel": "Evenementbron",
+    "sourceWedding": "Gebruik Bruiloft Evenementen",
+    "sourceWeddingDescription": "Toon {{count}} evenementen uit je bruiloft dashboard",
+    "sourceWeddingEmpty": "Nog geen evenementen - voeg evenementen toe in je dashboard",
+    "sourceStatic": "Gebruik Aangepaste Details",
+    "sourceStaticDescription": "Voer handmatig ceremonie en receptie details in",
+    "eventsFromWedding": "Pas aan hoe elk evenement op je website verschijnt",
     "show": "Tonen",
     "venueTitle": "Titel",
     "venue": "Locatie Naam",
@@ -146,6 +163,12 @@
       "address": "Adres",
       "date": "Datum & Tijd",
       "mapUrl": "Google Maps URL"
+    },
+    "customVenue": {
+      "add": "Ander Detail Toevoegen",
+      "newTitle": "Nieuw Detail",
+      "subtitle": "Extra evenement of detail",
+      "titlePlaceholder": "bijv. Welkomstdrankjes, Brunch, Dresscode"
     }
   },
   "events": {
@@ -154,6 +177,28 @@
     "sectionTitle": "Sectie Titel",
     "showFromWedding": "Bruiloft Evenementen Tonen",
     "showFromWeddingDescription": "Toon evenementen van je bruiloft planning dashboard"
+  },
+  "eventCustomization": {
+    "title": "Evenement Weergave Instellingen",
+    "subtitle": "Pas aan hoe elk evenement op je website wordt weergegeven",
+    "noEvents": "Geen evenementen gevonden. Voeg evenementen toe in je bruiloft dashboard om ze hier aan te passen.",
+    "icon": "Icoon",
+    "iconType": "Weergave Icoon",
+    "mapUrl": "Google Maps Link",
+    "mapUrlHint": "Plak een link zodat gasten de route naar dit evenement kunnen vinden",
+    "description": "Website Beschrijving",
+    "descriptionPlaceholder": "Voeg een aangepaste beschrijving toe voor je website...",
+    "descriptionHint": "Dit verschijnt op je website (anders dan de evenement beschrijving in je dashboard)"
+  },
+  "eventIcons": {
+    "church": "Kerk / Ceremonie",
+    "reception": "Receptie / Champagne",
+    "dinner": "Diner",
+    "party": "Feest",
+    "rings": "Ringen / Huwelijk",
+    "cake": "Taart",
+    "music": "Muziek / Dansen",
+    "car": "Vervoer / Vertrek"
   },
   "gallery": {
     "title": "Fotogalerij",

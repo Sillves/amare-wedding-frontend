@@ -94,6 +94,7 @@ export function getDefaultContent(
       contactEmail: '',
       customMessage: translate('defaults.footer.message', "We can't wait to celebrate with you!"),
     },
+    eventCustomizations: [],
   };
 }
 
@@ -105,6 +106,7 @@ export function getDefaultSettings(template: WebsiteTemplate): WebsiteSettings {
       accentColor: '#BDB2A7',
       fontFamily: 'serif',
       backgroundPattern: 'none',
+      colorScheme: 'bronsgoud',
     },
     ModernMinimal: {
       primaryColor: '#1A1A1A',

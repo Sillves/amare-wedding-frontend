@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { getIntlLocale } from '@/lib/dateLocale';
+import { getTimeFormatPreference } from '@/hooks/useDateFormat';
+import { formatEndDateTime } from '@/lib/dateUtils';
 import type { WebsiteContent, WebsiteSettings, EventDto } from '../../types';
 import './romanticGarden.css';
 
@@ -127,6 +129,7 @@ export function RomanticGardenTemplate({
 
   const { hero, story, details, gallery, rsvp, footer } = content;
   const { templateSettings } = settings;
+  const timeFormatPref = getTimeFormatPreference();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -141,8 +144,9 @@ export function RomanticGardenTemplate({
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString(locale, {
-      hour: 'numeric',
+      hour: timeFormatPref === '24h' ? '2-digit' : 'numeric',
       minute: '2-digit',
+      hour12: timeFormatPref === '12h',
     });
   };
 
@@ -321,6 +325,7 @@ export function RomanticGardenTemplate({
                 <p className="rg-event-location">{event.location}</p>
                 <p className="rg-event-time">
                   {formatDate(event.startDate)} {t('preview.at')} {formatTime(event.startDate)}
+                  {event.endDate && event.endDate !== event.startDate && ` - ${formatEndDateTime(event.startDate, event.endDate, i18n.language)}`}
                 </p>
                 {event.description && <p>{event.description}</p>}
               </div>
