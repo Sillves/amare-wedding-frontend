@@ -123,6 +123,29 @@ Existing Paid User → /profile → Manage Subscription → Stripe Portal → /b
 2 = Lifetime
 ```
 
+### Wedding Website Template Redesign (Feb 2026)
+- **4-Tint Color System**: Background (A), Accent (B), Headings (C), Text (D)
+- **Color Scheme Selector**: Bronsgoud (bronze gold) and Soft Sage (green) palettes
+- **RSVP Section**: White background, black description, weighted deadline text
+- **Footer Styling**: Increased text weight, hero-matching initials with vertical divider
+- **DatePicker Improvements**: Added `fromYear`/`toYear` props for year range selection
+- **Story Section**: Date formatting without weekday, visible in both timeline and narrative modes
+- **Time Range Formatting**: Intelligent display for multi-day events (e.g., "Feb 12, 12:00 - Feb 18, 12:00")
+- **Gallery Carousel**: Custom scrollbar styled with theme colors
+- **Chrome Upload Fix**: Removed manual Content-Type header for FormData (browser sets boundary automatically)
+
+### Color Scheme Configuration
+```typescript
+// In templateSettings
+colorScheme: 'bronsgoud' | 'softSage'
+
+// CSS Variables (4-tint system)
+--ec-tint-a: Background color
+--ec-tint-b: Accent/Secondary color
+--ec-tint-c: Primary/Headings color
+--ec-tint-d: Text color
+```
+
 ---
 
 ## 📋 Data Models
