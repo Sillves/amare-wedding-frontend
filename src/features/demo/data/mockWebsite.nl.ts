@@ -113,6 +113,7 @@ const DEMO_WEBSITE_SETTINGS_NL: WebsiteSettings = {
     accentColor: '#D4AF37',
     fontFamily: 'serif',
     backgroundPattern: 'damask',
+    colorScheme: 'bronsgoud',
   },
 };
 
