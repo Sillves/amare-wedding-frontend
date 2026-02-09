@@ -107,6 +107,54 @@
     "deleted": "Guest deleted successfully!",
     "invitationsSent": "{{count}} invitation(s) sent successfully!"
   },
+  "import": {
+    "button": "Import Guests",
+    "title": "Import Guests",
+    "description": "Upload an Excel or CSV file to bulk-add guests",
+    "back": "Back",
+    "next": "Next",
+    "steps": {
+      "upload": "Upload",
+      "mapping": "Map Columns",
+      "preview": "Preview",
+      "result": "Result"
+    },
+    "upload": {
+      "dropzone": "Drop your file here or click to browse",
+      "formats": "Supports .xlsx and .csv files",
+      "maxSize": "Max {{max}}MB",
+      "downloadTemplate": "Download Template",
+      "fileTooLarge": "File is too large (max {{max}}MB)",
+      "invalidType": "Invalid file type. Please use .xlsx or .csv",
+      "emptyFile": "The file appears to be empty",
+      "parseError": "Failed to read the file. Please check the format."
+    },
+    "mapping": {
+      "description": "Map your file columns to guest fields. Name and Email are required.",
+      "name": "Name",
+      "email": "Email",
+      "rsvpStatus": "RSVP Status",
+      "preferredLanguage": "Language",
+      "skip": "Skip",
+      "requiredFields": "You must map both Name and Email columns",
+      "checking": "Checking..."
+    },
+    "preview": {
+      "summary": "{{valid}} valid, {{invalid}} invalid out of {{total}} rows",
+      "removeInvalid": "Remove invalid rows",
+      "importButton": "Import {{count}} guests",
+      "importing": "Importing..."
+    },
+    "result": {
+      "title": "Import Complete",
+      "created": "Created",
+      "skipped": "Skipped",
+      "errors": "Errors",
+      "errorDetails": "Error details:",
+      "row": "Row {{number}}",
+      "close": "Close"
+    }
+  },
   "upgrade": {
     "sendInvitations": "Send Email Invitations",
     "sendInvitationsDescription": "Upgrade to Starter or Pro to send digital invitations to your guests.",

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { ArrowLeft, Users, UserCheck, UserX, Clock, X, Heart, Sparkles, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Users, UserCheck, UserX, Clock, X, Heart, Sparkles, HelpCircle, Upload } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useGuests, useSendGuestInvitations } from '@/features/guests/hooks/useGuests';
@@ -15,6 +15,7 @@ import { EditGuestDialog } from '@/features/guests/components/EditGuestDialog';
 import { DeleteGuestDialog } from '@/features/guests/components/DeleteGuestDialog';
 import { SendInvitationDialog } from '@/features/guests/components/SendInvitationDialog';
 import { BulkInvitationDialog } from '@/features/guests/components/BulkInvitationDialog';
+import { ImportGuestsDialog } from '@/features/guests/components/ImportGuestsDialog';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import type { GuestDto } from '@/features/weddings/types';
@@ -101,6 +102,7 @@ export function GuestsPage() {
   const [sendingInvitationGuest, setSendingInvitationGuest] = useState<GuestDto | null>(null);
   const [bulkInviteGuestIds, setBulkInviteGuestIds] = useState<string[]>([]);
   const [showBulkConfirm, setShowBulkConfirm] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
 
   // Calculate statistics (always use all guests for stats)
   const stats = useMemo(() => {
@@ -281,12 +283,22 @@ export function GuestsPage() {
             </div>
             <p className="text-muted-foreground">{t('guests:manageDescription')}</p>
           </div>
-          <CreateGuestDialog weddingId={selectedWeddingId}>
-            <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
-              <Users className="h-4 w-4 mr-2" />
-              {t('guests:addGuest')}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="rounded-xl"
+              onClick={() => setShowImportDialog(true)}
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              {t('guests:import.button')}
             </Button>
-          </CreateGuestDialog>
+            <CreateGuestDialog weddingId={selectedWeddingId}>
+              <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
+                <Users className="h-4 w-4 mr-2" />
+                {t('guests:addGuest')}
+              </Button>
+            </CreateGuestDialog>
+          </div>
         </section>
 
         {/* Statistics Cards */}
@@ -457,6 +469,13 @@ export function GuestsPage() {
         open={showBulkConfirm}
         onOpenChange={setShowBulkConfirm}
         onConfirm={confirmBulkSendInvitations}
+      />
+
+      {/* Import Guests Dialog */}
+      <ImportGuestsDialog
+        weddingId={selectedWeddingId}
+        open={showImportDialog}
+        onOpenChange={setShowImportDialog}
       />
     </div>
   );

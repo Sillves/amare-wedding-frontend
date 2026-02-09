@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { guestsApi } from '../api/guestsApi';
 import type { CreateGuestRequest, UpdateGuestRequest } from '@/features/weddings/types';
+import type { BulkImportGuestRequest } from '../types/importTypes';
 
 /**
  * Hook for fetching all guests for a specific wedding
@@ -121,6 +122,23 @@ export function useSendGuestInvitations() {
       variables.guestIds.forEach(guestId => {
         queryClient.invalidateQueries({ queryKey: ['guests', 'detail', guestId] });
       });
+    },
+  });
+}
+
+/**
+ * Hook for bulk importing guests from a file
+ * Automatically invalidates the guests query for the wedding on success
+ * @returns React Query mutation for importing guests
+ */
+export function useImportGuests() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ weddingId, data }: { weddingId: string; data: BulkImportGuestRequest }) =>
+      guestsApi.importGuests(weddingId, data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['guests', variables.weddingId] });
     },
   });
 }

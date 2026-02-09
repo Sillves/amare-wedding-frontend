@@ -107,6 +107,54 @@
     "deleted": "Invité supprimé avec succès!",
     "invitationsSent": "{{count}} invitation(s) envoyée(s) avec succès!"
   },
+  "import": {
+    "button": "Importer des invités",
+    "title": "Importer des invités",
+    "description": "Téléchargez un fichier Excel ou CSV pour ajouter des invités en masse",
+    "back": "Retour",
+    "next": "Suivant",
+    "steps": {
+      "upload": "Télécharger",
+      "mapping": "Colonnes",
+      "preview": "Aperçu",
+      "result": "Résultat"
+    },
+    "upload": {
+      "dropzone": "Déposez votre fichier ici ou cliquez pour parcourir",
+      "formats": "Formats supportés : .xlsx et .csv",
+      "maxSize": "Max {{max}}Mo",
+      "downloadTemplate": "Télécharger le modèle",
+      "fileTooLarge": "Le fichier est trop volumineux (max {{max}}Mo)",
+      "invalidType": "Type de fichier invalide. Utilisez .xlsx ou .csv",
+      "emptyFile": "Le fichier semble être vide",
+      "parseError": "Impossible de lire le fichier. Vérifiez le format."
+    },
+    "mapping": {
+      "description": "Associez vos colonnes aux champs d'invité. Nom et Email sont obligatoires.",
+      "name": "Nom",
+      "email": "Email",
+      "rsvpStatus": "Statut RSVP",
+      "preferredLanguage": "Langue",
+      "skip": "Ignorer",
+      "requiredFields": "Vous devez associer les colonnes Nom et Email",
+      "checking": "Vérification..."
+    },
+    "preview": {
+      "summary": "{{valid}} valides, {{invalid}} invalides sur {{total}} lignes",
+      "removeInvalid": "Supprimer les lignes invalides",
+      "importButton": "Importer {{count}} invités",
+      "importing": "Importation..."
+    },
+    "result": {
+      "title": "Importation terminée",
+      "created": "Créés",
+      "skipped": "Ignorés",
+      "errors": "Erreurs",
+      "errorDetails": "Détails des erreurs :",
+      "row": "Ligne {{number}}",
+      "close": "Fermer"
+    }
+  },
   "upgrade": {
     "sendInvitations": "Envoyer des Invitations par Email",
     "sendInvitationsDescription": "Passez à Starter ou Pro pour envoyer des invitations numériques à vos invités.",

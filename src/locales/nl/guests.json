@@ -107,6 +107,54 @@
     "deleted": "Gast succesvol verwijderd!",
     "invitationsSent": "{{count}} uitnodiging(en) succesvol verstuurd!"
   },
+  "import": {
+    "button": "Gasten importeren",
+    "title": "Gasten importeren",
+    "description": "Upload een Excel- of CSV-bestand om gasten in bulk toe te voegen",
+    "back": "Terug",
+    "next": "Volgende",
+    "steps": {
+      "upload": "Uploaden",
+      "mapping": "Kolommen",
+      "preview": "Voorbeeld",
+      "result": "Resultaat"
+    },
+    "upload": {
+      "dropzone": "Sleep uw bestand hierheen of klik om te bladeren",
+      "formats": "Ondersteunt .xlsx en .csv bestanden",
+      "maxSize": "Max {{max}}MB",
+      "downloadTemplate": "Sjabloon downloaden",
+      "fileTooLarge": "Bestand is te groot (max {{max}}MB)",
+      "invalidType": "Ongeldig bestandstype. Gebruik .xlsx of .csv",
+      "emptyFile": "Het bestand lijkt leeg te zijn",
+      "parseError": "Kan het bestand niet lezen. Controleer het formaat."
+    },
+    "mapping": {
+      "description": "Koppel uw kolommen aan gastvelden. Naam en E-mail zijn verplicht.",
+      "name": "Naam",
+      "email": "E-mail",
+      "rsvpStatus": "RSVP Status",
+      "preferredLanguage": "Taal",
+      "skip": "Overslaan",
+      "requiredFields": "U moet zowel Naam als E-mail kolommen koppelen",
+      "checking": "Controleren..."
+    },
+    "preview": {
+      "summary": "{{valid}} geldig, {{invalid}} ongeldig van {{total}} rijen",
+      "removeInvalid": "Ongeldige rijen verwijderen",
+      "importButton": "{{count}} gasten importeren",
+      "importing": "Importeren..."
+    },
+    "result": {
+      "title": "Import voltooid",
+      "created": "Aangemaakt",
+      "skipped": "Overgeslagen",
+      "errors": "Fouten",
+      "errorDetails": "Foutdetails:",
+      "row": "Rij {{number}}",
+      "close": "Sluiten"
+    }
+  },
   "upgrade": {
     "sendInvitations": "E-mail Uitnodigingen Versturen",
     "sendInvitationsDescription": "Upgrade naar Starter of Pro om digitale uitnodigingen naar je gasten te versturen.",

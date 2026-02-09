@@ -6,6 +6,7 @@ import type {
   SendInvitationsRequest,
   InvitationSendResult
 } from '@/features/weddings/types';
+import type { BulkImportGuestRequest, BulkImportGuestResult } from '../types/importTypes';
 import { normalizeRsvpStatus } from '../utils/rsvpStatusMapper';
 
 /**
@@ -96,5 +97,27 @@ export const guestsApi = {
   sendInvitations: async (weddingId: string, data: SendInvitationsRequest): Promise<InvitationSendResult> => {
     const response = await apiClient.post<InvitationSendResult>(`/weddings/${weddingId}/guests/send-invitations`, data);
     return response.data;
+  },
+
+  /**
+   * Bulk import guests from parsed file data
+   * @param weddingId - Wedding UUID
+   * @param data - Bulk import request payload
+   * @returns Promise<BulkImportGuestResult>
+   */
+  importGuests: async (weddingId: string, data: BulkImportGuestRequest): Promise<BulkImportGuestResult> => {
+    const response = await apiClient.post<BulkImportGuestResult>(`/weddings/${weddingId}/guests/import`, data);
+    return response.data;
+  },
+
+  /**
+   * Check which emails already exist for a wedding
+   * @param weddingId - Wedding UUID
+   * @param emails - List of emails to check
+   * @returns Promise<string[]> - Emails that already exist
+   */
+  checkEmails: async (weddingId: string, emails: string[]): Promise<string[]> => {
+    const response = await apiClient.post<{ existingEmails: string[] }>(`/weddings/${weddingId}/guests/check-emails`, { emails });
+    return response.data.existingEmails;
   },
 };
