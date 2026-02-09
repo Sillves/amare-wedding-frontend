@@ -67,5 +67,27 @@
   "filter": {
     "all": "All Categories",
     "filterByCategory": "Filter by category"
+  },
+  "budget": {
+    "title": "Budget",
+    "totalBudget": "Total Budget",
+    "setBudget": "Set Budget",
+    "editBudget": "Edit Budget",
+    "setupTitle": "Plan Your Wedding Budget",
+    "setupDescription": "Set a total budget and allocate amounts per category to track your spending.",
+    "getStarted": "Get Started",
+    "allocated": "Allocated",
+    "spent": "Spent",
+    "remaining": "Remaining",
+    "unallocated": "Unallocated",
+    "overBudget": "Over Budget",
+    "underBudget": "Under Budget",
+    "onTrack": "On Track",
+    "autoDistribute": "Auto-distribute",
+    "categoryBudget": "Category Budget",
+    "ofBudget": "of budget",
+    "totalAllocated": "Total Allocated",
+    "budgetSaved": "Budget saved successfully",
+    "budgetError": "Failed to save budget"
   }
 }

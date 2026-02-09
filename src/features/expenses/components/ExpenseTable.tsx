@@ -141,7 +141,7 @@ export function ExpenseTable({ expenses, onEdit, onDelete }: ExpenseTableProps) 
       defaultSortDirection="desc"
       itemsPerPageOptions={[10, 25, 50]}
       defaultItemsPerPage={10}
-      maxHeight="400px"
+      fillContainer
       emptyMessage={t('expenses:noExpenses')}
     />
   );

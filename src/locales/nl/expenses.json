@@ -67,5 +67,27 @@
   "filter": {
     "all": "Alle Categorieën",
     "filterByCategory": "Filter op categorie"
+  },
+  "budget": {
+    "title": "Budget",
+    "totalBudget": "Totaal Budget",
+    "setBudget": "Budget Instellen",
+    "editBudget": "Budget Bewerken",
+    "setupTitle": "Plan Je Trouwbudget",
+    "setupDescription": "Stel een totaalbudget in en verdeel bedragen per categorie om je uitgaven bij te houden.",
+    "getStarted": "Aan de slag",
+    "allocated": "Toegewezen",
+    "spent": "Uitgegeven",
+    "remaining": "Resterend",
+    "unallocated": "Niet toegewezen",
+    "overBudget": "Over Budget",
+    "underBudget": "Onder Budget",
+    "onTrack": "Op Schema",
+    "autoDistribute": "Automatisch verdelen",
+    "categoryBudget": "Budget per Categorie",
+    "ofBudget": "van budget",
+    "totalAllocated": "Totaal Toegewezen",
+    "budgetSaved": "Budget succesvol opgeslagen",
+    "budgetError": "Budget opslaan mislukt"
   }
 }

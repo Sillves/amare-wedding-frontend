@@ -67,5 +67,27 @@
   "filter": {
     "all": "Toutes les Catégories",
     "filterByCategory": "Filtrer par catégorie"
+  },
+  "budget": {
+    "title": "Budget",
+    "totalBudget": "Budget Total",
+    "setBudget": "Définir le Budget",
+    "editBudget": "Modifier le Budget",
+    "setupTitle": "Planifiez Votre Budget de Mariage",
+    "setupDescription": "Définissez un budget total et répartissez les montants par catégorie pour suivre vos dépenses.",
+    "getStarted": "Commencer",
+    "allocated": "Alloué",
+    "spent": "Dépensé",
+    "remaining": "Restant",
+    "unallocated": "Non alloué",
+    "overBudget": "Hors Budget",
+    "underBudget": "Sous Budget",
+    "onTrack": "En Bonne Voie",
+    "autoDistribute": "Répartir automatiquement",
+    "categoryBudget": "Budget par Catégorie",
+    "ofBudget": "du budget",
+    "totalAllocated": "Total Alloué",
+    "budgetSaved": "Budget enregistré avec succès",
+    "budgetError": "Échec de l'enregistrement du budget"
   }
 }

@@ -36,6 +36,7 @@ interface DataTableProps<T> {
   itemsPerPageOptions?: number[];
   defaultItemsPerPage?: number;
   maxHeight?: string;
+  fillContainer?: boolean;
   onRowClick?: (item: T) => void;
   emptyMessage?: string;
 }
@@ -49,6 +50,7 @@ export function DataTable<T>({
   itemsPerPageOptions = [10, 25, 50],
   defaultItemsPerPage = 10,
   maxHeight = '400px',
+  fillContainer = false,
   onRowClick,
   emptyMessage,
 }: DataTableProps<T>) {
@@ -114,10 +116,13 @@ export function DataTable<T>({
   }
 
   return (
-    <div className="space-y-4">
-      {/* Table with fixed height and scroll */}
-      <div className="rounded-md border overflow-x-auto">
-        <div className="overflow-y-auto min-w-[640px]" style={{ maxHeight }}>
+    <div className={fillContainer ? 'flex flex-col h-full' : 'space-y-4'}>
+      {/* Table with scroll */}
+      <div className={`rounded-md border overflow-x-auto ${fillContainer ? 'flex-1 min-h-0 flex flex-col' : ''}`}>
+        <div
+          className={`overflow-y-auto min-w-[640px] ${fillContainer ? 'flex-1 min-h-0' : ''}`}
+          style={fillContainer ? undefined : { maxHeight }}
+        >
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
               <TableRow>
@@ -154,7 +159,7 @@ export function DataTable<T>({
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
+        <div className={`flex items-center justify-between ${fillContainer ? 'flex-shrink-0 pt-4' : ''}`}>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">
               {t('showing')} {startIndex + 1}-{Math.min(endIndex, sortedData.length)} {t('of')} {sortedData.length}
