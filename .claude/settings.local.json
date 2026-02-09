@@ -13,6 +13,10 @@
       "Bash(sleep:*)",
       "Bash(curl:*)",
       "Bash(claude:*)",
+      "Bash(python3:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(powershell:*)",
       "mcp__postgres__query",
       "mcp__memory__create_entities",
       "mcp__ide__getDiagnostics",
@@ -23,8 +27,8 @@
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_press_key",
       "mcp__playwright__browser_evaluate",
-      "Bash(powershell:*)",
-      "Bash(del \"C:\\\\Users\\\\loren\\\\RiderProjects\\\\amare-wedding-frontend\\\\PLAN-elegant-classic-redesign.md\")"
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_resize"
     ]
   }
 }
