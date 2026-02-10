@@ -9,15 +9,40 @@ export async function parseFile(file: File): Promise<{ headers: string[]; rows: 
   const data = await file.arrayBuffer();
   const workbook = XLSX.read(data, { type: 'array' });
   const sheetName = workbook.SheetNames[0];
+  if (!sheetName) {
+    return { headers: [], rows: [] };
+  }
   const sheet = workbook.Sheets[sheetName];
+  if (!sheet) {
+    return { headers: [], rows: [] };
+  }
   const json: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
 
-  if (json.length === 0) {
+  const firstRow = json[0];
+  if (!firstRow) {
     return { headers: [], rows: [] };
   }
 
-  const headers = json[0].map((h) => String(h).trim());
-  const rows = json.slice(1).filter((row) => row.some((cell) => String(cell).trim() !== ''));
+  const allHeaders = firstRow.map((h) => String(h).trim());
+  const dataRows = json.slice(1);
+
+  const keepIndexes = allHeaders.reduce<number[]>((acc, h, i) => {
+    if (h !== '') {
+      acc.push(i);
+    } else if (dataRows.some((row) => String(row[i] ?? '').trim() !== '')) {
+      acc.push(i);
+    }
+    return acc;
+  }, []);
+
+  let colCounter = 1;
+  const headers = keepIndexes.map((i) => {
+    const h = allHeaders[i] ?? '';
+    return h !== '' ? h : `Column ${colCounter++}`;
+  });
+  const rows = dataRows
+    .map((row) => keepIndexes.map((i) => String(row[i] ?? '')))
+    .filter((row) => row.some((cell) => cell.trim() !== ''));
 
   return { headers, rows };
 }
@@ -47,7 +72,6 @@ const COLUMN_ALIASES: Record<string, 'name' | 'email' | 'rsvpStatus' | 'preferre
   gastnaam: 'name',
   'e-mailadres': 'email',
   emailadres: 'email',
-  'rsvp status': 'rsvpStatus',
   taal: 'preferredLanguage',
   voorkeurstaal: 'preferredLanguage',
   // French
