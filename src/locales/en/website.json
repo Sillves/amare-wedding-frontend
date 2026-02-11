@@ -15,6 +15,10 @@
     "rsvp": "RSVP",
     "footer": "Footer"
   },
+  "editor": {
+    "editTab": "Edit",
+    "previewTab": "Preview"
+  },
   "actions": {
     "save": "Save",
     "saving": "Saving...",

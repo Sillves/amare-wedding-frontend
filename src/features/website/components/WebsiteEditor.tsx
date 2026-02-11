@@ -42,6 +42,7 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
   const [settings, setSettings] = useState<WebsiteSettings | null>(null);
   const [template, setTemplate] = useState<WebsiteTemplate>(0); // 0 = ElegantClassic
   const [hasChanges, setHasChanges] = useState(false);
+  const [mobileView, setMobileView] = useState<'edit' | 'preview'>('edit');
 
   useEffect(() => {
     if (website) {
@@ -105,166 +106,241 @@ export function WebsiteEditor({ weddingId, weddingSlug }: WebsiteEditorProps) {
     );
   }
 
+  const editorPanel = (
+    <>
+      {/* Tabs */}
+      <div className="flex-1 overflow-y-auto">
+        <Tabs defaultValue="template" className="h-full">
+          <div className="sticky top-0 bg-background border-b z-10">
+            <TabsList className="w-full justify-start h-auto p-2 flex-wrap gap-1">
+              <TabsTrigger value="template">{t('tabs.template')}</TabsTrigger>
+              <TabsTrigger value="hero">{t('tabs.hero')}</TabsTrigger>
+              <TabsTrigger value="story">{t('tabs.story')}</TabsTrigger>
+              <TabsTrigger value="details">{t('tabs.details')}</TabsTrigger>
+              <TabsTrigger value="gallery">{t('tabs.gallery')}</TabsTrigger>
+              <TabsTrigger value="rsvp">{t('tabs.rsvp')}</TabsTrigger>
+              <TabsTrigger value="footer">{t('tabs.footer')}</TabsTrigger>
+            </TabsList>
+          </div>
+
+          <div className="p-4">
+            <TabsContent value="template" className="mt-0">
+              <TemplatePicker
+                selected={template}
+                onSelect={handleTemplateChange}
+                settings={settings}
+                onSettingsChange={handleSettingsChange}
+              />
+            </TabsContent>
+
+            <TabsContent value="hero" className="mt-0">
+              <HeroEditor
+                weddingId={weddingId}
+                data={content.hero}
+                onChange={(data) => handleContentChange('hero', data)}
+              />
+            </TabsContent>
+
+            <TabsContent value="story" className="mt-0">
+              <StoryEditor
+                weddingId={weddingId}
+                data={content.story}
+                onChange={(data) => handleContentChange('story', data)}
+              />
+            </TabsContent>
+
+            <TabsContent value="details" className="mt-0">
+              <DetailsEditor
+                data={content.details}
+                eventsData={content.events}
+                eventCustomizations={content.eventCustomizations || []}
+                weddingEvents={events}
+                onChange={(data) => handleContentChange('details', data)}
+                onEventsChange={(data) => handleContentChange('events', data)}
+                onCustomizationsChange={(customizations) => handleContentChange('eventCustomizations', customizations)}
+              />
+            </TabsContent>
+
+            <TabsContent value="gallery" className="mt-0">
+              <GalleryEditor
+                weddingId={weddingId}
+                data={content.gallery}
+                onChange={(data) => handleContentChange('gallery', data)}
+              />
+            </TabsContent>
+
+            <TabsContent value="rsvp" className="mt-0">
+              <RsvpEditor
+                data={content.rsvp}
+                onChange={(data) => handleContentChange('rsvp', data)}
+              />
+            </TabsContent>
+
+            <TabsContent value="footer" className="mt-0">
+              <FooterEditor
+                data={content.footer}
+                onChange={(data) => handleContentChange('footer', data)}
+              />
+            </TabsContent>
+          </div>
+        </Tabs>
+      </div>
+    </>
+  );
+
+  const actionButtons = (
+    <div className="flex flex-wrap items-center gap-2 p-4 border-t bg-background">
+      <Button
+        onClick={handleSave}
+        disabled={!hasChanges || updateWebsite.isPending}
+      >
+        <Save className="h-4 w-4 mr-2" />
+        {updateWebsite.isPending ? t('actions.saving') : t('actions.save')}
+      </Button>
+
+      {website?.isPublished ? (
+        <Button
+          variant="outline"
+          onClick={handleUnpublish}
+          disabled={unpublishWebsite.isPending}
+        >
+          <EyeOff className="h-4 w-4 mr-2" />
+          {unpublishWebsite.isPending
+            ? t('actions.unpublishing')
+            : t('actions.unpublish')}
+        </Button>
+      ) : (
+        <Button
+          variant="secondary"
+          onClick={handlePublish}
+          disabled={publishWebsite.isPending}
+        >
+          <Globe className="h-4 w-4 mr-2" />
+          {publishWebsite.isPending
+            ? t('actions.publishing')
+            : t('actions.publish')}
+        </Button>
+      )}
+
+      {website?.isPublished && (
+        <Button variant="ghost" asChild>
+          <a
+            href={`/w/${weddingSlug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            {t('actions.viewLive')}
+          </a>
+        </Button>
+      )}
+    </div>
+  );
+
   return (
-    <div className="flex h-[calc(100vh-8rem)]">
-      {/* Editor Panel */}
-      <div className="w-1/2 flex flex-col border-r">
+    <>
+      {/* Mobile Layout */}
+      <div className="block md:hidden flex flex-col h-[calc(100vh-8rem)]">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
-          <div>
+          <div className="min-w-0">
             <h1 className="text-xl font-bold">{t('title')}</h1>
-            <p className="text-sm text-muted-foreground">{t('description')}</p>
-          </div>
-          <div className="flex items-center gap-2">
-            {website?.isPublished && (
-              <Badge variant="default" className="bg-green-600">
-                <Globe className="h-3 w-3 mr-1" />
-                {t('published')}
-              </Badge>
-            )}
-            {hasChanges && (
-              <Badge variant="secondary">{t('unsavedChanges')}</Badge>
-            )}
+            <div className="flex items-center gap-2 mt-1">
+              {website?.isPublished && (
+                <Badge variant="default" className="bg-green-600">
+                  <Globe className="h-3 w-3 mr-1" />
+                  {t('published')}
+                </Badge>
+              )}
+              {hasChanges && (
+                <Badge variant="secondary">{t('unsavedChanges')}</Badge>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex-1 overflow-y-auto">
-          <Tabs defaultValue="template" className="h-full">
-            <div className="sticky top-0 bg-background border-b z-10">
-              <TabsList className="w-full justify-start h-auto p-2 flex-wrap gap-1">
-                <TabsTrigger value="template">{t('tabs.template')}</TabsTrigger>
-                <TabsTrigger value="hero">{t('tabs.hero')}</TabsTrigger>
-                <TabsTrigger value="story">{t('tabs.story')}</TabsTrigger>
-                <TabsTrigger value="details">{t('tabs.details')}</TabsTrigger>
-                <TabsTrigger value="gallery">{t('tabs.gallery')}</TabsTrigger>
-                <TabsTrigger value="rsvp">{t('tabs.rsvp')}</TabsTrigger>
-                <TabsTrigger value="footer">{t('tabs.footer')}</TabsTrigger>
-              </TabsList>
-            </div>
-
-            <div className="p-4">
-              <TabsContent value="template" className="mt-0">
-                <TemplatePicker
-                  selected={template}
-                  onSelect={handleTemplateChange}
-                  settings={settings}
-                  onSettingsChange={handleSettingsChange}
-                />
-              </TabsContent>
-
-              <TabsContent value="hero" className="mt-0">
-                <HeroEditor
-                  weddingId={weddingId}
-                  data={content.hero}
-                  onChange={(data) => handleContentChange('hero', data)}
-                />
-              </TabsContent>
-
-              <TabsContent value="story" className="mt-0">
-                <StoryEditor
-                  weddingId={weddingId}
-                  data={content.story}
-                  onChange={(data) => handleContentChange('story', data)}
-                />
-              </TabsContent>
-
-              <TabsContent value="details" className="mt-0">
-                <DetailsEditor
-                  data={content.details}
-                  eventsData={content.events}
-                  eventCustomizations={content.eventCustomizations || []}
-                  weddingEvents={events}
-                  onChange={(data) => handleContentChange('details', data)}
-                  onEventsChange={(data) => handleContentChange('events', data)}
-                  onCustomizationsChange={(customizations) => handleContentChange('eventCustomizations', customizations)}
-                />
-              </TabsContent>
-
-              <TabsContent value="gallery" className="mt-0">
-                <GalleryEditor
-                  weddingId={weddingId}
-                  data={content.gallery}
-                  onChange={(data) => handleContentChange('gallery', data)}
-                />
-              </TabsContent>
-
-              <TabsContent value="rsvp" className="mt-0">
-                <RsvpEditor
-                  data={content.rsvp}
-                  onChange={(data) => handleContentChange('rsvp', data)}
-                />
-              </TabsContent>
-
-              <TabsContent value="footer" className="mt-0">
-                <FooterEditor
-                  data={content.footer}
-                  onChange={(data) => handleContentChange('footer', data)}
-                />
-              </TabsContent>
-            </div>
-          </Tabs>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2 p-4 border-t bg-background">
-          <Button
-            onClick={handleSave}
-            disabled={!hasChanges || updateWebsite.isPending}
+        {/* Mobile Edit/Preview Toggle */}
+        <div className="flex border-b">
+          <button
+            className={`flex-1 py-2.5 text-sm font-medium text-center transition-colors ${
+              mobileView === 'edit'
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-muted-foreground'
+            }`}
+            onClick={() => setMobileView('edit')}
           >
-            <Save className="h-4 w-4 mr-2" />
-            {updateWebsite.isPending ? t('actions.saving') : t('actions.save')}
-          </Button>
+            {t('editor.editTab')}
+          </button>
+          <button
+            className={`flex-1 py-2.5 text-sm font-medium text-center transition-colors ${
+              mobileView === 'preview'
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-muted-foreground'
+            }`}
+            onClick={() => setMobileView('preview')}
+          >
+            {t('editor.previewTab')}
+          </button>
+        </div>
 
-          {website?.isPublished ? (
-            <Button
-              variant="outline"
-              onClick={handleUnpublish}
-              disabled={unpublishWebsite.isPending}
-            >
-              <EyeOff className="h-4 w-4 mr-2" />
-              {unpublishWebsite.isPending
-                ? t('actions.unpublishing')
-                : t('actions.unpublish')}
-            </Button>
-          ) : (
-            <Button
-              variant="secondary"
-              onClick={handlePublish}
-              disabled={publishWebsite.isPending}
-            >
-              <Globe className="h-4 w-4 mr-2" />
-              {publishWebsite.isPending
-                ? t('actions.publishing')
-                : t('actions.publish')}
-            </Button>
-          )}
+        {/* Mobile Content */}
+        {mobileView === 'edit' ? (
+          <div className="flex flex-col flex-1 overflow-hidden">
+            {editorPanel}
+            {actionButtons}
+          </div>
+        ) : (
+          <div className="flex-1 bg-muted overflow-auto">
+            <WebsitePreview
+              template={template}
+              content={content}
+              settings={settings}
+              weddingSlug={weddingSlug}
+              events={events}
+              isMobile
+            />
+          </div>
+        )}
+      </div>
 
-          {website?.isPublished && (
-            <Button variant="ghost" asChild>
-              <a
-                href={`/w/${weddingSlug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                {t('actions.viewLive')}
-              </a>
-            </Button>
-          )}
+      {/* Desktop Layout */}
+      <div className="hidden md:flex h-[calc(100vh-8rem)]">
+        {/* Editor Panel */}
+        <div className="w-1/2 flex flex-col border-r">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <div>
+              <h1 className="text-xl font-bold">{t('title')}</h1>
+              <p className="text-sm text-muted-foreground">{t('description')}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              {website?.isPublished && (
+                <Badge variant="default" className="bg-green-600">
+                  <Globe className="h-3 w-3 mr-1" />
+                  {t('published')}
+                </Badge>
+              )}
+              {hasChanges && (
+                <Badge variant="secondary">{t('unsavedChanges')}</Badge>
+              )}
+            </div>
+          </div>
+
+          {editorPanel}
+          {actionButtons}
+        </div>
+
+        {/* Preview Panel */}
+        <div className="w-1/2 bg-muted">
+          <WebsitePreview
+            template={template}
+            content={content}
+            settings={settings}
+            weddingSlug={weddingSlug}
+            events={events}
+          />
         </div>
       </div>
-
-      {/* Preview Panel */}
-      <div className="w-1/2 bg-muted">
-        <WebsitePreview
-          template={template}
-          content={content}
-          settings={settings}
-          weddingSlug={weddingSlug}
-          events={events}
-        />
-      </div>
-    </div>
+    </>
   );
 }

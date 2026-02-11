@@ -47,6 +47,7 @@ function DemoWebsiteContent() {
   const [hasChanges, setHasChanges] = useState(false);
   const [localContent, setLocalContent] = useState<WebsiteContent>(website.content);
   const [localTemplate, setLocalTemplate] = useState<WebsiteTemplate>(website.template);
+  const [mobileView, setMobileView] = useState<'edit' | 'preview'>('edit');
 
   const isActive = (path: string) => {
     if (path === '/demo') {
@@ -137,30 +138,9 @@ function DemoWebsiteContent() {
         <DemoBanner />
       </div>
 
-      {/* Website Editor */}
-      <div className="flex-1 flex">
-        {/* Editor Panel */}
-        <div className="w-1/2 flex flex-col border-r bg-background">
-          {/* Editor Header */}
-          <div className="flex items-center justify-between p-4 border-b">
-            <div>
-              <h1 className="text-xl font-bold">{t('website:title')}</h1>
-              <p className="text-sm text-muted-foreground">{t('website:description')}</p>
-            </div>
-            <div className="flex items-center gap-2">
-              {website.isPublished && (
-                <Badge variant="default" className="bg-green-600">
-                  <Globe className="h-3 w-3 mr-1" />
-                  {t('website:published')}
-                </Badge>
-              )}
-              {hasChanges && (
-                <Badge variant="secondary">{t('website:unsavedChanges')}</Badge>
-              )}
-            </div>
-          </div>
-
-          {/* Tabs */}
+      {/* Editor Tabs (shared between mobile & desktop) */}
+      {(() => {
+        const editorPanel = (
           <div className="flex-1 overflow-y-auto">
             <Tabs defaultValue="template" className="h-full">
               <div className="sticky top-0 bg-background border-b z-10">
@@ -241,9 +221,10 @@ function DemoWebsiteContent() {
               </div>
             </Tabs>
           </div>
+        );
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2 p-4 border-t bg-background">
+        const actionButtons = (
+          <div className="flex flex-wrap items-center gap-2 p-4 border-t bg-background">
             <Button onClick={handleSave} disabled={!hasChanges}>
               <Save className="h-4 w-4 mr-2" />
               {t('website:actions.save')}
@@ -261,19 +242,115 @@ function DemoWebsiteContent() {
               </Button>
             )}
           </div>
-        </div>
+        );
 
-        {/* Preview Panel */}
-        <div className="w-1/2 bg-muted">
-          <WebsitePreview
-            template={localTemplate}
-            content={localContent}
-            settings={website.settings}
-            weddingSlug="demo"
-            events={events}
-          />
-        </div>
-      </div>
+        return (
+          <>
+            {/* Mobile Layout */}
+            <div className="block md:hidden flex-1 flex flex-col bg-background">
+              {/* Editor Header */}
+              <div className="flex items-center justify-between p-4 border-b">
+                <div className="min-w-0">
+                  <h1 className="text-xl font-bold">{t('website:title')}</h1>
+                  <div className="flex items-center gap-2 mt-1">
+                    {website.isPublished && (
+                      <Badge variant="default" className="bg-green-600">
+                        <Globe className="h-3 w-3 mr-1" />
+                        {t('website:published')}
+                      </Badge>
+                    )}
+                    {hasChanges && (
+                      <Badge variant="secondary">{t('website:unsavedChanges')}</Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Edit/Preview Toggle */}
+              <div className="flex border-b">
+                <button
+                  className={`flex-1 py-2.5 text-sm font-medium text-center transition-colors ${
+                    mobileView === 'edit'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-muted-foreground'
+                  }`}
+                  onClick={() => setMobileView('edit')}
+                >
+                  {t('website:editor.editTab')}
+                </button>
+                <button
+                  className={`flex-1 py-2.5 text-sm font-medium text-center transition-colors ${
+                    mobileView === 'preview'
+                      ? 'border-b-2 border-primary text-primary'
+                      : 'text-muted-foreground'
+                  }`}
+                  onClick={() => setMobileView('preview')}
+                >
+                  {t('website:editor.previewTab')}
+                </button>
+              </div>
+
+              {/* Mobile Content */}
+              {mobileView === 'edit' ? (
+                <div className="flex flex-col flex-1 overflow-hidden">
+                  {editorPanel}
+                  {actionButtons}
+                </div>
+              ) : (
+                <div className="flex-1 bg-muted overflow-auto">
+                  <WebsitePreview
+                    template={localTemplate}
+                    content={localContent}
+                    settings={website.settings}
+                    weddingSlug="demo"
+                    events={events}
+                    isMobile
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Desktop Layout */}
+            <div className="hidden md:flex flex-1">
+              {/* Editor Panel */}
+              <div className="w-1/2 flex flex-col border-r bg-background">
+                {/* Editor Header */}
+                <div className="flex items-center justify-between p-4 border-b">
+                  <div>
+                    <h1 className="text-xl font-bold">{t('website:title')}</h1>
+                    <p className="text-sm text-muted-foreground">{t('website:description')}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {website.isPublished && (
+                      <Badge variant="default" className="bg-green-600">
+                        <Globe className="h-3 w-3 mr-1" />
+                        {t('website:published')}
+                      </Badge>
+                    )}
+                    {hasChanges && (
+                      <Badge variant="secondary">{t('website:unsavedChanges')}</Badge>
+                    )}
+                  </div>
+                </div>
+
+                {editorPanel}
+                {actionButtons}
+              </div>
+
+              {/* Preview Panel */}
+              <div className="w-1/2 bg-muted">
+                <WebsitePreview
+                  template={localTemplate}
+                  content={localContent}
+                  settings={website.settings}
+                  weddingSlug="demo"
+                  events={events}
+                />
+              </div>
+            </div>
+          </>
+        );
+      })()}
     </div>
   );
 }

@@ -15,6 +15,10 @@
     "rsvp": "RSVP",
     "footer": "Pied de page"
   },
+  "editor": {
+    "editTab": "Modifier",
+    "previewTab": "Aperçu"
+  },
   "actions": {
     "save": "Enregistrer",
     "saving": "Enregistrement...",

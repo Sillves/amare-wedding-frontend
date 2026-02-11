@@ -39,6 +39,7 @@ interface DataTableProps<T> {
   fillContainer?: boolean;
   onRowClick?: (item: T) => void;
   emptyMessage?: string;
+  mobileRender?: (item: T) => ReactNode;
 }
 
 export function DataTable<T>({
@@ -53,6 +54,7 @@ export function DataTable<T>({
   fillContainer = false,
   onRowClick,
   emptyMessage,
+  mobileRender,
 }: DataTableProps<T>) {
   const { t } = useTranslation('common');
   const [sortKey, setSortKey] = useState<string | undefined>(defaultSortKey);
@@ -117,8 +119,19 @@ export function DataTable<T>({
 
   return (
     <div className={fillContainer ? 'flex flex-col h-full' : 'space-y-4'}>
+      {/* Mobile Card View (when mobileRender is provided) */}
+      {mobileRender && (
+        <div className="block sm:hidden space-y-2">
+          {paginatedData.map((item) => (
+            <div key={getRowKey(item)}>
+              {mobileRender(item)}
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Table with scroll */}
-      <div className={`rounded-md border overflow-x-auto ${fillContainer ? 'flex-1 min-h-0 flex flex-col' : ''}`}>
+      <div className={`rounded-md border overflow-x-auto ${mobileRender ? 'hidden sm:block' : ''} ${fillContainer ? 'flex-1 min-h-0 flex flex-col' : ''}`}>
         <div
           className={`overflow-y-auto min-w-[640px] ${fillContainer ? 'flex-1 min-h-0' : ''}`}
           style={fillContainer ? undefined : { maxHeight }}
@@ -159,8 +172,8 @@ export function DataTable<T>({
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className={`flex items-center justify-between ${fillContainer ? 'flex-shrink-0 pt-4' : ''}`}>
-          <div className="flex items-center gap-2">
+        <div className={`flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between ${fillContainer ? 'flex-shrink-0 pt-4' : ''}`}>
+          <div className="hidden sm:flex items-center gap-2">
             <span className="text-sm text-muted-foreground">
               {t('showing')} {startIndex + 1}-{Math.min(endIndex, sortedData.length)} {t('of')} {sortedData.length}
             </span>
@@ -178,7 +191,7 @@ export function DataTable<T>({
             </Select>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center sm:justify-end gap-2">
             <Button
               variant="outline"
               size="sm"

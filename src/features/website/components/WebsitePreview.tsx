@@ -25,6 +25,7 @@ interface WebsitePreviewProps {
   settings: WebsiteSettings;
   weddingSlug: string;
   events?: WeddingEventDto[];
+  isMobile?: boolean;
 }
 
 type DeviceSize = 'desktop' | 'tablet' | 'mobile';
@@ -41,9 +42,10 @@ export function WebsitePreview({
   settings,
   weddingSlug,
   events,
+  isMobile = false,
 }: WebsitePreviewProps) {
   const { t } = useTranslation('website');
-  const [device, setDevice] = useState<DeviceSize>('desktop');
+  const [device, setDevice] = useState<DeviceSize>(isMobile ? 'mobile' : 'desktop');
 
   // Convert numeric template value to string name, then get the component
   const templateName = WebsiteTemplateNames[template] || 'ElegantClassic';
@@ -61,25 +63,27 @@ export function WebsitePreview({
 
   return (
     <div className="h-full flex flex-col">
-      {/* Device switcher */}
-      <div className="flex items-center justify-between p-4 border-b bg-background">
-        <h3 className="font-medium">{t('preview.title')}</h3>
-        <div className="flex items-center gap-1">
-          {(Object.keys(deviceSizes) as DeviceSize[]).map((size) => {
-            const { icon: Icon } = deviceSizes[size];
-            return (
-              <Button
-                key={size}
-                variant={device === size ? 'default' : 'ghost'}
-                size="sm"
-                onClick={() => setDevice(size)}
-              >
-                <Icon className="h-4 w-4" />
-              </Button>
-            );
-          })}
+      {/* Device switcher - hidden on mobile */}
+      {!isMobile && (
+        <div className="flex items-center justify-between p-4 border-b bg-background">
+          <h3 className="font-medium">{t('preview.title')}</h3>
+          <div className="flex items-center gap-1">
+            {(Object.keys(deviceSizes) as DeviceSize[]).map((size) => {
+              const { icon: Icon } = deviceSizes[size];
+              return (
+                <Button
+                  key={size}
+                  variant={device === size ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setDevice(size)}
+                >
+                  <Icon className="h-4 w-4" />
+                </Button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Preview container */}
       <div className="flex-1 overflow-auto bg-muted p-4">

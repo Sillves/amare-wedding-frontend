@@ -143,6 +143,46 @@ export function ExpenseTable({ expenses, onEdit, onDelete }: ExpenseTableProps) 
       defaultItemsPerPage={10}
       fillContainer
       emptyMessage={t('expenses:noExpenses')}
+      mobileRender={(expense) => (
+        <div className="rounded-md border p-3 space-y-1.5">
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-medium truncate">{expense.description || '-'}</span>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="font-bold">{formatCurrency(expense.amount || 0)}</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => onEdit(expense)}>
+                    <Pencil className="mr-2 h-4 w-4" />
+                    {t('expenses:editExpense')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="text-destructive" onClick={() => onDelete(expense)}>
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    {t('expenses:deleteConfirmTitle')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Badge
+              variant="secondary"
+              style={{ backgroundColor: CATEGORY_COLORS[expense.category as ExpenseCategory] }}
+              className="text-white"
+            >
+              {getCategoryLabel(expense.category as ExpenseCategory)}
+            </Badge>
+            <span>{expense.date ? format(new Date(expense.date), 'dd MMM yyyy', { locale }) : '-'}</span>
+          </div>
+          {expense.notes && (
+            <p className="text-sm text-muted-foreground truncate">{expense.notes}</p>
+          )}
+        </div>
+      )}
     />
   );
 }

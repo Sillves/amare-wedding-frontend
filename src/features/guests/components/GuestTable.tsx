@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pencil, Trash2, Mail, ChevronLeft, ChevronRight, Send, Check, X, Sparkles } from 'lucide-react';
+import { Pencil, Trash2, Mail, ChevronLeft, ChevronRight, Send, Check, X, Sparkles, MoreHorizontal } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -12,6 +12,12 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
@@ -185,7 +191,7 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
 
       {/* Bulk Actions - Only show if user can send emails */}
       {canSendEmails && onBulkSendInvitations && (
-        <div className="flex items-center justify-between p-3 bg-muted rounded-md min-h-[52px]">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between p-3 bg-muted rounded-md min-h-[52px]">
           {selectedGuestIds.size > 0 ? (
             <>
               <span className="text-sm text-muted-foreground">
@@ -204,8 +210,84 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
         </div>
       )}
 
-      {/* Table with fixed height and scroll */}
-      <div className="rounded-md border overflow-x-auto">
+      {/* Mobile Card View */}
+      <div className="block sm:hidden space-y-2">
+        {paginatedGuests.map((guest) => (
+          <div
+            key={guest.id}
+            className="rounded-md border p-3 space-y-1.5"
+            onClick={() => {
+              if (canSendEmails && onBulkSendInvitations && guest.email && guest.id) {
+                handleSelectGuest(guest.id, !selectedGuestIds.has(guest.id));
+              }
+            }}
+          >
+            <div className="flex items-center gap-2">
+              {canSendEmails && onBulkSendInvitations && (
+                <Checkbox
+                  checked={guest.id ? selectedGuestIds.has(guest.id) : false}
+                  onCheckedChange={(checked) => guest.id && handleSelectGuest(guest.id, checked as boolean)}
+                  aria-label={`Select ${guest.name}`}
+                  disabled={!guest.email}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-medium truncate">{guest.name || '-'}</span>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Badge variant={getRsvpBadgeVariant(guest.rsvpStatus ?? 0)}>
+                      {t(getRsvpStatusKey(guest.rsvpStatus ?? 0))}
+                    </Badge>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0" onClick={(e) => e.stopPropagation()}>
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => onEdit(guest)}>
+                          <Pencil className="mr-2 h-4 w-4" />
+                          {t('actions.edit')}
+                        </DropdownMenuItem>
+                        {canSendEmails && (
+                          <DropdownMenuItem onClick={() => onSendInvitation(guest)} disabled={!guest.email}>
+                            <Mail className="mr-2 h-4 w-4" />
+                            {t('actions.sendInvite')}
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuItem className="text-destructive" onClick={() => onDelete(guest)}>
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          {t('actions.delete')}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+                {guest.email && (
+                  <p className="text-sm text-muted-foreground truncate">{guest.email}</p>
+                )}
+                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
+                  {guest.invitationSentAt ? (
+                    <span className="flex items-center gap-1 text-green-600">
+                      <Check className="h-3 w-3" />
+                      {new Date(guest.invitationSentAt).toLocaleDateString()}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1">
+                      <X className="h-3 w-3" />
+                      {t('invitationSent')}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden sm:block rounded-md border overflow-x-auto">
         <div className="max-h-[600px] overflow-y-auto min-w-[640px]">
           <Table>
             <TableHeader className="sticky top-0 bg-background z-10">
@@ -250,10 +332,8 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
                   key={guest.id}
                   className={canSendEmails && onBulkSendInvitations && guest.email ? "cursor-pointer" : ""}
                   onClick={(e) => {
-                    // Only toggle selection if clicking the row (not action buttons)
                     if (canSendEmails && onBulkSendInvitations && guest.email && guest.id) {
                       const target = e.target as HTMLElement;
-                      // Don't select if clicking buttons or their children
                       if (!target.closest('button')) {
                         handleSelectGuest(guest.id, !selectedGuestIds.has(guest.id));
                       }
@@ -329,8 +409,8 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="hidden sm:flex items-center gap-2">
             <span className="text-sm text-muted-foreground">
               {t('common:showing')} {startIndex + 1}-{Math.min(endIndex, sortedGuests.length)} {t('common:of')} {sortedGuests.length}
             </span>
@@ -347,7 +427,7 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
             </Select>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center sm:justify-end gap-2">
             <Button
               variant="outline"
               size="sm"
