@@ -66,7 +66,7 @@
     @apply border-border;
   }
   html {
-    /* Prevent layout shift when scrollbar appears/disappears (e.g., when dropdowns open) */
+    /* Prevent layout shift when scrollbar appears/disappears */
     scrollbar-gutter: stable;
   }
   html,
@@ -75,6 +75,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* When Radix UI (react-remove-scroll) locks body scroll, it adds padding-right
+     to compensate for the disappearing scrollbar. But scrollbar-gutter: stable on
+     html already reserves that space, causing a double-compensation layout shift.
+     Override the inline padding-right to prevent the conflict. */
+  body[data-scroll-locked] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
   }
 }
 

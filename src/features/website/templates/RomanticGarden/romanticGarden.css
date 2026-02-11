@@ -707,8 +707,22 @@
     width: 100%;
   }
 
+  .rg-gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   .rg-gallery-masonry {
     columns: 2;
+  }
+
+  .rg-gallery-carousel {
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  .rg-gallery-carousel .rg-gallery-item {
+    width: 90%;
   }
 
   .rg-details-cards {
@@ -739,6 +753,10 @@
 
   .rg-gallery-masonry {
     columns: 1;
+  }
+
+  .rg-gallery-carousel .rg-gallery-item {
+    width: 95%;
   }
 
   .rg-couple-names {
@@ -819,8 +837,22 @@
     width: 100%;
   }
 
+  .romantic-garden .rg-gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   .romantic-garden .rg-gallery-masonry {
     columns: 2;
+  }
+
+  .romantic-garden .rg-gallery-carousel {
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+
+  .romantic-garden .rg-gallery-carousel .rg-gallery-item {
+    width: 90%;
   }
 
   .romantic-garden .rg-details-cards {
@@ -851,6 +883,10 @@
 
   .romantic-garden .rg-gallery-masonry {
     columns: 1;
+  }
+
+  .romantic-garden .rg-gallery-carousel .rg-gallery-item {
+    width: 95%;
   }
 
   .romantic-garden .rg-couple-names {
