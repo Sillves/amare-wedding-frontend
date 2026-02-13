@@ -32,11 +32,21 @@ export const invitationApi = {
     await apiClient.post(`/invitations/${token}/accept`);
   },
 
+  getWeddingUsers: async (weddingId: string): Promise<WeddingUserDto[]> => {
+    const response = await apiClient.get<WeddingUserDto[]>(
+      `/weddings/${weddingId}/users`);
+    return response.data;
+  },
+
   updateUserPermissions: async (
     weddingId: string, userId: string, data: UpdateWeddingUserRequest
   ): Promise<WeddingUserDto> => {
     const response = await apiClient.put<WeddingUserDto>(
       `/weddings/${weddingId}/users/${userId}`, data);
     return response.data;
+  },
+
+  removeUser: async (weddingId: string, userId: string): Promise<void> => {
+    await apiClient.delete(`/weddings/${weddingId}/users/${userId}`);
   },
 };

@@ -59,11 +59,7 @@ export function EventsPage() {
 
   const weddingIdFromUrl = searchParams.get('weddingId');
 
-  // Optimization: Only fetch all weddings if we don't have a weddingId in URL
-  // When weddingId is in URL, we already have context and don't need to fetch all weddings
-  const { data: weddings, isLoading: weddingsLoading } = useWeddings({
-    enabled: !weddingIdFromUrl
-  });
+  const { data: weddings, isLoading: weddingsLoading } = useWeddings();
 
   // Get wedding ID from URL params or use first wedding (when no URL param)
   const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
@@ -76,6 +72,7 @@ export function EventsPage() {
   const [managingGuestsEvent, setManagingGuestsEvent] = useState<EventDto | null>(null);
 
   const selectedWedding = weddings?.find((w) => w.id === selectedWeddingId);
+  const isReadOnly = selectedWedding ? selectedWedding.role !== 0 && (selectedWedding.isReadOnly ?? false) : false;
 
   // Sort events by start date and separate upcoming from past
   const { upcomingEvents, pastEvents } = useMemo(() => {
@@ -197,12 +194,14 @@ export function EventsPage() {
             <h1 className="text-4xl font-serif font-semibold">{t('events:title')}</h1>
             <p className="text-muted-foreground">{t('events:manageDescription')}</p>
           </div>
-          <CreateEventDialog weddingId={selectedWeddingId}>
-            <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
-              <Calendar className="h-4 w-4 mr-2" />
-              {t('events:addEvent')}
-            </Button>
-          </CreateEventDialog>
+          {!isReadOnly && (
+            <CreateEventDialog weddingId={selectedWeddingId}>
+              <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
+                <Calendar className="h-4 w-4 mr-2" />
+                {t('events:addEvent')}
+              </Button>
+            </CreateEventDialog>
+          )}
         </section>
 
         {/* Statistics Cards */}
@@ -295,11 +294,13 @@ export function EventsPage() {
                     <p className="text-sm text-muted-foreground mt-2">
                       {t('events:noEventsDescription')}
                     </p>
-                    <CreateEventDialog weddingId={selectedWeddingId}>
-                      <Button variant="link" className="mt-4 text-primary">
-                        {t('events:addEvent')}
-                      </Button>
-                    </CreateEventDialog>
+                    {!isReadOnly && (
+                      <CreateEventDialog weddingId={selectedWeddingId}>
+                        <Button variant="link" className="mt-4 text-primary">
+                          {t('events:addEvent')}
+                        </Button>
+                      </CreateEventDialog>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-6">

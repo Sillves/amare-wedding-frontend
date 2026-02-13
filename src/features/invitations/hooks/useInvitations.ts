@@ -50,6 +50,25 @@ export function useAcceptInvitation() {
   });
 }
 
+export function useWeddingUsers(weddingId: string) {
+  return useQuery({
+    queryKey: ['weddingUsers', weddingId],
+    queryFn: () => invitationApi.getWeddingUsers(weddingId),
+    enabled: !!weddingId,
+  });
+}
+
+export function useRemoveWeddingUser() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ weddingId, userId }: { weddingId: string; userId: string }) =>
+      invitationApi.removeUser(weddingId, userId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['weddingUsers', variables.weddingId] });
+    },
+  });
+}
+
 export function useUpdateWeddingUserPermissions() {
   const queryClient = useQueryClient();
   return useMutation({

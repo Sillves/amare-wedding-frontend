@@ -55,7 +55,14 @@ export function useLogin() {
       };
 
       setAuth(user, response.token);
-      navigate('/dashboard');
+
+      const pendingToken = localStorage.getItem('pendingInviteToken');
+      if (pendingToken) {
+        localStorage.removeItem('pendingInviteToken');
+        navigate(`/invite/${pendingToken}`);
+      } else {
+        navigate('/dashboard');
+      }
     },
   });
 }
@@ -91,7 +98,14 @@ export function useRegister() {
       };
 
       setAuth(user, response.token);
-      navigate('/dashboard');
+
+      const pendingToken = localStorage.getItem('pendingInviteToken');
+      if (pendingToken) {
+        localStorage.removeItem('pendingInviteToken');
+        navigate(`/invite/${pendingToken}`);
+      } else {
+        navigate('/dashboard');
+      }
     },
   });
 }

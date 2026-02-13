@@ -111,11 +111,11 @@ export function ExpensesPage() {
 
   const weddingIdFromUrl = searchParams.get('weddingId');
 
-  const { data: weddings, isLoading: weddingsLoading } = useWeddings({
-    enabled: !weddingIdFromUrl,
-  });
+  const { data: weddings, isLoading: weddingsLoading } = useWeddings();
 
   const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
+  const selectedWedding = weddings?.find((w) => w.id === selectedWeddingId);
+  const isReadOnly = selectedWedding ? selectedWedding.role !== 0 && (selectedWedding.isReadOnly ?? false) : false;
   const {
     data: summary,
     isLoading: summaryLoading,
@@ -267,29 +267,31 @@ export function ExpensesPage() {
             <h1 className="text-3xl font-serif font-semibold">{t('expenses:title')}</h1>
             <p className="text-muted-foreground text-sm">{t('expenses:subtitle')}</p>
           </div>
-          <div className="flex items-center gap-2">
-            {hasBudget && (
+          {!isReadOnly && (
+            <div className="flex items-center gap-2">
+              {hasBudget && (
+                <Button
+                  variant="outline"
+                  onClick={() => setIsBudgetDialogOpen(true)}
+                  className="rounded-xl"
+                >
+                  <Settings2 className="h-4 w-4 mr-2" />
+                  {t('expenses:budget.editBudget')}
+                </Button>
+              )}
               <Button
-                variant="outline"
-                onClick={() => setIsBudgetDialogOpen(true)}
-                className="rounded-xl"
+                onClick={() => setIsAddDialogOpen(true)}
+                className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow"
               >
-                <Settings2 className="h-4 w-4 mr-2" />
-                {t('expenses:budget.editBudget')}
+                <Plus className="h-4 w-4 mr-2" />
+                {t('expenses:addExpense')}
               </Button>
-            )}
-            <Button
-              onClick={() => setIsAddDialogOpen(true)}
-              className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              {t('expenses:addExpense')}
-            </Button>
-          </div>
+            </div>
+          )}
         </section>
 
-        {/* Budget Setup Card (shown when no budget exists) */}
-        {!budgetLoading && !hasBudget && (
+        {/* Budget Setup Card (shown when no budget exists, owners only) */}
+        {!budgetLoading && !hasBudget && !isReadOnly && (
           <section className="flex-shrink-0 animate-fade-in-up animation-delay-100">
             <BudgetSetupCard onSetupClick={() => setIsBudgetDialogOpen(true)} />
           </section>

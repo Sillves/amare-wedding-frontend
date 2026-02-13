@@ -66,11 +66,7 @@ export function GuestsPage() {
   const weddingIdFromUrl = searchParams.get('weddingId');
   const statusFilter = searchParams.get('status'); // 'attending', 'pending', 'declined', or null for all
 
-  // Optimization: Only fetch all weddings if we don't have a weddingId in URL
-  // When weddingId is in URL, we already have context and don't need to fetch all weddings
-  const { data: weddings, isLoading: weddingsLoading } = useWeddings({
-    enabled: !weddingIdFromUrl
-  });
+  const { data: weddings, isLoading: weddingsLoading } = useWeddings();
 
   // Get wedding ID from URL params or use first wedding (when no URL param)
   const selectedWeddingId = weddingIdFromUrl || weddings?.[0]?.id || '';
@@ -175,6 +171,7 @@ export function GuestsPage() {
   };
 
   const selectedWedding = weddings?.find((w) => w.id === selectedWeddingId);
+  const isReadOnly = selectedWedding ? selectedWedding.role !== 0 && (selectedWedding.isReadOnly ?? false) : false;
 
   if (weddingsLoading) {
     return (
@@ -283,22 +280,24 @@ export function GuestsPage() {
             </div>
             <p className="text-muted-foreground">{t('guests:manageDescription')}</p>
           </div>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="rounded-xl"
-              onClick={() => setShowImportDialog(true)}
-            >
-              <Upload className="h-4 w-4 mr-2" />
-              {t('guests:import.button')}
-            </Button>
-            <CreateGuestDialog weddingId={selectedWeddingId}>
-              <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
-                <Users className="h-4 w-4 mr-2" />
-                {t('guests:addGuest')}
+          {!isReadOnly && (
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                onClick={() => setShowImportDialog(true)}
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                {t('guests:import.button')}
               </Button>
-            </CreateGuestDialog>
-          </div>
+              <CreateGuestDialog weddingId={selectedWeddingId}>
+                <Button className="rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl transition-shadow">
+                  <Users className="h-4 w-4 mr-2" />
+                  {t('guests:addGuest')}
+                </Button>
+              </CreateGuestDialog>
+            </div>
+          )}
         </section>
 
         {/* Statistics Cards */}

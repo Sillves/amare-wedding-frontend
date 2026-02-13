@@ -38,6 +38,7 @@ import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { format, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/dateLocale';
 import { useDateFormatListener, getTimeFormatPreference } from '@/hooks/useDateFormat';
+import { TeamTab } from '@/features/invitations/components/TeamTab';
 
 /**
  * Floating decorative elements for premium dashboard aesthetic
@@ -164,6 +165,8 @@ export function DashboardPage() {
   const { data: events } = useEvents(wedding?.id || '', { enabled: !!wedding?.id });
   const { data: website } = useWebsite(wedding?.id || '', { enabled: !!wedding?.id });
 
+  const isOwner = wedding?.role === 0;
+  const isReadOnly = !isOwner && (wedding?.isReadOnly ?? false);
   const canAccessWebsite = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
   const canSendEmails = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
   const hasValidDate = isValidWeddingDate(wedding?.date);
@@ -266,6 +269,11 @@ export function DashboardPage() {
               <FontSizeSwitcher />
               <ThemeSwitcher />
             </div>
+            {!isOwner && (
+              <Badge variant="secondary" className="text-xs">
+                {t('common:planner.plannerMode')}
+              </Badge>
+            )}
             <span className="hidden md:inline text-sm text-muted-foreground">{user?.email}</span>
             <Button
               variant="ghost"
@@ -348,11 +356,13 @@ export function DashboardPage() {
                       </Badge>
                     )}
                   </div>
-                  <EditWeddingDialog wedding={wedding}>
-                    <Button variant="ghost" size="icon" className="rounded-xl hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-primary">
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                  </EditWeddingDialog>
+                  {isOwner && (
+                    <EditWeddingDialog wedding={wedding}>
+                      <Button variant="ghost" size="icon" className="rounded-xl hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-primary">
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                    </EditWeddingDialog>
+                  )}
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -561,33 +571,37 @@ export function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-3">
-                <CreateGuestDialog weddingId={wedding?.id || ''}>
-                  <button className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group">
-                    <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <Plus className="h-5 w-5 text-primary" />
-                    </div>
-                    <span className="text-xs font-medium text-center">{t('guests:addGuest')}</span>
-                  </button>
-                </CreateGuestDialog>
+                {!isReadOnly && (
+                  <>
+                    <CreateGuestDialog weddingId={wedding?.id || ''}>
+                      <button className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group">
+                        <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                          <Plus className="h-5 w-5 text-primary" />
+                        </div>
+                        <span className="text-xs font-medium text-center">{t('guests:addGuest')}</span>
+                      </button>
+                    </CreateGuestDialog>
 
-                <CreateEventDialog weddingId={wedding?.id || ''}>
-                  <button className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group">
-                    <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <CalendarDays className="h-5 w-5 text-primary" />
-                    </div>
-                    <span className="text-xs font-medium text-center">{t('events:addEvent')}</span>
-                  </button>
-                </CreateEventDialog>
+                    <CreateEventDialog weddingId={wedding?.id || ''}>
+                      <button className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group">
+                        <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                          <CalendarDays className="h-5 w-5 text-primary" />
+                        </div>
+                        <span className="text-xs font-medium text-center">{t('events:addEvent')}</span>
+                      </button>
+                    </CreateEventDialog>
 
-                <button
-                  className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
-                  onClick={() => navigate(`/expenses?weddingId=${wedding?.id}`)}
-                >
-                  <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                    <Plus className="h-5 w-5 text-primary" />
-                  </div>
-                  <span className="text-xs font-medium text-center">{t('expenses:addExpense')}</span>
-                </button>
+                    <button
+                      className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
+                      onClick={() => navigate(`/expenses?weddingId=${wedding?.id}`)}
+                    >
+                      <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <Plus className="h-5 w-5 text-primary" />
+                      </div>
+                      <span className="text-xs font-medium text-center">{t('expenses:addExpense')}</span>
+                    </button>
+                  </>
+                )}
 
                 <button
                   className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
@@ -683,6 +697,13 @@ export function DashboardPage() {
             </CardContent>
           </Card>
         </section>
+
+        {/* Team Management (Owner only) */}
+        {wedding && isOwner && (
+          <section className="animate-fade-in-up animation-delay-600">
+            <TeamTab weddingId={wedding.id!} />
+          </section>
+        )}
 
         {/* Next Steps */}
         <section className="animate-fade-in-up animation-delay-600">
