@@ -27,6 +27,7 @@ const BillingSuccessPage = lazy(() => import('@/pages/BillingSuccessPage').then(
 const BillingCancelPage = lazy(() => import('@/pages/BillingCancelPage').then(m => ({ default: m.BillingCancelPage })));
 const WebsiteEditorPage = lazy(() => import('@/pages/WebsiteEditorPage').then(m => ({ default: m.WebsiteEditorPage })));
 const PublicWebsitePage = lazy(() => import('@/pages/PublicWebsitePage').then(m => ({ default: m.PublicWebsitePage })));
+const PlannerPage = lazy(() => import('@/pages/PlannerPage').then(m => ({ default: m.PlannerPage })));
 
 // Demo pages (public, no auth required)
 const DemoPage = lazy(() => import('@/pages/DemoPage').then(m => ({ default: m.DemoPage })));
@@ -181,6 +182,16 @@ export const router = createBrowserRouter([
       <ProtectedRoute>
         <Suspense fallback={<PageLoader />}>
           <WebsiteEditorPage />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/planner',
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<PageLoader />}>
+          <PlannerPage />
         </Suspense>
       </ProtectedRoute>
     ),

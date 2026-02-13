@@ -183,6 +183,15 @@
     "viewAllEventsCount_one": "Voir tous les {{count}} événement",
     "viewAllEventsCount_other": "Voir tous les {{count}} événements"
   },
+  "guests": "invit\u00e9s",
+  "planner": {
+    "myWeddings": "Mes Mariages",
+    "myWedding": "Mon Mariage",
+    "viewOnly": "Lecture seule",
+    "fullAccess": "Acc\u00e8s complet",
+    "customAccess": "Acc\u00e8s personnalis\u00e9",
+    "noWeddings": "Vous n'avez pas encore de mariages partag\u00e9s."
+  },
   "accessibility": {
     "fontSize": "Taille du texte",
     "fontNormal": "Normal",

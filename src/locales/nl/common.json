@@ -183,6 +183,15 @@
     "viewAllEventsCount_one": "Bekijk alle {{count}} evenement",
     "viewAllEventsCount_other": "Bekijk alle {{count}} evenementen"
   },
+  "guests": "gasten",
+  "planner": {
+    "myWeddings": "Mijn Bruiloften",
+    "myWedding": "Mijn Bruiloft",
+    "viewOnly": "Alleen lezen",
+    "fullAccess": "Volledige toegang",
+    "customAccess": "Aangepaste toegang",
+    "noWeddings": "U heeft nog geen gedeelde bruiloften."
+  },
   "accessibility": {
     "fontSize": "Tekstgrootte",
     "fontNormal": "Normaal",

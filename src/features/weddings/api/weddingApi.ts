@@ -1,9 +1,10 @@
 import { apiClient } from '@/lib/axios';
 import type { Wedding, CreateWeddingRequest, UpdateWeddingRequest } from '../types';
+import type { WeddingWithRoleDto } from '@/features/invitations/types';
 
 export const weddingApi = {
-  getAll: async (): Promise<Wedding[]> => {
-    const response = await apiClient.get<Wedding[]>('/weddings');
+  getAll: async (): Promise<WeddingWithRoleDto[]> => {
+    const response = await apiClient.get<WeddingWithRoleDto[]>('/weddings');
     return response.data;
   },
 

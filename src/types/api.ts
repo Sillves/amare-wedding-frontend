@@ -164,6 +164,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/api/weddings/{weddingId}/budget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetWeddingBudget"];
+        put: operations["UpsertWeddingBudget"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/events/{eventId}/guests": {
         parameters: {
             query?: never;
@@ -292,6 +308,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/weddings/{weddingId}/guests/check-emails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CheckEmails"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/weddings/{weddingId}/guests": {
         parameters: {
             query?: never;
@@ -324,6 +356,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/weddings/{weddingId}/guests/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ImportGuests"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/weddings/{weddingId}/guests/{guestId}/send-invitation": {
         parameters: {
             query?: never;
@@ -350,6 +398,70 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["SendGuestInvitations"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/invitations/{token}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AcceptInvitation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/invitations/{invitationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["CancelInvitation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetInvitations"];
+        put?: never;
+        post: operations["CreateInvitation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/invitations/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetInvitationByToken"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -591,7 +703,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        put: operations["UpdateWeddingUser"];
         post?: never;
         delete: operations["RemoveWeddingUser"];
         options?: never;
@@ -610,6 +722,11 @@ export interface components {
             /** Format: uuid */
             userId?: string;
             role?: components["schemas"]["WeddingUserRole"];
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
         };
         AuthResult: {
             success?: boolean;
@@ -654,9 +771,61 @@ export interface components {
             sessionId?: string | null;
             url?: string | null;
         };
+        BudgetAllocation: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingBudgetId?: string;
+            category?: components["schemas"]["ExpenseCategory"];
+            /** Format: double */
+            amount?: number;
+            weddingBudget?: components["schemas"]["WeddingBudget"];
+        };
+        BudgetAllocationDto: {
+            category?: components["schemas"]["ExpenseCategory"];
+            /** Format: double */
+            amount?: number;
+        };
+        BudgetAllocationRequestDto: {
+            category?: components["schemas"]["ExpenseCategory"];
+            /** Format: double */
+            amount?: number;
+        };
+        BulkImportGuestErrorDto: {
+            /** Format: int32 */
+            rowIndex?: number;
+            name?: string | null;
+            email?: string | null;
+            errorMessage?: string | null;
+        };
+        BulkImportGuestItemDto: {
+            name?: string | null;
+            email?: string | null;
+            rsvpStatus?: components["schemas"]["RsvpStatus"];
+            preferredLanguage?: string | null;
+        };
+        BulkImportGuestRequestDto: {
+            guests?: components["schemas"]["BulkImportGuestItemDto"][] | null;
+        };
+        BulkImportGuestResultDto: {
+            /** Format: int32 */
+            createdCount?: number;
+            /** Format: int32 */
+            skippedCount?: number;
+            /** Format: int32 */
+            errorCount?: number;
+            createdGuests?: components["schemas"]["GuestDto"][] | null;
+            errors?: components["schemas"]["BulkImportGuestErrorDto"][] | null;
+        };
         ChangePasswordRequest: {
             currentPassword?: string | null;
             newPassword?: string | null;
+        };
+        CheckEmailsRequest: {
+            emails?: string[] | null;
+        };
+        CheckEmailsResponse: {
+            existingEmails?: string[] | null;
         };
         CreateEventRequestDto: {
             name?: string | null;
@@ -681,6 +850,14 @@ export interface components {
             /** Format: date-time */
             date?: string;
             notes?: string | null;
+        };
+        CreateWeddingInvitationRequestDto: {
+            email?: string | null;
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
         };
         CreateWeddingRequestDto: {
             title?: string | null;
@@ -901,11 +1078,23 @@ export interface components {
             date?: string | null;
             location?: string | null;
         };
+        UpdateWeddingUserRequestDto: {
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
+        };
         UpdateWeddingWebsiteRequestDto: {
             template?: components["schemas"]["WebsiteTemplate"];
             settings?: unknown;
             content?: unknown;
             metaDescription?: string | null;
+        };
+        UpsertWeddingBudgetRequestDto: {
+            /** Format: double */
+            totalBudget?: number;
+            allocations?: components["schemas"]["BudgetAllocationRequestDto"][] | null;
         };
         User: {
             /** Format: uuid */
@@ -967,6 +1156,34 @@ export interface components {
             events?: components["schemas"]["Event"][] | null;
             expenses?: components["schemas"]["WeddingExpense"][] | null;
             website?: components["schemas"]["WeddingWebsite"];
+            budget?: components["schemas"]["WeddingBudget"];
+        };
+        WeddingBudget: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            /** Format: double */
+            totalBudget?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            wedding?: components["schemas"]["Wedding"];
+            allocations?: components["schemas"]["BudgetAllocation"][] | null;
+        };
+        WeddingBudgetDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            /** Format: double */
+            totalBudget?: number;
+            allocations?: components["schemas"]["BudgetAllocationDto"][] | null;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
         };
         WeddingDto: {
             /** Format: uuid */
@@ -1041,6 +1258,25 @@ export interface components {
             } | null;
             expenses?: components["schemas"]["WeddingExpenseDto"][] | null;
         };
+        WeddingInvitationDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            email?: string | null;
+            role?: components["schemas"]["WeddingUserRole"];
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
+            /** Format: date-time */
+            expiresAt?: string;
+            /** Format: date-time */
+            acceptedAt?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+        };
         WeddingPublicDto: {
             /** Format: uuid */
             id?: string;
@@ -1058,6 +1294,11 @@ export interface components {
             role?: components["schemas"]["WeddingUserRole"];
             /** Format: date-time */
             addedAt?: string;
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
             wedding?: components["schemas"]["Wedding"];
             user?: components["schemas"]["User"];
         };
@@ -1071,6 +1312,11 @@ export interface components {
             role?: components["schemas"]["WeddingUserRole"];
             /** Format: date-time */
             addedAt?: string;
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
         };
         /**
          * Format: int32
@@ -1112,6 +1358,23 @@ export interface components {
             createdAt?: string;
             /** Format: date-time */
             updatedAt?: string;
+        };
+        WeddingWithRoleDto: {
+            /** Format: uuid */
+            id?: string;
+            title?: string | null;
+            slug?: string | null;
+            /** Format: date-time */
+            date?: string;
+            location?: string | null;
+            role?: components["schemas"]["WeddingUserRole"];
+            /** Format: int32 */
+            guestCount?: number;
+            canAccessGuests?: boolean;
+            canAccessEvents?: boolean;
+            canAccessExpenses?: boolean;
+            canAccessWebsite?: boolean;
+            isReadOnly?: boolean;
         };
     };
     responses: never;
@@ -1482,6 +1745,117 @@ export interface operations {
             };
             /** @description Bad Request */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetWeddingBudget: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingBudgetDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    UpsertWeddingBudget: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpsertWeddingBudgetRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingBudgetDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2336,6 +2710,59 @@ export interface operations {
             };
         };
     };
+    CheckEmails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckEmailsRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CheckEmailsResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     GetGuestsByWedding: {
         parameters: {
             query?: never;
@@ -2605,6 +3032,68 @@ export interface operations {
             };
         };
     };
+    ImportGuests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkImportGuestRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BulkImportGuestResultDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     SendGuestInvitation: {
         parameters: {
             query?: never;
@@ -2751,6 +3240,243 @@ export interface operations {
             };
             /** @description Bad Gateway */
             502: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    AcceptInvitation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CancelInvitation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+                invitationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetInvitations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingInvitationDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CreateInvitation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWeddingInvitationRequestDto"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingInvitationDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetInvitationByToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingInvitationDto"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3304,7 +4030,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WeddingDto"][];
+                    "application/json": components["schemas"]["WeddingWithRoleDto"][];
                 };
             };
             /** @description Unauthorized */
@@ -3619,6 +4345,69 @@ export interface operations {
             };
             /** @description Forbidden */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    UpdateWeddingUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateWeddingUserRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WeddingUserDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -183,6 +183,15 @@
     "viewAllEventsCount_one": "View all {{count}} event",
     "viewAllEventsCount_other": "View all {{count}} events"
   },
+  "guests": "guests",
+  "planner": {
+    "myWeddings": "My Weddings",
+    "myWedding": "My Wedding",
+    "viewOnly": "View Only",
+    "fullAccess": "Full Access",
+    "customAccess": "Custom Access",
+    "noWeddings": "You don't have any shared weddings yet."
+  },
   "accessibility": {
     "fontSize": "Text size",
     "fontNormal": "Normal",

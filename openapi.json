@@ -410,6 +410,146 @@
         }
       }
     },
+    "/api/api/weddings/{weddingId}/budget": {
+      "get": {
+        "tags": [
+          "Budget"
+        ],
+        "operationId": "GetWeddingBudget",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeddingBudgetDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Budget"
+        ],
+        "operationId": "UpsertWeddingBudget",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertWeddingBudgetRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeddingBudgetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/events/{eventId}/guests": {
       "post": {
         "tags": [
@@ -1466,6 +1606,77 @@
         }
       }
     },
+    "/api/weddings/{weddingId}/guests/check-emails": {
+      "post": {
+        "tags": [
+          "Guests"
+        ],
+        "operationId": "CheckEmails",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckEmailsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckEmailsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/weddings/{weddingId}/guests": {
       "post": {
         "tags": [
@@ -1801,6 +2012,87 @@
         }
       }
     },
+    "/api/weddings/{weddingId}/guests/import": {
+      "post": {
+        "tags": [
+          "Guests"
+        ],
+        "operationId": "ImportGuests",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkImportGuestRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkImportGuestResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/weddings/{weddingId}/guests/{guestId}/send-invitation": {
       "post": {
         "tags": [
@@ -1983,6 +2275,305 @@
           },
           "502": {
             "description": "Bad Gateway",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/invitations/{token}/accept": {
+      "post": {
+        "tags": [
+          "Invitations"
+        ],
+        "operationId": "AcceptInvitation",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weddings/{weddingId}/invitations/{invitationId}": {
+      "delete": {
+        "tags": [
+          "Invitations"
+        ],
+        "operationId": "CancelInvitation",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weddings/{weddingId}/invitations": {
+      "post": {
+        "tags": [
+          "Invitations"
+        ],
+        "operationId": "CreateInvitation",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWeddingInvitationRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeddingInvitationDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Invitations"
+        ],
+        "operationId": "GetInvitations",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeddingInvitationDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/invitations/{token}": {
+      "get": {
+        "tags": [
+          "Invitations"
+        ],
+        "operationId": "GetInvitationByToken",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeddingInvitationDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
             "content": {
               "application/json": {
                 "schema": {
@@ -2734,7 +3325,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/WeddingDto"
+                    "$ref": "#/components/schemas/WeddingWithRoleDto"
                   }
                 }
               }
@@ -3171,6 +3762,94 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "WeddingUsers"
+        ],
+        "operationId": "UpdateWeddingUser",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWeddingUserRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeddingUserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -3199,6 +3878,21 @@
           },
           "role": {
             "$ref": "#/components/schemas/WeddingUserRole"
+          },
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -3337,6 +4031,144 @@
         },
         "additionalProperties": false
       },
+      "BudgetAllocation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "weddingBudgetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ExpenseCategory"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "weddingBudget": {
+            "$ref": "#/components/schemas/WeddingBudget"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BudgetAllocationDto": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/ExpenseCategory"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BudgetAllocationRequestDto": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/ExpenseCategory"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BulkImportGuestErrorDto": {
+        "type": "object",
+        "properties": {
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BulkImportGuestItemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "rsvpStatus": {
+            "$ref": "#/components/schemas/RsvpStatus"
+          },
+          "preferredLanguage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BulkImportGuestRequestDto": {
+        "type": "object",
+        "properties": {
+          "guests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkImportGuestItemDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BulkImportGuestResultDto": {
+        "type": "object",
+        "properties": {
+          "createdCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "skippedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdGuests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GuestDto"
+            },
+            "nullable": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkImportGuestErrorDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ChangePasswordRequest": {
         "type": "object",
         "properties": {
@@ -3346,6 +4178,32 @@
           },
           "newPassword": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckEmailsRequest": {
+        "type": "object",
+        "properties": {
+          "emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckEmailsResponse": {
+        "type": "object",
+        "properties": {
+          "existingEmails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },
@@ -3420,6 +4278,31 @@
           "notes": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateWeddingInvitationRequestDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -4120,6 +5003,27 @@
         },
         "additionalProperties": false
       },
+      "UpdateWeddingUserRequestDto": {
+        "type": "object",
+        "properties": {
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateWeddingWebsiteRequestDto": {
         "type": "object",
         "properties": {
@@ -4134,6 +5038,23 @@
           },
           "metaDescription": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpsertWeddingBudgetRequestDto": {
+        "type": "object",
+        "properties": {
+          "totalBudget": {
+            "type": "number",
+            "format": "double"
+          },
+          "allocations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetAllocationRequestDto"
+            },
             "nullable": true
           }
         },
@@ -4347,6 +5268,78 @@
           },
           "website": {
             "$ref": "#/components/schemas/WeddingWebsite"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/WeddingBudget"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeddingBudget": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "weddingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "totalBudget": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "wedding": {
+            "$ref": "#/components/schemas/Wedding"
+          },
+          "allocations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetAllocation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeddingBudgetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "weddingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "totalBudget": {
+            "type": "number",
+            "format": "double"
+          },
+          "allocations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetAllocationDto"
+            },
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -4533,6 +5526,55 @@
         },
         "additionalProperties": false
       },
+      "WeddingInvitationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "weddingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/WeddingUserRole"
+          },
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acceptedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "WeddingPublicDto": {
         "type": "object",
         "properties": {
@@ -4577,6 +5619,21 @@
             "type": "string",
             "format": "date-time"
           },
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
+          },
           "wedding": {
             "$ref": "#/components/schemas/Wedding"
           },
@@ -4611,6 +5668,21 @@
           "addedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -4718,6 +5790,54 @@
           }
         },
         "additionalProperties": false
+      },
+      "WeddingWithRoleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/WeddingUserRole"
+          },
+          "guestCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "canAccessGuests": {
+            "type": "boolean"
+          },
+          "canAccessEvents": {
+            "type": "boolean"
+          },
+          "canAccessExpenses": {
+            "type": "boolean"
+          },
+          "canAccessWebsite": {
+            "type": "boolean"
+          },
+          "isReadOnly": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       }
     }
   },
@@ -4729,6 +5849,9 @@
       "name": "Billing"
     },
     {
+      "name": "Budget"
+    },
+    {
       "name": "Events"
     },
     {
@@ -4736,6 +5859,9 @@
     },
     {
       "name": "Guests"
+    },
+    {
+      "name": "Invitations"
     },
     {
       "name": "Media"

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import {
@@ -150,7 +150,16 @@ export function DashboardPage() {
 
   useCurrentUser();
 
-  const wedding = weddings?.[0];
+  const ownedWeddings = weddings?.filter(w => w.role === 0) ?? [];
+  const sharedWeddings = weddings?.filter(w => w.role === 1) ?? [];
+
+  useEffect(() => {
+    if (weddings && ownedWeddings.length === 0 && sharedWeddings.length > 0) {
+      navigate('/planner');
+    }
+  }, [weddings, ownedWeddings.length, sharedWeddings.length, navigate]);
+
+  const wedding = ownedWeddings[0] ?? weddings?.[0];
   const { data: guests } = useGuests(wedding?.id || '', { enabled: !!wedding?.id });
   const { data: events } = useEvents(wedding?.id || '', { enabled: !!wedding?.id });
   const { data: website } = useWebsite(wedding?.id || '', { enabled: !!wedding?.id });
