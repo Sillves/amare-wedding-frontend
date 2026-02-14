@@ -163,11 +163,10 @@ export function DashboardPage() {
   const wedding = ownedWeddings[0] ?? weddings?.[0];
   const { data: guests } = useGuests(wedding?.id || '', { enabled: !!wedding?.id });
   const { data: events } = useEvents(wedding?.id || '', { enabled: !!wedding?.id });
-  const { data: website } = useWebsite(wedding?.id || '', { enabled: !!wedding?.id });
-
   const isOwner = wedding?.role === 0;
   const isReadOnly = !isOwner && (wedding?.isReadOnly ?? false);
-  const canAccessWebsite = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
+  const canAccessWebsite = isOwner && (user?.subscriptionTier === 1 || user?.subscriptionTier === 2);
+  const { data: website } = useWebsite(wedding?.id || '', { enabled: !!wedding?.id && canAccessWebsite });
   const canSendEmails = user?.subscriptionTier === 1 || user?.subscriptionTier === 2;
   const hasValidDate = isValidWeddingDate(wedding?.date);
 
@@ -336,7 +335,7 @@ export function DashboardPage() {
 
         {/* Wedding Overview & Website Cards */}
         {wedding && (
-          <section className="grid gap-6 lg:grid-cols-2 animate-fade-in-up animation-delay-300">
+          <section className={`grid gap-6 ${isOwner ? 'lg:grid-cols-2' : ''} animate-fade-in-up animation-delay-300`}>
             {/* Wedding Overview Card */}
             <Card className="rounded-2xl border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] bg-card/80 backdrop-blur-sm">
               <CardHeader className="pb-4">
@@ -389,8 +388,8 @@ export function DashboardPage() {
               </CardContent>
             </Card>
 
-            {/* Website Card */}
-            <Card className="rounded-2xl border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] bg-card/80 backdrop-blur-sm">
+            {/* Website Card (Owner only) */}
+            {isOwner && <Card className="rounded-2xl border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] bg-card/80 backdrop-blur-sm">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
@@ -480,7 +479,7 @@ export function DashboardPage() {
                   </div>
                 )}
               </CardContent>
-            </Card>
+            </Card>}
           </section>
         )}
 
