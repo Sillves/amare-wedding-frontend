@@ -126,14 +126,14 @@ export function ReferralDashboard() {
       </div>
 
       {/* Pending Payout */}
-      {stats && stats.pendingPayout > 0 && (
+      {stats && (stats.pendingPayout ?? 0) > 0 && (
         <Card className="border-yellow-200 bg-yellow-50 dark:border-yellow-900 dark:bg-yellow-950">
           <CardContent className="flex items-center gap-3 pt-6">
             <Clock className="h-5 w-5 text-yellow-600" />
             <div>
               <p className="font-medium">{t('referrals:stats.pendingPayout')}</p>
               <p className="text-sm text-muted-foreground">
-                {formatCurrency(stats.pendingPayout)}
+                {formatCurrency(stats.pendingPayout ?? 0)}
               </p>
             </div>
           </CardContent>
@@ -182,13 +182,13 @@ export function ReferralDashboard() {
                     )}
                     <Badge
                       variant={
-                        COMMISSION_STATUS_LABELS[referral.commissionStatus] === 'paid'
+                        COMMISSION_STATUS_LABELS[referral.commissionStatus ?? 0] === 'paid'
                           ? 'default'
                           : 'outline'
                       }
                       className="text-xs"
                     >
-                      {t(`referrals:status.${COMMISSION_STATUS_LABELS[referral.commissionStatus] ?? 'pending'}`)}
+                      {t(`referrals:status.${COMMISSION_STATUS_LABELS[referral.commissionStatus ?? 0] ?? 'pending'}`)}
                     </Badge>
                   </div>
                 </div>

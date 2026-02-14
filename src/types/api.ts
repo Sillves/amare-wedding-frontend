@@ -532,6 +532,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/referrals/code": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyReferralCode"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/referrals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetReferrals"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/referrals/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetReferralStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/weddings/{weddingId}/website": {
         parameters: {
             query?: never;
@@ -771,16 +819,6 @@ export interface components {
             sessionId?: string | null;
             url?: string | null;
         };
-        BudgetAllocation: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            weddingBudgetId?: string;
-            category?: components["schemas"]["ExpenseCategory"];
-            /** Format: double */
-            amount?: number;
-            weddingBudget?: components["schemas"]["WeddingBudget"];
-        };
         BudgetAllocationDto: {
             category?: components["schemas"]["ExpenseCategory"];
             /** Format: double */
@@ -827,6 +865,11 @@ export interface components {
         CheckEmailsResponse: {
             existingEmails?: string[] | null;
         };
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        CommissionStatus: 0 | 1 | 2;
         CreateEventRequestDto: {
             name?: string | null;
             /** Format: date-time */
@@ -875,21 +918,6 @@ export interface components {
         ErrorResponse: {
             errors?: components["schemas"]["Error"][] | null;
         };
-        Event: {
-            /** Format: uuid */
-            id?: string;
-            name: string | null;
-            /** Format: date-time */
-            startDate: string;
-            /** Format: date-time */
-            endDate?: string | null;
-            location: string | null;
-            description?: string | null;
-            guests?: components["schemas"]["Guest"][] | null;
-            /** Format: uuid */
-            weddingId?: string;
-            wedding?: components["schemas"]["Wedding"];
-        };
         EventDto: {
             /** Format: uuid */
             id?: string;
@@ -929,23 +957,6 @@ export interface components {
             email?: string | null;
             language?: string | null;
         };
-        Guest: {
-            /** Format: uuid */
-            id?: string;
-            name?: string | null;
-            email?: string | null;
-            rsvpStatus?: components["schemas"]["RsvpStatus"];
-            preferredLanguage?: string | null;
-            invitationToken?: string | null;
-            /** Format: date-time */
-            invitationTokenExpiresAt?: string | null;
-            /** Format: date-time */
-            invitationSentAt?: string | null;
-            /** Format: uuid */
-            weddingId?: string;
-            wedding?: components["schemas"]["Wedding"];
-            events?: components["schemas"]["Event"][] | null;
-        };
         GuestDto: {
             /** Format: uuid */
             id?: string;
@@ -969,20 +980,6 @@ export interface components {
             email?: string | null;
             password?: string | null;
         };
-        Media: {
-            /** Format: uuid */
-            id?: string;
-            fileName?: string | null;
-            s3Url?: string | null;
-            contentType?: string | null;
-            /** Format: int64 */
-            size?: number;
-            /** Format: date-time */
-            uploadedAt?: string;
-            /** Format: uuid */
-            weddingId?: string;
-            wedding?: components["schemas"]["Wedding"];
-        };
         MediaUploadResponseDto: {
             /** Format: uuid */
             id?: string;
@@ -994,17 +991,6 @@ export interface components {
             /** Format: date-time */
             uploadedAt?: string;
         };
-        Page: {
-            /** Format: uuid */
-            id?: string;
-            title?: string | null;
-            content?: string | null;
-            /** Format: int32 */
-            order?: number;
-            /** Format: uuid */
-            weddingId?: string;
-            wedding?: components["schemas"]["Wedding"];
-        };
         PublicWeddingWebsiteDto: {
             weddingSlug?: string | null;
             coupleNames?: string | null;
@@ -1015,6 +1001,33 @@ export interface components {
             settings?: unknown;
             content?: unknown;
             events?: components["schemas"]["EventDto"][] | null;
+        };
+        ReferralDto: {
+            /** Format: uuid */
+            id?: string;
+            referredUserName?: string | null;
+            /** Format: date-time */
+            registeredAt?: string | null;
+            /** Format: date-time */
+            convertedAt?: string | null;
+            /** Format: double */
+            commissionPercentage?: number;
+            commissionStatus?: components["schemas"]["CommissionStatus"];
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        ReferralStatsDto: {
+            referralCode?: string | null;
+            /** Format: int32 */
+            signedUpCount?: number;
+            /** Format: int32 */
+            subscribedCount?: number;
+            /** Format: double */
+            conversionRate?: number;
+            /** Format: double */
+            totalCommissionEarned?: number;
+            /** Format: double */
+            pendingPayout?: number;
         };
         RegisterRequest: {
             email?: string | null;
@@ -1096,35 +1109,6 @@ export interface components {
             totalBudget?: number;
             allocations?: components["schemas"]["BudgetAllocationRequestDto"][] | null;
         };
-        User: {
-            /** Format: uuid */
-            id?: string;
-            userName?: string | null;
-            normalizedUserName?: string | null;
-            email?: string | null;
-            normalizedEmail?: string | null;
-            emailConfirmed?: boolean;
-            passwordHash?: string | null;
-            securityStamp?: string | null;
-            concurrencyStamp?: string | null;
-            phoneNumber?: string | null;
-            phoneNumberConfirmed?: boolean;
-            twoFactorEnabled?: boolean;
-            /** Format: date-time */
-            lockoutEnd?: string | null;
-            lockoutEnabled?: boolean;
-            /** Format: int32 */
-            accessFailedCount?: number;
-            firstName?: string | null;
-            lastName?: string | null;
-            /** Format: date-time */
-            createdAt?: string;
-            subscriptionTier?: components["schemas"]["SubscriptionTier"];
-            stripeCustomerId?: string | null;
-            stripeSubscriptionId?: string | null;
-            weddings?: components["schemas"]["Wedding"][] | null;
-            weddingUsers?: components["schemas"]["WeddingUser"][] | null;
-        };
         UserProfileDto: {
             /** Format: uuid */
             id?: string;
@@ -1138,40 +1122,6 @@ export interface components {
          * @enum {integer}
          */
         WebsiteTemplate: 0 | 1 | 2;
-        Wedding: {
-            /** Format: uuid */
-            id?: string;
-            title?: string | null;
-            slug?: string | null;
-            /** Format: date-time */
-            date?: string;
-            location?: string | null;
-            /** Format: uuid */
-            userId?: string;
-            user?: components["schemas"]["User"];
-            weddingUsers?: components["schemas"]["WeddingUser"][] | null;
-            guests?: components["schemas"]["Guest"][] | null;
-            pages?: components["schemas"]["Page"][] | null;
-            media?: components["schemas"]["Media"][] | null;
-            events?: components["schemas"]["Event"][] | null;
-            expenses?: components["schemas"]["WeddingExpense"][] | null;
-            website?: components["schemas"]["WeddingWebsite"];
-            budget?: components["schemas"]["WeddingBudget"];
-        };
-        WeddingBudget: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            weddingId?: string;
-            /** Format: double */
-            totalBudget?: number;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            wedding?: components["schemas"]["Wedding"];
-            allocations?: components["schemas"]["BudgetAllocation"][] | null;
-        };
         WeddingBudgetDto: {
             /** Format: uuid */
             id?: string;
@@ -1201,24 +1151,6 @@ export interface components {
             updatedAt?: string;
             /** Format: uuid */
             userId?: string;
-        };
-        WeddingExpense: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            weddingId?: string;
-            /** Format: double */
-            amount?: number;
-            category?: components["schemas"]["ExpenseCategory"];
-            description?: string | null;
-            /** Format: date-time */
-            date?: string;
-            notes?: string | null;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            wedding?: components["schemas"]["Wedding"];
         };
         WeddingExpenseDto: {
             /** Format: uuid */
@@ -1286,22 +1218,6 @@ export interface components {
             date?: string;
             location?: string | null;
         };
-        WeddingUser: {
-            /** Format: uuid */
-            weddingId?: string;
-            /** Format: uuid */
-            userId?: string;
-            role?: components["schemas"]["WeddingUserRole"];
-            /** Format: date-time */
-            addedAt?: string;
-            canAccessGuests?: boolean;
-            canAccessEvents?: boolean;
-            canAccessExpenses?: boolean;
-            canAccessWebsite?: boolean;
-            isReadOnly?: boolean;
-            wedding?: components["schemas"]["Wedding"];
-            user?: components["schemas"]["User"];
-        };
         WeddingUserDto: {
             /** Format: uuid */
             weddingId?: string;
@@ -1323,24 +1239,6 @@ export interface components {
          * @enum {integer}
          */
         WeddingUserRole: 0 | 1 | 2;
-        WeddingWebsite: {
-            /** Format: uuid */
-            id?: string;
-            /** Format: uuid */
-            weddingId?: string;
-            wedding?: components["schemas"]["Wedding"];
-            template?: components["schemas"]["WebsiteTemplate"];
-            settings?: string | null;
-            content?: string | null;
-            isPublished?: boolean;
-            /** Format: date-time */
-            publishedAt?: string | null;
-            metaDescription?: string | null;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
         WeddingWebsiteDto: {
             /** Format: uuid */
             id?: string;
@@ -3697,6 +3595,93 @@ export interface operations {
             };
         };
     };
+    GetMyReferralCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetReferrals: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReferralDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetReferralStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReferralStatsDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     GetWeddingWebsite: {
         parameters: {
             query?: never;
@@ -4063,7 +4048,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Wedding"];
+                    "application/json": components["schemas"]["WeddingDto"];
                 };
             };
             /** @description Unauthorized */

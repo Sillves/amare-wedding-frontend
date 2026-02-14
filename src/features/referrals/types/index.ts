@@ -1,20 +1,8 @@
-// Types will be replaced with components['schemas'][...] after running npm run sync-types
+import type { components } from '@/types/api';
 
-export interface ReferralStatsDto {
-  referralCode: string;
-  signedUpCount: number;
-  subscribedCount: number;
-  conversionRate: number;
-  totalCommissionEarned: number;
-  pendingPayout: number;
-}
-
-export interface ReferralDto {
-  id: string;
-  referredUserName: string | null;
-  registeredAt: string | null;
-  convertedAt: string | null;
-  commissionPercentage: number;
-  commissionStatus: number;
-  createdAt: string;
-}
+/**
+ * Auto-generated types from OpenAPI spec
+ */
+export type ReferralStatsDto = components['schemas']['ReferralStatsDto'];
+export type ReferralDto = components['schemas']['ReferralDto'];
+export type CommissionStatus = components['schemas']['CommissionStatus'];
