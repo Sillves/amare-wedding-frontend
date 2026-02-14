@@ -10,8 +10,8 @@ export const referralApi = {
    * @returns Promise<string> - The referral code
    */
   getCode: async (): Promise<string> => {
-    const response = await apiClient.get<string>('/referrals/code');
-    return response.data;
+    const response = await apiClient.get<{ code: string }>('/referrals/code');
+    return response.data.code;
   },
 
   /**
