@@ -33,6 +33,7 @@ export interface RegisterRequest {
   firstName: string;
   lastName: string;
   password: string;
+  accountType: number;
 }
 
 /**
@@ -61,6 +62,7 @@ export interface User {
   firstName: string;
   lastName: string;
   subscriptionTier?: SubscriptionTier;
+  accountType?: number;
 }
 
 /**

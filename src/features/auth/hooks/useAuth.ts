@@ -11,16 +11,22 @@ import { isSuccessfulAuthResult } from '../types';
  * Simple JWT decode without verification (verification happens on backend)
  * Supports common JWT claim names for user ID
  */
-function decodeJwtUserId(token: string): string | null {
+interface DecodedJwt {
+  userId: string | null;
+  accountType: number;
+}
+
+function decodeJwt(token: string): DecodedJwt {
   try {
     const payload = token.split('.')[1];
-    if (!payload) return null;
+    if (!payload) return { userId: null, accountType: 0 };
 
     const decoded = JSON.parse(atob(payload));
-    // Check common claim names for user ID
-    return decoded.sub || decoded.userId || decoded.nameid || decoded.id || null;
-  } catch (error) {
-    return null;
+    const userId = decoded.sub || decoded.userId || decoded.nameid || decoded.id || null;
+    const accountType = parseInt(decoded.account_type) || 0;
+    return { userId, accountType };
+  } catch {
+    return { userId: null, accountType: 0 };
   }
 }
 
@@ -40,8 +46,8 @@ export function useLogin() {
         throw new Error(response.message || 'Login failed');
       }
 
-      // Extract userId from JWT token
-      const userId = decodeJwtUserId(response.token);
+      // Extract userId and accountType from JWT token
+      const { userId, accountType } = decodeJwt(response.token);
       if (!userId) {
         throw new Error('Invalid authentication token. Please contact support.');
       }
@@ -52,6 +58,7 @@ export function useLogin() {
         email: variables.email,
         firstName: '',
         lastName: '',
+        accountType,
       };
 
       setAuth(user, response.token);
@@ -83,8 +90,8 @@ export function useRegister() {
         throw new Error(response.message || 'Registration failed');
       }
 
-      // Extract userId from JWT token
-      const userId = decodeJwtUserId(response.token);
+      // Extract userId and accountType from JWT token
+      const { userId, accountType } = decodeJwt(response.token);
       if (!userId) {
         throw new Error('Invalid authentication token. Please try logging in.');
       }
@@ -95,6 +102,7 @@ export function useRegister() {
         email: variables.email,
         firstName: variables.firstName,
         lastName: variables.lastName,
+        accountType,
       };
 
       setAuth(user, response.token);
@@ -103,6 +111,9 @@ export function useRegister() {
       if (pendingToken) {
         localStorage.removeItem('pendingInviteToken');
         navigate(`/invite/${pendingToken}`);
+      } else if (accountType === 1) {
+        // Planners skip onboarding wizard, go directly to planner page
+        navigate('/planner');
       } else {
         navigate('/dashboard');
       }
@@ -157,6 +168,7 @@ export function useCurrentUser(options?: { enabled?: boolean }) {
           firstName: profile.firstName || '',
           lastName: profile.lastName || '',
           subscriptionTier: profile.subscriptionTier,
+          accountType: profile.accountType,
         });
       }
       return profile;

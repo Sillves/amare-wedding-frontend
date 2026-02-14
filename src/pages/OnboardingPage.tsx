@@ -4,19 +4,25 @@ import { Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { WeddingWizard } from '@/features/onboarding';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 
 export function OnboardingPage() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { data: weddings, isLoading } = useWeddings();
 
   // If user already has weddings, redirect to dashboard
+  // If planner with no weddings, redirect to planner page
   useEffect(() => {
-    if (!isLoading && weddings && weddings.length > 0) {
+    if (isLoading) return;
+    if (weddings && weddings.length > 0) {
       navigate('/dashboard', { replace: true });
+    } else if (user?.accountType === 1) {
+      navigate('/planner', { replace: true });
     }
-  }, [weddings, isLoading, navigate]);
+  }, [weddings, isLoading, user?.accountType, navigate]);
 
   if (isLoading) {
     return (

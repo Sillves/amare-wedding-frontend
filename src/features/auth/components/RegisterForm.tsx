@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ArrowLeft } from 'lucide-react';
 import { useRegister } from '../hooks/useAuth';
+import { AccountTypeStep } from './AccountTypeStep';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
@@ -26,6 +29,8 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 export function RegisterForm() {
   const { t } = useTranslation(['auth', 'common']);
   const registerMutation = useRegister();
+  const [step, setStep] = useState<'type' | 'details'>('type');
+  const [accountType, setAccountType] = useState<number>(0);
 
   const {
     register,
@@ -35,14 +40,41 @@ export function RegisterForm() {
     resolver: zodResolver(registerSchema),
   });
 
+  const handleAccountTypeSelect = (type: number) => {
+    setAccountType(type);
+    setStep('details');
+  };
+
   const onSubmit = (data: RegisterFormData) => {
     const { confirmPassword, ...registerData } = data;
-    registerMutation.mutate(registerData);
+    registerMutation.mutate({ ...registerData, accountType });
   };
+
+  if (step === 'type') {
+    return (
+      <div className="flex flex-col items-center space-y-4">
+        <AccountTypeStep onSelect={handleAccountTypeSelect} />
+        <p className="text-sm text-muted-foreground">
+          {t('auth:register.hasAccount')}{' '}
+          <Link to="/login" className="text-primary hover:underline">
+            {t('auth:register.login')}
+          </Link>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
+        <button
+          type="button"
+          onClick={() => setStep('type')}
+          className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 w-fit"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          {t('auth:register.accountType.back')}
+        </button>
         <CardTitle className="text-2xl">{t('auth:register.title')}</CardTitle>
         <CardDescription>{t('auth:register.subtitle')}</CardDescription>
       </CardHeader>

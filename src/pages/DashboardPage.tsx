@@ -33,6 +33,7 @@ import { Badge } from '@/components/ui/badge';
 import { EditWeddingDialog } from '@/features/weddings/components/EditWeddingDialog';
 import { CreateGuestDialog } from '@/features/guests/components/CreateGuestDialog';
 import { CreateEventDialog } from '@/features/events/components/CreateEventDialog';
+import { TeamTab } from '@/features/invitations/components/TeamTab';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { format, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
@@ -234,6 +235,10 @@ export function DashboardPage() {
   }, [guestStats, events]);
 
   if (!isLoading && (!weddings || weddings.length === 0)) {
+    // Planners without weddings go to planner page, not onboarding
+    if (user?.accountType === 1) {
+      return <Navigate to="/planner" replace />;
+    }
     return <Navigate to="/onboarding" replace />;
   }
 
@@ -699,6 +704,13 @@ export function DashboardPage() {
             </CardContent>
           </Card>
         </section>
+
+        {/* Team & Collaborators - Couples can invite planners */}
+        {isOwner && user?.accountType === 0 && wedding && (
+          <section className="animate-fade-in-up animation-delay-500">
+            <TeamTab weddingId={wedding.id} />
+          </section>
+        )}
 
         {/* Next Steps */}
         <section className="animate-fade-in-up animation-delay-600">

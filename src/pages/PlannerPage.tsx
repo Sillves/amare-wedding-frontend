@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
-import { Calendar, MapPin, Users, Eye, Edit } from 'lucide-react';
+import { Calendar, MapPin, Users, Eye, Edit, Heart, Briefcase } from 'lucide-react';
 import type { WeddingWithRoleDto } from '@/features/invitations/types';
 
 export function PlannerPage() {
@@ -54,8 +54,18 @@ export function PlannerPage() {
           </div>
         ) : sharedWeddings.length === 0 ? (
           <Card>
-            <CardContent className="text-center py-12">
-              <p className="text-muted-foreground">{t('common:planner.noWeddings')}</p>
+            <CardContent className="text-center py-12 space-y-4">
+              <div className="p-4 rounded-full bg-primary/10 w-fit mx-auto">
+                <Briefcase className="h-10 w-10 text-primary" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-xl font-semibold">{t('common:planner.welcome')}</h2>
+                <p className="text-muted-foreground max-w-md mx-auto">{t('common:planner.getStarted')}</p>
+              </div>
+              <Button variant="outline" onClick={() => navigate('/onboarding')}>
+                <Heart className="h-4 w-4 mr-2" />
+                {t('common:planner.createMyWedding')}
+              </Button>
             </CardContent>
           </Card>
         ) : (

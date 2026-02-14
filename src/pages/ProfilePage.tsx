@@ -54,7 +54,6 @@ export function ProfilePage() {
 
   const { timeFormat, setTimeFormat } = useDateFormat();
   const { data: weddings } = useWeddings();
-  const isPlanner = weddings?.some(w => w.role === 1) ?? false;
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
@@ -349,7 +348,7 @@ export function ProfilePage() {
           </CardContent>
         </Card>
         {/* Referral Program - Planner only */}
-        {isPlanner && (
+        {user?.accountType === 1 && (
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
