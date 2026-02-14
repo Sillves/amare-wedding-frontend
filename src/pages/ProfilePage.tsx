@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { User, Mail, CreditCard, Crown, ArrowRight, Settings, Loader2, Lock, Eye, EyeOff, CheckCircle, Globe, Clock, Share2 } from 'lucide-react';
 import { useAuth, useCurrentUser, useChangePassword } from '@/features/auth/hooks/useAuth';
+import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { SubscriptionTierLabel, usePortalSession } from '@/features/billing';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -52,6 +53,8 @@ export function ProfilePage() {
   const [passwordChanged, setPasswordChanged] = useState(false);
 
   const { timeFormat, setTimeFormat } = useDateFormat();
+  const { data: weddings } = useWeddings();
+  const isPlanner = weddings?.some(w => w.role === 1) ?? false;
 
   const handleLanguageChange = (languageCode: string) => {
     i18n.changeLanguage(languageCode);
@@ -345,19 +348,21 @@ export function ProfilePage() {
             )}
           </CardContent>
         </Card>
-        {/* Referral Program */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Share2 className="h-5 w-5" />
-              {t('referrals:title')}
-            </CardTitle>
-            <CardDescription>{t('referrals:subtitle')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ReferralDashboard />
-          </CardContent>
-        </Card>
+        {/* Referral Program - Planner only */}
+        {isPlanner && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Share2 className="h-5 w-5" />
+                {t('referrals:title')}
+              </CardTitle>
+              <CardDescription>{t('referrals:subtitle')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ReferralDashboard />
+            </CardContent>
+          </Card>
+        )}
       </main>
     </div>
   );

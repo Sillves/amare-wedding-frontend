@@ -38,7 +38,6 @@ import { FontSizeSwitcher } from '@/shared/components/FontSizeSwitcher';
 import { format, differenceInDays, isBefore, isToday, parseISO } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/dateLocale';
 import { useDateFormatListener, getTimeFormatPreference } from '@/hooks/useDateFormat';
-import { TeamTab } from '@/features/invitations/components/TeamTab';
 
 /**
  * Floating decorative elements for premium dashboard aesthetic
@@ -700,13 +699,6 @@ export function DashboardPage() {
             </CardContent>
           </Card>
         </section>
-
-        {/* Team Management (Owner only) */}
-        {wedding && isOwner && (
-          <section className="animate-fade-in-up animation-delay-600">
-            <TeamTab weddingId={wedding.id!} />
-          </section>
-        )}
 
         {/* Next Steps */}
         <section className="animate-fade-in-up animation-delay-600">
