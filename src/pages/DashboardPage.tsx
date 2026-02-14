@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, Navigate, Link } from 'react-router-dom';
+import { useNavigate, Navigate, Link, useSearchParams } from 'react-router-dom';
 import {
   Calendar,
   Users,
@@ -147,6 +147,8 @@ export function DashboardPage() {
   const timeFormatStr = timeFormat === '12h' ? 'p' : 'HH:mm';
   const logout = useLogout();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const weddingIdFromUrl = searchParams.get('wedding');
   const { data: weddings, isLoading } = useWeddings();
 
   useCurrentUser();
@@ -155,12 +157,14 @@ export function DashboardPage() {
   const sharedWeddings = weddings?.filter(w => w.role === 1) ?? [];
 
   useEffect(() => {
-    if (weddings && ownedWeddings.length === 0 && sharedWeddings.length > 0) {
+    if (weddings && !weddingIdFromUrl && ownedWeddings.length === 0 && sharedWeddings.length > 0) {
       navigate('/planner');
     }
-  }, [weddings, ownedWeddings.length, sharedWeddings.length, navigate]);
+  }, [weddings, weddingIdFromUrl, ownedWeddings.length, sharedWeddings.length, navigate]);
 
-  const wedding = ownedWeddings[0] ?? weddings?.[0];
+  const wedding = weddingIdFromUrl
+    ? weddings?.find(w => w.id === weddingIdFromUrl) ?? ownedWeddings[0] ?? weddings?.[0]
+    : ownedWeddings[0] ?? weddings?.[0];
   const { data: guests } = useGuests(wedding?.id || '', { enabled: !!wedding?.id });
   const { data: events } = useEvents(wedding?.id || '', { enabled: !!wedding?.id });
   const isOwner = wedding?.role === 0;
