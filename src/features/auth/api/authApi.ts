@@ -32,7 +32,10 @@ export const authApi = {
    * @throws Error if the request fails
    */
   register: async (data: RegisterRequest): Promise<AuthResult> => {
-    const response = await apiClient.post<AuthResult>('/auth/register', data);
+    const referralCode = localStorage.getItem('referralCode');
+    const url = referralCode ? `/auth/register?ref=${encodeURIComponent(referralCode)}` : '/auth/register';
+    const response = await apiClient.post<AuthResult>(url, data);
+    if (referralCode) localStorage.removeItem('referralCode');
     return response.data;
   },
 

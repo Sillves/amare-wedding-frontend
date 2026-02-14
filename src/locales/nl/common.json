@@ -216,6 +216,13 @@
     "noEditAccess": "Je hebt alleen-lezen toegang tot deze bruiloft",
     "noModuleAccess": "Je hebt geen toegang tot dit onderdeel"
   },
+  "referral": {
+    "title": "Jouw planner raadt Amare aan",
+    "description": "Jouw weddingplanner gebruikt Amare om koppels te helpen hun perfecte dag te plannen. Maak een gratis account aan om te beginnen.",
+    "cta": "Maak je gratis account aan",
+    "alreadyHaveAccount": "Heb je al een account?",
+    "login": "Inloggen"
+  },
   "accessibility": {
     "fontSize": "Tekstgrootte",
     "fontNormal": "Normaal",

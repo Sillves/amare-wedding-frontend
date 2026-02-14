@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { User, Mail, CreditCard, Crown, ArrowRight, Settings, Loader2, Lock, Eye, EyeOff, CheckCircle, Globe, Clock } from 'lucide-react';
+import { User, Mail, CreditCard, Crown, ArrowRight, Settings, Loader2, Lock, Eye, EyeOff, CheckCircle, Globe, Clock, Share2 } from 'lucide-react';
 import { useAuth, useCurrentUser, useChangePassword } from '@/features/auth/hooks/useAuth';
 import { SubscriptionTierLabel, usePortalSession } from '@/features/billing';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useErrorToast } from '@/hooks/useErrorToast';
 import { useDateFormat, type TimeFormatPreference } from '@/hooks/useDateFormat';
+import { ReferralDashboard } from '@/features/referrals/components/ReferralDashboard';
 
 const SUPPORTED_LANGUAGES = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -39,7 +40,7 @@ const changePasswordSchema = z.object({
 type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 
 export function ProfilePage() {
-  const { t, i18n } = useTranslation(['profile', 'common', 'billing', 'auth']);
+  const { t, i18n } = useTranslation(['profile', 'common', 'billing', 'auth', 'referrals']);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { isLoading } = useCurrentUser();
@@ -342,6 +343,19 @@ export function ProfilePage() {
                 </div>
               </>
             )}
+          </CardContent>
+        </Card>
+        {/* Referral Program */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Share2 className="h-5 w-5" />
+              {t('referrals:title')}
+            </CardTitle>
+            <CardDescription>{t('referrals:subtitle')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ReferralDashboard />
           </CardContent>
         </Card>
       </main>

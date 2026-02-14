@@ -1,0 +1,28 @@
+{
+  "title": "Referralprogramma",
+  "subtitle": "Verdien commissie door nieuwe koppels naar Amare te verwijzen",
+  "link": {
+    "title": "Jouw verwijzingslink",
+    "description": "Deel deze link met koppels. Wanneer ze zich aanmelden en een abonnement nemen, verdien je 15% commissie."
+  },
+  "stats": {
+    "signedUp": "Aangemeld",
+    "subscribed": "Geabonneerd",
+    "conversionRate": "Conversie",
+    "earned": "Verdiend",
+    "pendingPayout": "Uitbetaling in afwachting"
+  },
+  "status": {
+    "pending": "In afwachting",
+    "paid": "Uitbetaald",
+    "expired": "Verlopen"
+  },
+  "activity": {
+    "title": "Recente verwijzingen",
+    "description": "Koppels die zich aanmeldden via jouw verwijzingslink",
+    "empty": "Nog geen verwijzingen. Deel je link om te beginnen!",
+    "anonymous": "Anonieme gebruiker",
+    "notRegistered": "Nog niet geregistreerd",
+    "converted": "Geabonneerd"
+  }
+}

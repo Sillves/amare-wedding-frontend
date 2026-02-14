@@ -1,0 +1,28 @@
+{
+  "title": "Programme de parrainage",
+  "subtitle": "Gagnez des commissions en recommandant de nouveaux couples sur Amare",
+  "link": {
+    "title": "Votre lien de parrainage",
+    "description": "Partagez ce lien avec des couples. Lorsqu'ils s'inscrivent et s'abonnent, vous gagnez une commission de 15%."
+  },
+  "stats": {
+    "signedUp": "Inscrits",
+    "subscribed": "Abonnés",
+    "conversionRate": "Conversion",
+    "earned": "Gagné",
+    "pendingPayout": "Paiement en attente"
+  },
+  "status": {
+    "pending": "En attente",
+    "paid": "Payé",
+    "expired": "Expiré"
+  },
+  "activity": {
+    "title": "Parrainages récents",
+    "description": "Couples inscrits via votre lien de parrainage",
+    "empty": "Pas encore de parrainages. Partagez votre lien pour commencer !",
+    "anonymous": "Utilisateur anonyme",
+    "notRegistered": "Pas encore inscrit",
+    "converted": "Abonné"
+  }
+}

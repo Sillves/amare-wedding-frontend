@@ -1,0 +1,28 @@
+{
+  "title": "Referral Program",
+  "subtitle": "Earn commission by referring new couples to Amare",
+  "link": {
+    "title": "Your Referral Link",
+    "description": "Share this link with couples. When they sign up and subscribe, you earn a 15% commission."
+  },
+  "stats": {
+    "signedUp": "Signed Up",
+    "subscribed": "Subscribed",
+    "conversionRate": "Conversion",
+    "earned": "Earned",
+    "pendingPayout": "Pending payout"
+  },
+  "status": {
+    "pending": "Pending",
+    "paid": "Paid",
+    "expired": "Expired"
+  },
+  "activity": {
+    "title": "Recent Referrals",
+    "description": "Couples who signed up through your referral link",
+    "empty": "No referrals yet. Share your link to get started!",
+    "anonymous": "Anonymous user",
+    "notRegistered": "Not yet registered",
+    "converted": "Subscribed"
+  }
+}

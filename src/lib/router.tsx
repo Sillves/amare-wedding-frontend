@@ -29,6 +29,7 @@ const WebsiteEditorPage = lazy(() => import('@/pages/WebsiteEditorPage').then(m 
 const PublicWebsitePage = lazy(() => import('@/pages/PublicWebsitePage').then(m => ({ default: m.PublicWebsitePage })));
 const PlannerPage = lazy(() => import('@/pages/PlannerPage').then(m => ({ default: m.PlannerPage })));
 const InviteAcceptPage = lazy(() => import('@/pages/InviteAcceptPage').then(m => ({ default: m.InviteAcceptPage })));
+const ReferralLandingPage = lazy(() => import('@/pages/ReferralLandingPage').then(m => ({ default: m.ReferralLandingPage })));
 
 // Demo pages (public, no auth required)
 const DemoPage = lazy(() => import('@/pages/DemoPage').then(m => ({ default: m.DemoPage })));
@@ -190,6 +191,10 @@ export const router = createBrowserRouter([
   {
     path: '/invite/:token',
     element: withSuspense(InviteAcceptPage),
+  },
+  {
+    path: '/ref/:code',
+    element: withSuspense(ReferralLandingPage),
   },
   {
     path: '/planner',

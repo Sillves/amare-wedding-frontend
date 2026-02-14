@@ -216,6 +216,13 @@
     "noEditAccess": "Vous avez un acc\u00e8s en lecture seule \u00e0 ce mariage",
     "noModuleAccess": "Vous n'avez pas acc\u00e8s \u00e0 cette section"
   },
+  "referral": {
+    "title": "Votre planificateur recommande Amare",
+    "description": "Votre planificateur de mariage utilise Amare pour aider les couples à organiser leur journée parfaite. Créez votre compte gratuit pour commencer.",
+    "cta": "Créer votre compte gratuit",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "login": "Se connecter"
+  },
   "accessibility": {
     "fontSize": "Taille du texte",
     "fontNormal": "Normal",

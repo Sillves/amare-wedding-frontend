@@ -216,6 +216,13 @@
     "noEditAccess": "You have read-only access to this wedding",
     "noModuleAccess": "You don't have access to this section"
   },
+  "referral": {
+    "title": "Your planner recommends Amare",
+    "description": "Your wedding planner uses Amare to help couples plan their perfect day. Create your free account to get started.",
+    "cta": "Create your free account",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Log in"
+  },
   "accessibility": {
     "fontSize": "Text size",
     "fontNormal": "Normal",
