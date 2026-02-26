@@ -1,23 +1,26 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
-import { useLogout, useCurrentUser } from '@/features/auth/hooks/useAuth';
+import { useAuth, useCurrentUser } from '@/features/auth/hooks/useAuth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ThemeSwitcher } from '@/shared/components/ThemeSwitcher';
 import { Calendar, MapPin, Users, Eye, Edit, Heart, Briefcase } from 'lucide-react';
 import type { WeddingWithRoleDto } from '@/features/invitations/types';
+import { PlannerLayout } from '@/layouts/PlannerLayout';
 
 export function PlannerPage() {
   const { t } = useTranslation(['common']);
   const navigate = useNavigate();
-  const logout = useLogout();
+  const { user } = useAuth();
   useCurrentUser();
   const { data: weddings, isLoading } = useWeddings();
 
+  if (user?.accountType !== 1) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   const sharedWeddings = weddings?.filter(w => w.role === 1) ?? [];
-  const ownedWeddings = weddings?.filter(w => w.role === 0) ?? [];
 
   const getAccessLabel = (wedding: WeddingWithRoleDto) => {
     if (wedding.isReadOnly) return t('common:planner.viewOnly');
@@ -29,24 +32,7 @@ export function PlannerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-10 bg-card border-b border-border px-4 py-3">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <h1 className="text-lg font-semibold">{t('common:planner.myWeddings')}</h1>
-          <div className="flex items-center gap-2">
-            <ThemeSwitcher />
-            {ownedWeddings.length > 0 && (
-              <Button variant="outline" size="sm" onClick={() => navigate('/dashboard')}>
-                {t('common:planner.myWedding')}
-              </Button>
-            )}
-            <Button variant="ghost" size="sm" onClick={logout}>
-              {t('auth:logout')}
-            </Button>
-          </div>
-        </div>
-      </header>
-
+    <PlannerLayout>
       <main className="max-w-5xl mx-auto p-4 space-y-4">
         {isLoading ? (
           <div className="flex justify-center py-12">
@@ -104,6 +90,6 @@ export function PlannerPage() {
           ))
         )}
       </main>
-    </div>
+    </PlannerLayout>
   );
 }
