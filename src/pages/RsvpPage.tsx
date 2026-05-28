@@ -44,7 +44,8 @@ export function RsvpPage() {
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [dietary, setDietary] = useState('');
-  const [attending, setAttending] = useState(true);
+  // Only used when the flow exposes no events (then there's nothing else to signal presence).
+  const [willAttend, setWillAttend] = useState(true);
   const [attendingEventIds, setAttendingEventIds] = useState<string[]>([]);
   const [plusOneAttending, setPlusOneAttending] = useState(false);
   const [plusOneName, setPlusOneName] = useState('');
@@ -136,18 +137,25 @@ export function RsvpPage() {
 
   const setAnswer = (qid: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [qid]: value }));
 
+  // When the flow has events, the per-event selection is the presence signal; otherwise fall
+  // back to an explicit yes/no. Attending = picked at least one event (or said yes).
+  const hasEvents = (flow.events ?? []).length > 0;
+  const attending = hasEvents ? attendingEventIds.length > 0 : willAttend;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
 
-    // basic required-question check client-side
-    for (const q of flow.questions ?? []) {
-      if (q.required) {
-        const v = answers[q.id!];
-        const empty = v === undefined || v === '' || (Array.isArray(v) && v.length === 0);
-        if (empty) {
-          setFormError(`Please answer: ${q.label}`);
-          return;
+    // Required questions only apply when the guest is attending.
+    if (attending) {
+      for (const q of flow.questions ?? []) {
+        if (q.required) {
+          const v = answers[q.id!];
+          const empty = v === undefined || v === '' || (Array.isArray(v) && v.length === 0);
+          if (empty) {
+            setFormError(`Please answer: ${q.label}`);
+            return;
+          }
         }
       }
     }
@@ -188,26 +196,6 @@ export function RsvpPage() {
 
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Attendance toggle */}
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              type="button"
-              variant={attending ? 'default' : 'outline'}
-              size="lg"
-              onClick={() => setAttending(true)}
-            >
-              I’ll be there
-            </Button>
-            <Button
-              type="button"
-              variant={!attending ? 'default' : 'outline'}
-              size="lg"
-              onClick={() => setAttending(false)}
-            >
-              Can’t make it
-            </Button>
-          </div>
-
           {/* Base questions */}
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -228,14 +216,15 @@ export function RsvpPage() {
             <Input id="r-dietary" value={dietary} onChange={(e) => setDietary(e.target.value)} placeholder="e.g. vegetarian, allergies" />
           </div>
 
-          {attending && (
-            <>
-              {/* Events */}
-              {(flow.events ?? []).length > 0 && (
-                <div className="space-y-2">
-                  <Label>Which events will you attend?</Label>
-                  <div className="grid gap-2">
-                    {(flow.events ?? []).map((ev) => {
+          {/* Presence: per-event selection when the flow has events, else an explicit yes/no */}
+          {hasEvents ? (
+            <div className="space-y-2">
+              <Label>Which events will you attend?</Label>
+              <p className="text-xs text-muted-foreground">
+                Select the events you’ll attend. Leave them all unchecked if you can’t make it.
+              </p>
+              <div className="grid gap-2">
+                {(flow.events ?? []).map((ev) => {
                       const when = formatEventWhen(ev.startDate);
                       return (
                         <label key={ev.id} className="flex items-start gap-2 text-sm rounded-lg border p-3">
@@ -257,8 +246,29 @@ export function RsvpPage() {
                     })}
                   </div>
                 </div>
-              )}
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  type="button"
+                  variant={willAttend ? 'default' : 'outline'}
+                  size="lg"
+                  onClick={() => setWillAttend(true)}
+                >
+                  I’ll be there
+                </Button>
+                <Button
+                  type="button"
+                  variant={!willAttend ? 'default' : 'outline'}
+                  size="lg"
+                  onClick={() => setWillAttend(false)}
+                >
+                  Can’t make it
+                </Button>
+              </div>
+            )}
 
+            {attending && (
+              <>
               {/* Custom questions */}
               {(flow.questions ?? []).map((q) => (
                 <DynamicQuestion key={q.id} question={q} value={answers[q.id!]} onChange={(v) => setAnswer(q.id!, v)} />
