@@ -19,6 +19,7 @@ const DashboardPage = lazy(() => import('@/pages/DashboardPage').then(m => ({ de
 const OnboardingPage = lazy(() => import('@/pages/OnboardingPage').then(m => ({ default: m.OnboardingPage })));
 const GuestsPage = lazy(() => import('@/pages/GuestsPage').then(m => ({ default: m.GuestsPage })));
 const EventsPage = lazy(() => import('@/pages/EventsPage').then(m => ({ default: m.EventsPage })));
+const InvitationFlowsPage = lazy(() => import('@/pages/InvitationFlowsPage').then(m => ({ default: m.InvitationFlowsPage })));
 const ExpensesPage = lazy(() => import('@/pages/ExpensesPage').then(m => ({ default: m.ExpensesPage })));
 const RsvpPage = lazy(() => import('@/pages/RsvpPage').then(m => ({ default: m.RsvpPage })));
 const PricingPage = lazy(() => import('@/pages/PricingPage').then(m => ({ default: m.PricingPage })));
@@ -165,6 +166,16 @@ export const router = createBrowserRouter([
       <ProtectedRoute>
         <Suspense fallback={<PageLoader />}>
           <ExpensesPage />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/invitations',
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<PageLoader />}>
+          <InvitationFlowsPage />
         </Suspense>
       </ProtectedRoute>
     ),

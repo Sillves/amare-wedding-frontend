@@ -1,240 +1,287 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Heart, Check, X, HelpCircle, Loader2 } from 'lucide-react';
+import { Heart, Check, Lock, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useSubmitRsvp, useWeddingPublicInfo } from '@/features/rsvp/hooks/useRsvp';
-import type { RsvpStatus } from '@/features/weddings/types';
+import { useRsvpFlowState, useUnlockRsvpFlow, useSubmitRsvpFlow } from '@/features/rsvp/hooks/useRsvpFlow';
+import { DynamicQuestion, type AnswerValue } from '@/features/rsvp/components/DynamicQuestion';
+import type { RsvpFlowPublic } from '@/features/rsvp/types';
+
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-2xl">{children}</Card>
+    </div>
+  );
+}
 
 export function RsvpPage() {
-  const { weddingId } = useParams<{ weddingId: string }>();
-  const { t, i18n } = useTranslation(['guests', 'common']);
+  const { weddingId: slugOrId = '' } = useParams<{ weddingId: string }>();
+  const { data: state, isLoading, error } = useRsvpFlowState(slugOrId);
+  const unlock = useUnlockRsvpFlow(slugOrId);
+  const submit = useSubmitRsvpFlow(slugOrId);
 
-  // Fetch wedding public information from API
-  const { data: wedding, isLoading: weddingLoading, error: weddingError } = useWeddingPublicInfo(weddingId || '');
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState<RsvpStatus | null>(null);
+  const [passcode, setPasscode] = useState('');
+  const [passcodeError, setPasscodeError] = useState<string | null>(null);
+  const [unlockedFlow, setUnlockedFlow] = useState<RsvpFlowPublic | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const submitRsvp = useSubmitRsvp();
+  // form state
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [dietary, setDietary] = useState('');
+  const [attending, setAttending] = useState(true);
+  const [attendingEventIds, setAttendingEventIds] = useState<string[]>([]);
+  const [plusOneAttending, setPlusOneAttending] = useState(false);
+  const [plusOneName, setPlusOneName] = useState('');
+  const [plusOneDietary, setPlusOneDietary] = useState('');
+  const [answers, setAnswers] = useState<Record<string, AnswerValue>>({});
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const flow = unlockedFlow ?? state?.flow ?? null;
 
-    if (!wedding?.id || !name.trim() || selectedStatus === null) {
-      return;
-    }
-
-    setErrorMessage(null);
-
-    try {
-      await submitRsvp.mutateAsync({
-        weddingId: wedding.id, // Use the UUID from fetched wedding data, not the URL param (which could be a slug)
-        data: {
-          name: name.trim(),
-          email: email.trim() || null,
-          rsvpStatus: selectedStatus,
-        },
-      });
-      setSubmitted(true);
-    } catch (error: any) {
-      // Check for specific error messages
-      const errorResponse = error?.response?.data?.error;
-      if (errorResponse === 'Guest not found for wedding') {
-        setErrorMessage(t('guests:rsvp.guestNotFound'));
-      } else {
-        setErrorMessage(t('guests:rsvp.error'));
-      }
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString(i18n.language, {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    } catch {
-      return dateString;
-    }
-  };
-
-  // Loading state
-  if (weddingLoading) {
+  if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md text-center">
-          <CardContent className="pt-6">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto text-rose-600" />
-            <p className="mt-4 text-muted-foreground">{t('common:loading')}</p>
-          </CardContent>
-        </Card>
-      </div>
+      <Shell>
+        <CardContent className="pt-6 text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto text-rose-600" />
+        </CardContent>
+      </Shell>
     );
   }
 
-  // Error or not found
-  if (!weddingId || weddingError || !wedding) {
+  if (error || !state || !state.hasFlows) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-destructive">{t('common:error')}</CardTitle>
-            <CardDescription>{t('guests:rsvp.notFound')}</CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
+      <Shell>
+        <CardHeader className="text-center">
+          <CardTitle>RSVP not available</CardTitle>
+          <CardDescription>The couple hasn’t opened RSVPs yet. Please check back later.</CardDescription>
+        </CardHeader>
+      </Shell>
     );
   }
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md text-center">
-          <CardHeader>
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <Check className="h-8 w-8 text-green-600" />
-            </div>
-            <CardTitle className="text-2xl">{t('guests:rsvp.thankyou')}</CardTitle>
-            <CardDescription className="text-base">
-              {selectedStatus === 1
-                ? t('guests:rsvp.confirmAttending')
-                : selectedStatus === 2
-                  ? t('guests:rsvp.confirmDeclined')
-                  : t('guests:rsvp.confirmMaybe')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">{t('guests:rsvp.emailConfirmation')}</p>
-          </CardContent>
-        </Card>
-      </div>
+      <Shell>
+        <CardHeader className="text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <Check className="h-8 w-8 text-green-600" />
+          </div>
+          <CardTitle className="text-2xl">Thank you!</CardTitle>
+          <CardDescription className="text-base">Your RSVP has been recorded.</CardDescription>
+        </CardHeader>
+      </Shell>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl">
-        <CardHeader className="text-center space-y-4">
+  // Passcode gate
+  if (!flow) {
+    const handleUnlock = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setPasscodeError(null);
+      try {
+        const result = await unlock.mutateAsync(passcode.trim());
+        setUnlockedFlow(result);
+      } catch {
+        setPasscodeError('That passcode didn’t work. Please check with the couple.');
+      }
+    };
+
+    return (
+      <Shell>
+        <CardHeader className="text-center space-y-3">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
-            <Heart className="h-8 w-8 text-rose-600" />
+            <Lock className="h-8 w-8 text-rose-600" />
           </div>
-          <div>
-            <CardTitle className="text-3xl font-serif mb-2">{wedding.title}</CardTitle>
-            <p className="text-lg text-muted-foreground">{formatDate(wedding.date)}</p>
-            {wedding.location && (
-              <p className="text-sm text-muted-foreground mt-1">{wedding.location}</p>
-            )}
-          </div>
-          <CardDescription className="text-base">
-            {t('guests:rsvp.description')}
-          </CardDescription>
+          <CardTitle className="text-2xl font-serif">Enter your passcode</CardTitle>
+          <CardDescription>You should have received this with your invitation.</CardDescription>
         </CardHeader>
-
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Input */}
-            <div className="space-y-2">
-              <Label htmlFor="rsvp-name">
-                {t('guests:form.name')} <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="rsvp-name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={t('guests:form.namePlaceholder')}
-                required
-                autoComplete="name"
-              />
-            </div>
-
-            {/* Email Input */}
-            <div className="space-y-2">
-              <Label htmlFor="rsvp-email">{t('guests:form.email')}</Label>
-              <Input
-                id="rsvp-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t('guests:form.emailPlaceholder')}
-                autoComplete="email"
-              />
-            </div>
-
-            {/* RSVP Status Selection */}
-            <div className="space-y-3">
-              <Label>{t('guests:rsvp.statusQuestion')}</Label>
-              <div className="grid gap-3 sm:grid-cols-3">
-                <button
-                  type="button"
-                  onClick={() => setSelectedStatus(1)}
-                  className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all hover:border-green-300 hover:bg-green-50 ${
-                    selectedStatus === 1
-                      ? 'border-green-500 bg-green-50 ring-2 ring-green-200'
-                      : 'border-gray-200'
-                  }`}
-                >
-                  <Check className="h-6 w-6 text-green-600" />
-                  <span className="font-medium">{t('guests:rsvpStatus.attending')}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedStatus(2)}
-                  className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all hover:border-red-300 hover:bg-red-50 ${
-                    selectedStatus === 2
-                      ? 'border-red-500 bg-red-50 ring-2 ring-red-200'
-                      : 'border-gray-200'
-                  }`}
-                >
-                  <X className="h-6 w-6 text-red-600" />
-                  <span className="font-medium">{t('guests:rsvpStatus.declined')}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedStatus(3)}
-                  className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all hover:border-blue-300 hover:bg-blue-50 ${
-                    selectedStatus === 3
-                      ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
-                      : 'border-gray-200'
-                  }`}
-                >
-                  <HelpCircle className="h-6 w-6 text-blue-600" />
-                  <span className="font-medium">{t('guests:rsvpStatus.maybe')}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Error Message */}
-            {errorMessage && (
-              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
-                {errorMessage}
-              </div>
-            )}
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              className="w-full"
-              size="lg"
-              disabled={submitRsvp.isPending || !name.trim() || selectedStatus === null}
-            >
-              {submitRsvp.isPending ? t('guests:rsvp.submitting') : t('guests:rsvp.submit')}
+          <form onSubmit={handleUnlock} className="space-y-4">
+            <Input
+              value={passcode}
+              onChange={(e) => setPasscode(e.target.value)}
+              placeholder="Passcode"
+              autoFocus
+              required
+            />
+            {passcodeError && <p className="text-sm text-destructive">{passcodeError}</p>}
+            <Button type="submit" className="w-full" size="lg" disabled={unlock.isPending || !passcode.trim()}>
+              {unlock.isPending ? 'Checking…' : 'Continue'}
             </Button>
           </form>
         </CardContent>
-      </Card>
-    </div>
+      </Shell>
+    );
+  }
+
+  // RSVP form
+  const toggleEvent = (id: string, checked: boolean) =>
+    setAttendingEventIds((ids) => (checked ? [...ids, id] : ids.filter((i) => i !== id)));
+
+  const setAnswer = (qid: string, value: AnswerValue) => setAnswers((a) => ({ ...a, [qid]: value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+
+    // basic required-question check client-side
+    for (const q of flow.questions ?? []) {
+      if (q.required) {
+        const v = answers[q.id!];
+        const empty = v === undefined || v === '' || (Array.isArray(v) && v.length === 0);
+        if (empty) {
+          setFormError(`Please answer: ${q.label}`);
+          return;
+        }
+      }
+    }
+
+    try {
+      await submit.mutateAsync({
+        name: name.trim(),
+        surname: surname.trim(),
+        email: email.trim(),
+        dietary: dietary.trim() || null,
+        status: attending ? 'Attending' : 'Declined',
+        attendingEventIds: attending ? attendingEventIds : [],
+        plusOneAttending: attending && plusOneAttending,
+        plusOneName: plusOneName.trim() || null,
+        plusOneDietary: plusOneDietary.trim() || null,
+        customAnswers: answers as Record<string, unknown>,
+      });
+      setSubmitted(true);
+    } catch (err: unknown) {
+      const status = (err as { response?: { status?: number } })?.response?.status;
+      if (status === 409) {
+        setFormError('An RSVP with this name and email already exists for this wedding.');
+      } else {
+        setFormError('Something went wrong submitting your RSVP. Please try again.');
+      }
+    }
+  };
+
+  return (
+    <Shell>
+      <CardHeader className="text-center space-y-3">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
+          <Heart className="h-8 w-8 text-rose-600" />
+        </div>
+        <CardTitle className="text-3xl font-serif">RSVP</CardTitle>
+        <CardDescription>We can’t wait to celebrate with you. Please fill in your details below.</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Attendance toggle */}
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              type="button"
+              variant={attending ? 'default' : 'outline'}
+              size="lg"
+              onClick={() => setAttending(true)}
+            >
+              I’ll be there
+            </Button>
+            <Button
+              type="button"
+              variant={!attending ? 'default' : 'outline'}
+              size="lg"
+              onClick={() => setAttending(false)}
+            >
+              Can’t make it
+            </Button>
+          </div>
+
+          {/* Base questions */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="r-name">First name <span className="text-destructive">*</span></Label>
+              <Input id="r-name" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="r-surname">Surname <span className="text-destructive">*</span></Label>
+              <Input id="r-surname" value={surname} onChange={(e) => setSurname(e.target.value)} required />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="r-email">Email <span className="text-destructive">*</span></Label>
+            <Input id="r-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="r-dietary">Dietary needs</Label>
+            <Input id="r-dietary" value={dietary} onChange={(e) => setDietary(e.target.value)} placeholder="e.g. vegetarian, allergies" />
+          </div>
+
+          {attending && (
+            <>
+              {/* Events */}
+              {(flow.events ?? []).length > 0 && (
+                <div className="space-y-2">
+                  <Label>Which events will you attend?</Label>
+                  <div className="grid gap-2">
+                    {(flow.events ?? []).map((ev) => (
+                      <label key={ev.id} className="flex items-center gap-2 text-sm rounded-lg border p-3">
+                        <Checkbox
+                          checked={attendingEventIds.includes(ev.id!)}
+                          onCheckedChange={(c) => toggleEvent(ev.id!, !!c)}
+                        />
+                        <span className="font-medium">{ev.name}</span>
+                        {ev.location && <span className="text-muted-foreground">· {ev.location}</span>}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Custom questions */}
+              {(flow.questions ?? []).map((q) => (
+                <DynamicQuestion key={q.id} question={q} value={answers[q.id!]} onChange={(v) => setAnswer(q.id!, v)} />
+              ))}
+
+              {/* Plus one */}
+              {flow.includePlusOne && (
+                <div className="space-y-3 rounded-lg border p-4">
+                  <label className="flex items-center gap-2 font-medium">
+                    <Checkbox checked={plusOneAttending} onCheckedChange={(c) => setPlusOneAttending(!!c)} />
+                    I’m bringing a plus-one
+                  </label>
+                  {plusOneAttending && (
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="po-name">Plus-one name <span className="text-destructive">*</span></Label>
+                        <Input id="po-name" value={plusOneName} onChange={(e) => setPlusOneName(e.target.value)} required />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="po-dietary">Plus-one dietary needs</Label>
+                        <Input id="po-dietary" value={plusOneDietary} onChange={(e) => setPlusOneDietary(e.target.value)} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+
+          {formError && (
+            <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{formError}</div>
+          )}
+
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={submit.isPending || !name.trim() || !surname.trim() || !email.trim()}
+          >
+            {submit.isPending ? 'Submitting…' : 'Submit RSVP'}
+          </Button>
+        </form>
+      </CardContent>
+    </Shell>
   );
 }

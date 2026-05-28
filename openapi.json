@@ -2286,6 +2286,409 @@
         }
       }
     },
+    "/api/weddings/{weddingId}/invitation-flows": {
+      "post": {
+        "tags": [
+          "InvitationFlows"
+        ],
+        "operationId": "CreateInvitationFlow",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInvitationFlowRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationFlowDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "InvitationFlows"
+        ],
+        "operationId": "GetInvitationFlows",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvitationFlowDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weddings/{weddingId}/invitation-flows/{flowId}": {
+      "delete": {
+        "tags": [
+          "InvitationFlows"
+        ],
+        "operationId": "DeleteInvitationFlow",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "InvitationFlows"
+        ],
+        "operationId": "UpdateInvitationFlow",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "flowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInvitationFlowRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationFlowDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/weddings/{weddingId}/rsvp-responses": {
+      "get": {
+        "tags": [
+          "InvitationFlows"
+        ],
+        "operationId": "GetRsvpResponses",
+        "parameters": [
+          {
+            "name": "weddingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "flowId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RsvpResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/invitations/{token}/accept": {
       "post": {
         "tags": [
@@ -2941,6 +3344,216 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/weddings/{slug}/rsvp": {
+      "get": {
+        "tags": [
+          "Rsvp"
+        ],
+        "operationId": "GetRsvpFlowState",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RsvpFlowStateDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/weddings/{slug}/rsvp/submit": {
+      "post": {
+        "tags": [
+          "Rsvp"
+        ],
+        "operationId": "SubmitRsvpFlow",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RsvpFlowSubmitRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RsvpSubmitResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/weddings/{slug}/rsvp/unlock": {
+      "post": {
+        "tags": [
+          "Rsvp"
+        ],
+        "operationId": "UnlockRsvpFlow",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RsvpUnlockRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RsvpFlowPublicDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
             "content": {
               "application/json": {
                 "schema": {
@@ -3946,6 +4559,14 @@
   },
   "components": {
     "schemas": {
+      "AccountType": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "AddGuestsToEventRequestDto": {
         "type": "object",
         "properties": {
@@ -4333,6 +4954,45 @@
         },
         "additionalProperties": false
       },
+      "CreateInvitationFlowRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "passcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "includePlusOne": {
+            "type": "boolean"
+          },
+          "customQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionDefinition"
+            },
+            "nullable": true
+          },
+          "eventIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "customEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomEventDefinition"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateWeddingExpenseRequestDto": {
         "type": "object",
         "properties": {
@@ -4406,6 +5066,29 @@
         "properties": {
           "template": {
             "$ref": "#/components/schemas/WebsiteTemplate"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomEventDefinition": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4610,6 +5293,65 @@
         },
         "additionalProperties": false
       },
+      "InvitationFlowDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "weddingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "passcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "includePlusOne": {
+            "type": "boolean"
+          },
+          "customQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionDefinition"
+            },
+            "nullable": true
+          },
+          "eventIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "customEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomEventDefinition"
+            },
+            "nullable": true
+          },
+          "responseCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "InvitationSendResultDto": {
         "type": "object",
         "properties": {
@@ -4714,6 +5456,33 @@
         },
         "additionalProperties": false
       },
+      "QuestionDefinition": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "$ref": "#/components/schemas/RsvpQuestionType"
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ReferralDto": {
         "type": "object",
         "properties": {
@@ -4797,6 +5566,9 @@
           "password": {
             "type": "string",
             "nullable": true
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/AccountType"
           }
         },
         "additionalProperties": false
@@ -4833,6 +5605,213 @@
         },
         "additionalProperties": false
       },
+      "RsvpEventOptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpFlowPublicDto": {
+        "type": "object",
+        "properties": {
+          "flowId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "weddingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "includePlusOne": {
+            "type": "boolean"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionDefinition"
+            },
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RsvpEventOptionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpFlowStateDto": {
+        "type": "object",
+        "properties": {
+          "hasFlows": {
+            "type": "boolean"
+          },
+          "requiresPasscode": {
+            "type": "boolean"
+          },
+          "flow": {
+            "$ref": "#/components/schemas/RsvpFlowPublicDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpFlowSubmitRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "dietary": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/RsvpResponseStatus"
+          },
+          "attendingEventIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "plusOneAttending": {
+            "type": "boolean"
+          },
+          "plusOneName": {
+            "type": "string",
+            "nullable": true
+          },
+          "plusOneDietary": {
+            "type": "string",
+            "nullable": true
+          },
+          "customAnswers": {
+            "type": "object",
+            "additionalProperties": {},
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpQuestionType": {
+        "enum": [
+          "YesNo",
+          "FreeText",
+          "SingleChoice",
+          "MultiChoice"
+        ],
+        "type": "string"
+      },
+      "RsvpResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "invitationFlowId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "flowName": {
+            "type": "string",
+            "nullable": true
+          },
+          "guestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "dietary": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/RsvpResponseStatus"
+          },
+          "attendingEventIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "attendingEventNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "customAnswers": {
+            "type": "object",
+            "additionalProperties": {},
+            "nullable": true
+          },
+          "isPlusOne": {
+            "type": "boolean"
+          },
+          "plusOneOfGuestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpResponseStatus": {
+        "enum": [
+          "Attending",
+          "Declined"
+        ],
+        "type": "string"
+      },
       "RsvpStatus": {
         "enum": [
           0,
@@ -4856,6 +5835,35 @@
           },
           "rsvpStatus": {
             "$ref": "#/components/schemas/RsvpStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpSubmitResultDto": {
+        "type": "object",
+        "properties": {
+          "responseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "guestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "plusOneGuestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RsvpUnlockRequestDto": {
+        "type": "object",
+        "properties": {
+          "passcode": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4926,6 +5934,45 @@
           },
           "preferredLanguage": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateInvitationFlowRequestDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "passcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "includePlusOne": {
+            "type": "boolean"
+          },
+          "customQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionDefinition"
+            },
+            "nullable": true
+          },
+          "eventIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "customEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomEventDefinition"
+            },
             "nullable": true
           }
         },
@@ -5053,6 +6100,9 @@
           },
           "subscriptionTier": {
             "$ref": "#/components/schemas/SubscriptionTier"
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/AccountType"
           }
         },
         "additionalProperties": false
@@ -5482,6 +6532,9 @@
       "name": "Guests"
     },
     {
+      "name": "InvitationFlows"
+    },
+    {
       "name": "Invitations"
     },
     {
@@ -5492,6 +6545,9 @@
     },
     {
       "name": "Referrals"
+    },
+    {
+      "name": "Rsvp"
     },
     {
       "name": "Website"
