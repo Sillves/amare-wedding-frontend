@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, Plus, Lock, Unlock, Users, Pencil, Trash2, ListChecks } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
@@ -46,6 +46,32 @@ export function InvitationFlowsPage() {
   const [deleting, setDeleting] = useState<InvitationFlowDto | null>(null);
 
   const rsvpUrl = slug ? `${window.location.origin}/rsvp/${slug}` : '';
+
+  // Aggregate attendee headcount per event (plus-ones are their own response, so they count too).
+  const summary = useMemo(() => {
+    const events = new Map<string, { name: string; count: number }>();
+    let attending = 0;
+    let declined = 0;
+    for (const r of responses) {
+      if (r.status === 'Declined') {
+        declined++;
+        continue;
+      }
+      attending++;
+      const ids = r.attendingEventIds ?? [];
+      const names = r.attendingEventNames ?? [];
+      ids.forEach((id, i) => {
+        const entry = events.get(id) ?? { name: names[i] ?? 'Event', count: 0 };
+        entry.count++;
+        events.set(id, entry);
+      });
+    }
+    return {
+      attending,
+      declined,
+      events: [...events.values()].sort((a, b) => b.count - a.count),
+    };
+  }, [responses]);
 
   const handleDelete = async () => {
     if (!deleting) return;
@@ -178,7 +204,34 @@ export function InvitationFlowsPage() {
                 </CardContent>
               </Card>
             ) : (
-              <Card>
+              <div className="space-y-4">
+                {/* Headcount summary */}
+                <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                  <Card>
+                    <CardContent className="py-4">
+                      <p className="text-2xl font-semibold text-green-600">{summary.attending}</p>
+                      <p className="text-xs text-muted-foreground">Attending (incl. plus-ones)</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="py-4">
+                      <p className="text-2xl font-semibold text-muted-foreground">{summary.declined}</p>
+                      <p className="text-xs text-muted-foreground">Declined</p>
+                    </CardContent>
+                  </Card>
+                  {summary.events.map((ev) => (
+                    <Card key={ev.name}>
+                      <CardContent className="py-4">
+                        <p className="text-2xl font-semibold text-primary">{ev.count}</p>
+                        <p className="text-xs text-muted-foreground truncate" title={ev.name}>
+                          {ev.name}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <Card>
                 <CardContent className="p-0">
                   <Table>
                     <TableHeader>
@@ -212,7 +265,8 @@ export function InvitationFlowsPage() {
                     </TableBody>
                   </Table>
                 </CardContent>
-              </Card>
+                </Card>
+              </div>
             )}
           </TabsContent>
         </Tabs>
