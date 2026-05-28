@@ -5270,7 +5270,15 @@
             "type": "string",
             "nullable": true
           },
+          "surname": {
+            "type": "string",
+            "nullable": true
+          },
           "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "dietary": {
             "type": "string",
             "nullable": true
           },
@@ -5289,6 +5297,11 @@
           "weddingId": {
             "type": "string",
             "format": "uuid"
+          },
+          "plusOneOfGuestId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
           }
         },
         "additionalProperties": false

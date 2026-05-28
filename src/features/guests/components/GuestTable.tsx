@@ -234,7 +234,12 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
               )}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-medium truncate">{guest.name || '-'}</span>
+                  <span className="font-medium truncate">
+                    {[guest.name, guest.surname].filter(Boolean).join(' ') || '-'}
+                    {guest.plusOneOfGuestId && (
+                      <Badge variant="outline" className="ml-2">+1</Badge>
+                    )}
+                  </span>
                   <div className="flex items-center gap-2 shrink-0">
                     <Badge variant={getRsvpBadgeVariant(guest.rsvpStatus ?? 0)}>
                       {t(getRsvpStatusKey(guest.rsvpStatus ?? 0))}
@@ -350,7 +355,12 @@ export function GuestTable({ guests, onEdit, onDelete, onSendInvitation, onBulkS
                       />
                     </TableCell>
                   )}
-                  <TableCell className="font-medium">{guest.name || '-'}</TableCell>
+                  <TableCell className="font-medium">
+                    {[guest.name, guest.surname].filter(Boolean).join(' ') || '-'}
+                    {guest.plusOneOfGuestId && (
+                      <Badge variant="outline" className="ml-2">+1</Badge>
+                    )}
+                  </TableCell>
                   <TableCell>{guest.email || '-'}</TableCell>
                   <TableCell>
                     <Badge variant={getRsvpBadgeVariant(guest.rsvpStatus ?? 0)}>

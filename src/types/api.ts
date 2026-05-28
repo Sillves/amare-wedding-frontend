@@ -1078,13 +1078,17 @@ export interface components {
             /** Format: uuid */
             id?: string;
             name?: string | null;
+            surname?: string | null;
             email?: string | null;
+            dietary?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
             preferredLanguage?: string | null;
             /** Format: date-time */
             invitationSentAt?: string | null;
             /** Format: uuid */
             weddingId?: string;
+            /** Format: uuid */
+            plusOneOfGuestId?: string | null;
         };
         InvitationFlowDto: {
             /** Format: uuid */
