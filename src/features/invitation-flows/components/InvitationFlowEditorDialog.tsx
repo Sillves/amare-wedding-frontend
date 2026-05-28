@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { Trash2, Plus } from 'lucide-react';
 import { useCreateInvitationFlow, useUpdateInvitationFlow } from '../hooks/useInvitationFlows';
 import { useErrorToast } from '@/hooks/useErrorToast';
@@ -291,22 +292,30 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
               )}
 
               {customEvents.map((ce) => (
-                <div key={ce.id} className="flex gap-2 items-center">
-                  <Input
-                    value={ce.name ?? ''}
-                    onChange={(e) => updateCustomEvent(ce.id!, { name: e.target.value })}
-                    placeholder="Custom event name"
-                    className="flex-1"
-                  />
-                  <Input
-                    value={ce.location ?? ''}
-                    onChange={(e) => updateCustomEvent(ce.id!, { location: e.target.value })}
-                    placeholder="Location (optional)"
-                    className="flex-1"
-                  />
-                  <Button type="button" variant="ghost" size="icon" onClick={() => removeCustomEvent(ce.id!)}>
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
+                <div key={ce.id} className="rounded-lg border p-3 grid gap-2">
+                  <div className="flex gap-2 items-center">
+                    <Input
+                      value={ce.name ?? ''}
+                      onChange={(e) => updateCustomEvent(ce.id!, { name: e.target.value })}
+                      placeholder="Custom event name"
+                      className="flex-1"
+                    />
+                    <Button type="button" variant="ghost" size="icon" onClick={() => removeCustomEvent(ce.id!)}>
+                      <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    <DateTimePicker
+                      value={ce.startDate ? new Date(ce.startDate) : undefined}
+                      onChange={(d) => updateCustomEvent(ce.id!, { startDate: d ? d.toISOString() : null })}
+                      placeholder="Start time (optional)"
+                    />
+                    <Input
+                      value={ce.location ?? ''}
+                      onChange={(e) => updateCustomEvent(ce.id!, { location: e.target.value })}
+                      placeholder="Location (optional)"
+                    />
+                  </div>
                 </div>
               ))}
               <Button type="button" variant="outline" size="sm" className="w-fit" onClick={addCustomEvent}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 import { Heart, Check, Lock, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +10,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useRsvpFlowState, useUnlockRsvpFlow, useSubmitRsvpFlow } from '@/features/rsvp/hooks/useRsvpFlow';
 import { DynamicQuestion, type AnswerValue } from '@/features/rsvp/components/DynamicQuestion';
 import type { RsvpFlowPublic } from '@/features/rsvp/types';
+
+function formatEventWhen(iso?: string | null): string | null {
+  if (!iso) return null;
+  try {
+    return format(parseISO(iso), 'PPp');
+  } catch {
+    return null;
+  }
+}
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
@@ -225,16 +235,26 @@ export function RsvpPage() {
                 <div className="space-y-2">
                   <Label>Which events will you attend?</Label>
                   <div className="grid gap-2">
-                    {(flow.events ?? []).map((ev) => (
-                      <label key={ev.id} className="flex items-center gap-2 text-sm rounded-lg border p-3">
-                        <Checkbox
-                          checked={attendingEventIds.includes(ev.id!)}
-                          onCheckedChange={(c) => toggleEvent(ev.id!, !!c)}
-                        />
-                        <span className="font-medium">{ev.name}</span>
-                        {ev.location && <span className="text-muted-foreground">· {ev.location}</span>}
-                      </label>
-                    ))}
+                    {(flow.events ?? []).map((ev) => {
+                      const when = formatEventWhen(ev.startDate);
+                      return (
+                        <label key={ev.id} className="flex items-start gap-2 text-sm rounded-lg border p-3">
+                          <Checkbox
+                            checked={attendingEventIds.includes(ev.id!)}
+                            onCheckedChange={(c) => toggleEvent(ev.id!, !!c)}
+                            className="mt-0.5"
+                          />
+                          <span className="flex flex-col">
+                            <span className="font-medium">{ev.name}</span>
+                            {(when || ev.location) && (
+                              <span className="text-muted-foreground text-xs">
+                                {[when, ev.location].filter(Boolean).join(' · ')}
+                              </span>
+                            )}
+                          </span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
               )}
