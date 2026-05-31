@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import { nl, fr, enUS } from 'date-fns/locale';
+import type { Locale } from 'date-fns';
 import { Heart, Check, Lock, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,10 +14,13 @@ import { useRsvpFlowState, useUnlockRsvpFlow, useSubmitRsvpFlow } from '@/featur
 import { DynamicQuestion, type AnswerValue } from '@/features/rsvp/components/DynamicQuestion';
 import type { RsvpFlowPublic } from '@/features/rsvp/types';
 
-function formatEventWhen(iso?: string | null): string | null {
+const DATE_LOCALES: Record<string, Locale> = { nl, fr, en: enUS };
+
+function formatEventWhen(iso: string | null | undefined, lang: string): string | null {
   if (!iso) return null;
   try {
-    return format(parseISO(iso), 'PPp');
+    const locale = DATE_LOCALES[lang.split('-')[0] ?? 'nl'] ?? nl;
+    return format(parseISO(iso), 'PPp', { locale });
   } catch {
     return null;
   }
@@ -30,6 +36,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 
 export function RsvpPage() {
   const { weddingId: slugOrId = '' } = useParams<{ weddingId: string }>();
+  const { t, i18n } = useTranslation('rsvp');
   const { data: state, isLoading, error } = useRsvpFlowState(slugOrId);
   const unlock = useUnlockRsvpFlow(slugOrId);
   const submit = useSubmitRsvpFlow(slugOrId);
@@ -69,8 +76,8 @@ export function RsvpPage() {
     return (
       <Shell>
         <CardHeader className="text-center">
-          <CardTitle>RSVP not available</CardTitle>
-          <CardDescription>The couple hasn’t opened RSVPs yet. Please check back later.</CardDescription>
+          <CardTitle>{t('public.notAvailable.title')}</CardTitle>
+          <CardDescription>{t('public.notAvailable.description')}</CardDescription>
         </CardHeader>
       </Shell>
     );
@@ -83,8 +90,8 @@ export function RsvpPage() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
             <Check className="h-8 w-8 text-green-600" />
           </div>
-          <CardTitle className="text-2xl">Thank you!</CardTitle>
-          <CardDescription className="text-base">Your RSVP has been recorded.</CardDescription>
+          <CardTitle className="text-2xl">{t('public.thankYou.title')}</CardTitle>
+          <CardDescription className="text-base">{t('public.thankYou.description')}</CardDescription>
         </CardHeader>
       </Shell>
     );
@@ -99,7 +106,7 @@ export function RsvpPage() {
         const result = await unlock.mutateAsync(passcode.trim());
         setUnlockedFlow(result);
       } catch {
-        setPasscodeError('That passcode didn’t work. Please check with the couple.');
+        setPasscodeError(t('public.gate.error'));
       }
     };
 
@@ -109,21 +116,21 @@ export function RsvpPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
             <Lock className="h-8 w-8 text-rose-600" />
           </div>
-          <CardTitle className="text-2xl font-serif">Enter your passcode</CardTitle>
-          <CardDescription>You should have received this with your invitation.</CardDescription>
+          <CardTitle className="text-2xl font-serif">{t('public.gate.title')}</CardTitle>
+          <CardDescription>{t('public.gate.description')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleUnlock} className="space-y-4">
             <Input
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}
-              placeholder="Passcode"
+              placeholder={t('public.gate.placeholder')}
               autoFocus
               required
             />
             {passcodeError && <p className="text-sm text-destructive">{passcodeError}</p>}
             <Button type="submit" className="w-full" size="lg" disabled={unlock.isPending || !passcode.trim()}>
-              {unlock.isPending ? 'Checking…' : 'Continue'}
+              {unlock.isPending ? t('public.gate.submitting') : t('public.gate.submit')}
             </Button>
           </form>
         </CardContent>
@@ -153,7 +160,7 @@ export function RsvpPage() {
           const v = answers[q.id!];
           const empty = v === undefined || v === '' || (Array.isArray(v) && v.length === 0);
           if (empty) {
-            setFormError(`Please answer: ${q.label}`);
+            setFormError(t('public.form.errors.requiredQuestion', { label: q.label }));
             return;
           }
         }
@@ -177,9 +184,9 @@ export function RsvpPage() {
     } catch (err: unknown) {
       const status = (err as { response?: { status?: number } })?.response?.status;
       if (status === 409) {
-        setFormError('An RSVP with this name and email already exists for this wedding.');
+        setFormError(t('public.form.errors.duplicate'));
       } else {
-        setFormError('Something went wrong submitting your RSVP. Please try again.');
+        setFormError(t('public.form.errors.generic'));
       }
     }
   };
@@ -190,8 +197,8 @@ export function RsvpPage() {
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
           <Heart className="h-8 w-8 text-rose-600" />
         </div>
-        <CardTitle className="text-3xl font-serif">RSVP</CardTitle>
-        <CardDescription>We can’t wait to celebrate with you. Please fill in your details below.</CardDescription>
+        <CardTitle className="text-3xl font-serif">{t('public.form.title')}</CardTitle>
+        <CardDescription>{t('public.form.description')}</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -199,33 +206,31 @@ export function RsvpPage() {
           {/* Base questions */}
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="r-name">First name <span className="text-destructive">*</span></Label>
+              <Label htmlFor="r-name">{t('public.form.firstName')} <span className="text-destructive">*</span></Label>
               <Input id="r-name" value={name} onChange={(e) => setName(e.target.value)} required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="r-surname">Surname <span className="text-destructive">*</span></Label>
+              <Label htmlFor="r-surname">{t('public.form.surname')} <span className="text-destructive">*</span></Label>
               <Input id="r-surname" value={surname} onChange={(e) => setSurname(e.target.value)} required />
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="r-email">Email <span className="text-destructive">*</span></Label>
+            <Label htmlFor="r-email">{t('public.form.email')} <span className="text-destructive">*</span></Label>
             <Input id="r-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="r-dietary">Dietary needs</Label>
-            <Input id="r-dietary" value={dietary} onChange={(e) => setDietary(e.target.value)} placeholder="e.g. vegetarian, allergies" />
+            <Label htmlFor="r-dietary">{t('public.form.dietary')}</Label>
+            <Input id="r-dietary" value={dietary} onChange={(e) => setDietary(e.target.value)} placeholder={t('public.form.dietaryPlaceholder')} />
           </div>
 
           {/* Presence: per-event selection when the flow has events, else an explicit yes/no */}
           {hasEvents ? (
             <div className="space-y-2">
-              <Label>Which events will you attend?</Label>
-              <p className="text-xs text-muted-foreground">
-                Select the events you’ll attend. Leave them all unchecked if you can’t make it.
-              </p>
+              <Label>{t('public.form.eventsLabel')}</Label>
+              <p className="text-xs text-muted-foreground">{t('public.form.eventsHint')}</p>
               <div className="grid gap-2">
                 {(flow.events ?? []).map((ev) => {
-                      const when = formatEventWhen(ev.startDate);
+                      const when = formatEventWhen(ev.startDate, i18n.language);
                       return (
                         <label key={ev.id} className="flex items-start gap-2 text-sm rounded-lg border p-3">
                           <Checkbox
@@ -254,7 +259,7 @@ export function RsvpPage() {
                   size="lg"
                   onClick={() => setWillAttend(true)}
                 >
-                  I’ll be there
+                  {t('public.form.willAttend')}
                 </Button>
                 <Button
                   type="button"
@@ -262,7 +267,7 @@ export function RsvpPage() {
                   size="lg"
                   onClick={() => setWillAttend(false)}
                 >
-                  Can’t make it
+                  {t('public.form.willDecline')}
                 </Button>
               </div>
             )}
@@ -279,16 +284,16 @@ export function RsvpPage() {
                 <div className="space-y-3 rounded-lg border p-4">
                   <label className="flex items-center gap-2 font-medium">
                     <Checkbox checked={plusOneAttending} onCheckedChange={(c) => setPlusOneAttending(!!c)} />
-                    I’m bringing a plus-one
+                    {t('public.form.plusOneCheckbox')}
                   </label>
                   {plusOneAttending && (
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="po-name">Plus-one name <span className="text-destructive">*</span></Label>
+                        <Label htmlFor="po-name">{t('public.form.plusOneName')} <span className="text-destructive">*</span></Label>
                         <Input id="po-name" value={plusOneName} onChange={(e) => setPlusOneName(e.target.value)} required />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="po-dietary">Plus-one dietary needs</Label>
+                        <Label htmlFor="po-dietary">{t('public.form.plusOneDietary')}</Label>
                         <Input id="po-dietary" value={plusOneDietary} onChange={(e) => setPlusOneDietary(e.target.value)} />
                       </div>
                     </div>
@@ -308,7 +313,7 @@ export function RsvpPage() {
             size="lg"
             disabled={submit.isPending || !name.trim() || !surname.trim() || !email.trim()}
           >
-            {submit.isPending ? 'Submitting…' : 'Submit RSVP'}
+            {submit.isPending ? t('public.form.submitting') : t('public.form.submit')}
           </Button>
         </form>
       </CardContent>

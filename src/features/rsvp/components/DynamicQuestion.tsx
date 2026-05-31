@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function DynamicQuestion({ question, value, onChange }: Props) {
+  const { t } = useTranslation('rsvp');
   return (
     <div className="space-y-2">
       <Label>
@@ -36,14 +38,14 @@ export function DynamicQuestion({ question, value, onChange }: Props) {
             variant={value === true ? 'default' : 'outline'}
             onClick={() => onChange(true)}
           >
-            Yes
+            {t('public.yes')}
           </Button>
           <Button
             type="button"
             variant={value === false ? 'default' : 'outline'}
             onClick={() => onChange(false)}
           >
-            No
+            {t('public.no')}
           </Button>
         </div>
       )}

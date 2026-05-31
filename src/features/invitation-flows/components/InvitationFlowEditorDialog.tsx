@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -40,16 +41,16 @@ interface Props {
   children: React.ReactNode;
 }
 
-const TYPE_LABELS: Record<RsvpQuestionType, string> = {
-  YesNo: 'Yes / No',
-  FreeText: 'Free text',
-  SingleChoice: 'Pick one',
-  MultiChoice: 'Pick multiple',
-};
-
 const newId = () => crypto.randomUUID();
 
 export function InvitationFlowEditorDialog({ weddingId, events, flow, children }: Props) {
+  const { t } = useTranslation('rsvp');
+  const typeLabels: Record<RsvpQuestionType, string> = {
+    YesNo: t('editor.questions.types.YesNo'),
+    FreeText: t('editor.questions.types.FreeText'),
+    SingleChoice: t('editor.questions.types.SingleChoice'),
+    MultiChoice: t('editor.questions.types.MultiChoice'),
+  };
   const isEdit = !!flow;
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
@@ -116,10 +117,10 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
     try {
       if (isEdit) {
         await update.mutateAsync({ flowId: flow!.id!, data: payload });
-        showSuccess('Flow updated');
+        showSuccess(t('editor.toasts.updated'));
       } else {
         await create.mutateAsync(payload);
-        showSuccess('Flow created');
+        showSuccess(t('editor.toasts.created'));
       }
       setOpen(false);
     } catch (err) {
@@ -133,44 +134,39 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
       <DialogContent className="sm:max-w-[680px] max-h-[85vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{isEdit ? 'Edit invitation flow' : 'New invitation flow'}</DialogTitle>
-            <DialogDescription>
-              A flow defines what guests see when they RSVP. Either create one open flow (no passcode) or
-              several passcode-protected flows.
-            </DialogDescription>
+            <DialogTitle>{isEdit ? t('editor.titleEdit') : t('editor.titleNew')}</DialogTitle>
+            <DialogDescription>{t('editor.description')}</DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-5 py-4">
             <div className="grid gap-2">
               <Label htmlFor="flow-name">
-                Name (only you see this) <span className="text-destructive">*</span>
+                {t('editor.fields.name')} <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="flow-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Family, Evening guests"
+                placeholder={t('editor.fields.namePlaceholder')}
                 required
               />
             </div>
 
             <div className="flex items-center justify-between rounded-lg border p-3">
               <div>
-                <Label>Require a passcode</Label>
-                <p className="text-xs text-muted-foreground">
-                  Guests must enter this code before they can RSVP.
-                </p>
+                <Label>{t('editor.fields.requirePasscode')}</Label>
+                <p className="text-xs text-muted-foreground">{t('editor.fields.requirePasscodeHelp')}</p>
               </div>
               <Switch checked={usePasscode} onCheckedChange={setUsePasscode} />
             </div>
             {usePasscode && (
               <div className="grid gap-2">
-                <Label htmlFor="flow-passcode">Passcode</Label>
+                <Label htmlFor="flow-passcode">{t('editor.fields.passcodeLabel')}</Label>
                 <Input
                   id="flow-passcode"
                   value={passcode}
                   onChange={(e) => setPasscode(e.target.value)}
-                  placeholder="e.g. lovestory2026"
+                  placeholder={t('editor.fields.passcodePlaceholder')}
                   required
                 />
               </div>
@@ -178,8 +174,8 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
 
             <div className="flex items-center justify-between rounded-lg border p-3">
               <div>
-                <Label>Allow a plus-one</Label>
-                <p className="text-xs text-muted-foreground">Guests can add one extra attendee.</p>
+                <Label>{t('editor.fields.plusOne')}</Label>
+                <p className="text-xs text-muted-foreground">{t('editor.fields.plusOneHelp')}</p>
               </div>
               <Switch checked={includePlusOne} onCheckedChange={setIncludePlusOne} />
             </div>
@@ -187,15 +183,13 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
             {/* Custom questions */}
             <div className="grid gap-3">
               <div className="flex items-center justify-between">
-                <Label>Custom questions</Label>
+                <Label>{t('editor.questions.title')}</Label>
                 <Button type="button" variant="outline" size="sm" onClick={addQuestion}>
-                  <Plus className="h-4 w-4 mr-1" /> Add question
+                  <Plus className="h-4 w-4 mr-1" /> {t('editor.questions.add')}
                 </Button>
               </div>
               {questions.length === 0 && (
-                <p className="text-xs text-muted-foreground">
-                  Only the base questions (name, surname, email, dietary) will be shown.
-                </p>
+                <p className="text-xs text-muted-foreground">{t('editor.questions.emptyHint')}</p>
               )}
               {questions.map((q) => {
                 const needsOptions = q.type === 'SingleChoice' || q.type === 'MultiChoice';
@@ -205,7 +199,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                       <Input
                         value={q.label ?? ''}
                         onChange={(e) => updateQuestion(q.id!, { label: e.target.value })}
-                        placeholder="Question label"
+                        placeholder={t('editor.questions.labelPlaceholder')}
                         className="flex-1"
                       />
                       <Select value={q.type} onValueChange={(v) => onTypeChange(q.id!, v as RsvpQuestionType)}>
@@ -213,9 +207,9 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          {QUESTION_TYPES.map((t) => (
-                            <SelectItem key={t} value={t}>
-                              {TYPE_LABELS[t]}
+                          {QUESTION_TYPES.map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {typeLabels[type]}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -236,7 +230,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                                 options[idx] = e.target.value;
                                 updateQuestion(q.id!, { options });
                               }}
-                              placeholder={`Option ${idx + 1}`}
+                              placeholder={t('editor.questions.optionPlaceholder', { n: idx + 1 })}
                             />
                             <Button
                               type="button"
@@ -257,7 +251,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                           className="w-fit"
                           onClick={() => updateQuestion(q.id!, { options: [...(q.options ?? []), ''] })}
                         >
-                          <Plus className="h-3 w-3 mr-1" /> Add option
+                          <Plus className="h-3 w-3 mr-1" /> {t('editor.questions.addOption')}
                         </Button>
                       </div>
                     )}
@@ -267,7 +261,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                         checked={q.required}
                         onCheckedChange={(c) => updateQuestion(q.id!, { required: !!c })}
                       />
-                      Required
+                      {t('editor.questions.required')}
                     </label>
                   </div>
                 );
@@ -276,7 +270,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
 
             {/* Events */}
             <div className="grid gap-3">
-              <Label>Events guests can RSVP to</Label>
+              <Label>{t('editor.events.title')}</Label>
               {events.length > 0 && (
                 <div className="grid gap-2">
                   {events.map((ev) => (
@@ -297,7 +291,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                     <Input
                       value={ce.name ?? ''}
                       onChange={(e) => updateCustomEvent(ce.id!, { name: e.target.value })}
-                      placeholder="Custom event name"
+                      placeholder={t('editor.events.customNamePlaceholder')}
                       className="flex-1"
                     />
                     <Button type="button" variant="ghost" size="icon" onClick={() => removeCustomEvent(ce.id!)}>
@@ -308,28 +302,28 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                     <DateTimePicker
                       value={ce.startDate ? new Date(ce.startDate) : undefined}
                       onChange={(d) => updateCustomEvent(ce.id!, { startDate: d ? d.toISOString() : null })}
-                      placeholder="Start time (optional)"
+                      placeholder={t('editor.events.customTimePlaceholder')}
                     />
                     <Input
                       value={ce.location ?? ''}
                       onChange={(e) => updateCustomEvent(ce.id!, { location: e.target.value })}
-                      placeholder="Location (optional)"
+                      placeholder={t('editor.events.customLocationPlaceholder')}
                     />
                   </div>
                 </div>
               ))}
               <Button type="button" variant="outline" size="sm" className="w-fit" onClick={addCustomEvent}>
-                <Plus className="h-4 w-4 mr-1" /> Add custom event
+                <Plus className="h-4 w-4 mr-1" /> {t('editor.events.addCustom')}
               </Button>
             </div>
           </div>
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-              Cancel
+              {t('editor.actions.cancel')}
             </Button>
             <Button type="submit" disabled={isPending || !name.trim()}>
-              {isPending ? 'Saving…' : isEdit ? 'Save changes' : 'Create flow'}
+              {isPending ? t('editor.actions.saving') : isEdit ? t('editor.actions.save') : t('editor.actions.create')}
             </Button>
           </DialogFooter>
         </form>

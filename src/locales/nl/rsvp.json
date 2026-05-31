@@ -1,0 +1,144 @@
+{
+  "planner": {
+    "title": "RSVP & uitnodigingen",
+    "subtitle": "Bouw de formulieren die je gasten invullen en bekijk hun antwoorden.",
+    "newFlow": "Nieuwe uitnodiging",
+    "publicLink": "Publieke RSVP-link:",
+    "loading": "Bezig met laden…",
+    "tabs": {
+      "flows": "Uitnodigingen ({{count}})",
+      "responses": "Antwoorden ({{count}})"
+    },
+    "empty": {
+      "flows": "Nog geen uitnodigingen. Maak er een om gasten te laten RSVP'en.",
+      "responses": "Nog geen antwoorden."
+    },
+    "badges": {
+      "open": "Open",
+      "plusOne": "Plus-één toegestaan",
+      "customQuestions_one": "{{count}} eigen vraag",
+      "customQuestions_other": "{{count}} eigen vragen",
+      "events_one": "{{count}} evenement",
+      "events_other": "{{count}} evenementen",
+      "responses_one": "{{count}} antwoord",
+      "responses_other": "{{count}} antwoorden"
+    },
+    "summary": {
+      "attending": "Komt (incl. plus-één)",
+      "declined": "Komt niet"
+    },
+    "table": {
+      "name": "Naam",
+      "email": "E-mailadres",
+      "flow": "Uitnodiging",
+      "status": "Status",
+      "events": "Evenementen",
+      "dietary": "Dieet"
+    },
+    "status": {
+      "attending": "Komt",
+      "declined": "Komt niet"
+    },
+    "delete": {
+      "title": "\"{{name}}\" verwijderen?",
+      "description": "Dit verwijdert de uitnodiging en al {{count}} antwoorden. Dit kan niet ongedaan gemaakt worden.",
+      "cancel": "Annuleren",
+      "confirm": "Verwijderen",
+      "pending": "Bezig met verwijderen…",
+      "success": "Uitnodiging verwijderd"
+    }
+  },
+  "editor": {
+    "titleNew": "Nieuwe RSVP-uitnodiging",
+    "titleEdit": "RSVP-uitnodiging bewerken",
+    "description": "Een uitnodiging bepaalt wat gasten zien als ze RSVP'en. Maak één open uitnodiging (zonder code) of meerdere uitnodigingen met een toegangscode.",
+    "fields": {
+      "name": "Naam (alleen jij ziet dit)",
+      "namePlaceholder": "bijv. Familie, Avondgasten",
+      "passcodeLabel": "Toegangscode",
+      "passcodePlaceholder": "bijv. trouw2026",
+      "requirePasscode": "Toegangscode vereisen",
+      "requirePasscodeHelp": "Gasten moeten deze code invoeren voordat ze kunnen RSVP'en.",
+      "plusOne": "Plus-één toestaan",
+      "plusOneHelp": "Gasten kunnen één extra persoon meebrengen."
+    },
+    "questions": {
+      "title": "Eigen vragen",
+      "add": "Vraag toevoegen",
+      "emptyHint": "Alleen de basisvragen (naam, achternaam, e-mail, dieet) worden getoond.",
+      "labelPlaceholder": "Tekst van de vraag",
+      "addOption": "Optie toevoegen",
+      "optionPlaceholder": "Optie {{n}}",
+      "required": "Verplicht",
+      "types": {
+        "YesNo": "Ja / Nee",
+        "FreeText": "Vrij tekstveld",
+        "SingleChoice": "Eén keuze",
+        "MultiChoice": "Meerdere keuzes"
+      }
+    },
+    "events": {
+      "title": "Evenementen waar gasten op kunnen reageren",
+      "customNamePlaceholder": "Naam van het evenement",
+      "customTimePlaceholder": "Starttijd (optioneel)",
+      "customLocationPlaceholder": "Locatie (optioneel)",
+      "addCustom": "Eigen evenement toevoegen"
+    },
+    "actions": {
+      "cancel": "Annuleren",
+      "save": "Wijzigingen opslaan",
+      "create": "Uitnodiging aanmaken",
+      "saving": "Bezig met opslaan…"
+    },
+    "toasts": {
+      "created": "Uitnodiging aangemaakt",
+      "updated": "Uitnodiging bijgewerkt"
+    }
+  },
+  "public": {
+    "notAvailable": {
+      "title": "RSVP nog niet beschikbaar",
+      "description": "Het bruidspaar heeft de RSVP nog niet opengezet. Kom later terug."
+    },
+    "thankYou": {
+      "title": "Bedankt!",
+      "description": "Je RSVP is geregistreerd."
+    },
+    "gate": {
+      "title": "Voer je toegangscode in",
+      "description": "Je hebt deze ontvangen bij je uitnodiging.",
+      "placeholder": "Toegangscode",
+      "submit": "Doorgaan",
+      "submitting": "Bezig met controleren…",
+      "error": "Die toegangscode klopt niet. Vraag het bruidspaar."
+    },
+    "form": {
+      "title": "RSVP",
+      "description": "We kijken er naar uit om met jou te vieren. Vul hieronder je gegevens in.",
+      "willAttend": "Ik kom",
+      "willDecline": "Ik kan niet komen",
+      "firstName": "Voornaam",
+      "surname": "Achternaam",
+      "email": "E-mailadres",
+      "dietary": "Dieetwensen",
+      "dietaryPlaceholder": "bijv. vegetarisch, allergieën",
+      "eventsLabel": "Bij welke evenementen ben je aanwezig?",
+      "eventsHint": "Vink de evenementen aan die je bijwoont. Laat alles leeg als je niet kan komen.",
+      "plusOneCheckbox": "Ik breng een plus-één mee",
+      "plusOneName": "Naam plus-één",
+      "plusOneDietary": "Dieetwensen plus-één",
+      "submit": "RSVP versturen",
+      "submitting": "Bezig met versturen…",
+      "errors": {
+        "duplicate": "Er bestaat al een RSVP met deze naam en dit e-mailadres voor deze bruiloft.",
+        "generic": "Er ging iets mis bij het versturen van je RSVP. Probeer het opnieuw.",
+        "requiredQuestion": "Beantwoord: {{label}}"
+      }
+    },
+    "yes": "Ja",
+    "no": "Nee"
+  },
+  "dashboard": {
+    "quickAction": "RSVP & uitnodigingen"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "planner": {
+    "title": "RSVP & invitations",
+    "subtitle": "Créez les formulaires que vos invités remplissent et consultez leurs réponses.",
+    "newFlow": "Nouvelle invitation",
+    "publicLink": "Lien RSVP public :",
+    "loading": "Chargement…",
+    "tabs": {
+      "flows": "Invitations ({{count}})",
+      "responses": "Réponses ({{count}})"
+    },
+    "empty": {
+      "flows": "Pas encore d’invitation. Créez-en une pour que vos invités puissent répondre.",
+      "responses": "Pas encore de réponses."
+    },
+    "badges": {
+      "open": "Ouverte",
+      "plusOne": "Plus-un autorisé",
+      "customQuestions_one": "{{count}} question personnalisée",
+      "customQuestions_other": "{{count}} questions personnalisées",
+      "events_one": "{{count}} événement",
+      "events_other": "{{count}} événements",
+      "responses_one": "{{count}} réponse",
+      "responses_other": "{{count}} réponses"
+    },
+    "summary": {
+      "attending": "Présent(s) (avec plus-un)",
+      "declined": "Ne vient pas"
+    },
+    "table": {
+      "name": "Nom",
+      "email": "E-mail",
+      "flow": "Invitation",
+      "status": "Statut",
+      "events": "Événements",
+      "dietary": "Régime"
+    },
+    "status": {
+      "attending": "Présent",
+      "declined": "Absent"
+    },
+    "delete": {
+      "title": "Supprimer « {{name}} » ?",
+      "description": "Ceci supprime l’invitation et l’ensemble de ses {{count}} réponses. Cette action est définitive.",
+      "cancel": "Annuler",
+      "confirm": "Supprimer",
+      "pending": "Suppression…",
+      "success": "Invitation supprimée"
+    }
+  },
+  "editor": {
+    "titleNew": "Nouvelle invitation RSVP",
+    "titleEdit": "Modifier l’invitation RSVP",
+    "description": "Une invitation définit ce que voient vos invités lorsqu’ils répondent. Créez une invitation ouverte (sans code) ou plusieurs invitations protégées par un code.",
+    "fields": {
+      "name": "Nom (visible par vous uniquement)",
+      "namePlaceholder": "ex. Famille, Invités du soir",
+      "passcodeLabel": "Code d’accès",
+      "passcodePlaceholder": "ex. mariage2026",
+      "requirePasscode": "Exiger un code d’accès",
+      "requirePasscodeHelp": "Les invités doivent saisir ce code avant de pouvoir répondre.",
+      "plusOne": "Autoriser un plus-un",
+      "plusOneHelp": "Les invités peuvent ajouter un accompagnant."
+    },
+    "questions": {
+      "title": "Questions personnalisées",
+      "add": "Ajouter une question",
+      "emptyHint": "Seules les questions de base (prénom, nom, e-mail, régime) seront affichées.",
+      "labelPlaceholder": "Intitulé de la question",
+      "addOption": "Ajouter une option",
+      "optionPlaceholder": "Option {{n}}",
+      "required": "Obligatoire",
+      "types": {
+        "YesNo": "Oui / Non",
+        "FreeText": "Texte libre",
+        "SingleChoice": "Choix unique",
+        "MultiChoice": "Choix multiple"
+      }
+    },
+    "events": {
+      "title": "Événements auxquels les invités peuvent répondre",
+      "customNamePlaceholder": "Nom de l’événement",
+      "customTimePlaceholder": "Heure de début (facultatif)",
+      "customLocationPlaceholder": "Lieu (facultatif)",
+      "addCustom": "Ajouter un événement personnalisé"
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "save": "Enregistrer les modifications",
+      "create": "Créer l’invitation",
+      "saving": "Enregistrement…"
+    },
+    "toasts": {
+      "created": "Invitation créée",
+      "updated": "Invitation mise à jour"
+    }
+  },
+  "public": {
+    "notAvailable": {
+      "title": "RSVP indisponible",
+      "description": "Les mariés n’ont pas encore ouvert les réponses. Revenez plus tard."
+    },
+    "thankYou": {
+      "title": "Merci !",
+      "description": "Votre réponse a bien été enregistrée."
+    },
+    "gate": {
+      "title": "Saisissez votre code d’accès",
+      "description": "Vous l’avez reçu avec votre invitation.",
+      "placeholder": "Code d’accès",
+      "submit": "Continuer",
+      "submitting": "Vérification…",
+      "error": "Ce code ne fonctionne pas. Demandez-le aux mariés."
+    },
+    "form": {
+      "title": "RSVP",
+      "description": "Nous avons hâte de célébrer avec vous. Merci de remplir vos informations ci-dessous.",
+      "willAttend": "Je serai présent",
+      "willDecline": "Je ne pourrai pas venir",
+      "firstName": "Prénom",
+      "surname": "Nom",
+      "email": "E-mail",
+      "dietary": "Régime alimentaire",
+      "dietaryPlaceholder": "ex. végétarien, allergies",
+      "eventsLabel": "À quels événements assistez-vous ?",
+      "eventsHint": "Cochez les événements auxquels vous participerez. Laissez tout décoché si vous ne pouvez pas venir.",
+      "plusOneCheckbox": "Je viens avec un plus-un",
+      "plusOneName": "Nom du plus-un",
+      "plusOneDietary": "Régime du plus-un",
+      "submit": "Envoyer ma réponse",
+      "submitting": "Envoi…",
+      "errors": {
+        "duplicate": "Une réponse avec ce nom et cet e-mail existe déjà pour ce mariage.",
+        "generic": "Une erreur est survenue lors de l’envoi. Veuillez réessayer.",
+        "requiredQuestion": "Répondez à : {{label}}"
+      }
+    },
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "dashboard": {
+    "quickAction": "RSVP & invitations"
+  }
+}

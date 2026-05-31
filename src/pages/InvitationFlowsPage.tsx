@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Heart, Plus, Lock, Unlock, Users, Pencil, Trash2, ListChecks } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
@@ -29,6 +30,7 @@ import { useErrorToast } from '@/hooks/useErrorToast';
 import type { InvitationFlowDto } from '@/features/rsvp/types';
 
 export function InvitationFlowsPage() {
+  const { t } = useTranslation('rsvp');
   const navigate = useNavigate();
   const { user } = useAuth();
   const logout = useLogout();
@@ -77,7 +79,7 @@ export function InvitationFlowsPage() {
     if (!deleting) return;
     try {
       await deleteFlow.mutateAsync({ flowId: deleting.id!, force: true });
-      showSuccess('Flow deleted');
+      showSuccess(t('planner.delete.success'));
       setDeleting(null);
     } catch (err) {
       showError(err);
@@ -108,7 +110,7 @@ export function InvitationFlowsPage() {
           <div className="flex items-center gap-4">
             <span className="hidden md:inline text-sm text-muted-foreground">{user?.firstName}</span>
             <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">
-              Log out
+              {t('auth:logout')}
             </Button>
           </div>
         </div>
@@ -117,12 +119,12 @@ export function InvitationFlowsPage() {
       <main className="container mx-auto px-4 py-8 space-y-6">
         <section className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
-            <h1 className="text-4xl font-serif font-semibold">RSVP &amp; invitations</h1>
-            <p className="text-muted-foreground">Build the forms your guests fill in and review their answers.</p>
+            <h1 className="text-4xl font-serif font-semibold">{t('planner.title')}</h1>
+            <p className="text-muted-foreground">{t('planner.subtitle')}</p>
           </div>
           <InvitationFlowEditorDialog weddingId={weddingId} events={events}>
             <Button className="rounded-xl shadow-lg shadow-primary/25">
-              <Plus className="h-4 w-4 mr-2" /> New flow
+              <Plus className="h-4 w-4 mr-2" /> {t('planner.newFlow')}
             </Button>
           </InvitationFlowEditorDialog>
         </section>
@@ -130,7 +132,7 @@ export function InvitationFlowsPage() {
         {rsvpUrl && (
           <Card className="bg-muted/40">
             <CardContent className="py-4 text-sm">
-              <span className="text-muted-foreground">Public RSVP link: </span>
+              <span className="text-muted-foreground">{t('planner.publicLink')} </span>
               <a href={rsvpUrl} target="_blank" rel="noreferrer" className="font-medium text-primary underline">
                 {rsvpUrl}
               </a>
@@ -140,17 +142,17 @@ export function InvitationFlowsPage() {
 
         <Tabs defaultValue="flows">
           <TabsList>
-            <TabsTrigger value="flows">Flows ({flows.length})</TabsTrigger>
-            <TabsTrigger value="responses">Responses ({responses.length})</TabsTrigger>
+            <TabsTrigger value="flows">{t('planner.tabs.flows', { count: flows.length })}</TabsTrigger>
+            <TabsTrigger value="responses">{t('planner.tabs.responses', { count: responses.length })}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="flows" className="space-y-4 pt-4">
             {flowsLoading ? (
-              <p className="text-muted-foreground">Loading…</p>
+              <p className="text-muted-foreground">{t('planner.loading')}</p>
             ) : flows.length === 0 ? (
               <Card className="border-dashed">
                 <CardContent className="py-10 text-center text-muted-foreground">
-                  No flows yet. Create one to let guests RSVP.
+                  {t('planner.empty.flows')}
                 </CardContent>
               </Card>
             ) : (
@@ -165,7 +167,7 @@ export function InvitationFlowsPage() {
                         </Badge>
                       ) : (
                         <Badge variant="outline" className="gap-1">
-                          <Unlock className="h-3 w-3" /> Open
+                          <Unlock className="h-3 w-3" /> {t('planner.badges.open')}
                         </Badge>
                       )}
                     </CardTitle>
@@ -181,13 +183,13 @@ export function InvitationFlowsPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-                    {flow.includePlusOne && <Badge variant="outline">Plus-one allowed</Badge>}
-                    <Badge variant="outline">{flow.customQuestions?.length ?? 0} custom questions</Badge>
+                    {flow.includePlusOne && <Badge variant="outline">{t('planner.badges.plusOne')}</Badge>}
+                    <Badge variant="outline">{t('planner.badges.customQuestions', { count: flow.customQuestions?.length ?? 0 })}</Badge>
                     <Badge variant="outline">
-                      {(flow.eventIds?.length ?? 0) + (flow.customEvents?.length ?? 0)} events
+                      {t('planner.badges.events', { count: (flow.eventIds?.length ?? 0) + (flow.customEvents?.length ?? 0) })}
                     </Badge>
                     <Badge variant="outline" className="gap-1">
-                      <Users className="h-3 w-3" /> {flow.responseCount ?? 0} responses
+                      <Users className="h-3 w-3" /> {t('planner.badges.responses', { count: flow.responseCount ?? 0 })}
                     </Badge>
                   </CardContent>
                 </Card>
@@ -200,7 +202,7 @@ export function InvitationFlowsPage() {
               <Card className="border-dashed">
                 <CardContent className="py-10 text-center text-muted-foreground">
                   <ListChecks className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                  No responses yet.
+                  {t('planner.empty.responses')}
                 </CardContent>
               </Card>
             ) : (
@@ -210,13 +212,13 @@ export function InvitationFlowsPage() {
                   <Card>
                     <CardContent className="py-4">
                       <p className="text-2xl font-semibold text-green-600">{summary.attending}</p>
-                      <p className="text-xs text-muted-foreground">Attending (incl. plus-ones)</p>
+                      <p className="text-xs text-muted-foreground">{t('planner.summary.attending')}</p>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="py-4">
                       <p className="text-2xl font-semibold text-muted-foreground">{summary.declined}</p>
-                      <p className="text-xs text-muted-foreground">Declined</p>
+                      <p className="text-xs text-muted-foreground">{t('planner.summary.declined')}</p>
                     </CardContent>
                   </Card>
                   {summary.events.map((ev) => (
@@ -236,12 +238,12 @@ export function InvitationFlowsPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Flow</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Events</TableHead>
-                        <TableHead>Dietary</TableHead>
+                        <TableHead>{t('planner.table.name')}</TableHead>
+                        <TableHead>{t('planner.table.email')}</TableHead>
+                        <TableHead>{t('planner.table.flow')}</TableHead>
+                        <TableHead>{t('planner.table.status')}</TableHead>
+                        <TableHead>{t('planner.table.events')}</TableHead>
+                        <TableHead>{t('planner.table.dietary')}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -254,7 +256,9 @@ export function InvitationFlowsPage() {
                           <TableCell className="text-muted-foreground">{r.email}</TableCell>
                           <TableCell>{r.flowName}</TableCell>
                           <TableCell>
-                            <Badge variant={r.status === 'Attending' ? 'default' : 'secondary'}>{r.status}</Badge>
+                            <Badge variant={r.status === 'Attending' ? 'default' : 'secondary'}>
+                              {r.status === 'Attending' ? t('planner.status.attending') : t('planner.status.declined')}
+                            </Badge>
                           </TableCell>
                           <TableCell className="text-muted-foreground">
                             {(r.attendingEventNames ?? []).join(', ') || '—'}
@@ -275,15 +279,15 @@ export function InvitationFlowsPage() {
       <AlertDialog open={!!deleting} onOpenChange={(o) => !o && setDeleting(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete &quot;{deleting?.name}&quot;?</AlertDialogTitle>
+            <AlertDialogTitle>{t('planner.delete.title', { name: deleting?.name ?? '' })}</AlertDialogTitle>
             <AlertDialogDescription>
-              This deletes the flow and all {deleting?.responseCount ?? 0} of its responses. This cannot be undone.
+              {t('planner.delete.description', { count: deleting?.responseCount ?? 0 })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('planner.delete.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete} disabled={deleteFlow.isPending}>
-              {deleteFlow.isPending ? 'Deleting…' : 'Delete'}
+              {deleteFlow.isPending ? t('planner.delete.pending') : t('planner.delete.confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

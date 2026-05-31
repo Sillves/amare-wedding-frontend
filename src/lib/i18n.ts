@@ -16,6 +16,7 @@ import nlDemo from '@/locales/nl/demo.json';
 import nlSeo from '@/locales/nl/seo.json';
 import nlWebsite from '@/locales/nl/website.json';
 import nlReferrals from '@/locales/nl/referrals.json';
+import nlRsvp from '@/locales/nl/rsvp.json';
 
 import enCommon from '@/locales/en/common.json';
 import enAuth from '@/locales/en/auth.json';
@@ -30,6 +31,7 @@ import enDemo from '@/locales/en/demo.json';
 import enSeo from '@/locales/en/seo.json';
 import enWebsite from '@/locales/en/website.json';
 import enReferrals from '@/locales/en/referrals.json';
+import enRsvp from '@/locales/en/rsvp.json';
 
 import frCommon from '@/locales/fr/common.json';
 import frAuth from '@/locales/fr/auth.json';
@@ -44,6 +46,7 @@ import frDemo from '@/locales/fr/demo.json';
 import frSeo from '@/locales/fr/seo.json';
 import frWebsite from '@/locales/fr/website.json';
 import frReferrals from '@/locales/fr/referrals.json';
+import frRsvp from '@/locales/fr/rsvp.json';
 
 const resources = {
   nl: {
@@ -60,6 +63,7 @@ const resources = {
     seo: nlSeo,
     website: nlWebsite,
     referrals: nlReferrals,
+    rsvp: nlRsvp,
   },
   en: {
     common: enCommon,
@@ -75,6 +79,7 @@ const resources = {
     seo: enSeo,
     website: enWebsite,
     referrals: enReferrals,
+    rsvp: enRsvp,
   },
   fr: {
     common: frCommon,
@@ -90,6 +95,7 @@ const resources = {
     seo: frSeo,
     website: frWebsite,
     referrals: frReferrals,
+    rsvp: frRsvp,
   },
 };
 
@@ -100,7 +106,7 @@ i18n
     resources,
     fallbackLng: 'nl', // Nederlands als fallback
     defaultNS: 'common',
-    ns: ['common', 'auth', 'weddings', 'guests', 'events', 'billing', 'profile', 'landing', 'expenses', 'demo', 'seo', 'website', 'referrals'],
+    ns: ['common', 'auth', 'weddings', 'guests', 'events', 'billing', 'profile', 'landing', 'expenses', 'demo', 'seo', 'website', 'referrals', 'rsvp'],
     interpolation: {
       escapeValue: false, // React escapes by default
     },

@@ -647,7 +647,7 @@ export function DashboardPage() {
                   <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors">
                     <Send className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
-                  <span className="text-xs font-medium text-center">RSVP &amp; invitations</span>
+                  <span className="text-xs font-medium text-center">{t('rsvp:dashboard.quickAction')}</span>
                 </button>
               </div>
             </CardContent>
