@@ -1,0 +1,144 @@
+{
+  "planner": {
+    "title": "RSVP & invitations",
+    "subtitle": "Build the forms your guests fill in and review their answers.",
+    "newFlow": "New invitation",
+    "publicLink": "Public RSVP link:",
+    "loading": "Loading…",
+    "tabs": {
+      "flows": "Invitations ({{count}})",
+      "responses": "Responses ({{count}})"
+    },
+    "empty": {
+      "flows": "No invitations yet. Create one to let guests RSVP.",
+      "responses": "No responses yet."
+    },
+    "badges": {
+      "open": "Open",
+      "plusOne": "Plus-one allowed",
+      "customQuestions_one": "{{count}} custom question",
+      "customQuestions_other": "{{count}} custom questions",
+      "events_one": "{{count}} event",
+      "events_other": "{{count}} events",
+      "responses_one": "{{count}} response",
+      "responses_other": "{{count}} responses"
+    },
+    "summary": {
+      "attending": "Attending (incl. plus-ones)",
+      "declined": "Declined"
+    },
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "flow": "Invitation",
+      "status": "Status",
+      "events": "Events",
+      "dietary": "Dietary"
+    },
+    "status": {
+      "attending": "Attending",
+      "declined": "Declined"
+    },
+    "delete": {
+      "title": "Delete \"{{name}}\"?",
+      "description": "This deletes the invitation and all {{count}} of its responses. This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "pending": "Deleting…",
+      "success": "Invitation deleted"
+    }
+  },
+  "editor": {
+    "titleNew": "New RSVP invitation",
+    "titleEdit": "Edit RSVP invitation",
+    "description": "An invitation defines what guests see when they RSVP. Either create one open invitation (no passcode) or several passcode-protected invitations.",
+    "fields": {
+      "name": "Name (only you see this)",
+      "namePlaceholder": "e.g. Family, Evening guests",
+      "passcodeLabel": "Passcode",
+      "passcodePlaceholder": "e.g. lovestory2026",
+      "requirePasscode": "Require a passcode",
+      "requirePasscodeHelp": "Guests must enter this code before they can RSVP.",
+      "plusOne": "Allow a plus-one",
+      "plusOneHelp": "Guests can add one extra attendee."
+    },
+    "questions": {
+      "title": "Custom questions",
+      "add": "Add question",
+      "emptyHint": "Only the base questions (name, surname, email, dietary) will be shown.",
+      "labelPlaceholder": "Question label",
+      "addOption": "Add option",
+      "optionPlaceholder": "Option {{n}}",
+      "required": "Required",
+      "types": {
+        "YesNo": "Yes / No",
+        "FreeText": "Free text",
+        "SingleChoice": "Pick one",
+        "MultiChoice": "Pick multiple"
+      }
+    },
+    "events": {
+      "title": "Events guests can RSVP to",
+      "customNamePlaceholder": "Custom event name",
+      "customTimePlaceholder": "Start time (optional)",
+      "customLocationPlaceholder": "Location (optional)",
+      "addCustom": "Add custom event"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "create": "Create invitation",
+      "saving": "Saving…"
+    },
+    "toasts": {
+      "created": "Invitation created",
+      "updated": "Invitation updated"
+    }
+  },
+  "public": {
+    "notAvailable": {
+      "title": "RSVP not available",
+      "description": "The couple hasn’t opened RSVPs yet. Please check back later."
+    },
+    "thankYou": {
+      "title": "Thank you!",
+      "description": "Your RSVP has been recorded."
+    },
+    "gate": {
+      "title": "Enter your passcode",
+      "description": "You should have received this with your invitation.",
+      "placeholder": "Passcode",
+      "submit": "Continue",
+      "submitting": "Checking…",
+      "error": "That passcode didn’t work. Please check with the couple."
+    },
+    "form": {
+      "title": "RSVP",
+      "description": "We can’t wait to celebrate with you. Please fill in your details below.",
+      "willAttend": "I’ll be there",
+      "willDecline": "Can’t make it",
+      "firstName": "First name",
+      "surname": "Surname",
+      "email": "Email",
+      "dietary": "Dietary needs",
+      "dietaryPlaceholder": "e.g. vegetarian, allergies",
+      "eventsLabel": "Which events will you attend?",
+      "eventsHint": "Select the events you’ll attend. Leave them all unchecked if you can’t make it.",
+      "plusOneCheckbox": "I’m bringing a plus-one",
+      "plusOneName": "Plus-one name",
+      "plusOneDietary": "Plus-one dietary needs",
+      "submit": "Submit RSVP",
+      "submitting": "Submitting…",
+      "errors": {
+        "duplicate": "An RSVP with this name and email already exists for this wedding.",
+        "generic": "Something went wrong submitting your RSVP. Please try again.",
+        "requiredQuestion": "Please answer: {{label}}"
+      }
+    },
+    "yes": "Yes",
+    "no": "No"
+  },
+  "dashboard": {
+    "quickAction": "RSVP & invitations"
+  }
+}

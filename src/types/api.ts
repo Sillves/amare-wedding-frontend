@@ -404,6 +404,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/weddings/{weddingId}/invitation-flows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetInvitationFlows"];
+        put?: never;
+        post: operations["CreateInvitationFlow"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/invitation-flows/{flowId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["UpdateInvitationFlow"];
+        post?: never;
+        delete: operations["DeleteInvitationFlow"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/weddings/{weddingId}/rsvp-responses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetRsvpResponses"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/invitations/{token}/accept": {
         parameters: {
             query?: never;
@@ -574,6 +622,54 @@ export interface paths {
         get: operations["GetReferralStats"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/weddings/{slug}/rsvp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetRsvpFlowState"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/weddings/{slug}/rsvp/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SubmitRsvpFlow"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/weddings/{slug}/rsvp/unlock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UnlockRsvpFlow"];
         delete?: never;
         options?: never;
         head?: never;
@@ -763,6 +859,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        AccountType: 0 | 1;
         AddGuestsToEventRequestDto: {
             guestIds?: string[] | null;
         };
@@ -885,6 +986,14 @@ export interface components {
             rsvpStatus?: components["schemas"]["RsvpStatus"];
             preferredLanguage?: string | null;
         };
+        CreateInvitationFlowRequestDto: {
+            name?: string | null;
+            passcode?: string | null;
+            includePlusOne?: boolean;
+            customQuestions?: components["schemas"]["QuestionDefinition"][] | null;
+            eventIds?: string[] | null;
+            customEvents?: components["schemas"]["CustomEventDefinition"][] | null;
+        };
         CreateWeddingExpenseRequestDto: {
             /** Format: double */
             amount?: number;
@@ -910,6 +1019,14 @@ export interface components {
         };
         CreateWeddingWebsiteRequestDto: {
             template?: components["schemas"]["WebsiteTemplate"];
+        };
+        CustomEventDefinition: {
+            /** Format: uuid */
+            id?: string;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            location?: string | null;
         };
         Error: {
             code?: string | null;
@@ -961,13 +1078,35 @@ export interface components {
             /** Format: uuid */
             id?: string;
             name?: string | null;
+            surname?: string | null;
             email?: string | null;
+            dietary?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
             preferredLanguage?: string | null;
             /** Format: date-time */
             invitationSentAt?: string | null;
             /** Format: uuid */
             weddingId?: string;
+            /** Format: uuid */
+            plusOneOfGuestId?: string | null;
+        };
+        InvitationFlowDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            name?: string | null;
+            passcode?: string | null;
+            includePlusOne?: boolean;
+            customQuestions?: components["schemas"]["QuestionDefinition"][] | null;
+            eventIds?: string[] | null;
+            customEvents?: components["schemas"]["CustomEventDefinition"][] | null;
+            /** Format: int32 */
+            responseCount?: number;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
         };
         InvitationSendResultDto: {
             /** Format: int32 */
@@ -1002,6 +1141,14 @@ export interface components {
             content?: unknown;
             events?: components["schemas"]["EventDto"][] | null;
         };
+        QuestionDefinition: {
+            /** Format: uuid */
+            id?: string;
+            type?: components["schemas"]["RsvpQuestionType"];
+            label?: string | null;
+            required?: boolean;
+            options?: string[] | null;
+        };
         ReferralDto: {
             /** Format: uuid */
             id?: string;
@@ -1034,6 +1181,7 @@ export interface components {
             firstName?: string | null;
             lastName?: string | null;
             password?: string | null;
+            accountType?: components["schemas"]["AccountType"];
         };
         RemoveGuestsFromEventRequestDto: {
             guestIds?: string[] | null;
@@ -1043,6 +1191,70 @@ export interface components {
             token?: string | null;
             newPassword?: string | null;
         };
+        RsvpEventOptionDto: {
+            /** Format: uuid */
+            id?: string;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            location?: string | null;
+        };
+        RsvpFlowPublicDto: {
+            /** Format: uuid */
+            flowId?: string;
+            /** Format: uuid */
+            weddingId?: string;
+            includePlusOne?: boolean;
+            questions?: components["schemas"]["QuestionDefinition"][] | null;
+            events?: components["schemas"]["RsvpEventOptionDto"][] | null;
+        };
+        RsvpFlowStateDto: {
+            hasFlows?: boolean;
+            requiresPasscode?: boolean;
+            flow?: components["schemas"]["RsvpFlowPublicDto"];
+        };
+        RsvpFlowSubmitRequestDto: {
+            name?: string | null;
+            surname?: string | null;
+            email?: string | null;
+            dietary?: string | null;
+            status?: components["schemas"]["RsvpResponseStatus"];
+            attendingEventIds?: string[] | null;
+            plusOneAttending?: boolean;
+            plusOneName?: string | null;
+            plusOneDietary?: string | null;
+            customAnswers?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** @enum {string} */
+        RsvpQuestionType: "YesNo" | "FreeText" | "SingleChoice" | "MultiChoice";
+        RsvpResponseDto: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            invitationFlowId?: string;
+            flowName?: string | null;
+            /** Format: uuid */
+            guestId?: string;
+            name?: string | null;
+            surname?: string | null;
+            email?: string | null;
+            dietary?: string | null;
+            status?: components["schemas"]["RsvpResponseStatus"];
+            attendingEventIds?: string[] | null;
+            attendingEventNames?: string[] | null;
+            customAnswers?: {
+                [key: string]: unknown;
+            } | null;
+            isPlusOne?: boolean;
+            /** Format: uuid */
+            plusOneOfGuestId?: string | null;
+            /** Format: date-time */
+            submittedAt?: string;
+        };
+        /** @enum {string} */
+        RsvpResponseStatus: "Attending" | "Declined";
         /**
          * Format: int32
          * @enum {integer}
@@ -1052,6 +1264,17 @@ export interface components {
             name?: string | null;
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
+        };
+        RsvpSubmitResultDto: {
+            /** Format: uuid */
+            responseId?: string;
+            /** Format: uuid */
+            guestId?: string;
+            /** Format: uuid */
+            plusOneGuestId?: string | null;
+        };
+        RsvpUnlockRequestDto: {
+            passcode?: string | null;
         };
         SendInvitationsRequestDto: {
             guestIds?: string[] | null;
@@ -1075,6 +1298,14 @@ export interface components {
             email?: string | null;
             rsvpStatus?: components["schemas"]["RsvpStatus"];
             preferredLanguage?: string | null;
+        };
+        UpdateInvitationFlowRequestDto: {
+            name?: string | null;
+            passcode?: string | null;
+            includePlusOne?: boolean;
+            customQuestions?: components["schemas"]["QuestionDefinition"][] | null;
+            eventIds?: string[] | null;
+            customEvents?: components["schemas"]["CustomEventDefinition"][] | null;
         };
         UpdateWeddingExpenseRequestDto: {
             /** Format: double */
@@ -1116,6 +1347,7 @@ export interface components {
             firstName?: string | null;
             lastName?: string | null;
             subscriptionTier?: components["schemas"]["SubscriptionTier"];
+            accountType?: components["schemas"]["AccountType"];
         };
         /**
          * Format: int32
@@ -3147,6 +3379,308 @@ export interface operations {
             };
         };
     };
+    GetInvitationFlows: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvitationFlowDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CreateInvitationFlow: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateInvitationFlowRequestDto"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvitationFlowDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    UpdateInvitationFlow: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                weddingId: string;
+                flowId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateInvitationFlowRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvitationFlowDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    DeleteInvitationFlow: {
+        parameters: {
+            query?: {
+                force?: boolean;
+            };
+            header?: never;
+            path: {
+                weddingId: string;
+                flowId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetRsvpResponses: {
+        parameters: {
+            query?: {
+                flowId?: string;
+            };
+            header?: never;
+            path: {
+                weddingId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RsvpResponseDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     AcceptInvitation: {
         parameters: {
             query?: never;
@@ -3673,6 +4207,170 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    GetRsvpFlowState: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RsvpFlowStateDto"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    SubmitRsvpFlow: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RsvpFlowSubmitRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RsvpSubmitResultDto"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    UnlockRsvpFlow: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RsvpUnlockRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RsvpFlowPublicDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
                 headers: {
                     [name: string]: unknown;
                 };

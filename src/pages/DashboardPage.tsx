@@ -639,6 +639,16 @@ export function DashboardPage() {
                   </div>
                   <span className="text-xs font-medium text-center">{t('expenses:title')}</span>
                 </button>
+
+                <button
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-primary/5 hover:scale-105 transition-all group"
+                  onClick={() => navigate('/invitations')}
+                >
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors">
+                    <Send className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <span className="text-xs font-medium text-center">{t('rsvp:dashboard.quickAction')}</span>
+                </button>
               </div>
             </CardContent>
           </Card>
