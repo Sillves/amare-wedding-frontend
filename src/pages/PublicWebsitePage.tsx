@@ -5,12 +5,14 @@ import { WebsiteTemplateNames } from '@/features/website/types';
 import { ElegantClassicTemplate } from '@/features/website/templates/ElegantClassic/ElegantClassicTemplate';
 import { ModernMinimalTemplate } from '@/features/website/templates/ModernMinimal/ModernMinimalTemplate';
 import { RomanticGardenTemplate } from '@/features/website/templates/RomanticGarden/RomanticGardenTemplate';
+import { MinimalArchitectureTemplate } from '@/features/website/templates/MinimalArchitecture/MinimalArchitectureTemplate';
 
 // Map template names to components
 const templateComponents = {
   ElegantClassic: ElegantClassicTemplate,
   ModernMinimal: ModernMinimalTemplate,
   RomanticGarden: RomanticGardenTemplate,
+  MinimalArchitecture: MinimalArchitectureTemplate,
 };
 
 export function PublicWebsitePage() {

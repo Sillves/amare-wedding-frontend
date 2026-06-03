@@ -120,6 +120,11 @@ export function getDefaultSettings(template: WebsiteTemplate): WebsiteSettings {
       fontFamily: 'script',
       floralStyle: 'watercolor',
     },
+    MinimalArchitecture: {
+      primaryColor: '#1A1A1A',
+      accentColor: '#8E9794',
+      fontFamily: 'serif',
+    },
   };
 
   // Convert numeric template to string name
@@ -149,5 +154,10 @@ export const TEMPLATE_INFO: Record<
     name: 'Romantic Garden',
     description: 'Floral motifs, watercolor elements, and organic shapes',
     previewImage: '/templates/romantic-garden-preview.jpg',
+  },
+  MinimalArchitecture: {
+    name: 'Modern Minimalistisch',
+    description: 'Cold, architectural editorial style — stark black & white with steel grey accents',
+    previewImage: '/templates/minimal-architecture-preview.jpg',
   },
 };

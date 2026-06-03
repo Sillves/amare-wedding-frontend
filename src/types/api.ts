@@ -1353,7 +1353,7 @@ export interface components {
          * Format: int32
          * @enum {integer}
          */
-        WebsiteTemplate: 0 | 1 | 2;
+        WebsiteTemplate: 0 | 1 | 2 | 3;
         WeddingBudgetDto: {
             /** Format: uuid */
             id?: string;

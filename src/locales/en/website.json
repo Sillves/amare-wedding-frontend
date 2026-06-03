@@ -61,6 +61,10 @@
       "name": "Romantic Garden",
       "description": "Whimsical and organic with botanical illustrations and watercolor accents"
     },
+    "MinimalArchitecture": {
+      "name": "Modern Minimalist",
+      "description": "Cold, architectural and editorial — stark black & white with steel grey accents"
+    },
     "colorScheme": {
       "title": "Color Scheme",
       "description": "Choose a color palette for your website",
