@@ -61,6 +61,10 @@
       "name": "Romantische Tuin",
       "description": "Speels en organisch met botanische illustraties en aquarel accenten"
     },
+    "MinimalArchitecture": {
+      "name": "Modern Minimalistisch",
+      "description": "Koel, architecturaal en editorial — strak zwart-wit met staalgrijze accenten"
+    },
     "colorScheme": {
       "title": "Kleurenschema",
       "description": "Kies een kleurenpalet voor je website",

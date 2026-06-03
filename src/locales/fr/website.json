@@ -61,6 +61,10 @@
       "name": "Jardin Romantique",
       "description": "Fantaisiste et organique avec des illustrations botaniques et des accents aquarelle"
     },
+    "MinimalArchitecture": {
+      "name": "Minimaliste Moderne",
+      "description": "Froid, architectural et éditorial — noir et blanc épuré avec des accents gris acier"
+    },
     "colorScheme": {
       "title": "Palette de Couleurs",
       "description": "Choisissez une palette de couleurs pour votre site",

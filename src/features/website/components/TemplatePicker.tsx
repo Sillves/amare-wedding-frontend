@@ -31,7 +31,7 @@ interface PreviewProps {
 }
 
 // Template values as numbers (matching backend enum)
-const templates: WebsiteTemplate[] = [0, 1, 2]; // ElegantClassic, ModernMinimal, RomanticGarden
+const templates: WebsiteTemplate[] = [0, 1, 2, 3]; // ElegantClassic, ModernMinimal, RomanticGarden, MinimalArchitecture
 
 // Elegant Classic Preview - Sophisticated serif design with initials
 const ElegantClassicPreview = ({ locale, t }: PreviewProps) => (
@@ -188,10 +188,42 @@ const RomanticGardenPreview = ({ locale, t }: PreviewProps) => (
   </div>
 );
 
+// Minimal Architecture Preview - Cold editorial, asymmetric name block + massive date
+const MinimalArchitecturePreview = (_props: PreviewProps) => (
+  <div className="h-full w-full bg-white relative overflow-hidden p-4">
+    {/* Asymmetric name block - left aligned */}
+    <div className="absolute top-4 left-4 text-left">
+      <span className="block text-[#1a1a1a] leading-none" style={{ fontFamily: "'Prata', serif", fontSize: '20px' }}>
+        Sara
+      </span>
+      <span className="block text-[#1a1a1a] leading-none mt-0.5" style={{ fontFamily: "'Prata', serif", fontSize: '20px' }}>
+        Lorenz
+      </span>
+    </div>
+    <span
+      className="absolute top-5 left-[88px] text-[#1a1a1a]"
+      style={{ fontFamily: "'Petit Formal Script', cursive", fontSize: '11px' }}
+    >
+      en
+    </span>
+
+    {/* Massive stacked date - right side */}
+    <div
+      className="absolute bottom-3 right-4 text-right text-[#1a1a1a] leading-[0.95]"
+      style={{ fontFamily: "'Prata', serif", fontSize: '34px' }}
+    >
+      <span className="block">24</span>
+      <span className="block">03</span>
+      <span className="block">26</span>
+    </div>
+  </div>
+);
+
 const templatePreviews: Record<WebsiteTemplate, React.FC<PreviewProps>> = {
   0: ElegantClassicPreview,
   1: ModernMinimalPreview,
   2: RomanticGardenPreview,
+  3: MinimalArchitecturePreview,
 };
 
 // Color scheme definitions for Elegant Classic
@@ -230,7 +262,7 @@ export function TemplatePicker({ selected, onSelect, settings, onSettingsChange 
         <p className="text-sm text-muted-foreground">{t('templates.description')}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {templates.map((template) => {
           const templateName = WebsiteTemplateNames[template];
           const isSelected = selected === template;

@@ -6,7 +6,7 @@ import type { components } from '@/types/api';
 
 /**
  * Website Template enum - Auto-generated from OpenAPI
- * 0 = ElegantClassic, 1 = ModernMinimal, 2 = RomanticGarden
+ * 0 = ElegantClassic, 1 = ModernMinimal, 2 = RomanticGarden, 3 = MinimalArchitecture
  */
 export type WebsiteTemplate = components['schemas']['WebsiteTemplate'];
 
@@ -17,6 +17,7 @@ export const WebsiteTemplateValues: Record<string, WebsiteTemplate> = {
   ElegantClassic: 0,
   ModernMinimal: 1,
   RomanticGarden: 2,
+  MinimalArchitecture: 3,
 };
 
 /**
@@ -26,6 +27,7 @@ export const WebsiteTemplateNames: Record<WebsiteTemplate, string> = {
   0: 'ElegantClassic',
   1: 'ModernMinimal',
   2: 'RomanticGarden',
+  3: 'MinimalArchitecture',
 };
 
 /**

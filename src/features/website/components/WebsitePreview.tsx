@@ -11,12 +11,14 @@ import type { EventDto as WeddingEventDto } from '@/features/weddings/types';
 import { ElegantClassicTemplate } from '../templates/ElegantClassic/ElegantClassicTemplate';
 import { ModernMinimalTemplate } from '../templates/ModernMinimal/ModernMinimalTemplate';
 import { RomanticGardenTemplate } from '../templates/RomanticGarden/RomanticGardenTemplate';
+import { MinimalArchitectureTemplate } from '../templates/MinimalArchitecture/MinimalArchitectureTemplate';
 
 // Map template names to components
 const templateComponents = {
   ElegantClassic: ElegantClassicTemplate,
   ModernMinimal: ModernMinimalTemplate,
   RomanticGarden: RomanticGardenTemplate,
+  MinimalArchitecture: MinimalArchitectureTemplate,
 };
 
 interface WebsitePreviewProps {
