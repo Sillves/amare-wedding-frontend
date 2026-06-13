@@ -255,6 +255,32 @@ export function ModernMinimalTemplate({
                 )}
               </div>
             )}
+
+            {details.customVenues
+              ?.filter((v) => v.enabled)
+              .map((venue) => (
+                <div key={venue.id} className="mm-detail-block">
+                  <h3>{venue.title}</h3>
+                  <HorizontalLine />
+                  <div className="mm-detail-info">
+                    <p className="mm-venue">{venue.venue}</p>
+                    <p className="mm-address">{venue.address}</p>
+                    {venue.date && <p className="mm-time">{formatTime(venue.date)}</p>}
+                  </div>
+                  {venue.description && <p className="mm-note">{venue.description}</p>}
+                  {venue.mapUrl && (
+                    <a
+                      href={venue.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mm-link"
+                    >
+                      {t('preview.getDirections')}
+                      <span className="mm-link-arrow">→</span>
+                    </a>
+                  )}
+                </div>
+              ))}
           </div>
         </section>
       )}
