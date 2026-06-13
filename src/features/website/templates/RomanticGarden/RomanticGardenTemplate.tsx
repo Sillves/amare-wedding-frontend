@@ -305,6 +305,34 @@ export function RomanticGardenTemplate({
                 )}
               </div>
             )}
+
+            {details.customVenues
+              ?.filter((v) => v.enabled)
+              .map((venue) => (
+                <div key={venue.id} className="rg-detail-card">
+                  <div className="rg-card-corner" />
+                  <div className="rg-card-icon">
+                    <ReceptionIcon />
+                  </div>
+                  <h3>{venue.title}</h3>
+                  <p className="rg-venue">{venue.venue}</p>
+                  <p className="rg-address">{venue.address}</p>
+                  {venue.date && <p className="rg-time">{formatTime(venue.date)}</p>}
+                  {venue.description && (
+                    <p className="rg-description">{venue.description}</p>
+                  )}
+                  {venue.mapUrl && (
+                    <a
+                      href={venue.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rg-map-link"
+                    >
+                      {t('preview.viewLocation')}
+                    </a>
+                  )}
+                </div>
+              ))}
           </div>
         </section>
       )}
