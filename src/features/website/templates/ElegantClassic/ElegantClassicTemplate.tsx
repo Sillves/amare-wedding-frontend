@@ -328,6 +328,7 @@ export function ElegantClassicTemplate({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     return date.toLocaleDateString(locale, {
       weekday: 'long',
       year: 'numeric',
@@ -339,6 +340,7 @@ export function ElegantClassicTemplate({
   // Format date without weekday (for Our Story section)
   const formatStoryDate = (dateString: string) => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     return date.toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
@@ -348,6 +350,7 @@ export function ElegantClassicTemplate({
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     return date.toLocaleTimeString(locale, {
       hour: timeFormatPref === '24h' ? '2-digit' : 'numeric',
       minute: '2-digit',
@@ -358,6 +361,7 @@ export function ElegantClassicTemplate({
   // Format short date (e.g., "Feb 12")
   const formatShortDate = (dateString: string) => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     return date.toLocaleDateString(locale, {
       month: 'short',
       day: 'numeric',
@@ -434,7 +438,7 @@ export function ElegantClassicTemplate({
             </h1>
           )}
 
-          <div className="ec-date">{formatDate(hero.date)}</div>
+          {formatDate(hero.date) && <div className="ec-date">{formatDate(hero.date)}</div>}
         </div>
       </section>
 
@@ -562,7 +566,9 @@ export function ElegantClassicTemplate({
                     <h3>{details.ceremony.title}</h3>
                     <p className="ec-venue">{details.ceremony.venue}</p>
                     <p className="ec-address">{details.ceremony.address}</p>
-                    <p className="ec-time">{formatTime(details.ceremony.date)}</p>
+                    {details.ceremony.date && (
+                      <p className="ec-time">{formatTime(details.ceremony.date)}</p>
+                    )}
                     {details.ceremony.description && (
                       <p className="ec-description">{details.ceremony.description}</p>
                     )}
@@ -587,7 +593,9 @@ export function ElegantClassicTemplate({
                     <h3>{details.reception.title}</h3>
                     <p className="ec-venue">{details.reception.venue}</p>
                     <p className="ec-address">{details.reception.address}</p>
-                    <p className="ec-time">{formatTime(details.reception.date)}</p>
+                    {details.reception.date && (
+                      <p className="ec-time">{formatTime(details.reception.date)}</p>
+                    )}
                     {details.reception.description && (
                       <p className="ec-description">{details.reception.description}</p>
                     )}

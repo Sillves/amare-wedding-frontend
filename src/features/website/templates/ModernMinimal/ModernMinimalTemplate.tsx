@@ -47,6 +47,7 @@ export function ModernMinimalTemplate({
 
   const formatDate = (dateString: string, style: 'full' | 'short' = 'full') => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     if (style === 'short') {
       return date.toLocaleDateString(locale, {
         month: 'short',
@@ -63,6 +64,7 @@ export function ModernMinimalTemplate({
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return '';
     return date.toLocaleTimeString(locale, {
       hour: timeFormatPref === '24h' ? '2-digit' : 'numeric',
       minute: '2-digit',
@@ -76,13 +78,20 @@ export function ModernMinimalTemplate({
     for (const sep of separators) {
       if (names.includes(sep)) {
         const parts = names.split(sep);
-        return { name1: parts[0].trim(), name2: parts[1].trim() };
+        return { name1: parts[0]?.trim() ?? '', name2: parts[1]?.trim() ?? '' };
       }
     }
     return { name1: names, name2: '' };
   };
 
   const coupleNames = parseCoupleNames(hero.coupleNames);
+
+  // Stacked hero date (day / month / year), guarded against an unset/invalid date
+  const heroDate = new Date(hero.date);
+  const heroValid = !Number.isNaN(heroDate.getTime());
+  const heroDay = heroValid ? String(heroDate.getDate()).padStart(2, '0') : '';
+  const heroMonth = heroValid ? heroDate.toLocaleDateString(locale, { month: 'long' }) : '';
+  const heroYear = heroValid ? String(heroDate.getFullYear()) : '';
 
   return (
     <div
@@ -122,20 +131,16 @@ export function ModernMinimalTemplate({
 
           <DiamondDivider />
 
-          <div className="mm-date">
-            <span className="mm-date-day">
-              {String(new Date(hero.date).getDate()).padStart(2, '0')}
-            </span>
-            <span className="mm-date-separator" />
-            <div className="mm-date-details">
-              <span className="mm-date-month">
-                {new Date(hero.date).toLocaleDateString(locale, { month: 'long' })}
-              </span>
-              <span className="mm-date-year">
-                {new Date(hero.date).getFullYear()}
-              </span>
+          {heroValid && (
+            <div className="mm-date">
+              <span className="mm-date-day">{heroDay}</span>
+              <span className="mm-date-separator" />
+              <div className="mm-date-details">
+                <span className="mm-date-month">{heroMonth}</span>
+                <span className="mm-date-year">{heroYear}</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -210,7 +215,9 @@ export function ModernMinimalTemplate({
                 <div className="mm-detail-info">
                   <p className="mm-venue">{details.ceremony.venue}</p>
                   <p className="mm-address">{details.ceremony.address}</p>
-                  <p className="mm-time">{formatTime(details.ceremony.date)}</p>
+                  {details.ceremony.date && (
+                    <p className="mm-time">{formatTime(details.ceremony.date)}</p>
+                  )}
                 </div>
                 {details.ceremony.description && (
                   <p className="mm-note">{details.ceremony.description}</p>
@@ -237,7 +244,9 @@ export function ModernMinimalTemplate({
                 <div className="mm-detail-info">
                   <p className="mm-venue">{details.reception.venue}</p>
                   <p className="mm-address">{details.reception.address}</p>
-                  <p className="mm-time">{formatTime(details.reception.date)}</p>
+                  {details.reception.date && (
+                    <p className="mm-time">{formatTime(details.reception.date)}</p>
+                  )}
                 </div>
                 {details.reception.description && (
                   <p className="mm-note">{details.reception.description}</p>
@@ -302,8 +311,9 @@ export function ModernMinimalTemplate({
                 <div className="mm-event-details">
                   <h3>{event.name}</h3>
                   <p className="mm-event-meta">
-                    {formatDate(event.startDate, 'short')}
-                    {event.endDate && event.endDate !== event.startDate && ` - ${formatDate(event.endDate, 'short')}`} · {event.location}
+                    {formatDate(event.startDate ?? '', 'short')}
+                    {event.endDate && event.endDate !== event.startDate && ` - ${formatDate(event.endDate, 'short')}`}
+                    {event.location && ` · ${event.location}`}
                   </p>
                   {event.description && <p>{event.description}</p>}
                 </div>
