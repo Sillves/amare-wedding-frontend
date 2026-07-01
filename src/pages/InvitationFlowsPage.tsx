@@ -1,7 +1,17 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Heart, Plus, Lock, Unlock, Users, Pencil, Trash2, ListChecks } from 'lucide-react';
+import {
+  ArrowLeft,
+  Heart,
+  Plus,
+  Lock,
+  Unlock,
+  Users,
+  Pencil,
+  Trash2,
+  ListChecks,
+} from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
 import { useEvents } from '@/features/events/hooks/useEvents';
@@ -15,7 +25,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -48,6 +65,9 @@ export function InvitationFlowsPage() {
   const [deleting, setDeleting] = useState<InvitationFlowDto | null>(null);
 
   const rsvpUrl = slug ? `${window.location.origin}/rsvp/${slug}` : '';
+
+  // A passcode on any flow puts the whole published website behind the code (no separate toggle).
+  const hasPasscodeFlow = flows.some((f) => !!f.passcode);
 
   // Aggregate attendee headcount per event (plus-ones are their own response, so they count too).
   const summary = useMemo(() => {
@@ -99,7 +119,12 @@ export function InvitationFlowsPage() {
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate('/dashboard')} className="rounded-xl">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/dashboard')}
+              className="rounded-xl"
+            >
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <Link to="/dashboard" className="flex items-center gap-2">
@@ -108,7 +133,9 @@ export function InvitationFlowsPage() {
             </Link>
           </div>
           <div className="flex items-center gap-4">
-            <span className="hidden md:inline text-sm text-muted-foreground">{user?.firstName}</span>
+            <span className="hidden md:inline text-sm text-muted-foreground">
+              {user?.firstName}
+            </span>
             <Button variant="outline" size="sm" onClick={logout} className="rounded-xl">
               {t('auth:logout')}
             </Button>
@@ -133,17 +160,35 @@ export function InvitationFlowsPage() {
           <Card className="bg-muted/40">
             <CardContent className="py-4 text-sm">
               <span className="text-muted-foreground">{t('planner.publicLink')} </span>
-              <a href={rsvpUrl} target="_blank" rel="noreferrer" className="font-medium text-primary underline">
+              <a
+                href={rsvpUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium text-primary underline"
+              >
                 {rsvpUrl}
               </a>
             </CardContent>
           </Card>
         )}
 
+        {hasPasscodeFlow && (
+          <Card className="border-primary/30 bg-primary/5">
+            <CardContent className="flex items-start gap-3 py-4 text-sm">
+              <Lock className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
+              <p className="text-muted-foreground">{t('planner.privateWebsiteNotice')}</p>
+            </CardContent>
+          </Card>
+        )}
+
         <Tabs defaultValue="flows">
           <TabsList>
-            <TabsTrigger value="flows">{t('planner.tabs.flows', { count: flows.length })}</TabsTrigger>
-            <TabsTrigger value="responses">{t('planner.tabs.responses', { count: responses.length })}</TabsTrigger>
+            <TabsTrigger value="flows">
+              {t('planner.tabs.flows', { count: flows.length })}
+            </TabsTrigger>
+            <TabsTrigger value="responses">
+              {t('planner.tabs.responses', { count: responses.length })}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="flows" className="space-y-4 pt-4">
@@ -183,13 +228,22 @@ export function InvitationFlowsPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-                    {flow.includePlusOne && <Badge variant="outline">{t('planner.badges.plusOne')}</Badge>}
-                    <Badge variant="outline">{t('planner.badges.customQuestions', { count: flow.customQuestions?.length ?? 0 })}</Badge>
+                    {flow.includePlusOne && (
+                      <Badge variant="outline">{t('planner.badges.plusOne')}</Badge>
+                    )}
                     <Badge variant="outline">
-                      {t('planner.badges.events', { count: (flow.eventIds?.length ?? 0) + (flow.customEvents?.length ?? 0) })}
+                      {t('planner.badges.customQuestions', {
+                        count: flow.customQuestions?.length ?? 0,
+                      })}
+                    </Badge>
+                    <Badge variant="outline">
+                      {t('planner.badges.events', {
+                        count: (flow.eventIds?.length ?? 0) + (flow.customEvents?.length ?? 0),
+                      })}
                     </Badge>
                     <Badge variant="outline" className="gap-1">
-                      <Users className="h-3 w-3" /> {t('planner.badges.responses', { count: flow.responseCount ?? 0 })}
+                      <Users className="h-3 w-3" />{' '}
+                      {t('planner.badges.responses', { count: flow.responseCount ?? 0 })}
                     </Badge>
                   </CardContent>
                 </Card>
@@ -212,13 +266,19 @@ export function InvitationFlowsPage() {
                   <Card>
                     <CardContent className="py-4">
                       <p className="text-2xl font-semibold text-green-600">{summary.attending}</p>
-                      <p className="text-xs text-muted-foreground">{t('planner.summary.attending')}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {t('planner.summary.attending')}
+                      </p>
                     </CardContent>
                   </Card>
                   <Card>
                     <CardContent className="py-4">
-                      <p className="text-2xl font-semibold text-muted-foreground">{summary.declined}</p>
-                      <p className="text-xs text-muted-foreground">{t('planner.summary.declined')}</p>
+                      <p className="text-2xl font-semibold text-muted-foreground">
+                        {summary.declined}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {t('planner.summary.declined')}
+                      </p>
                     </CardContent>
                   </Card>
                   {summary.events.map((ev) => (
@@ -234,41 +294,49 @@ export function InvitationFlowsPage() {
                 </div>
 
                 <Card>
-                <CardContent className="p-0">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>{t('planner.table.name')}</TableHead>
-                        <TableHead>{t('planner.table.email')}</TableHead>
-                        <TableHead>{t('planner.table.flow')}</TableHead>
-                        <TableHead>{t('planner.table.status')}</TableHead>
-                        <TableHead>{t('planner.table.events')}</TableHead>
-                        <TableHead>{t('planner.table.dietary')}</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {responses.map((r) => (
-                        <TableRow key={r.id}>
-                          <TableCell className="font-medium">
-                            {r.name} {r.surname}
-                            {r.isPlusOne && <Badge variant="outline" className="ml-2">+1</Badge>}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">{r.email}</TableCell>
-                          <TableCell>{r.flowName}</TableCell>
-                          <TableCell>
-                            <Badge variant={r.status === 'Attending' ? 'default' : 'secondary'}>
-                              {r.status === 'Attending' ? t('planner.status.attending') : t('planner.status.declined')}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">
-                            {(r.attendingEventNames ?? []).join(', ') || '—'}
-                          </TableCell>
-                          <TableCell className="text-muted-foreground">{r.dietary || '—'}</TableCell>
+                  <CardContent className="p-0">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>{t('planner.table.name')}</TableHead>
+                          <TableHead>{t('planner.table.email')}</TableHead>
+                          <TableHead>{t('planner.table.flow')}</TableHead>
+                          <TableHead>{t('planner.table.status')}</TableHead>
+                          <TableHead>{t('planner.table.events')}</TableHead>
+                          <TableHead>{t('planner.table.dietary')}</TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
+                      </TableHeader>
+                      <TableBody>
+                        {responses.map((r) => (
+                          <TableRow key={r.id}>
+                            <TableCell className="font-medium">
+                              {r.name} {r.surname}
+                              {r.isPlusOne && (
+                                <Badge variant="outline" className="ml-2">
+                                  +1
+                                </Badge>
+                              )}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">{r.email}</TableCell>
+                            <TableCell>{r.flowName}</TableCell>
+                            <TableCell>
+                              <Badge variant={r.status === 'Attending' ? 'default' : 'secondary'}>
+                                {r.status === 'Attending'
+                                  ? t('planner.status.attending')
+                                  : t('planner.status.declined')}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">
+                              {(r.attendingEventNames ?? []).join(', ') || '—'}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">
+                              {r.dietary || '—'}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
                 </Card>
               </div>
             )}
@@ -279,7 +347,9 @@ export function InvitationFlowsPage() {
       <AlertDialog open={!!deleting} onOpenChange={(o) => !o && setDeleting(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t('planner.delete.title', { name: deleting?.name ?? '' })}</AlertDialogTitle>
+            <AlertDialogTitle>
+              {t('planner.delete.title', { name: deleting?.name ?? '' })}
+            </AlertDialogTitle>
             <AlertDialogDescription>
               {t('planner.delete.description', { count: deleting?.responseCount ?? 0 })}
             </AlertDialogDescription>

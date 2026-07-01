@@ -4,6 +4,7 @@
     "subtitle": "Bouw de formulieren die je gasten invullen en bekijk hun antwoorden.",
     "newFlow": "Nieuwe uitnodiging",
     "publicLink": "Publieke RSVP-link:",
+    "privateWebsiteNotice": "Je trouwwebsite vraagt bezoekers om een code, omdat je uitnodigingen met een passcode gebruikt. Gebruik je alleen een open uitnodiging zonder code, dan is je website publiek.",
     "loading": "Bezig met laden…",
     "tabs": {
       "flows": "Uitnodigingen ({{count}})",

@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { usePublicWebsite } from '@/features/website/hooks/useWebsite';
+import { WebsiteUnlockGate } from '@/features/website/components/WebsiteUnlockGate';
 import { WebsiteTemplateNames } from '@/features/website/types';
 import { ElegantClassicTemplate } from '@/features/website/templates/ElegantClassic/ElegantClassicTemplate';
 import { ModernMinimalTemplate } from '@/features/website/templates/ModernMinimal/ModernMinimalTemplate';
@@ -17,7 +18,7 @@ const templateComponents = {
 
 export function PublicWebsitePage() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: website, isLoading, error } = usePublicWebsite(slug || '');
+  const { data: state, isLoading, error } = usePublicWebsite(slug || '');
 
   if (isLoading) {
     return (
@@ -32,13 +33,11 @@ export function PublicWebsitePage() {
     );
   }
 
-  if (error || !website) {
+  if (error || !state) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center max-w-md px-4">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Wedding Website Not Found
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Wedding Website Not Found</h1>
           <p className="text-gray-600 mb-8">
             This wedding website may not be published yet, or the link may be incorrect.
           </p>
@@ -52,6 +51,13 @@ export function PublicWebsitePage() {
       </div>
     );
   }
+
+  // Locked website: guest must enter the invitation passcode before any content is shown.
+  if (state.requiresPasscode || !state.website) {
+    return <WebsiteUnlockGate slug={slug || ''} />;
+  }
+
+  const website = state.website;
 
   // Convert numeric template value to string name, then get the component
   const templateName = WebsiteTemplateNames[website.template] || 'ElegantClassic';

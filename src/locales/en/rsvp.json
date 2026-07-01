@@ -4,6 +4,7 @@
     "subtitle": "Build the forms your guests fill in and review their answers.",
     "newFlow": "New invitation",
     "publicLink": "Public RSVP link:",
+    "privateWebsiteNotice": "Your wedding website asks visitors for a code because you use invitations with a passcode. If you only use an open invitation without a code, your website stays public.",
     "loading": "Loading…",
     "tabs": {
       "flows": "Invitations ({{count}})",

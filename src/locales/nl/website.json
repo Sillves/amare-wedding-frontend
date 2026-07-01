@@ -1,4 +1,12 @@
 {
+  "publicGate": {
+    "title": "Vul je code in",
+    "description": "Deze website is privé. Vul de code van je uitnodiging in om verder te gaan.",
+    "placeholder": "Code",
+    "submit": "Doorgaan",
+    "submitting": "Bezig met controleren…",
+    "error": "Die code werkt niet. Controleer bij het koppel."
+  },
   "title": "Trouwwebsite",
   "description": "Maak je mooie trouwwebsite",
   "loading": "Website laden...",

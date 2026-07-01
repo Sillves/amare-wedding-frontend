@@ -4,6 +4,7 @@
     "subtitle": "Créez les formulaires que vos invités remplissent et consultez leurs réponses.",
     "newFlow": "Nouvelle invitation",
     "publicLink": "Lien RSVP public :",
+    "privateWebsiteNotice": "Votre site de mariage demande un code aux visiteurs, car vous utilisez des invitations protégées par un code. Si vous n’utilisez qu’une invitation ouverte sans code, votre site reste public.",
     "loading": "Chargement…",
     "tabs": {
       "flows": "Invitations ({{count}})",

@@ -1,4 +1,12 @@
 {
+  "publicGate": {
+    "title": "Enter your passcode",
+    "description": "This website is private. Enter the code from your invitation to continue.",
+    "placeholder": "Passcode",
+    "submit": "Continue",
+    "submitting": "Checking…",
+    "error": "That passcode didn’t work. Please check with the couple."
+  },
   "title": "Wedding Website",
   "description": "Create your beautiful wedding website",
   "loading": "Loading website...",

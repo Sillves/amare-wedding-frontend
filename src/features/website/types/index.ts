@@ -41,6 +41,16 @@ export type WeddingWebsiteDto = components['schemas']['WeddingWebsiteDto'];
 export type PublicWeddingWebsiteDto = components['schemas']['PublicWeddingWebsiteDto'];
 
 /**
+ * Public website access state. When the wedding has passcode-protected invitation flows and the
+ * visitor has not unlocked one, `requiresPasscode` is true and `website` is null (no content leaks).
+ * Defined manually until the OpenAPI types are regenerated.
+ */
+export interface PublicWebsiteState {
+  requiresPasscode: boolean;
+  website: PublicWeddingWebsiteDto | null;
+}
+
+/**
  * Request payload for creating a wedding website - Auto-generated from OpenAPI
  */
 export type CreateWeddingWebsiteRequest = components['schemas']['CreateWeddingWebsiteRequestDto'];
@@ -129,7 +139,15 @@ export interface EventsContent {
 /**
  * Icon types available for event customization
  */
-export type EventIconType = 'church' | 'reception' | 'dinner' | 'party' | 'rings' | 'cake' | 'music' | 'car';
+export type EventIconType =
+  | 'church'
+  | 'reception'
+  | 'dinner'
+  | 'party'
+  | 'rings'
+  | 'cake'
+  | 'music'
+  | 'car';
 
 /**
  * Customization options for individual events displayed on the website
@@ -213,7 +231,10 @@ export interface WeddingWebsite extends Omit<WeddingWebsiteDto, 'content' | 'set
 /**
  * Extended Public Wedding Website DTO with typed content and settings
  */
-export interface PublicWeddingWebsite extends Omit<PublicWeddingWebsiteDto, 'content' | 'settings'> {
+export interface PublicWeddingWebsite extends Omit<
+  PublicWeddingWebsiteDto,
+  'content' | 'settings'
+> {
   content: WebsiteContent;
   settings: WebsiteSettings;
 }
