@@ -231,8 +231,9 @@ export function MinimalArchitectureTemplate({
         </section>
       )}
 
-      {/* 02. Wedding Details */}
-      {details.enabled && enabledVenues.length > 0 && (
+      {/* 02. Wedding Details — the manual venue cards. Hidden when the couple uses "Use Wedding
+          Events": those render in the Schedule section below, so showing venues too would duplicate. */}
+      {details.enabled && !showEvents && enabledVenues.length > 0 && (
         <section className="min-section min-details">
           <h2 className="min-section-title">
             <span className="min-section-no">{sectionLabel((sectionNo += 1))}</span> {details.title}
