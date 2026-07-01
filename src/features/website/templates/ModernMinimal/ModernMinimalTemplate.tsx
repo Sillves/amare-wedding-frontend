@@ -13,16 +13,26 @@ interface ModernMinimalTemplateProps {
 
 // Minimal geometric decorations
 const DiamondDivider = () => (
-  <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mm-diamond-divider">
+  <svg
+    viewBox="0 0 200 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="mm-diamond-divider"
+  >
     <line x1="0" y1="10" x2="85" y2="10" className="mm-svg-line" />
-    <rect x="92" y="3" width="14" height="14" transform="rotate(45 99 10)" className="mm-svg-diamond" />
+    <rect
+      x="92"
+      y="3"
+      width="14"
+      height="14"
+      transform="rotate(45 99 10)"
+      className="mm-svg-diamond"
+    />
     <line x1="115" y1="10" x2="200" y2="10" className="mm-svg-line" />
   </svg>
 );
 
-const HorizontalLine = () => (
-  <div className="mm-line" />
-);
+const HorizontalLine = () => <div className="mm-line" />;
 
 // Geometric accent for section markers
 const SectionMarker = ({ number }: { number: string }) => (
@@ -93,6 +103,11 @@ export function ModernMinimalTemplate({
   const heroMonth = heroValid ? heroDate.toLocaleDateString(locale, { month: 'long' }) : '';
   const heroYear = heroValid ? String(heroDate.getFullYear()) : '';
 
+  // When the couple uses "Use Wedding Events" the events render in the Schedule section below, so
+  // the manual Wedding Details section is hidden to avoid showing both (see Details vs Schedule).
+  const showEvents =
+    content.events.enabled && content.events.showFromWeddingEvents && !!events && events.length > 0;
+
   return (
     <div
       className="modern-minimal"
@@ -107,9 +122,7 @@ export function ModernMinimalTemplate({
       <section
         className="mm-hero"
         style={{
-          backgroundImage: hero.backgroundImageUrl
-            ? `url(${hero.backgroundImageUrl})`
-            : undefined,
+          backgroundImage: hero.backgroundImageUrl ? `url(${hero.backgroundImageUrl})` : undefined,
         }}
       >
         <div className={`mm-hero-content mm-hero-${hero.displayStyle}`}>
@@ -163,11 +176,7 @@ export function ModernMinimalTemplate({
                   </div>
                   <div className="mm-timeline-content">
                     {item.imageUrl && (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="mm-timeline-image"
-                      />
+                      <img src={item.imageUrl} alt={item.title} className="mm-timeline-image" />
                     )}
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
@@ -198,8 +207,8 @@ export function ModernMinimalTemplate({
         </section>
       )}
 
-      {/* Details Section */}
-      {details.enabled && (
+      {/* Details Section — hidden when Wedding Events are used (they render in the Schedule below) */}
+      {details.enabled && !showEvents && (
         <section className="mm-section mm-details">
           <div className="mm-section-header mm-centered">
             <SectionMarker number="02" />
@@ -294,8 +303,8 @@ export function ModernMinimalTemplate({
         </section>
       )}
 
-      {/* Events Section */}
-      {content.events.enabled && content.events.showFromWeddingEvents && events && events.length > 0 && (
+      {/* Events Section (Schedule) */}
+      {showEvents && (
         <section className="mm-section mm-events">
           <div className="mm-section-header">
             <SectionMarker number="03" />
@@ -305,14 +314,14 @@ export function ModernMinimalTemplate({
           <div className="mm-events-grid">
             {events.map((event, index) => (
               <div key={event.id} className="mm-event-item">
-                <span className="mm-event-number">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
+                <span className="mm-event-number">{String(index + 1).padStart(2, '0')}</span>
                 <div className="mm-event-details">
                   <h3>{event.name}</h3>
                   <p className="mm-event-meta">
                     {formatDate(event.startDate ?? '', 'short')}
-                    {event.endDate && event.endDate !== event.startDate && ` - ${formatDate(event.endDate, 'short')}`}
+                    {event.endDate &&
+                      event.endDate !== event.startDate &&
+                      ` - ${formatDate(event.endDate, 'short')}`}
                     {event.location && ` · ${event.location}`}
                   </p>
                   {event.description && <p>{event.description}</p>}
@@ -367,7 +376,9 @@ export function ModernMinimalTemplate({
           <DiamondDivider />
           {footer.customMessage && <p className="mm-footer-message">{footer.customMessage}</p>}
           {footer.contactEmail && (
-            <a href={`mailto:${footer.contactEmail}`} className="mm-footer-email">{footer.contactEmail}</a>
+            <a href={`mailto:${footer.contactEmail}`} className="mm-footer-email">
+              {footer.contactEmail}
+            </a>
           )}
         </footer>
       )}
