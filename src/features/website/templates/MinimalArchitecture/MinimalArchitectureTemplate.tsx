@@ -143,23 +143,27 @@ export function MinimalArchitectureTemplate({
     content.events.enabled && content.events.showFromWeddingEvents && !!events && events.length > 0;
   const showGallery = gallery.enabled && gallery.images.length > 0;
 
-  const enabledVenues = [
-    details.ceremony.enabled
-      ? { ...details.ceremony, label: t('preview.ceremonyLabel') }
-      : null,
-    details.reception.enabled
-      ? { ...details.reception, label: t('preview.receptionLabel') }
-      : null,
-    ...(details.customVenues?.filter((v) => v.enabled).map((v) => ({ ...v, label: '' })) ?? []),
-  ].filter(Boolean) as Array<{
-    label: string;
-    title: string;
-    venue: string;
-    address: string;
-    date: string;
-    description: string;
-    mapUrl: string;
-  }>;
+  const enabledVenues = (
+    [
+      details.ceremony.enabled ? { ...details.ceremony, label: t('preview.ceremonyLabel') } : null,
+      details.reception.enabled
+        ? { ...details.reception, label: t('preview.receptionLabel') }
+        : null,
+      ...(details.customVenues?.filter((v) => v.enabled).map((v) => ({ ...v, label: '' })) ?? []),
+    ].filter(Boolean) as Array<{
+      label: string;
+      title: string;
+      venue: string;
+      address: string;
+      date: string;
+      description: string;
+      mapUrl: string;
+    }>
+  )
+    // Only render venues that actually carry content. A venue can be "enabled" by default while
+    // empty (e.g. when the couple uses "Use Wedding Events" — those render in the Schedule section),
+    // which would otherwise leave a title-only ghost card in the Details section.
+    .filter((v) => [v.venue, v.address, v.date, v.description, v.mapUrl].some((f) => f?.trim()));
 
   return (
     <div
@@ -227,8 +231,9 @@ export function MinimalArchitectureTemplate({
         </section>
       )}
 
-      {/* 02. Wedding Details */}
-      {details.enabled && enabledVenues.length > 0 && (
+      {/* 02. Wedding Details — the manual venue cards. Hidden when the couple uses "Use Wedding
+          Events": those render in the Schedule section below, so showing venues too would duplicate. */}
+      {details.enabled && !showEvents && enabledVenues.length > 0 && (
         <section className="min-section min-details">
           <h2 className="min-section-title">
             <span className="min-section-no">{sectionLabel((sectionNo += 1))}</span> {details.title}
@@ -247,12 +252,7 @@ export function MinimalArchitectureTemplate({
                 {v.address && <p className="min-detail-meta">{v.address}</p>}
                 {v.description && <p className="min-detail-note">{v.description}</p>}
                 {v.mapUrl && (
-                  <a
-                    className="min-link"
-                    href={v.mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a className="min-link" href={v.mapUrl} target="_blank" rel="noopener noreferrer">
                     {t('preview.viewOnMap')}
                   </a>
                 )}
