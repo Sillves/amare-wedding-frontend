@@ -1,4 +1,12 @@
 {
+  "publicGate": {
+    "title": "Saisissez votre code",
+    "description": "Ce site est privé. Saisissez le code de votre invitation pour continuer.",
+    "placeholder": "Code",
+    "submit": "Continuer",
+    "submitting": "Vérification…",
+    "error": "Ce code ne fonctionne pas. Veuillez vérifier auprès du couple."
+  },
   "title": "Site de Mariage",
   "description": "Créez votre magnifique site de mariage",
   "loading": "Chargement du site...",
