@@ -80,10 +80,15 @@
     },
     "events": {
       "title": "Evenementen waar gasten op kunnen reageren",
-      "customNamePlaceholder": "Naam van het evenement",
-      "customTimePlaceholder": "Starttijd (optioneel)",
-      "customLocationPlaceholder": "Locatie (optioneel)",
-      "addCustom": "Eigen evenement toevoegen"
+      "newHint": "Nieuwe evenementen worden toegevoegd aan je bruiloft en getoond op deze uitnodiging.",
+      "newNamePlaceholder": "Naam van het evenement",
+      "newTimePlaceholder": "Starttijd",
+      "newLocationPlaceholder": "Locatie",
+      "addNew": "Evenement toevoegen",
+      "incomplete": "Nieuwe evenementen hebben een naam, starttijd en locatie nodig.",
+      "customExistingHint": "Deze evenementen bestaan alleen op deze uitnodiging. Maak er echte trouw-evenementen van om ze overal te beheren.",
+      "makeReal": "Maak er een echt evenement van",
+      "unnamed": "Naamloos evenement"
     },
     "actions": {
       "cancel": "Annuleren",
