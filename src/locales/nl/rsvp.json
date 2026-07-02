@@ -80,10 +80,12 @@
     },
     "events": {
       "title": "Evenementen waar gasten op kunnen reageren",
-      "customNamePlaceholder": "Naam van het evenement",
-      "customTimePlaceholder": "Starttijd (optioneel)",
-      "customLocationPlaceholder": "Locatie (optioneel)",
-      "addCustom": "Eigen evenement toevoegen"
+      "newHint": "Nieuwe evenementen worden toegevoegd aan je bruiloft en getoond op deze uitnodiging.",
+      "newNamePlaceholder": "Naam van het evenement",
+      "newTimePlaceholder": "Starttijd",
+      "newLocationPlaceholder": "Locatie",
+      "addNew": "Evenement toevoegen",
+      "incomplete": "Nieuwe evenementen hebben een naam, starttijd en locatie nodig."
     },
     "actions": {
       "cancel": "Annuleren",

@@ -80,10 +80,12 @@
     },
     "events": {
       "title": "Événements auxquels les invités peuvent répondre",
-      "customNamePlaceholder": "Nom de l’événement",
-      "customTimePlaceholder": "Heure de début (facultatif)",
-      "customLocationPlaceholder": "Lieu (facultatif)",
-      "addCustom": "Ajouter un événement personnalisé"
+      "newHint": "Les nouveaux événements sont ajoutés à votre mariage et affichés sur cette invitation.",
+      "newNamePlaceholder": "Nom de l’événement",
+      "newTimePlaceholder": "Heure de début",
+      "newLocationPlaceholder": "Lieu",
+      "addNew": "Ajouter un événement",
+      "incomplete": "Les nouveaux événements nécessitent un nom, une heure de début et un lieu."
     },
     "actions": {
       "cancel": "Annuler",

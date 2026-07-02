@@ -80,10 +80,12 @@
     },
     "events": {
       "title": "Events guests can RSVP to",
-      "customNamePlaceholder": "Custom event name",
-      "customTimePlaceholder": "Start time (optional)",
-      "customLocationPlaceholder": "Location (optional)",
-      "addCustom": "Add custom event"
+      "newHint": "New events are added to your wedding and shown on this invitation.",
+      "newNamePlaceholder": "Event name",
+      "newTimePlaceholder": "Start time",
+      "newLocationPlaceholder": "Location",
+      "addNew": "Add event",
+      "incomplete": "New events need a name, start time and location."
     },
     "actions": {
       "cancel": "Cancel",

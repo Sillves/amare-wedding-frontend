@@ -24,15 +24,23 @@ import {
 import { DateTimePicker } from '@/components/ui/date-time-picker';
 import { Trash2, Plus } from 'lucide-react';
 import { useCreateInvitationFlow, useUpdateInvitationFlow } from '../hooks/useInvitationFlows';
+import { useCreateEvent } from '@/features/events/hooks/useEvents';
 import { useErrorToast } from '@/hooks/useErrorToast';
 import type { EventDto } from '@/features/weddings/types';
 import type {
   InvitationFlowDto,
   QuestionDefinition,
-  CustomEventDefinition,
   RsvpQuestionType,
 } from '@/features/rsvp/types';
 import { QUESTION_TYPES } from '@/features/rsvp/types';
+
+/** A not-yet-persisted event drafted in the editor; created as a real wedding event on save. */
+interface NewEventDraft {
+  key: string;
+  name: string;
+  startDate: string | null;
+  location: string;
+}
 
 interface Props {
   weddingId: string;
@@ -59,12 +67,13 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
   const [includePlusOne, setIncludePlusOne] = useState(false);
   const [questions, setQuestions] = useState<QuestionDefinition[]>([]);
   const [selectedEventIds, setSelectedEventIds] = useState<string[]>([]);
-  const [customEvents, setCustomEvents] = useState<CustomEventDefinition[]>([]);
+  const [newEvents, setNewEvents] = useState<NewEventDraft[]>([]);
 
   const create = useCreateInvitationFlow(weddingId);
   const update = useUpdateInvitationFlow(weddingId);
+  const createEvent = useCreateEvent();
   const { showError, showSuccess } = useErrorToast();
-  const isPending = create.isPending || update.isPending;
+  const isPending = create.isPending || update.isPending || createEvent.isPending;
 
   useEffect(() => {
     if (!open) return;
@@ -74,7 +83,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
     setIncludePlusOne(flow?.includePlusOne ?? false);
     setQuestions((flow?.customQuestions ?? []).map((q) => ({ ...q, options: q.options ? [...q.options] : null })));
     setSelectedEventIds([...(flow?.eventIds ?? [])]);
-    setCustomEvents((flow?.customEvents ?? []).map((e) => ({ ...e })));
+    setNewEvents([]);
   }, [open, flow]);
 
   const addQuestion = () =>
@@ -93,28 +102,51 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
   const toggleEvent = (eventId: string, checked: boolean) =>
     setSelectedEventIds((ids) => (checked ? [...ids, eventId] : ids.filter((i) => i !== eventId)));
 
-  const addCustomEvent = () =>
-    setCustomEvents((e) => [...e, { id: newId(), name: '', location: null, startDate: null }]);
+  const addNewEvent = () =>
+    setNewEvents((e) => [...e, { key: newId(), name: '', location: '', startDate: null }]);
 
-  const updateCustomEvent = (id: string, patch: Partial<CustomEventDefinition>) =>
-    setCustomEvents((es) => es.map((e) => (e.id === id ? { ...e, ...patch } : e)));
+  const updateNewEvent = (key: string, patch: Partial<NewEventDraft>) =>
+    setNewEvents((es) => es.map((e) => (e.key === key ? { ...e, ...patch } : e)));
 
-  const removeCustomEvent = (id: string) => setCustomEvents((es) => es.filter((e) => e.id !== id));
+  const removeNewEvent = (key: string) => setNewEvents((es) => es.filter((e) => e.key !== key));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
-    const payload = {
-      name: name.trim(),
-      passcode: usePasscode ? passcode.trim() : null,
-      includePlusOne,
-      customQuestions: questions,
-      eventIds: selectedEventIds,
-      customEvents,
-    };
+    // New events are created as real wedding events; each needs a name, start time and location.
+    const drafts = newEvents.filter((d) => d.name.trim() || d.location.trim() || d.startDate);
+    if (drafts.some((d) => !d.name.trim() || !d.location.trim() || !d.startDate)) {
+      showError(new Error(t('editor.events.incomplete')));
+      return;
+    }
 
     try {
+      const createdIds: string[] = [];
+      for (const d of drafts) {
+        const created = await createEvent.mutateAsync({
+          weddingId,
+          data: {
+            name: d.name.trim(),
+            location: d.location.trim(),
+            startDate: d.startDate!,
+            endDate: null,
+            description: null,
+          },
+        });
+        if (created.id) createdIds.push(created.id);
+      }
+
+      const payload = {
+        name: name.trim(),
+        passcode: usePasscode ? passcode.trim() : null,
+        includePlusOne,
+        customQuestions: questions,
+        eventIds: [...selectedEventIds, ...createdIds],
+        // Preserve any pre-existing flow-local custom events untouched (not editable here anymore).
+        customEvents: flow?.customEvents ?? [],
+      };
+
       if (isEdit) {
         await update.mutateAsync({ flowId: flow!.id!, data: payload });
         showSuccess(t('editor.toasts.updated'));
@@ -285,35 +317,38 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                 </div>
               )}
 
-              {customEvents.map((ce) => (
-                <div key={ce.id} className="rounded-lg border p-3 grid gap-2">
+              {newEvents.map((ne) => (
+                <div key={ne.key} className="rounded-lg border p-3 grid gap-2">
                   <div className="flex gap-2 items-center">
                     <Input
-                      value={ce.name ?? ''}
-                      onChange={(e) => updateCustomEvent(ce.id!, { name: e.target.value })}
-                      placeholder={t('editor.events.customNamePlaceholder')}
+                      value={ne.name}
+                      onChange={(e) => updateNewEvent(ne.key, { name: e.target.value })}
+                      placeholder={t('editor.events.newNamePlaceholder')}
                       className="flex-1"
                     />
-                    <Button type="button" variant="ghost" size="icon" onClick={() => removeCustomEvent(ce.id!)}>
+                    <Button type="button" variant="ghost" size="icon" onClick={() => removeNewEvent(ne.key)}>
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-2">
                     <DateTimePicker
-                      value={ce.startDate ? new Date(ce.startDate) : undefined}
-                      onChange={(d) => updateCustomEvent(ce.id!, { startDate: d ? d.toISOString() : null })}
-                      placeholder={t('editor.events.customTimePlaceholder')}
+                      value={ne.startDate ? new Date(ne.startDate) : undefined}
+                      onChange={(d) => updateNewEvent(ne.key, { startDate: d ? d.toISOString() : null })}
+                      placeholder={t('editor.events.newTimePlaceholder')}
                     />
                     <Input
-                      value={ce.location ?? ''}
-                      onChange={(e) => updateCustomEvent(ce.id!, { location: e.target.value })}
-                      placeholder={t('editor.events.customLocationPlaceholder')}
+                      value={ne.location}
+                      onChange={(e) => updateNewEvent(ne.key, { location: e.target.value })}
+                      placeholder={t('editor.events.newLocationPlaceholder')}
                     />
                   </div>
                 </div>
               ))}
-              <Button type="button" variant="outline" size="sm" className="w-fit" onClick={addCustomEvent}>
-                <Plus className="h-4 w-4 mr-1" /> {t('editor.events.addCustom')}
+              {newEvents.length > 0 && (
+                <p className="text-xs text-muted-foreground">{t('editor.events.newHint')}</p>
+              )}
+              <Button type="button" variant="outline" size="sm" className="w-fit" onClick={addNewEvent}>
+                <Plus className="h-4 w-4 mr-1" /> {t('editor.events.addNew')}
               </Button>
             </div>
           </div>
