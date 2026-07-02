@@ -85,7 +85,10 @@
       "newTimePlaceholder": "Start time",
       "newLocationPlaceholder": "Location",
       "addNew": "Add event",
-      "incomplete": "New events need a name, start time and location."
+      "incomplete": "New events need a name, start time and location.",
+      "customExistingHint": "These events only exist on this invitation. Make them real wedding events to manage them everywhere.",
+      "makeReal": "Make it a real event",
+      "unnamed": "Untitled event"
     },
     "actions": {
       "cancel": "Cancel",

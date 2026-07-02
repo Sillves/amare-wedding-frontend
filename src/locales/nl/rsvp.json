@@ -85,7 +85,10 @@
       "newTimePlaceholder": "Starttijd",
       "newLocationPlaceholder": "Locatie",
       "addNew": "Evenement toevoegen",
-      "incomplete": "Nieuwe evenementen hebben een naam, starttijd en locatie nodig."
+      "incomplete": "Nieuwe evenementen hebben een naam, starttijd en locatie nodig.",
+      "customExistingHint": "Deze evenementen bestaan alleen op deze uitnodiging. Maak er echte trouw-evenementen van om ze overal te beheren.",
+      "makeReal": "Maak er een echt evenement van",
+      "unnamed": "Naamloos evenement"
     },
     "actions": {
       "cancel": "Annuleren",

@@ -30,6 +30,7 @@ import type { EventDto } from '@/features/weddings/types';
 import type {
   InvitationFlowDto,
   QuestionDefinition,
+  CustomEventDefinition,
   RsvpQuestionType,
 } from '@/features/rsvp/types';
 import { QUESTION_TYPES } from '@/features/rsvp/types';
@@ -68,6 +69,8 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
   const [questions, setQuestions] = useState<QuestionDefinition[]>([]);
   const [selectedEventIds, setSelectedEventIds] = useState<string[]>([]);
   const [newEvents, setNewEvents] = useState<NewEventDraft[]>([]);
+  // Pre-existing flow-local custom events, preserved as-is unless promoted to real events.
+  const [customEvents, setCustomEvents] = useState<CustomEventDefinition[]>([]);
 
   const create = useCreateInvitationFlow(weddingId);
   const update = useUpdateInvitationFlow(weddingId);
@@ -84,6 +87,7 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
     setQuestions((flow?.customQuestions ?? []).map((q) => ({ ...q, options: q.options ? [...q.options] : null })));
     setSelectedEventIds([...(flow?.eventIds ?? [])]);
     setNewEvents([]);
+    setCustomEvents((flow?.customEvents ?? []).map((e) => ({ ...e })));
   }, [open, flow]);
 
   const addQuestion = () =>
@@ -109,6 +113,16 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
     setNewEvents((es) => es.map((e) => (e.key === key ? { ...e, ...patch } : e)));
 
   const removeNewEvent = (key: string) => setNewEvents((es) => es.filter((e) => e.key !== key));
+
+  // Promote an existing flow-local custom event into an editable new-event draft; it becomes a
+  // real wedding event on save (deferred, so cancelling the dialog changes nothing).
+  const promoteCustomEvent = (ce: CustomEventDefinition) => {
+    setNewEvents((es) => [
+      ...es,
+      { key: newId(), name: ce.name ?? '', startDate: ce.startDate ?? null, location: ce.location ?? '' },
+    ]);
+    setCustomEvents((es) => es.filter((e) => e.id !== ce.id));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -143,8 +157,9 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
         includePlusOne,
         customQuestions: questions,
         eventIds: [...selectedEventIds, ...createdIds],
-        // Preserve any pre-existing flow-local custom events untouched (not editable here anymore).
-        customEvents: flow?.customEvents ?? [],
+        // Remaining custom events are preserved; any promoted ones were removed from this list
+        // and re-created above as real events.
+        customEvents,
       };
 
       if (isEdit) {
@@ -313,6 +328,20 @@ export function InvitationFlowEditorDialog({ weddingId, events, flow, children }
                       />
                       {ev.name}
                     </label>
+                  ))}
+                </div>
+              )}
+
+              {customEvents.length > 0 && (
+                <div className="grid gap-2">
+                  <p className="text-xs text-muted-foreground">{t('editor.events.customExistingHint')}</p>
+                  {customEvents.map((ce) => (
+                    <div key={ce.id} className="flex items-center justify-between gap-2 rounded-lg border border-dashed p-2 text-sm">
+                      <span className="truncate">{ce.name || t('editor.events.unnamed')}</span>
+                      <Button type="button" variant="outline" size="sm" onClick={() => promoteCustomEvent(ce)}>
+                        {t('editor.events.makeReal')}
+                      </Button>
+                    </div>
                   ))}
                 </div>
               )}
