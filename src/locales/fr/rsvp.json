@@ -47,6 +47,10 @@
       "confirm": "Supprimer",
       "pending": "Suppression…",
       "success": "Invitation supprimée"
+    },
+    "answers": {
+      "title": "Réponses",
+      "deletedQuestion": "(question supprimée)"
     }
   },
   "editor": {

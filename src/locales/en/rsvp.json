@@ -47,6 +47,10 @@
       "confirm": "Delete",
       "pending": "Deleting…",
       "success": "Invitation deleted"
+    },
+    "answers": {
+      "title": "Answers",
+      "deletedQuestion": "(deleted question)"
     }
   },
   "editor": {
