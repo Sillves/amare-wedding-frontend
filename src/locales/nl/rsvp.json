@@ -47,6 +47,10 @@
       "confirm": "Verwijderen",
       "pending": "Bezig met verwijderen…",
       "success": "Uitnodiging verwijderd"
+    },
+    "answers": {
+      "title": "Antwoorden",
+      "deletedQuestion": "(verwijderde vraag)"
     }
   },
   "editor": {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -11,6 +11,8 @@ import {
   Pencil,
   Trash2,
   ListChecks,
+  ChevronDown,
+  ChevronRight,
 } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
@@ -21,6 +23,10 @@ import {
   useRsvpResponses,
 } from '@/features/invitation-flows/hooks/useInvitationFlows';
 import { InvitationFlowEditorDialog } from '@/features/invitation-flows/components/InvitationFlowEditorDialog';
+import {
+  ResponseAnswers,
+  hasResponseAnswers,
+} from '@/features/invitation-flows/components/ResponseAnswers';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -44,7 +50,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useErrorToast } from '@/hooks/useErrorToast';
-import type { InvitationFlowDto } from '@/features/rsvp/types';
+import type { InvitationFlowDto, QuestionDefinition } from '@/features/rsvp/types';
 
 export function InvitationFlowsPage() {
   const { t } = useTranslation('rsvp');
@@ -63,6 +69,25 @@ export function InvitationFlowsPage() {
   const deleteFlow = useDeleteInvitationFlow(weddingId);
 
   const [deleting, setDeleting] = useState<InvitationFlowDto | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  const toggleExpanded = (id: string) => {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  // Each flow owns its custom questions; responses link back via invitationFlowId.
+  const questionsByFlow = useMemo(() => {
+    const map = new Map<string, QuestionDefinition[]>();
+    for (const flow of flows) {
+      if (flow.id) map.set(flow.id, flow.customQuestions ?? []);
+    }
+    return map;
+  }, [flows]);
 
   const rsvpUrl = slug ? `${window.location.origin}/rsvp/${slug}` : '';
 
@@ -298,6 +323,7 @@ export function InvitationFlowsPage() {
                     <Table>
                       <TableHeader>
                         <TableRow>
+                          <TableHead className="w-8" />
                           <TableHead>{t('planner.table.name')}</TableHead>
                           <TableHead>{t('planner.table.email')}</TableHead>
                           <TableHead>{t('planner.table.flow')}</TableHead>
@@ -307,33 +333,71 @@ export function InvitationFlowsPage() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {responses.map((r) => (
-                          <TableRow key={r.id}>
-                            <TableCell className="font-medium">
-                              {r.name} {r.surname}
-                              {r.isPlusOne && (
-                                <Badge variant="outline" className="ml-2">
-                                  +1
-                                </Badge>
+                        {responses.map((r) => {
+                          const canExpand = hasResponseAnswers(r.customAnswers);
+                          const isExpanded = !!r.id && expanded.has(r.id);
+                          return (
+                            <Fragment key={r.id}>
+                              <TableRow>
+                                <TableCell className="w-8 align-top">
+                                  {canExpand && r.id && (
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-7 w-7"
+                                      onClick={() => toggleExpanded(r.id!)}
+                                      aria-expanded={isExpanded}
+                                      aria-label={t('planner.answers.title')}
+                                    >
+                                      {isExpanded ? (
+                                        <ChevronDown className="h-4 w-4" />
+                                      ) : (
+                                        <ChevronRight className="h-4 w-4" />
+                                      )}
+                                    </Button>
+                                  )}
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {r.name} {r.surname}
+                                  {r.isPlusOne && (
+                                    <Badge variant="outline" className="ml-2">
+                                      +1
+                                    </Badge>
+                                  )}
+                                </TableCell>
+                                <TableCell className="text-muted-foreground">{r.email}</TableCell>
+                                <TableCell>{r.flowName}</TableCell>
+                                <TableCell>
+                                  <Badge
+                                    variant={r.status === 'Attending' ? 'default' : 'secondary'}
+                                  >
+                                    {r.status === 'Attending'
+                                      ? t('planner.status.attending')
+                                      : t('planner.status.declined')}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell className="text-muted-foreground">
+                                  {(r.attendingEventNames ?? []).join(', ') || '—'}
+                                </TableCell>
+                                <TableCell className="text-muted-foreground">
+                                  {r.dietary || '—'}
+                                </TableCell>
+                              </TableRow>
+                              {isExpanded && (
+                                <TableRow className="hover:bg-transparent">
+                                  <TableCell colSpan={7} className="bg-muted/30">
+                                    <ResponseAnswers
+                                      answers={r.customAnswers ?? {}}
+                                      questions={
+                                        questionsByFlow.get(r.invitationFlowId ?? '') ?? []
+                                      }
+                                    />
+                                  </TableCell>
+                                </TableRow>
                               )}
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">{r.email}</TableCell>
-                            <TableCell>{r.flowName}</TableCell>
-                            <TableCell>
-                              <Badge variant={r.status === 'Attending' ? 'default' : 'secondary'}>
-                                {r.status === 'Attending'
-                                  ? t('planner.status.attending')
-                                  : t('planner.status.declined')}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">
-                              {(r.attendingEventNames ?? []).join(', ') || '—'}
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">
-                              {r.dietary || '—'}
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                            </Fragment>
+                          );
+                        })}
                       </TableBody>
                     </Table>
                   </CardContent>
