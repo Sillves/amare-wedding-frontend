@@ -51,6 +51,15 @@
     "answers": {
       "title": "Antwoorden",
       "deletedQuestion": "(verwijderde vraag)"
+    },
+    "export": {
+      "button": "Exporteer CSV",
+      "columns": {
+        "name": "Voornaam",
+        "surname": "Achternaam",
+        "plusOne": "Introducé",
+        "submittedAt": "Ingediend op"
+      }
     }
   },
   "editor": {

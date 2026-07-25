@@ -13,6 +13,7 @@ import {
   ListChecks,
   ChevronDown,
   ChevronRight,
+  Download,
 } from 'lucide-react';
 import { useAuth, useLogout } from '@/features/auth/hooks/useAuth';
 import { useWeddings } from '@/features/weddings/hooks/useWeddings';
@@ -50,6 +51,10 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useErrorToast } from '@/hooks/useErrorToast';
+import {
+  buildRsvpResponsesCsv,
+  downloadCsv,
+} from '@/features/invitation-flows/utils/exportRsvpCsv';
 import type { InvitationFlowDto, QuestionDefinition } from '@/features/rsvp/types';
 
 export function InvitationFlowsPage() {
@@ -119,6 +124,27 @@ export function InvitationFlowsPage() {
       events: [...events.values()].sort((a, b) => b.count - a.count),
     };
   }, [responses]);
+
+  const handleExportCsv = () => {
+    const csv = buildRsvpResponsesCsv(responses, questionsByFlow, {
+      name: t('planner.export.columns.name'),
+      surname: t('planner.export.columns.surname'),
+      email: t('planner.table.email'),
+      flow: t('planner.table.flow'),
+      status: t('planner.table.status'),
+      plusOne: t('planner.export.columns.plusOne'),
+      dietary: t('planner.table.dietary'),
+      events: t('planner.table.events'),
+      submittedAt: t('planner.export.columns.submittedAt'),
+      attending: t('planner.status.attending'),
+      declined: t('planner.status.declined'),
+      yes: t('public.yes'),
+      no: t('public.no'),
+      deletedQuestion: t('planner.answers.deletedQuestion'),
+    });
+    const namePart = slug || 'rsvp';
+    downloadCsv(`rsvp-responses-${namePart}.csv`, csv);
+  };
 
   const handleDelete = async () => {
     if (!deleting) return;
@@ -286,6 +312,18 @@ export function InvitationFlowsPage() {
               </Card>
             ) : (
               <div className="space-y-4">
+                <div className="flex justify-end">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleExportCsv}
+                    className="rounded-xl"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    {t('planner.export.button')}
+                  </Button>
+                </div>
+
                 {/* Headcount summary */}
                 <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                   <Card>

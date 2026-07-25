@@ -51,6 +51,15 @@
     "answers": {
       "title": "Answers",
       "deletedQuestion": "(deleted question)"
+    },
+    "export": {
+      "button": "Export CSV",
+      "columns": {
+        "name": "First name",
+        "surname": "Last name",
+        "plusOne": "Plus-one",
+        "submittedAt": "Submitted at"
+      }
     }
   },
   "editor": {
